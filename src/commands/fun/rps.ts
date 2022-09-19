@@ -119,9 +119,7 @@ export default new Command({
                         .setColor('RED')
                         .setDescription(`❌ \`${user.username}\` did not respond!`)
 
-                    await interaction.editReply({
-                        embeds: [timeout]
-                    })
+                    await interaction.editReply({embeds: [timeout], components: []})
                 } else if (reason === 'ACCEPTED') {
                     let challengerChoice: string
                     let opponentChoice: string
