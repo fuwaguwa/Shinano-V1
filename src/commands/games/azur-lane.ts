@@ -150,21 +150,19 @@ export default new Command({
                     return interaction.reply({embeds:[shipNotFound], ephemeral: true})
                 }
                 
-                
 
                 // Color Picking
-                if (ship.rarity === 'Normal') var color: any = '#b0b7b8';
-                if (ship.rarity === 'Rare') var color: any = '#03dbfc';
-                if (ship.rarity === 'Elite') var color: any = '#ec18f0';
-                if (ship.rarity === 'Super Rare' || ship.rarity === 'Priority') var color: any = '#eff233';
-                if (ship.rarity === 'Ultra Rare' || ship.rarity === 'Decisive') var color: any = 'BLACK';
+                let color: any
+                if (ship.rarity === 'Normal') color = '#b0b7b8';
+                if (ship.rarity === 'Rare') color = '#03dbfc';
+                if (ship.rarity === 'Elite') color = '#ec18f0';
+                if (ship.rarity === 'Super Rare' || ship.rarity === 'Priority') color = '#eff233';
+                if (ship.rarity === 'Ultra Rare' || ship.rarity === 'Decisive') color = 'BLACK';
                
 
-
-                // Embeds 
                 // General Info
                 await interaction.deferReply()
-                var info: MessageEmbed = new MessageEmbed()
+                const info: MessageEmbed = new MessageEmbed()
                     .setTitle(`${ship.names.en} | ${ship.names.code}`)
                     .setDescription(`[Wiki Link](${ship.wikiUrl})\nDrawn by ${ship.misc.artist.name}\nVoiced by ${ship.misc.voice.name !== undefined ? ship.misc.voice.name : "Unknown"}`)
                     .setThumbnail(ship.thumbnail)
@@ -175,25 +173,24 @@ export default new Command({
                         {name: 'Class:', value: ship.class},
                         {name: 'Hull Type:', value: ship.hullType},
                     )
+                
 
+                // Checks for PR ship
                 if (ship.rarity !== 'Decisive' && ship.rarity !== 'Priority') {
-                    var pools: string[] = []
+                    const pools: string[] = []
                     if (ship.construction.availableIn.exchange !== false) pools.push('Exchange')
                     if (ship.construction.availableIn.light !== false) pools.push('Light Ship Pool');
                     if (ship.construction.availableIn.heavy !== false) pools.push('Heavy Ship Pool');
                     if (ship.construction.availableIn.aviation !== false) pools.push('Special Ship Pool');
                     if (ship.construction.availableIn.limited !== false) pools.push(`Limited Ship Pool: ${ship.construction.availableIn.limited}`);
                     
+                    let aprIn: string;
+                    pools.length > 0
+                        ? aprIn = pools.join('\n')
+                        : aprIn = 'Maps'
 
-                    if (pools.length > 0) {
-                        var aprIn = pools.join('\n')
-                    } else {
-                        var aprIn = 'Maps'
-                    }
-
-
+                    let maps: string[] = []
                     if (ship.obtainedFrom.fromMaps.length > 0) {
-                        var maps: string[] = []
                         for (let i = 0; i < ship.obtainedFrom.fromMaps.length; i++) {
                             if (ship.obtainedFrom.fromMaps[i].name !== undefined) {
                                 maps.push(ship.obtainedFrom.fromMaps[i].name)
@@ -203,11 +200,13 @@ export default new Command({
                         }   
                     }
 
-
-                    if (maps !== undefined && maps.length > 0 && pools.length > 0) {
-                        var aprIn = aprIn + `\nMaps: ${maps.join(', ')}`
-                    } else if (maps !== undefined && maps.length > 0 && !(pools.length > 0)) {
-                        var aprIn = aprIn + `: ${maps.join(', ')}`
+                    
+                    if (maps.length > 0 && pools.length > 0) {
+                        // Pools + Maps ship appears in
+                        aprIn = aprIn + `\nMaps: ${maps.join(', ')}`
+                    } else if (maps.length > 0 && !(pools.length > 0)) {
+                        // Maps only
+                        aprIn = aprIn + `: ${maps.join(', ')}`
                     }
                     
 
@@ -221,20 +220,23 @@ export default new Command({
                     info.addField('Obtain From:', 'Shipyard')
                 }
 
-
                 
                 // Stats
-                if (ship.limitBreaks == null && ship.devLevels == null) {
-                    var name = 'Limit Breaks:'
-                    var limitBreak = 'Ship cannot be limit broken.'
-                } else if (ship.limitBreaks !== null && ship.devLevels == null) {
-                    var name = 'Limit Breaks:'
-                    var limitBreak = `**First**: ${ship.limitBreaks[0].join('/')}
+                let name: string;
+                let limitBreak: string;
+
+                if ((!ship.limitBreaks) && (!ship.devLevels)) {
+                    name = 'Limit Breaks:'
+                    limitBreak = 'Ship cannot be limit broken.'
+                } else if ((ship.limitBreaks) && (!ship.devLevels)) {
+                    name = 'Limit Breaks:'
+                    limitBreak = `
+                    **First**: ${ship.limitBreaks[0].join('/')}
                     **Second**: ${ship.limitBreaks[1].join('/')}
                     **Third**: ${ship.limitBreaks[2].join('/')}`
                 } else {
-                    var name = `Dev Levels:`
-                    var limitBreak = `**Dev 5**: ${ship.devLevels[0].buffs.join('/')}
+                    name = 'Dev Levels:'
+                    limitBreak = `**Dev 5**: ${ship.devLevels[0].buffs.join('/')}
                     **Dev 10**: ${ship.devLevels[1].buffs.join('/')}
                     **Dev 15**: ${ship.devLevels[2].buffs.join('/')}
                     **Dev 20**: ${ship.devLevels[3].buffs.join('/')}
@@ -243,8 +245,7 @@ export default new Command({
                 }
 
                 
-
-                var stats: MessageEmbed = new MessageEmbed()
+                const stats: MessageEmbed = new MessageEmbed()
                     .setTitle(`${ship.names.en}'s Stats`)
                     .setColor(color)
                     .setThumbnail(ship.thumbnail)
@@ -287,7 +288,7 @@ export default new Command({
                         **ASW**: ${ship.stats.level100.antisubmarineWarfare}/${ship.stats.level120.antisubmarineWarfare}/${ship.stats.level125.antisubmarineWarfare}`, inline: true},
                     )
 
-                if (ship.stats.level100Retrofit !== undefined) {
+                if (ship.stats.level100Retrofit) {
                     stats.addField('Retrofit:', `
                     **HP**: ${ship.stats.level100Retrofit.health}/${ship.stats.level120Retrofit.health}/${ship.stats.level125Retrofit.health}
                     **ARM**: ${ship.stats.level100Retrofit.armor}/${ship.stats.level120Retrofit.armor}/${ship.stats.level125Retrofit.armor}
@@ -305,26 +306,29 @@ export default new Command({
                 }
                 
 
-
-                // Skill
+                // Skills
                 const skills: MessageEmbed = new MessageEmbed()
                     .setColor(color)
                     .setThumbnail(ship.thumbnail)
                     .setTitle(`${ship.names.en}'s Skills`)
                 ship.skills.forEach((skill) => {
-                    if (skill.color === 'pink') var skillType = 'Offensive Skill';
-                    if (skill.color === 'gold') var skillType = 'Support Skill';
-                    if (skill.color === 'deepskyblue') var skillType = 'Defensive Skill';
-                    skills
-                        .addField(`${skill.names.en} (${skillType})`, skill.description)
-                })
+                    let skillType: string
 
+                    if (skill.color === 'pink') skillType = 'Offensive Skill';
+                    if (skill.color === 'gold') skillType = 'Support Skill';
+                    if (skill.color === 'deepskyblue') skillType = 'Defensive Skill';
+                    
+                    skills.addField(`${skill.names.en} (${skillType})`, skill.description)
+                })
 
                 
                 // Tech
+                let techPts: string
+                let statsBonus: string
+
                 if (ship.fleetTech.statsBonus.collection == null || ship.fleetTech.techPoints == null) {
-                    var techPts= 'N/A'
-                    var statsBonus = 'N/A'
+                    techPts= 'N/A'
+                    statsBonus = 'N/A'
                 } else {
                     let collection = ship.fleetTech.statsBonus.collection.stat
                     let maxLevel = ship.fleetTech.statsBonus.maxLevel.stat
@@ -354,13 +358,13 @@ export default new Command({
                     } 
 
 
-                    var techPts = `
+                    techPts = `
                     Unlocking The Ship: **${ship.fleetTech.techPoints.collection}**
                     Max Limit Break: **${ship.fleetTech.techPoints.maxLimitBreak}**
                     Reaching Level 120: **${ship.fleetTech.techPoints.maxLevel}**
                     Total Tech Points: **${ship.fleetTech.techPoints.total}**`
 
-                    var statsBonus = `
+                    statsBonus = `
                     Unlocking The Ship: ${ship.fleetTech.statsBonus.collection.bonus} **${collection}** for ${toTitleCase(ship.fleetTech.statsBonus.collection.applicable.join(', '))}s
                     Reaching Level 120: ${ship.fleetTech.statsBonus.maxLevel.bonus} **${maxLevel}** for ${toTitleCase(ship.fleetTech.statsBonus.maxLevel.applicable.join(', '))}s`
                 }
@@ -375,9 +379,8 @@ export default new Command({
                     )
 
 
-
                 // Selection Menu
-                const category: any = new MessageActionRow()
+                const category = new MessageActionRow()
                     .addComponents(
                         new MessageSelectMenu()
                             .setPlaceholder('Categories')
@@ -421,7 +424,6 @@ export default new Command({
                 const message = await interaction.editReply({embeds:[info], components: [category]})
 
 
-
                 // Collector 
                 const collector: InteractionCollector<SelectMenuInteraction> = await (message as Message).createMessageComponentCollector({
                     componentType: 'SELECT_MENU',
@@ -445,11 +447,9 @@ export default new Command({
                         switch (i.values[0]) {
                             case 'info': {
                                 for (let i = 0; i < 5; i++) {
-                                    if (i == 0) {
-                                        category.components[0].options[i].default = true
-                                    } else {
-                                        category.components[0].options[i].default = false
-                                    }
+                                    i == 0
+                                        ? (category.components[0] as MessageSelectMenu).options[i].default = true
+                                        : (category.components[0] as MessageSelectMenu).options[i].default = false
                                 }
 
                                 await i.editReply({
@@ -461,11 +461,9 @@ export default new Command({
 
                             case 'tech': {
                                 for (let i = 0; i < 5; i++) {
-                                    if (i == 1) {
-                                        category.components[0].options[i].default = true
-                                    } else {
-                                        category.components[0].options[i].default = false
-                                    }
+                                    i == 1
+                                        ? (category.components[0] as MessageSelectMenu).options[i].default = true
+                                        : (category.components[0] as MessageSelectMenu).options[i].default = false
                                 }
 
                                 await i.editReply({
@@ -477,11 +475,9 @@ export default new Command({
                             
                             case 'stats': {
                                 for (let i = 0; i < 5; i++) {
-                                    if (i == 2) {
-                                        category.components[0].options[i].default = true
-                                    } else {
-                                        category.components[0].options[i].default = false
-                                    }
+                                    i == 2
+                                        ? (category.components[0] as MessageSelectMenu).options[i].default = true
+                                        : (category.components[0] as MessageSelectMenu).options[i].default = false
                                 }
 
                                 await i.editReply({
@@ -493,11 +489,9 @@ export default new Command({
 
                             case 'skills': {
                                 for (let i = 0; i < 5; i++) {
-                                    if (i == 3) {
-                                        category.components[0].options[i].default = true
-                                    } else {
-                                        category.components[0].options[i].default = false
-                                    }
+                                    i == 3
+                                        ? (category.components[0] as MessageSelectMenu).options[i].default = true
+                                        : (category.components[0] as MessageSelectMenu).options[i].default = false
                                 }
 
                                 await i.editReply({
@@ -510,17 +504,16 @@ export default new Command({
         
                             case 'skins': {
                                 for (let i = 0; i < 5; i++) {
-                                    if (i == 4) {
-                                        category.components[0].options[i].default = true
-                                    } else {
-                                        category.components[0].options[i].default = false
-                                    }
+                                    i == 4
+                                        ? (category.components[0] as MessageSelectMenu).options[i].default = true
+                                        : (category.components[0] as MessageSelectMenu).options[i].default = false
                                 }
 
 
                                 // Creating the skin embeds
                                 const skinEmbed: MessageEmbed[] = []
-                                let description;
+                                let description: string;
+
                                 ship.skins.forEach((skin) => {
                                     if (skin.info.obtainedFrom === 'Skin Shop') {
                                         description = `
@@ -542,7 +535,7 @@ export default new Command({
                                             .setTitle(`${ship.names.en}'s Skins`)
                                             .setDescription(description)
                                             .setColor(color)
-                                            .setImage(skin.bg !== undefined ? skin.bg : skin.image)
+                                            .setImage(skin.bg ? skin.bg : skin.image)
                                             .setThumbnail(skin.chibi)
                                     )
                                 })
@@ -573,7 +566,7 @@ export default new Command({
                 })
                 
                 collector.on('end', async (collected, reason) => {
-                    category.components[0].setDisabled(true)
+                    (category.components[0] as MessageSelectMenu).setDisabled(true)
                     await interaction.editReply({components:[category]})
                 })
                 break
@@ -585,33 +578,36 @@ export default new Command({
                 const chapter = AL.chapters.filter((chapter) => {
                     return chapter.id === chapterNumber
                 })
-                const info: any = chapter[0]
+                const info = chapter[0]
 
 
-                // Embeds
                 const title = `Chapter ${info.id}: ${info.names.en}`
                 // Normal
-                var normalLevels: MessageEmbed[] = []
+                const normalLevels: MessageEmbed[] = []
                 for (let i = 1; i-1 < 4; i++) {
-                    var blueprints: string[] = []
+                    const blueprints: string[] = []
+
                     info[i].normal.blueprintDrops.forEach((blueprint) => {
-                        let name = blueprint.tier + ' ' + blueprint.name
+                        const name = blueprint.tier + ' ' + blueprint.name
                         blueprints.push(name)
                     })
+
                     normalLevels.push(
                         new MessageEmbed()
                             .setTitle(`${title} | ${info[i].normal.code}`)
-                            .setDescription(`**${info[i].normal.title}**
-                            *${info[i].normal.introduction}*`)
+                            .setDescription(`
+                                **${info[i].normal.title}**
+                                *${info[i].normal.introduction}*`
+                            )
                             .addFields(
                                 {name: 'Unlock Requirements:', value: `${info[i].normal.unlockRequirements.text}`, inline: false},
 
                                 {name: 'Airspace Control:', value: `
-                                Actual: ${info[i].normal.airspaceControl.actual !== undefined ? info[i].normal.airspaceControl.actual : 'Empty'}
-                                Denial: ${info[i].normal.airspaceControl.denial !== undefined ? info[i].normal.airspaceControl.denial : 'Empty'}
-                                Parity: ${info[i].normal.airspaceControl.parity !== undefined ? info[i].normal.airspaceControl.parity : 'Empty'}
-                                Superiority: ${info[i].normal.airspaceControl.superiority !== undefined ? info[i].normal.airspaceControl.superiority : 'Empty'}
-                                Supremacy: ${info[i].normal.airspaceControl.supremacy !== undefined ? info[i].normal.airspaceControl.supremacy : 'Empty'}`, inline: false},
+                                Actual: ${info[i].normal.airspaceControl.actual  ? info[i].normal.airspaceControl.actual : 'N/A'}
+                                Denial: ${info[i].normal.airspaceControl.denial ? info[i].normal.airspaceControl.denial : 'N/A'}
+                                Parity: ${info[i].normal.airspaceControl.parity  ? info[i].normal.airspaceControl.parity : 'N/A'}
+                                Superiority: ${info[i].normal.airspaceControl.superiority ? info[i].normal.airspaceControl.superiority : 'N/A'}
+                                Supremacy: ${info[i].normal.airspaceControl.supremacy ? info[i].normal.airspaceControl.supremacy : 'N/A'}`, inline: false},
         
                                 {name: 'Base XP:', value: `
                                 **Small Fleet**: ${info[i].normal.baseXP.smallFleet}
@@ -636,29 +632,34 @@ export default new Command({
 
 
                 // Hard
-                if (info[1].hard !== null) {
+                if (info[1].hard) {
+                    const hardLevels: MessageEmbed[] = []
                     const title = `Chapter ${info.id}: ${info.names.en}`
-                    var hardLevels: MessageEmbed[] = []
+
                     for (let i = 1; i-1 < 4; i++) {
-                        var blueprints: string[] = []
+                        const blueprints: string[] = []
+
                         info[i].hard.blueprintDrops.forEach((blueprint) => {
                             let name = blueprint.tier + ' ' + blueprint.name
                             blueprints.push(name)
                         })
+
                         hardLevels.push(
                             new MessageEmbed()
                                 .setTitle(`${title} | ${info[i].hard.code} | Hard`)
-                                .setDescription(`**${info[i].hard.title}**
-                                *${info[i].hard.introduction}*`)
+                                .setDescription(`
+                                    **${info[i].hard.title}**
+                                    *${info[i].hard.introduction}*`
+                                )
                                 .addFields(
                                     {name: 'Unlock Requirements:', value: `${info[i].hard.unlockRequirements.text}`, inline: false},
 
                                     {name: 'Airspace Control:', value: `
-                                    Actual: ${info[i].hard.airspaceControl.actual !== undefined ? info[i].hard.airspaceControl.actual : ''}
-                                    Denial: ${info[i].hard.airspaceControl.denial !== undefined ? info[i].hard.airspaceControl.denial : 'N/A'}
-                                    Parity: ${info[i].hard.airspaceControl.parity !== undefined ? info[i].hard.airspaceControl.parity : 'N/A'}
-                                    Superiority: ${info[i].hard.airspaceControl.superiority !== undefined ? info[i].hard.airspaceControl.superiority : 'N/A'}
-                                    Supremacy: ${info[i].hard.airspaceControl.supremacy !== undefined ? info[i].hard.airspaceControl.supremacy : 'N/A'}`, inline: false},    
+                                    Actual: ${info[i].hard.airspaceControl.actual ? info[i].hard.airspaceControl.actual : 'N/A'}
+                                    Denial: ${info[i].hard.airspaceControl.denial ? info[i].hard.airspaceControl.denial : 'N/A'}
+                                    Parity: ${info[i].hard.airspaceControl.parity ? info[i].hard.airspaceControl.parity : 'N/A'}
+                                    Superiority: ${info[i].hard.airspaceControl.superiority ? info[i].hard.airspaceControl.superiority : 'N/A'}
+                                    Supremacy: ${info[i].hard.airspaceControl.supremacy ? info[i].hard.airspaceControl.supremacy : 'N/A'}`, inline: false},    
             
                                     {name: 'Base XP:', value: `
                                     **Small Fleet**: ${info[i].hard.baseXP.smallFleet}
@@ -684,7 +685,7 @@ export default new Command({
                     
 
                     // Selection Menu
-                    const navigation: any = new MessageActionRow()
+                    const navigation = new MessageActionRow()
                         .addComponents(
                             new MessageSelectMenu()
                                 .setCustomId(`${chapterNumber}-${interaction.user.id}`)
@@ -706,11 +707,12 @@ export default new Command({
                     
 
 
-                    // Message
-                    const message: any = await interaction.editReply({
+                    // Paginator
+                    const message = await interaction.editReply({
                         embeds: [normalLevels[0]],
                         components: [navigation]
                     })
+
                     ShinanoPaginator({
                         interaction: interaction,
                         interactor_only: true,
@@ -723,25 +725,25 @@ export default new Command({
 
 
                     // Collector
-                    const collector: InteractionCollector<SelectMenuInteraction> = message.createMessageComponentCollector({
+                    const collector: InteractionCollector<SelectMenuInteraction> = (message as Message).createMessageComponentCollector({
                         componentType: 'SELECT_MENU',
                         time: 60000
                     })
 
                     collector.on('collect', async (i) => {
-                        const customId = i.customId.split('-')[0]
-                        
+                        // Filtering Interaction
                         if (!i.customId.endsWith(i.user.id)) {
                             return i.reply({
                                 content: 'This menu is not for you!',
                                 ephemeral: true
                             })
                         }
+
                         await i.deferUpdate()
                         switch (i.values[0]) {
                             case 'normal': {
-                                navigation.components[0].options[0].default = true
-                                navigation.components[0].options[1].default = false
+                                (navigation.components[0] as MessageSelectMenu).options[0].default = true;
+                                (navigation.components[0] as MessageSelectMenu).options[1].default = false;
 
                                 ShinanoPaginator({
                                     interaction: interaction,
@@ -755,8 +757,8 @@ export default new Command({
                             }
 
                             case 'hard': {
-                                navigation.components[0].options[0].default = false
-                                navigation.components[0].options[1].default = true
+                                (navigation.components[0] as MessageSelectMenu).options[0].default = false;
+                                (navigation.components[0] as MessageSelectMenu).options[1].default = true;
 
                                 ShinanoPaginator({
                                     interaction: interaction,
@@ -773,6 +775,7 @@ export default new Command({
                         collector.resetTimer()
                     })
                 } else {
+                    // Only pages is needed if hard levels don't exist
                     ShinanoPaginator({
                         interaction: interaction,
                         interactor_only: true,
@@ -785,9 +788,10 @@ export default new Command({
 
             case 'gear': {
                 await interaction.deferReply()
+                
                 const gearName: string = interaction.options.getString('gear-name')
                 const gearFiltered = AL.equipments.filter((gear) => {
-                    if (gear.names['wiki'] != undefined && gear.names['wiki'].toLowerCase() === gearName.toLowerCase()) return gear;
+                    if (gear.names['wiki'] && gear.names['wiki'].toLowerCase() === gearName.toLowerCase()) return gear;
                     if (gear.names.en.toLowerCase() === gearName.toLowerCase()) return gear;
                 })
 
@@ -801,9 +805,9 @@ export default new Command({
 
 
                 // Gears
-                var infoEmbeds: MessageEmbed[] = []
-                var statsEmbeds: MessageEmbed[] = []
-                var equippableEmbeds: MessageEmbed[] = []
+                const infoEmbeds: MessageEmbed[] = []
+                const statsEmbeds: MessageEmbed[] = []
+                const equippableEmbeds: MessageEmbed[] = []
                 for (let i = 1; gear.tiers.length > 1 ? i-1 < gear.tiers.length - 1 : i-1 < gear.tiers.length; i++) {
 
                     let count = i
@@ -811,11 +815,12 @@ export default new Command({
 
 
                     // Color Picking
-                    if (gear.tiers[count].rarity === 'Normal') var color: any = '#b0b7b8';
-                    if (gear.tiers[count].rarity === 'Rare') var color: any = '#03dbfc';
-                    if (gear.tiers[count].rarity === 'Elite') var color: any = '#ec18f0';
-                    if (gear.tiers[count].rarity === 'Super Rare') var color: any = '#eff233';
-                    if (gear.tiers[count].rarity === 'Ultra Rare') var color: any = 'BLACK';
+                    let color: any;
+                    if (gear.tiers[count].rarity === 'Normal') color = '#b0b7b8';
+                    if (gear.tiers[count].rarity === 'Rare') color = '#03dbfc';
+                    if (gear.tiers[count].rarity === 'Elite') color= '#ec18f0';
+                    if (gear.tiers[count].rarity === 'Super Rare') color = '#eff233';
+                    if (gear.tiers[count].rarity === 'Ultra Rare') color = 'BLACK';
 
 
                     // General Info
@@ -845,9 +850,11 @@ export default new Command({
                             .setThumbnail(gear.image)
                             .setTitle(`${gear.names['wiki'] !== undefined ? gear.names['wiki'] : gear.names.en} | ${gear.tiers[count].rarity}`)
                     )
-                    for (var stat in gear.tiers[count].stats) {
-                        var name: string
-                        var st = gear.tiers[count].stats[stat].formatted
+
+                    for (let stat in gear.tiers[count].stats) {
+                        let name: string 
+                        let st = gear.tiers[count].stats[stat].formatted // Stats of {name}
+
                         switch (stat.toLowerCase()) {
                             case 'antiair':
                                 name = 'Anti-Air:'
@@ -878,33 +885,42 @@ export default new Command({
                                 break
                             case 'aaguns': {
                                 let guns: string[] = []
+
                                 gear.tiers[count].stats[stat].stats.forEach((unit) => {
                                     guns.push(unit.formatted)
                                 })
+
                                 name = 'AA Guns'
                                 st = guns.join('\n')
+
                                 break
                             }
                             case 'ordnance': {
                                 let ordnances: string[] = []
+
                                 gear.tiers[count].stats[stat].stats.forEach((unit) => {
                                     ordnances.push(unit.formatted)
                                 })
+
                                 name = toTitleCase(stat) + ':'
                                 st = ordnances.join('\n')
+
+                                break
                             }
-                            default: 
+                            default: { 
                                 name = toTitleCase(stat) + ':'
                                 break
-                        }    
+                            }
+                        } 
+
                         statsEmbeds[gear.tiers.length > 1 ? count-1 : count]
                             .addField(name, st)
                     }    
 
 
-                    // Equippable
-                    var fitted: string[] = []
-                    for (var ship in gear.fits) {
+                    // Equippables
+                    const fitted: string[] = []
+                    for (let ship in gear.fits) {
                         if (gear.fits[ship] !== null) {
                             switch (ship.toLowerCase()) {
                                 case 'destroyer':
@@ -962,7 +978,7 @@ export default new Command({
                 }
 
                 // Selection Menu
-                var navigationTiers: any = new MessageActionRow()
+                const navigationTiers = new MessageActionRow()
                     .addComponents(
                         new MessageSelectMenu()
                         .setCustomId(`TIERS-${interaction.user.id}`)
@@ -987,7 +1003,7 @@ export default new Command({
                             },
                         )    
                     )
-                var navigationOptions: any = new MessageActionRow()
+                const navigationOptions = new MessageActionRow()
                     .addComponents(
                         new MessageSelectMenu()
                         .setCustomId(`op-${interaction.user.id}`)
@@ -1014,14 +1030,14 @@ export default new Command({
                     )
 
                 // Collector
-                
+                let message;
                 if (gear.tiers.length > 1) {
-                    var message: any = await interaction.editReply({
+                    message = await interaction.editReply({
                         embeds: [infoEmbeds[0]],
                         components: [navigationTiers, navigationOptions]
                     })
                 } else {
-                    var message: any = await interaction.editReply({
+                    message = await interaction.editReply({
                         embeds: [infoEmbeds[0]],
                         components: [navigationOptions]
                     })
@@ -1032,7 +1048,7 @@ export default new Command({
                     time: 120000
                 })
 
-                var tierCount: number  = 0
+                let tierCount: number  = 0
                 collector.on('collect', async (i) => {
                     const customId = i.customId.split('-')[0]
                     
@@ -1048,61 +1064,67 @@ export default new Command({
                         switch (i.values[0]) {
                             case 'T1': {
                                 tierCount = 0
+
                                 for (let i = 0; i < 3; i++) {
                                     if (i !== 0) {
-                                        navigationTiers.components[0].options[i].default = false
-                                        navigationOptions.components[0].options[i].default = false    
+                                        (navigationTiers.components[0] as MessageSelectMenu).options[i].default = false;
+                                        (navigationOptions.components[0] as MessageSelectMenu).options[i].default = false; 
                                     } else {
-                                        navigationTiers.components[0].options[i].default = true
-                                        navigationOptions.components[0].options[i].default = false    
+                                        (navigationTiers.components[0] as MessageSelectMenu).options[i].default = true;
+                                        (navigationOptions.components[0] as MessageSelectMenu).options[i].default = false;    
                                     }
                                 }
-                                navigationOptions.components[0].options[0].default = true
+                                (navigationOptions.components[0] as MessageSelectMenu).options[0].default = true
 
                                 await i.editReply({
                                     embeds: [infoEmbeds[0]],
                                     components: [navigationTiers, navigationOptions]
                                 })
+
                                 break
                             }
 
                             case 'T2': {
                                 tierCount = 1
+
                                 for (let i = 0; i < 3; i++) {
                                     if (i !== 1) {
-                                        navigationTiers.components[0].options[i].default = false
-                                        navigationOptions.components[0].options[i].default = false    
+                                        (navigationTiers.components[0] as MessageSelectMenu).options[i].default = false;
+                                        (navigationOptions.components[0] as MessageSelectMenu).options[i].default = false;    
                                     } else {
-                                        navigationTiers.components[0].options[i].default = true
-                                        navigationOptions.components[0].options[i].default = false    
+                                        (navigationTiers.components[0] as MessageSelectMenu).options[i].default = true;
+                                        (navigationOptions.components[0] as MessageSelectMenu).options[i].default = false;    
                                     }
                                 }
-                                navigationOptions.components[0].options[0].default = true
+                                (navigationOptions.components[0] as MessageSelectMenu).options[0].default = true
 
                                 await i.editReply({
                                     embeds: [infoEmbeds[1]],
                                     components: [navigationTiers, navigationOptions]
                                 })
+
                                 break
                             }
 
                             case 'T3': {
                                 tierCount = 2
+
                                 for (let i = 0; i < 3; i++) {
                                     if (i !== 2) {
-                                        navigationTiers.components[0].options[i].default = false
-                                        navigationOptions.components[0].options[i].default = false    
+                                        (navigationTiers.components[0] as MessageSelectMenu).options[i].default = false;
+                                        (navigationOptions.components[0] as MessageSelectMenu).options[i].default = false;    
                                     } else {
-                                        navigationTiers.components[0].options[i].default = true
-                                        navigationOptions.components[0].options[i].default = false
+                                        (navigationTiers.components[0] as MessageSelectMenu).options[i].default = true;
+                                        (navigationOptions.components[0] as MessageSelectMenu).options[i].default = false;
                                     }
                                 }
-                                navigationOptions.components[0].options[0].default = true
+                                (navigationOptions.components[0] as MessageSelectMenu).options[0].default = true;
 
                                 await i.editReply({
                                     embeds: [infoEmbeds[2]],
                                     components: [navigationTiers, navigationOptions]
                                 })
+
                                 break
                             }
                         }
@@ -1110,49 +1132,46 @@ export default new Command({
                         switch (i.values[0]) {
                             case 'info': {
                                 for (let i = 0; i < 3; i++) {
-                                    if (i === 0) {
-                                        navigationOptions.components[0].options[i].default = true
-                                    } else {
-                                        navigationOptions.components[0].options[i].default = false    
-                                    }
+                                    i == 0
+                                        ? (navigationOptions.components[0] as MessageSelectMenu).options[i].default = true
+                                        : (navigationOptions.components[0] as MessageSelectMenu).options[i].default = false
                                 }
 
                                 await i.editReply({
                                     embeds: [infoEmbeds[tierCount]],
                                     components: gear.tiers.length > 1 ? [navigationTiers, navigationOptions] : [navigationOptions]
                                 })
+
                                 break
                             }
 
                             case 'stats': {
                                 for (let i = 0; i < 3; i++) {
-                                    if (i === 1) {
-                                        navigationOptions.components[0].options[i].default = true
-                                    } else {
-                                        navigationOptions.components[0].options[i].default = false    
-                                    }
+                                    i == 1
+                                        ? (navigationOptions.components[0] as MessageSelectMenu).options[i].default = true
+                                        : (navigationOptions.components[0] as MessageSelectMenu).options[i].default = false
                                 }
 
                                 await i.editReply({
                                     embeds: [statsEmbeds[tierCount]],
                                     components: gear.tiers.length > 1 ? [navigationTiers, navigationOptions] : [navigationOptions]
                                 })
+
                                 break
                             }
 
                             case 'fits': {
                                 for (let i = 0; i < 3; i++) {
-                                    if (i === 2) {
-                                        navigationOptions.components[0].options[i].default = true
-                                    } else {
-                                        navigationOptions.components[0].options[i].default = false    
-                                    }
+                                    i == 2
+                                        ? (navigationOptions.components[0] as MessageSelectMenu).options[i].default = true
+                                        : (navigationOptions.components[0] as MessageSelectMenu).options[i].default = false
                                 }
 
                                 await i.editReply({
                                     embeds: [equippableEmbeds[tierCount]],
                                     components: gear.tiers.length > 1 ? [navigationTiers, navigationOptions] : [navigationOptions]
                                 })
+
                                 break
                             }
                         } 
@@ -1162,8 +1181,9 @@ export default new Command({
                 })
 
                 collector.on('end', async (collected, reason) => {
-                    navigationTiers.components[0].setDisabled(true)
-                    navigationOptions.components[0].setDisabled(true)
+                    (navigationTiers.components[0] as MessageSelectMenu).setDisabled(true);
+                    (navigationOptions.components[0] as MessageSelectMenu).setDisabled(true);
+
                     await interaction.editReply({
                         components: gear.tiers.length > 1 ? [navigationTiers, navigationOptions] : [navigationOptions]
                     })
@@ -1173,6 +1193,7 @@ export default new Command({
 
             case 'exp-calculator': {
                 await interaction.deferReply()
+
                 const currentLevel = interaction.options.getInteger('current-level')
                 const targetLevel = interaction.options.getInteger('target-level')
                 const rarity = interaction.options.getString('rarity')
@@ -1226,10 +1247,13 @@ export default new Command({
                 expNeeded
                     .setDescription(`You will need **${expDifference.toLocaleString()} EXP** to get ${rarity === 'normal' ? 'a Normal ship' : 'an Ultra Rare ship'} from level **${currentLevel}** to level **${targetLevel}**`)
                 return interaction.editReply({embeds: [expNeeded]})
-                break
             }
 
             case 'pr-completion-calculator': {
+                /*
+                    Helpful comments stop here, I don't know what I did but it sure as hell did work out perfectly fine 💀
+                */
+
                 // Receiving and processing data
                 const shipName: string = interaction.options.getString('ship-name').toLowerCase()
                 let devLevel: number = interaction.options.getInteger('dev-level')
@@ -1257,18 +1281,20 @@ export default new Command({
                 }
 
                 const ship: any = await AL.ships.get(shipName)
-                if (ship == undefined) {
+                if (!ship) {
                     const shipNotFound: MessageEmbed = new MessageEmbed()
                         .setDescription('Ship not found!')
                         .setColor('RED')
                     return interaction.reply({embeds:[shipNotFound], ephemeral: true})
                 }
+
                 if (ship.rarity !== 'Priority' && ship.rarity !== 'Decisive') {
                     const shipNotPR: MessageEmbed = new MessageEmbed()
                         .setColor('RED')
                         .setDescription('The ship is not a PR ship!')
                     return interaction.reply({embeds: [shipNotPR]})
                 }
+
                 if (ship.rarity === 'Priority') {
                     color = 'GOLD'
                     prTable = data.PR
