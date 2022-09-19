@@ -26,7 +26,7 @@ export class Shinano extends Client {
     }
 
     startEventListener() {
-        // Process
+        // Error Handler
         process.on("unhandledRejection", async (err) => {
             console.error("Unhandled Promise Rejection:\n", err);
         });
@@ -59,6 +59,7 @@ export class Shinano extends Client {
     }
 
     async registerModules() {
+        // Registering Slash Commands
         const slashCommands: ApplicationCommandDataResolvable[] = [];
         const commandFiles = await globPromise(
             `${__dirname}/../commands/*/*{.ts,.js}`
@@ -78,6 +79,8 @@ export class Shinano extends Client {
             });
         });
 
+
+        // Start Listening To Events
         const eventFiles = await globPromise(
             `${__dirname}/../events/*{.ts,.js}`
         );

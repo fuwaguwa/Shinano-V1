@@ -15,30 +15,29 @@ export default new Command({
         }
     ],
     run: async({interaction}) => {
-        const word = interaction.options.getString('word')
         await interaction.deferReply()
+
+        const word = interaction.options.getString('word')
         const response = await fetch(`https://api.urbandictionary.com/v0/define?term=${word}`, {
             method:"GET"
         })
         const definition = await response.json()
-
-        if (definition['list'].length !== 0) {
-            const definitionEmbed = new MessageEmbed()
-                .setTitle(`"${definition['list'][0]['word']}"`)
-                .setColor('BLUE')
-                .addFields({name:'Definition', value:`${definition['list'][0]['definition']}`})
-                .setFooter({text:`Definition by ${definition['list'][0]['author']} | ${definition['list'][0]['thumbs_up']} 👍 / ${definition['list'][0]['thumbs_down']} 👎`})
-            if (definition['list'][0]['example']) {
-                definitionEmbed.addField('Example', `${definition['list'][0]['example']}`)
-                await interaction.editReply({embeds:[definitionEmbed]})
-            } else {
-                await interaction.editReply({embeds:[definitionEmbed]})
-            }
-        } else {
-            const failedEmbed = new MessageEmbed()
+        
+        // No Result
+        if (definition.list.length == 0) {
+            const noResult: MessageEmbed = new MessageEmbed()
                 .setColor('RED')
-                .setDescription('Couldn\'t find the word on Urban Dictionary.')
-            await interaction.editReply({embeds:[failedEmbed]})
+                .setDescription(`No definition for the word \`${word}\` can be found!`)
+            return interaction.editReply({embeds: [noResult]})
         }
+
+        // Outputting Definition
+        const wordInfo = definition.list[0]
+        const definitionEmbed: MessageEmbed = new MessageEmbed()
+            .setColor('BLUE')
+            .setTitle(`"${wordInfo.word}"`)
+            .addField('Definition', wordInfo.definition)
+            .setFooter({text: `Defintion by ${wordInfo.author} | ${wordInfo.thumbs_up} 👍 /  ${wordInfo.thumbs_down} 👎`})
+        await interaction.editReply({embeds: [definitionEmbed]})
     }
 })

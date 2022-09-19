@@ -30,19 +30,19 @@ export default new Command({
                     /<command>
                     
                     **8ball**
-                    <:rmal:1021036738161950800>Ask the mighty 8ball
+                    <:curve:1021036738161950800>Ask the mighty 8ball
                     **blackjack**
-                    <:rmal:1021036738161950800>Play some blackjack with the bot
+                    <:curve:1021036738161950800>Play some blackjack with the bot
                     **define**
-                    <:rmal:1021036738161950800>Get a word's definition from Urban Dictionary
+                    <:curve:1021036738161950800>Get a word's definition from Urban Dictionary
                     **dadjoke**
-                    <:rmal:1021036738161950800>Guranteed funny dadjoke
+                    <:curve:1021036738161950800>Guranteed funny dadjoke
                     **fact**
-                    <:rmal:1021036738161950800>Get a fact about an animal
+                    <:curve:1021036738161950800>Get a fact about an animal
                     **match**
-                    <:rmal:1021036738161950800>Checks two person love percentage
+                    <:curve:1021036738161950800>Checks two person love percentage
                     **roll**
-                    <:rmal:1021036738161950800>Roll a dice`
+                    <:curve:1021036738161950800>Roll a dice`
                 )
                 const funCommand2: MessageEmbed = new MessageEmbed()
                     .setColor('BLUE')
@@ -50,11 +50,11 @@ export default new Command({
                         /<command>
                         
                         **rps**
-                        <:rmal:1021036738161950800>Play rock paper scissor against the bot!
+                        <:curve:1021036738161950800>Play rock paper scissor against the bot!
                         **ttt**
-                        <:rmal:1021036738161950800>Play tictactoe against the bot or against someone!
+                        <:curve:1021036738161950800>Play tictactoe against the bot or against someone!
                         **trivia**
-                        <:rmal:1021036738161950800>Start a trivia question!`
+                        <:curve:1021036738161950800>Start a trivia question!`
                     )
                 
 
@@ -67,19 +67,19 @@ export default new Command({
                         /<command>
                         
                         **bronya**
-                        <:rmal:1021036738161950800>Bronya's certificate
+                        <:curve:1021036738161950800>Bronya's certificate
                         **cat**
-                        <:rmal:1021036738161950800>Generate a picture of a cat!
+                        <:curve:1021036738161950800>Generate a picture of a cat!
                         **dog**
-                        <:rmal:1021036738161950800>Generate a picture of a dog!
+                        <:curve:1021036738161950800>Generate a picture of a dog!
                         **fox**
-                        <:rmal:1021036738161950800>Generate a picture of a fox!
+                        <:curve:1021036738161950800>Generate a picture of a fox!
                         **gay**
-                        <:rmal:1021036738161950800>Taste the rainbow
+                        <:curve:1021036738161950800>Taste the rainbow
                         **jail**
-                        <:rmal:1021036738161950800>Go to horny jail!
+                        <:curve:1021036738161950800>Go to horny jail!
                         **nekomimi**
-                        <:rmal:1021036738161950800>Generate a (SFW) picture of a catgirl!`
+                        <:curve:1021036738161950800>Generate a (SFW) picture of a catgirl!`
                     )
                 const imageCommand2: MessageEmbed = new MessageEmbed()
                     .setColor('BLUE')
@@ -87,15 +87,15 @@ export default new Command({
                         /<command>
                         
                         **pixelate**
-                        <:rmal:1021036738161950800>64 bits, 32 bits, 16 bits, 8 bits, ...
+                        <:curve:1021036738161950800>64 bits, 32 bits, 16 bits, 8 bits, ...
                         **rip**
-                        <:rmal:1021036738161950800>*dies*
+                        <:curve:1021036738161950800>*dies*
                         **sigma**
-                        <:rmal:1021036738161950800>Sigma Grindset
+                        <:curve:1021036738161950800>Sigma Grindset
                         **wanted**
-                        <:rmal:1021036738161950800>Put a bounty on someone
+                        <:curve:1021036738161950800>Put a bounty on someone
                         **upscale**
-                        <:rmal:1021036738161950800>Upscale an image using DeepAI`
+                        <:curve:1021036738161950800>Upscale an image using DeepAI`
                     )
 
 
@@ -107,9 +107,9 @@ export default new Command({
                         /<command>
                         
                         **purge**
-                        <:rmal:1021036738161950800>Purge messages that aren't older than 14 days
+                        <:curve:1021036738161950800>Purge messages that aren't older than 14 days
                         **role**
-                        <:rmal:1021036738161950800>Add or remove roles from someone`
+                        <:curve:1021036738161950800>Add or remove roles from someone`
                     )
                 
 
@@ -122,11 +122,11 @@ export default new Command({
                         /<command>
                         
                         **bot**
-                        <:rmal:1021036738161950800>Information about the bot
+                        <:curve:1021036738161950800>Information about the bot
                         **covid**
-                        <:rmal:1021036738161950800>Information about COVID
+                        <:curve:1021036738161950800>Information about COVID
                         **help**
-                        <:rmal:1021036738161950800>Information about commands`
+                        <:curve:1021036738161950800>Information about commands`
                     )
 
 
@@ -138,19 +138,19 @@ export default new Command({
                         /<command>
                         
                         **bite**
-                        <:rmal:1021036738161950800>nom nom nom
+                        <:curve:1021036738161950800>nom nom nom
                         **blush**
-                        <:rmal:1021036738161950800>😳
+                        <:curve:1021036738161950800>😳
                         **cringe**
-                        <:rmal:1021036738161950800>Cringe at someone
+                        <:curve:1021036738161950800>Cringe at someone
                         **cuddle**
-                        <:rmal:1021036738161950800>uwu you so snuggable
+                        <:curve:1021036738161950800>uwu you so snuggable
                         **glomp**
-                        <:rmal:1021036738161950800>Give someone an affectionate hug!
+                        <:curve:1021036738161950800>Give someone an affectionate hug!
                         **handhold**
-                        <:rmal:1021036738161950800>Lewd!
+                        <:curve:1021036738161950800>Lewd!
                         **hug**
-                        <:rmal:1021036738161950800>uwu you so warm`
+                        <:curve:1021036738161950800>uwu you so warm`
                     )
                 const reactionCommand2: MessageEmbed = new MessageEmbed()
                     .setColor('BLUE')
@@ -158,26 +158,26 @@ export default new Command({
                         /<command>
                         
                         **kiss**
-                        <:rmal:1021036738161950800>Kiss someone!
+                        <:curve:1021036738161950800>Kiss someone!
                         **lick**
-                        <:rmal:1021036738161950800>...wtf?
+                        <:curve:1021036738161950800>...wtf?
                         **pat**
-                        <:rmal:1021036738161950800>'Cause everyone needs headpats
+                        <:curve:1021036738161950800>'Cause everyone needs headpats
                         **poke**
-                        <:rmal:1021036738161950800>Poke someone
+                        <:curve:1021036738161950800>Poke someone
                         **slap**
-                        <:rmal:1021036738161950800>Eat that, sucker.
+                        <:curve:1021036738161950800>Eat that, sucker.
                         **smile**
-                        <:rmal:1021036738161950800>Ehe.
+                        <:curve:1021036738161950800>Ehe.
                         **smug**
-                        <:rmal:1021036738161950800>mmmmmmm`
+                        <:curve:1021036738161950800>mmmmmmm`
                     )
                 const reactionCommand3: MessageEmbed = new MessageEmbed()
                     .setColor('BLUE')
                     .setDescription(`
                         /<command>
                         **wink**
-                        <:rmal:1021036738161950800>Wink at someone`
+                        <:curve:1021036738161950800>Wink at someone`
                     )
 
 
@@ -189,17 +189,17 @@ export default new Command({
                         /<command>
                         
                         **announce**
-                        <:rmal:1021036738161950800>Announce something using the bot
+                        <:curve:1021036738161950800>Announce something using the bot
                         **avatar**
-                        <:rmal:1021036738161950800>Get someone's avatar
+                        <:curve:1021036738161950800>Get someone's avatar
                         **banner**
-                        <:rmal:1021036738161950800>Get someone's banner
+                        <:curve:1021036738161950800>Get someone's banner
                         **id**
-                        <:rmal:1021036738161950800>Get someone's UID
+                        <:curve:1021036738161950800>Get someone's UID
                         **info**
-                        <:rmal:1021036738161950800>Get info about the current guild or an user
+                        <:curve:1021036738161950800>Get info about the current guild or an user
                         **snipe**
-                        <:rmal:1021036738161950800>Get the most recently deleted message`
+                        <:curve:1021036738161950800>Get the most recently deleted message`
                     )
                         
                 
@@ -212,15 +212,15 @@ export default new Command({
                         /azur-lane <command>
                         
                         **ship**
-                        <:rmal:1021036738161950800>Get info about an Azur Lane ship
+                        <:curve:1021036738161950800>Get info about an Azur Lane ship
                         **chapter**
-                        <:rmal:1021036738161950800>Get info about an Azur Lane chapter
+                        <:curve:1021036738161950800>Get info about an Azur Lane chapter
                         **gear**
-                        <:rmal:1021036738161950800>Get info about an Azur Lane gear
+                        <:curve:1021036738161950800>Get info about an Azur Lane gear
                         **exp-calculator**
-                        <:rmal:1021036738161950800>Calculate the EXP needed to get your ship to the desired level
+                        <:curve:1021036738161950800>Calculate the EXP needed to get your ship to the desired level
                         **pr-completion-calculator**
-                        <:rmal:1021036738161950800>Calculate your PR completion!`
+                        <:curve:1021036738161950800>Calculate your PR completion!`
 
                     )
 
@@ -232,11 +232,11 @@ export default new Command({
                         /anime <command>
 
                         **search**
-                        <:rmal:1021036738161950800>Search up an anime on MyAnimeList.
+                        <:curve:1021036738161950800>Search up an anime on MyAnimeList.
                         **character**
-                        <:rmal:1021036738161950800>Search up an anime character on MyAnimeList.
+                        <:curve:1021036738161950800>Search up an anime character on MyAnimeList.
                         **random**
-                        <:rmal:1021036738161950800>Return a random anime on MyAnimeList.`
+                        <:curve:1021036738161950800>Return a random anime on MyAnimeList.`
                     )
 
 

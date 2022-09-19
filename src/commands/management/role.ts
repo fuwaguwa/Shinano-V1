@@ -49,6 +49,8 @@ export default new Command({
         const guild: Guild = interaction.guild
         const modMember: GuildMember = await guild.members.fetch(interaction.user)
         const modPerm: Readonly<Permissions> = modMember.permissions
+
+        // Checking if interactor has permission
         if (!modPerm.has(Permissions.FLAGS.MANAGE_ROLES || Permissions.FLAGS.ADMINISTRATOR)) {
             const noPerm: MessageEmbed = new MessageEmbed()
                 .setTitle('Missing Permission!')
@@ -57,44 +59,61 @@ export default new Command({
             return interaction.reply({embeds:[noPerm]})
         }
 
+
+        // Fetching info about the user
         const target: User = interaction.options.getUser('user')
         const targetGuildMember: GuildMember = await guild.members.fetch(target)
 
-        const reqRole = interaction.options.getRole('role')
-        const reqGuildRole = guild.roles.cache.find(role => role.id === reqRole.id)
-        const guildMemberRole: Collection<string, Role> = targetGuildMember.roles.cache
+        const requestedRole = interaction.options.getRole('role')
+        const requestedGuildRole = guild.roles.cache.find(role => role.id === requestedRole.id)
+        const guildMemberRoles: Collection<string, Role> = targetGuildMember.roles.cache
 
-        if (modMember.roles.highest.comparePositionTo(reqGuildRole) <= 0) {
+
+        // Checking the priority of the role
+        if (modMember.roles.highest.comparePositionTo(requestedGuildRole) <= 0) {
             const errorTopRole: MessageEmbed = new MessageEmbed()
                 .setColor('RED')
                 .setDescription('You are only allowed to add and remove roles below you!')
             return interaction.reply({embeds:[errorTopRole]})
         }
 
-        const roleAddError: MessageEmbed = new MessageEmbed()
-            .setColor('RED')
-            .setDescription(`${target} already has the role ${reqRole}!`)
-        const roleRemoveError: MessageEmbed = new MessageEmbed()
-            .setColor('RED')
-            .setDescription(`${target} does not have the role ${reqRole}!`)
-        const roleAddSuccess: MessageEmbed = new MessageEmbed()
-            .setColor('GREEN')
-            .setTitle('Role added to user!')
-            .setDescription(`${reqRole} was added to ${target}!`)
-        const roleRemoveSuccess: MessageEmbed = new MessageEmbed()
-            .setColor('GREEN')
-            .setTitle('Role removed from user!')
-            .setDescription(`${reqRole} was removed from ${target}!`)
-        
+
+        // Adding/Removing The Roles
         switch (interaction.options.getSubcommand()) {
-            case 'add':
-                if (guildMemberRole.has(reqRole.id)) return interaction.reply({embeds:[roleAddError], ephemeral: true});
-                targetGuildMember.roles.add(reqGuildRole)
-                return interaction.reply({embeds:[roleAddSuccess]})
-            case 'remove':
-                if (!guildMemberRole.has(reqRole.id)) return interaction.reply({embeds:[roleRemoveError], ephemeral: true});
-                targetGuildMember.roles.remove(reqGuildRole)
-                return interaction.reply({embeds:[roleRemoveSuccess]})
+            case 'add': {
+                if (guildMemberRoles.has(requestedRole.id)) {
+                    const roleAddError: MessageEmbed = new MessageEmbed()
+                        .setColor('RED')
+                        .setDescription(`${target} already has the role ${requestedRole}!`)
+                    return interaction.reply({embeds:[roleAddError], ephemeral: true});
+                } 
+                
+                targetGuildMember.roles.add(requestedGuildRole)
+                const roleAddSuccess: MessageEmbed = new MessageEmbed()
+                    .setColor('GREEN')
+                    .setTitle('Role added to user!')
+                    .setDescription(`${requestedRole} was added to ${target}!`)
+                await interaction.reply({embeds:[roleAddSuccess]})
+                
+                break
+            }
+
+            case 'remove': {
+                if (!guildMemberRoles.has(requestedRole.id)) {
+                    const roleRemoveError: MessageEmbed = new MessageEmbed()
+                        .setColor('RED')
+                        .setDescription(`${target} does not have the role ${requestedRole}!`)
+                    return interaction.reply({embeds:[roleRemoveError], ephemeral: true});
+                }
+                targetGuildMember.roles.remove(requestedGuildRole)
+                const roleRemoveSuccess: MessageEmbed = new MessageEmbed()
+                    .setColor('GREEN')
+                    .setTitle('Role removed from user!')
+                    .setDescription(`${requestedRole} was removed from ${target}!`)
+                await interaction.reply({embeds:[roleRemoveSuccess]})
+
+                break
+            }
         }
     }
 })

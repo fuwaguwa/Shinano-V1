@@ -1,7 +1,7 @@
 import { Command } from "../../structures/Command";
 import fetch from 'node-fetch'
 import { config } from "dotenv";
-import {isNum} from '../../structures/Utils'
+import { isNum } from '../../structures/Utils'
 import { InteractionCollector, Message, MessageActionRow, MessageEmbed, MessageSelectMenu, SelectMenuInteraction } from "discord.js";
 import { ShinanoPaginator } from "../../structures/Pages";
 config();
@@ -22,7 +22,7 @@ function animeInfo({anime, interaction}) {
         .setColor('BLUE')
         .setThumbnail(anime.images.jpg.large_image_url)
         .setTitle(`${anime.title} | Synopsis`)
-        .setDescription(`*${anime.synopsis}*`)
+        .setDescription(`*${anime.synopsis || 'No Sypnosis Can Be Found'}*`)
     const generalInfoEmbed: MessageEmbed = new MessageEmbed()
         .setColor('BLUE')
         .setThumbnail(anime.images.jpg.large_image_url)

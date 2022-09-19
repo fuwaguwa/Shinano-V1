@@ -40,12 +40,12 @@ export default new Command({
     ],
     cooldown: 5000,
     run: async({interaction}) => {
-
         const categoryChoice: string = interaction.options.getString('category')
         const difficultyChoice: string = interaction.options.getString('difficulty')
         await interaction.deferReply()
 
-        var category = categoryChoice
+        // Picking Category
+        let category = categoryChoice
         if (categoryChoice === 'random') {
             const all_category = [
                 'arts_and_literature',
@@ -59,40 +59,43 @@ export default new Command({
                 'society_and_culture',
                 'sport_and_leisure'
             ]
-            var category = all_category[Math.floor(Math.random() * all_category.length)]
+            category = all_category[Math.floor(Math.random() * all_category.length)]
         }
 
 
-        var difficulty = difficultyChoice
+        // Picking Difficulty
+        let difficulty = difficultyChoice
         if (difficultyChoice === 'random') {
             const all_diff = [
                 'easy',
                 'medium',
                 'hard'
             ]
-            var difficulty = all_diff[Math.floor(Math.random() * all_diff.length)]
+            difficulty = all_diff[Math.floor(Math.random() * all_diff.length)]
         }
 
 
-        var response = await fetch(`https://the-trivia-api.com/api/questions?categories=${category}&limit=1&difficulty=${difficulty}`, {method:"GET"})
-        var trivia = await response.json()
-        console.log(`Trivia Answer: ${trivia[0]['correctAnswer']}`)
+        // Fetching Questions And Answers
+        let response = await fetch(`https://the-trivia-api.com/api/questions?categories=${category}&limit=1&difficulty=${difficulty}`, {method:"GET"})
+        let trivia = await response.json()
 
-
-        var answers = [
+        let answers = [
             trivia[0]['correctAnswer'],
             trivia[0]['incorrectAnswers'][0],
             trivia[0]['incorrectAnswers'][1],
             trivia[0]['incorrectAnswers'][2],
         ]
+
+        console.log(`Trivia Answer: ${trivia[0]['correctAnswer']}`)
         
 
+        // Making sure they are under the text limit
         while (answers[0].length > 60 || answers[1].length > 60 || answers[2].length > 60 || answers[3].length > 60) {
-            var response = await fetch(`https://the-trivia-api.com/api/questions?categories=${category}&limit=1&difficulty=${difficulty}`, {method:"GET"})
-            var trivia = await response.json()
+            response = await fetch(`https://the-trivia-api.com/api/questions?categories=${category}&limit=1&difficulty=${difficulty}`, {method:"GET"})
+            trivia = await response.json()
             console.log(`Trivia Answer: ${trivia[0]['correctAnswer']}`)
 
-            var answers = [
+            answers = [
                 trivia[0]['correctAnswer'],
                 trivia[0]['incorrectAnswers'][0],
                 trivia[0]['incorrectAnswers'][1],
@@ -101,33 +104,44 @@ export default new Command({
         }
 
         
-        var randchoice = []
+        // Generating 4 different number from the range of 1-4
+        const randchoice = []
         while (randchoice.length < 4) {
-            var r = Math.floor(Math.random() * 4)
+            const r = Math.floor(Math.random() * 4)
             if (randchoice.indexOf(r) === -1) randchoice.push(r)
+        }
+
+
+        // Randomising the answer
+        const randomizedAnswers = {
+            answer1: answers[randchoice[0]],
+            answer2: answers[randchoice[1]],
+            answer3: answers[randchoice[2]],
+            answer4: answers[randchoice[3]],
         }
 
         const row = new MessageActionRow()
             .addComponents(
                 new MessageButton()
-                    .setLabel(`${answers[randchoice[0]]}`)
+                    .setLabel(`${randomizedAnswers.answer1}`)
                     .setStyle('PRIMARY')
-                    .setCustomId(`${answers[randchoice[0]]}-${interaction.user.id}`),
+                    .setCustomId(`${randomizedAnswers.answer1}-${interaction.user.id}`),
                 new MessageButton()
-                    .setLabel(`${answers[randchoice[1]]}`)
+                    .setLabel(`${randomizedAnswers.answer2}`)
                     .setStyle('PRIMARY')
-                    .setCustomId(`${answers[randchoice[1]]}-${interaction.user.id}`),
+                    .setCustomId(`${randomizedAnswers.answer2}-${interaction.user.id}`),
                 new MessageButton()
-                    .setLabel(`${answers[randchoice[2]]}`)
+                    .setLabel(`${randomizedAnswers.answer3}`)
                     .setStyle('PRIMARY')
-                    .setCustomId(`${answers[randchoice[2]]}-${interaction.user.id}`),
+                    .setCustomId(`${randomizedAnswers.answer3}-${interaction.user.id}`),
                 new MessageButton()
-                    .setLabel(`${answers[randchoice[3]]}`)
+                    .setLabel(`${randomizedAnswers.answer4}`)
                     .setStyle('PRIMARY')
-                    .setCustomId(`${answers[randchoice[3]]}-${interaction.user.id}`)
+                    .setCustomId(`${randomizedAnswers.answer4}-${interaction.user.id}`)
             )
 
         
+        // Embed and Message  
         const question = new MessageEmbed()
             .setAuthor({iconURL: interaction.user.displayAvatarURL({dynamic:true}), name: `${interaction.user.username}'s Trivia Question:`})
             .setDescription(`${trivia[0]['question']}\u200b\n\u200b`)
@@ -137,13 +151,17 @@ export default new Command({
                 {name:'Category', value:`${trivia[0]['category'].toUpperCase()}`, inline:true}
             )
             .setFooter({text:'You have 15s to pick an answer!', iconURL:`${interaction.user.displayAvatarURL({dynamic:true})}`})
-        const message = await interaction.editReply({embeds:[question], components:[row]})
         
-
-        const collector: InteractionCollector<ButtonInteraction> = await (message as Message).createMessageComponentCollector({componentType:'BUTTON', time: 15000})
+        const message = await interaction.editReply({embeds:[question], components:[row]})
+        const collector: InteractionCollector<ButtonInteraction> = await (message as Message).createMessageComponentCollector({
+            componentType:'BUTTON', 
+            time: 15000
+        })
+        
         collector.on('collect', async (i) => {
-            const answer = i.customId.split('-')
-
+            const answer = i.customId.split('-')[0]
+            
+            // Filtering Response
             if (!i.customId.endsWith(i.user.id)) {
                 return i.reply({
                     content: 'This button is not for you!',
@@ -151,39 +169,44 @@ export default new Command({
                 })
             }
 
+
+            // Making the correct answer green, wrong one red and all of them to secondary
             await i.deferUpdate()
-            if (answer[0] === trivia[0]['correctAnswer']) {
+            if (answer === trivia[0]['correctAnswer']) {
                 for (let i = 0; i < 4; i++) {
                     if ((row.components[i] as MessageButton).customId.split('-')[0] === trivia[0]['correctAnswer']) {
                         (row.components[i] as MessageButton).setStyle('SUCCESS')
-                    } else {
-                        (row.components[i] as MessageButton).setStyle('SECONDARY')
-                    }
-                    (row.components[i] as MessageButton).setDisabled(true)
+                    } 
+                    (row.components[i] as MessageButton).setStyle('SECONDARY').setDisabled(true);
                 }
                 question.setColor('GREEN')
-                collector.stop('End.')
+
+                collector.stop('End')
                 await i.editReply({components:[row], embeds:[question], content: 'You\'re correct!'})
 
             } else {
-                const id = answer[0]
                 for (let i = 0; i < 4; i++) {
                     switch (true) {
-                        case ((row.components[i] as MessageButton).customId.split('-')[0] === trivia[0]['correctAnswer']):
-                            (row.components[i] as MessageButton).setStyle('SUCCESS')
+                        case ((row.components[i] as MessageButton).customId.split('-')[0] === trivia[0]['correctAnswer']): {
+                            (row.components[i] as MessageButton).setStyle('SUCCESS').setDisabled(true);
                             break
-                        case ((row.components[i] as MessageButton).customId.split('-')[0] === id):
-                            (row.components[i] as MessageButton).setStyle('DANGER')
+                        }
+
+                        case ((row.components[i] as MessageButton).customId.split('-')[0] === answer): {
+                            (row.components[i] as MessageButton).setStyle('DANGER').setDisabled(true);
                             break 
-                        default:
-                            (row.components[i] as MessageButton).setStyle('SECONDARY')
+                        }
+
+                        default: {
+                            (row.components[i] as MessageButton).setStyle('SECONDARY').setDisabled(true);
                             break
+                        }
                     }
-                    (row.components[i] as MessageButton).setDisabled(true)
                 }
 
                 question.setColor('RED')
-                collector.stop('End.')
+
+                collector.stop('End')
                 await i.editReply({components:[row], embeds:[question], content: `That was incorrect, the answer was \`${trivia[0]['correctAnswer']}\`.`})
                 
             }
@@ -191,7 +214,8 @@ export default new Command({
         })
 
         collector.on('end', async (collected, reason) => {
-            if (reason && reason !== 'End.') {
+            // Timed Out
+            if (reason && reason !== 'End') {
                 for (let i = 0; i < 4; i++) {
                     (row.components[i] as MessageButton).customId.split('-')[0] === trivia[0]['correctAnswer']
                         ? (row.components[i] as MessageButton).setStyle('SUCCESS')

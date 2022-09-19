@@ -4,6 +4,10 @@ import fetch from 'node-fetch'
 import {config} from 'dotenv'
 config();
 
+function addCommas(n) {
+    return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+
 export default new Command({
     name:'covid',
     description:'Covid Information',
@@ -31,14 +35,11 @@ export default new Command({
     run: async({interaction}) => {
         await interaction.deferReply()
 
-        var country: String
+        // Decide the country
+        let country: string
         interaction.options.getSubcommand() === 'world'
             ? country = 'all'
             : country = interaction.options.getString('country')
-        
-        function AddCommas(n) {
-            return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-        }
         
         const response = await fetch(`https://covid-193.p.rapidapi.com/statistics?country=${country}`, {
             method: "GET",
@@ -49,59 +50,59 @@ export default new Command({
         })
         const covid = await response.json()
         
-        let covidResults;
-        if (covid['results'] === 0) {
-            covidResults = {
-                "results": covid['results']
-            }
-        } else {
-            covidResults = {
-                "results" : covid['results'],
-                "newCases": covid['response'][0]['cases']['new'],
-                "activeCases": covid['response'][0]['cases']['active'],
-                "recovered": covid['response'][0]['cases']['recovered'],
-                "totalCases": covid['response'][0]['cases']['total'],
-                "newDeaths": covid['response'][0]['deaths']['new'],
-                "totalDeaths": covid['response'][0]['deaths']['total'],
-                "country": covid['response'][0]['country']
-            }
+
+        // No Results
+        if (covid.results === 0) {
+            const noResult: MessageEmbed = new MessageEmbed()
+                .setColor('RED')
+                .setDescription('Couldn\'t find the country!')
+            return interaction.editReply({embeds: [noResult]})
         }
 
-        if (covid['results'] === 0) {
-            let epicFailEmbed = new MessageEmbed()
-                .setDescription('Couldn\'t find the country!')
-                .setColor('RED')
-            await interaction.editReply({embeds: [epicFailEmbed]})
-        } else {
-            let covidEmbed = new MessageEmbed()
-                .setTitle(`Covid Statistics In ${
-                    interaction.options.getSubcommand() === 'world'
-                        ? "The World"
-                        : covidResults.country
-                }`)
-                .setColor('#548ed1')
-                .setFields(
-                    {name:'Cases Today', value:`${
-                        covidResults.newCases === null
-                            ? "+0"
-                            : AddCommas(covidResults.newCases)
-                }`, inline: true},
-                    {name:'Active Cases', value:`${
-                        covidResults.activeCases === null
-                            ? "+0"
-                            : AddCommas(covidResults.activeCases)
-                }`, inline: true},
-                    {name:'Total Cases', value:`${AddCommas(covidResults.totalCases)}`, inline: true},
-                    {name:'Recovered Cases', value:`${AddCommas(covidResults.recovered)}`, inline: true},
-                    {name:'Deaths Today', value:`${
-                        covidResults.newDeaths === null
-                            ? "+0"
-                            : AddCommas(covidResults.newDeaths)
-                    }`, inline: true},
-                    {name:'Total Deaths', value:`${AddCommas(covidResults.totalDeaths)}`, inline: true}
-                )
-                .setThumbnail('https://coastalhealthdistrict.org/wp-content/uploads/2020/02/coronavirus-square-800.jpg')
-            await interaction.editReply({embeds:[covidEmbed]})
+
+        // Yes Results
+        const covidResponse = covid.response[0]
+        const covidInfo = {
+            "results": covid.results,
+            "newCases": covidResponse.cases.new,
+            "activeCases": covidResponse.cases.active,
+            "recovered": covidResponse.cases.recovered,
+            "totalCases": covidResponse.cases.total,
+            "newDeaths": covidResponse.deaths.new,
+            "totalDeaths": covidResponse.deaths.total,
+            "country": covidResponse.country
         }
+
+
+        // Outputting Information
+        const covidEmbed = new MessageEmbed()
+            .setTitle(`Covid Statistics In ${
+                interaction.options.getSubcommand() === 'world'
+                    ? "The World"
+                    : covidInfo.country
+            }`)
+            .setColor('#548ed1')
+            .setFields(
+                {name:'Cases Today', value:`${
+                    covidInfo.newCases === null
+                        ? "+0"
+                        : addCommas(covidInfo.newCases)
+            }`, inline: true},
+                {name:'Active Cases', value:`${
+                    covidInfo.activeCases === null
+                        ? "+0"
+                        : addCommas(covidInfo.activeCases)
+            }`, inline: true},
+                {name:'Total Cases', value:`${addCommas(covidInfo.totalCases)}`, inline: true},
+                {name:'Recovered Cases', value:`${addCommas(covidInfo.recovered)}`, inline: true},
+                {name:'Deaths Today', value:`${
+                    covidInfo.newDeaths === null
+                        ? "+0"
+                        : addCommas(covidInfo.newDeaths)
+                }`, inline: true},
+                {name:'Total Deaths', value:`${addCommas(covidInfo.totalDeaths)}`, inline: true}
+            )
+            .setThumbnail('https://cdn.discordapp.com/attachments/1002188088942022810/1021422793360949308/coronavirus-square-800.jpg')
+        await interaction.editReply({embeds:[covidEmbed]})
     }
 })
