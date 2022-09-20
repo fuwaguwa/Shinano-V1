@@ -1,4 +1,4 @@
-import { MessageEmbed, MessageActionRow, MessageButton, ButtonInteraction, SelectMenuInteraction, InteractionCollector, MessageComponentInteraction, Message } from "discord.js";
+import { MessageEmbed, MessageActionRow, MessageButton, ButtonInteraction, SelectMenuInteraction, InteractionCollector, MessageComponentInteraction, Message, MessageSelectMenu } from "discord.js";
 import { ShinanoInteraction } from "../typings/Command";
 
 
@@ -8,27 +8,27 @@ export async function ShinanoPaginator(options: {
     interactor_only: boolean,
     menu?: MessageActionRow,
     timeout: number,
-    menuId?: string,
 }) {
     let pageCount: number = 0
+    const menuId = (options.menu.components[0] as MessageSelectMenu).customId.split('-')[0]
 
     // Deferring the reply
     if (options.interaction.deferred == false) await options.interaction.deferReply();
 
 
     // Buttons
-    const navigation = new MessageActionRow()
+    let navigation = new MessageActionRow()
         .addComponents(
             new MessageButton()
                 .setStyle('PRIMARY')
                 .setEmoji('<:FIRST:1002197527732437052>')
                 .setDisabled(true)
-                .setCustomId(`FIRST-${options.interaction.user.id}-${options.menuId}`),
+                .setCustomId(`FIRST-${options.interaction.user.id}`),
             new MessageButton()
                 .setStyle('PRIMARY')
                 .setEmoji('<:LEFT:1002197531335327805>')
                 .setDisabled(true)
-                .setCustomId(`BACK-${options.interaction.user.id}-${options.menuId}`),
+                .setCustomId(`BACK-${options.interaction.user.id}`),
             new MessageButton()
                 .setStyle('SECONDARY')
                 .setDisabled(true)
@@ -37,17 +37,18 @@ export async function ShinanoPaginator(options: {
             new MessageButton()
                 .setStyle('PRIMARY')
                 .setEmoji('<:RIGHT:1002197525345865790>')
-                .setCustomId(`NEXT-${options.interaction.user.id}-${options.menuId}`),
+                .setCustomId(`NEXT-${options.interaction.user.id}`),
             new MessageButton()
                 .setStyle('PRIMARY')
                 .setEmoji('<:LAST:1002197529095577612>')
-                .setCustomId(`LAST-${options.interaction.user.id}-${options.menuId}`)
+                .setCustomId(`LAST-${options.interaction.user.id}`)
         )
     
     // Disables all the button if there is only one page
     if (options.pages.length == 1) {
-        for (let i; i < navigation.components.length; i++) {
-            (navigation.components[i] as MessageButton).setDisabled(true).setStyle('SECONDARY')
+        console.log('sad')
+        for (let i = 0; i < navigation.components.length; i++) {
+            (navigation.components[i] as MessageButton).setStyle('SECONDARY').setDisabled(true);
         }
     }
 
@@ -75,15 +76,12 @@ export async function ShinanoPaginator(options: {
     collector.on('collect', async (i) => {
         const customId = i.customId.split('-')[0]
 
-
         // Reset page count on menu update
-        if ((options.menuId) && (customId === options.menuId)) {
+        if (customId === menuId) {
             pageCount = 0
             return collector.stop('interaction ended') // Ending paginator for that menu option
         } 
 
-
-        if (!i.customId.endsWith(options.menuId)) return;
 
         if (options.interactor_only == true) {
             if (i.customId.split('-')[1] !== i.user.id) {

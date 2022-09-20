@@ -345,7 +345,6 @@ export default new Command({
                 })
                 ShinanoPaginator({
                     interaction: interaction,
-                    menuId: 'NAVCAT',
                     menu: navigation,
                     pages: funCommands,
                     interactor_only: true,
@@ -380,7 +379,6 @@ export default new Command({
 
                             ShinanoPaginator({
                                 interaction: interaction,
-                                menuId: 'NAVCAT',
                                 timeout: 30000,
                                 menu: navigation,
                                 interactor_only: true,
@@ -398,7 +396,6 @@ export default new Command({
 
                             ShinanoPaginator({
                                 interaction: interaction,
-                                menuId: 'NAVCAT',
                                 timeout: 30000,
                                 menu: navigation,
                                 interactor_only: true,
@@ -416,7 +413,6 @@ export default new Command({
 
                             ShinanoPaginator({
                                 interaction: interaction,
-                                menuId: 'NAVCAT',
                                 timeout: 30000,
                                 menu: navigation,
                                 interactor_only: true,
@@ -434,7 +430,6 @@ export default new Command({
 
                             ShinanoPaginator({
                                 interaction: interaction,
-                                menuId: 'NAVCAT',
                                 timeout: 30000,
                                 menu: navigation,
                                 interactor_only: true,
@@ -452,7 +447,6 @@ export default new Command({
 
                             ShinanoPaginator({
                                 interaction: interaction,
-                                menuId: 'NAVCAT',
                                 timeout: 30000,
                                 menu: navigation,
                                 interactor_only: true,
@@ -470,7 +464,6 @@ export default new Command({
 
                             ShinanoPaginator({
                                 interaction: interaction,
-                                menuId: 'NAVCAT',
                                 timeout: 30000,
                                 menu: navigation,
                                 interactor_only: true,
@@ -488,7 +481,6 @@ export default new Command({
 
                             ShinanoPaginator({
                                 interaction: interaction,
-                                menuId: 'NAVCAT',
                                 timeout: 30000,
                                 menu: navigation,
                                 interactor_only: true,
@@ -506,7 +498,6 @@ export default new Command({
 
                             ShinanoPaginator({
                                 interaction: interaction,
-                                menuId: 'NAVCAT',
                                 timeout: 30000,
                                 menu: navigation,
                                 interactor_only: true,

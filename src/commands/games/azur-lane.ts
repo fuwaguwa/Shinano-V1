@@ -554,7 +554,6 @@ export default new Command({
                                         interactor_only: true,
                                         timeout: 120000,
                                         menu: category,
-                                        menuId: shipName,
                                     })
                                 }
                                 break
@@ -719,7 +718,6 @@ export default new Command({
                         pages: normalLevels,
                         timeout: 120000,
                         menu: navigation,
-                        menuId: chapterNumber
                     })
 
 
@@ -748,7 +746,6 @@ export default new Command({
                                 ShinanoPaginator({
                                     interaction: interaction,
                                     menu: navigation,
-                                    menuId: chapterNumber,
                                     interactor_only: true,
                                     pages: normalLevels,
                                     timeout: 120000,
@@ -763,7 +760,6 @@ export default new Command({
                                 ShinanoPaginator({
                                     interaction: interaction,
                                     menu: navigation,
-                                    menuId: chapterNumber,
                                     interactor_only: true,
                                     pages: hardLevels,
                                     timeout: 120000,
