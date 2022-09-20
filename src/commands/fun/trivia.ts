@@ -175,8 +175,8 @@ export default new Command({
             if (answer === trivia[0]['correctAnswer']) {
                 for (let i = 0; i < 4; i++) {
                     (row.components[i] as MessageButton).customId.split('-')[0] === trivia[0]['correctAnswer']
-                        ? (row.components[i] as MessageButton).setStyle('SUCCESS')
-                        : (row.components[i] as MessageButton).setStyle('SECONDARY').setDisabled(true);
+                        ? (row.components[i] as MessageButton).setStyle('SUCCESS').setDisabled(true)
+                        : (row.components[i] as MessageButton).setStyle('SECONDARY').setDisabled(true)
                 }
                 question.setColor('GREEN')
 
