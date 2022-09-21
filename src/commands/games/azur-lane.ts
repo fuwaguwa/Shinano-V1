@@ -383,10 +383,9 @@ export default new Command({
                     dataSource: dataSrc,
                     bgColor: '#2f3136'
                 });
+
                 const statsImage = await (channel as TextChannel).send(
-                    {files: [
-                        new MessageAttachment(table.canvas.toBuffer(), 'image.png')
-                    ]}
+                    {files: [new MessageAttachment(table.canvas.toBuffer(), `${shipName}Stats.png`)]}
                 )
 
                 const stats: MessageEmbed = new MessageEmbed()
