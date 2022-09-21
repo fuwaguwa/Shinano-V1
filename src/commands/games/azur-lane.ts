@@ -3,8 +3,9 @@ import { AzurAPI } from "@azurapi/azurapi";
 import { InteractionCollector, Message, MessageActionRow, MessageEmbed, MessageSelectMenu, SelectMenuInteraction } from "discord.js";
 import { ShinanoPaginator } from "../../structures/Pages";
 import { toTitleCase } from "../../structures/Utils";
+import { Table } from "embed-table";
 import fetch from 'node-fetch'
-import {config} from 'dotenv'
+import { config } from 'dotenv'
 config()
 const AL = new AzurAPI();
  
@@ -251,60 +252,169 @@ export default new Command({
                     .setThumbnail(ship.thumbnail)
                     .addFields(
                         {name: name, value: limitBreak},
-
                         {name: 'Weapon Slots: MinEff%/MaxEff%: ', value: `
                         **${ship.slots[0].type}**: ${ship.slots[0].minEfficiency}%/${ship.slots[0].maxEfficiency}%
                         **${ship.slots[1].type}**: ${ship.slots[1].minEfficiency}%/${ship.slots[1].maxEfficiency}%
                         **${ship.slots[2].type}**: ${ship.slots[2].minEfficiency}%/${ship.slots[2].maxEfficiency}%`},
-
-                        {name: 'Base:', value: `
-                        **HP**: ${ship.stats.baseStats.health}
-                        **ARM**: ${ship.stats.baseStats.armor}
-                        **RLD**: ${ship.stats.baseStats.reload}
-                        **LCK**: ${ship.stats.baseStats.luck}
-                        **FP**: ${ship.stats.baseStats.firepower}
-                        **TRP**: ${ship.stats.baseStats.torpedo}
-                        **EVA**: ${ship.stats.baseStats.evasion}
-                        **SPD**: ${ship.stats.baseStats.speed}
-                        **AA**: ${ship.stats.baseStats.antiair}
-                        **AVI**: ${ship.stats.baseStats.aviation}
-                        **OIL**: ${ship.stats.baseStats.oilConsumption}
-                        **ACC**: ${ship.stats.baseStats.accuracy}
-                        **ASW**: ${ship.stats.baseStats.antisubmarineWarfare}`, inline: true},
-
-                        {name: 'Level 100/120/125:', value: `
-                        **HP**: ${ship.stats.level100.health}/${ship.stats.level120.health}/${ship.stats.level125.health}
-                        **ARM**: ${ship.stats.level100.armor}/${ship.stats.level120.armor}/${ship.stats.level125.armor}
-                        **RLD**: ${ship.stats.level100.reload}/${ship.stats.level120.reload}/${ship.stats.level125.reload}
-                        **LCK**: ${ship.stats.level100.luck}/${ship.stats.level120.luck}/${ship.stats.level125.luck}
-                        **FP**: ${ship.stats.level100.firepower}/${ship.stats.level120.firepower}/${ship.stats.level125.firepower}
-                        **TRP**: ${ship.stats.level100.torpedo}/${ship.stats.level120.torpedo}/${ship.stats.level125.torpedo}
-                        **EVA**: ${ship.stats.level100.evasion}/${ship.stats.level120.evasion}/${ship.stats.level125.evasion}
-                        **SPD**: ${ship.stats.level100.speed}/${ship.stats.level120.speed}/${ship.stats.level125.speed}
-                        **AA**: ${ship.stats.level100.antiair}/${ship.stats.level120.antiair}/${ship.stats.level125.antiair}
-                        **AVI**: ${ship.stats.level100.aviation}/${ship.stats.level120.aviation}/${ship.stats.level125.aviation}
-                        **OIL**: ${ship.stats.level100.oilConsumption}/${ship.stats.level120.oilConsumption}/${ship.stats.level125.oilConsumption}
-                        **ACC**: ${ship.stats.level100.accuracy}/${ship.stats.level120.accuracy}/${ship.stats.level125.accuracy}
-                        **ASW**: ${ship.stats.level100.antisubmarineWarfare}/${ship.stats.level120.antisubmarineWarfare}/${ship.stats.level125.antisubmarineWarfare}`, inline: true},
                     )
+                const statsTable = new Table({//13
+                    titles: ['LVL', 'HP', 'RLD', 'LCK', 'FP', 'TRP', 'EVA', 'SPD', 'AA', 'AVI', 'OIL', 'ACC', 'ASW'],
+                    titleIndexes: [0, 8, 16, 24, 33, 40, 48, 56, 64, 72, 81, 88, 95],
+                    columnIndexes: [0, 5, 11, 17, 23, 28, 34, 40, 46, 52, 58, 63, 69],
+                    start: '`',
+                    end: '`',
+                    padEnd: 5
+                })
+
+
+                // Adding Stats
+                statsTable.addRow(
+                    [
+                        '1', 
+                        ship.stats.baseStats.health,
+                        ship.stats.baseStats.reload,
+                        ship.stats.baseStats.luck,
+                        ship.stats.baseStats.firepower,
+                        ship.stats.baseStats.torpedo,
+                        ship.stats.baseStats.evasion,
+                        ship.stats.baseStats.speed,
+                        ship.stats.baseStats.antiair,
+                        ship.stats.baseStats.aviation,
+                        ship.stats.baseStats.oilConsumption,
+                        ship.stats.baseStats.accuracy,
+                        ship.stats.baseStats.antisubmarineWarfare
+                    ]
+                )
+                statsTable.addRow(
+                    [
+                        '100',
+                        ship.stats.level100.health,
+                        ship.stats.level100.reload,
+                        ship.stats.level100.luck,
+                        ship.stats.level100.firepower,
+                        ship.stats.level100.torpedo,
+                        ship.stats.level100.evasion,
+                        ship.stats.level100.speed,
+                        ship.stats.level100.antiair,
+                        ship.stats.level100.aviation,
+                        ship.stats.level100.oilConsumption,
+                        ship.stats.level100.accuracy,
+                        ship.stats.level100.antisubmarineWarfare
+                    ]
+                )
+                statsTable.addRow(
+                    [
+                        '120',
+                        ship.stats.level120.health,
+                        ship.stats.level120.reload,
+                        ship.stats.level120.luck,
+                        ship.stats.level120.firepower,
+                        ship.stats.level120.torpedo,
+                        ship.stats.level120.evasion,
+                        ship.stats.level120.speed,
+                        ship.stats.level120.antiair,
+                        ship.stats.level120.aviation,
+                        ship.stats.level120.oilConsumption,
+                        ship.stats.level120.accuracy,
+                        ship.stats.level120.antisubmarineWarfare
+                    ]
+                )
+                statsTable.addRow(
+                    [
+                        '125',
+                        ship.stats.level125.health,
+                        ship.stats.level125.reload,
+                        ship.stats.level125.luck,
+                        ship.stats.level125.firepower,
+                        ship.stats.level125.torpedo,
+                        ship.stats.level125.evasion,
+                        ship.stats.level125.speed,
+                        ship.stats.level125.antiair,
+                        ship.stats.level125.aviation,
+                        ship.stats.level125.oilConsumption,
+                        ship.stats.level125.accuracy,
+                        ship.stats.level125.antisubmarineWarfare
+                    ]
+                )
+                
+                // Normal Stats
+                const stats2: MessageEmbed = new MessageEmbed()
+                    .setColor(color)
+                    .addFields(statsTable.field())
+                    .setFooter({text: 'Normal Stats'})
+                
+                // Retrofit Stats
+                const stats3: MessageEmbed = new MessageEmbed()
+                    .setColor(color)
+                    .setFooter({text: 'Retrofit Stats'})
 
                 if (ship.stats.level100Retrofit) {
-                    stats.addField('Retrofit:', `
-                    **HP**: ${ship.stats.level100Retrofit.health}/${ship.stats.level120Retrofit.health}/${ship.stats.level125Retrofit.health}
-                    **ARM**: ${ship.stats.level100Retrofit.armor}/${ship.stats.level120Retrofit.armor}/${ship.stats.level125Retrofit.armor}
-                    **RLD**: ${ship.stats.level100Retrofit.reload}/${ship.stats.level120Retrofit.reload}/${ship.stats.level125Retrofit.reload}
-                    **LCK**: ${ship.stats.level100Retrofit.luck}/${ship.stats.level120Retrofit.luck}/${ship.stats.level125Retrofit.luck}
-                    **FP**: ${ship.stats.level100Retrofit.firepower}/${ship.stats.level120Retrofit.firepower}/${ship.stats.level125Retrofit.firepower}
-                    **TRP**: ${ship.stats.level100Retrofit.torpedo}/${ship.stats.level120Retrofit.torpedo}/${ship.stats.level125Retrofit.torpedo}
-                    **EVA**: ${ship.stats.level100Retrofit.evasion}/${ship.stats.level120Retrofit.evasion}/${ship.stats.level125Retrofit.evasion}
-                    **SPD**: ${ship.stats.level100Retrofit.speed}/${ship.stats.level120Retrofit.speed}/${ship.stats.level125Retrofit.speed}
-                    **AA**: ${ship.stats.level100Retrofit.antiair}/${ship.stats.level120Retrofit.antiair}/${ship.stats.level125Retrofit.antiair}
-                    **AVI**: ${ship.stats.level100Retrofit.aviation}/${ship.stats.level120Retrofit.aviation}/${ship.stats.level125Retrofit.aviation}
-                    **OIL**: ${ship.stats.level100Retrofit.oilConsumption}/${ship.stats.level120Retrofit.oilConsumption}/${ship.stats.level125Retrofit.oilConsumption}
-                    **ACC**: ${ship.stats.level100Retrofit.accuracy}/${ship.stats.level120Retrofit.accuracy}/${ship.stats.level125Retrofit.accuracy}
-                    **ASW**: ${ship.stats.level100Retrofit.antisubmarineWarfare}/${ship.stats.level120Retrofit.antisubmarineWarfare}/${ship.stats.level125Retrofit.antisubmarineWarfare}`, true)
+                    const statsTableRetro = new Table({//13
+                        titles: ['LVL', 'HP', 'RLD', 'LCK', 'FP', 'TRP', 'EVA', 'SPD', 'AA', 'AVI', 'OIL', 'ACC', 'ASW'],
+                        titleIndexes: [0, 8, 16, 24, 33, 40, 48, 56, 64, 72, 81, 88, 95],
+                        columnIndexes: [0, 5, 11, 17, 23, 28, 34, 40, 46, 52, 58, 63, 69],
+                        start: '`',
+                        end: '`',
+                        padEnd: 5
+                    })
+
+                    statsTableRetro.addRow(
+                        [
+                            '100',
+                            ship.stats.level100Retrofit.health,
+                            ship.stats.level100Retrofit.reload,
+                            ship.stats.level100Retrofit.luck,
+                            ship.stats.level100Retrofit.firepower,
+                            ship.stats.level100Retrofit.torpedo,
+                            ship.stats.level100Retrofit.evasion,
+                            ship.stats.level100Retrofit.speed,
+                            ship.stats.level100Retrofit.antiair,
+                            ship.stats.level100Retrofit.aviation,
+                            ship.stats.level100Retrofit.oilConsumption,
+                            ship.stats.level100Retrofit.accuracy,
+                            ship.stats.level100Retrofit.antisubmarineWarfare
+                        ]
+                    )
+
+                    statsTableRetro.addRow(
+                        [
+                            '120',
+                            ship.stats.level120Retrofit.health,
+                            ship.stats.level120Retrofit.reload,
+                            ship.stats.level120Retrofit.luck,
+                            ship.stats.level120Retrofit.firepower,
+                            ship.stats.level120Retrofit.torpedo,
+                            ship.stats.level120Retrofit.evasion,
+                            ship.stats.level120Retrofit.speed,
+                            ship.stats.level120Retrofit.antiair,
+                            ship.stats.level120Retrofit.aviation,
+                            ship.stats.level120Retrofit.oilConsumption,
+                            ship.stats.level120Retrofit.accuracy,
+                            ship.stats.level120Retrofit.antisubmarineWarfare
+                        ]
+                    )
+
+                    statsTableRetro.addRow(
+                        [
+                            '125',
+                            ship.stats.level125Retrofit.health,
+                            ship.stats.level125Retrofit.reload,
+                            ship.stats.level125Retrofit.luck,
+                            ship.stats.level125Retrofit.firepower,
+                            ship.stats.level125Retrofit.torpedo,
+                            ship.stats.level125Retrofit.evasion,
+                            ship.stats.level125Retrofit.speed,
+                            ship.stats.level125Retrofit.antiair,
+                            ship.stats.level125Retrofit.aviation,
+                            ship.stats.level125Retrofit.oilConsumption,
+                            ship.stats.level125Retrofit.accuracy,
+                            ship.stats.level125Retrofit.antisubmarineWarfare
+                        ]
+                    )
+
+                    stats3.addFields(statsTableRetro.field())
                 }
-                
+
 
                 // Skills
                 const skills: MessageEmbed = new MessageEmbed()
@@ -327,7 +437,7 @@ export default new Command({
                 let statsBonus: string
 
                 if (ship.fleetTech.statsBonus.collection == null || ship.fleetTech.techPoints == null) {
-                    techPts= 'N/A'
+                    techPts = 'N/A'
                     statsBonus = 'N/A'
                 } else {
                     let collection = ship.fleetTech.statsBonus.collection.stat
@@ -378,6 +488,36 @@ export default new Command({
                         {name: 'Stats Bonus:', value: statsBonus}
                     )
 
+
+                // Skins
+                const skinEmbed: MessageEmbed[] = []
+                let description: string;
+
+                ship.skins.forEach((skin) => {
+                    if (skin.info.obtainedFrom === 'Skin Shop') {
+                        description = `
+                        **Skin Name**: ${skin.name}
+                        **Obtain From**: Skin Shop
+                        **Cost**: ${skin.info.cost} <:GEAMS:1002198674539036672>     
+                        **Live2D?** ${skin.info.live2dModel == false ? 'No' : 'Yes'}
+                        **Limited or Permanent**: ${skin.info.enLimited == undefined ? `${skin.info.enClient} on EN.` : skin.info.enLimited}`
+                    } else if (skin.info.obtainedFrom === 'Default') {
+                        description = `**Skin Name**: ${skin.name}`
+                    } else {
+                        description = `
+                        **Skin Name**: ${skin.name}
+                        **Obtain From**: ${skin.info.obtainedFrom}`
+                    }
+
+                    skinEmbed.push(
+                        new MessageEmbed()
+                            .setTitle(`${ship.names.en}'s Skins`)
+                            .setDescription(description)
+                            .setColor(color)
+                            .setImage(skin.bg ? skin.bg : skin.image)
+                            .setThumbnail(skin.chibi)
+                    )
+                })
 
                 // Selection Menu
                 const category = new MessageActionRow()
@@ -480,8 +620,10 @@ export default new Command({
                                         : (category.components[0] as MessageSelectMenu).options[i].default = false
                                 }
 
+                                const statsEmbed = ship.stats.level100Retrofit ? [stats, stats2, stats3] : [stats, stats2]
+
                                 await i.editReply({
-                                    embeds: [stats],
+                                    embeds: statsEmbed,
                                     components: [category]
                                 })
                                 break
@@ -509,39 +651,6 @@ export default new Command({
                                         : (category.components[0] as MessageSelectMenu).options[i].default = false
                                 }
 
-
-                                // Creating the skin embeds
-                                const skinEmbed: MessageEmbed[] = []
-                                let description: string;
-
-                                ship.skins.forEach((skin) => {
-                                    if (skin.info.obtainedFrom === 'Skin Shop') {
-                                        description = `
-                                        **Skin Name**: ${skin.name}
-                                        **Obtain From**: Skin Shop
-                                        **Cost**: ${skin.info.cost} <:GEAMS:1002198674539036672>     
-                                        **Live2D?** ${skin.info.live2dModel == false ? 'No' : 'Yes'}
-                                        **Limited or Permanent**: ${skin.info.enLimited == undefined ? `${skin.info.enClient} on EN.` : skin.info.enLimited}`
-                                    } else if (skin.info.obtainedFrom === 'Default') {
-                                        description = `**Skin Name**: ${skin.name}`
-                                    } else {
-                                        description = `
-                                        **Skin Name**: ${skin.name}
-                                        **Obtain From**: ${skin.info.obtainedFrom}`
-                                    }
-    
-                                    skinEmbed.push(
-                                        new MessageEmbed()
-                                            .setTitle(`${ship.names.en}'s Skins`)
-                                            .setDescription(description)
-                                            .setColor(color)
-                                            .setImage(skin.bg ? skin.bg : skin.image)
-                                            .setThumbnail(skin.chibi)
-                                    )
-                                })
-                                
-
-                                // Creating selections for skins
                                 if (skinEmbed.length === 1) {
                                     await i.editReply({
                                         embeds: [skinEmbed[0]],
