@@ -249,19 +249,19 @@ export default new Command({
 
                 
                 const columns: any = [
-                    {title: 'LVL', dataIndex: 'LVL', textAlign: 'center', textColor: 'rgba(255, 255, 255, 1)', titleColor: 'rgba(255, 255, 255, 1)', titleFontSize: '27px', textFontSize: '27px'},
-                    {title: 'HP', dataIndex: 'HP', textAlign: 'center', textColor: 'rgba(255, 255, 255, 1)', titleColor: 'rgba(255, 255, 255, 1)', titleFontSize: '27px', textFontSize: '27px'},
-                    {title: 'RLD', dataIndex: 'RLD', textAlign: 'center', textColor: 'rgba(255, 255, 255, 1)', titleColor: 'rgba(255, 255, 255, 1)', titleFontSize: '27px', textFontSize: '27px'},
-                    {title: 'LCK', dataIndex: 'LCK', textAlign: 'center', textColor: 'rgba(255, 255, 255, 1)', titleColor: 'rgba(255, 255, 255, 1)', titleFontSize: '27px', textFontSize: '27px'},
-                    {title: 'FP', dataIndex: 'FP', textAlign: 'center', textColor: 'rgba(255, 255, 255, 1)', titleColor: 'rgba(255, 255, 255, 1)', titleFontSize: '27px', textFontSize: '27px'},
-                    {title: 'TRP', dataIndex: 'TRP', textAlign: 'center', textColor: 'rgba(255, 255, 255, 1)', titleColor: 'rgba(255, 255, 255, 1)', titleFontSize: '27px', textFontSize: '27px'},
-                    {title: 'EVA', dataIndex: 'EVA', textAlign: 'center', textColor: 'rgba(255, 255, 255, 1)', titleColor: 'rgba(255, 255, 255, 1)', titleFontSize: '27px', textFontSize: '27px'},
-                    {title: 'SPD', dataIndex: 'SPD', textAlign: 'center', textColor: 'rgba(255, 255, 255, 1)', titleColor: 'rgba(255, 255, 255, 1)', titleFontSize: '27px', textFontSize: '27px'},
-                    {title: 'AA', dataIndex: 'AA', textAlign: 'center', textColor: 'rgba(255, 255, 255, 1)', titleColor: 'rgba(255, 255, 255, 1)', titleFontSize: '27px', textFontSize: '27px'},
-                    {title: 'AVI', dataIndex: 'AVI', textAlign: 'center', textColor: 'rgba(255, 255, 255, 1)', titleColor: 'rgba(255, 255, 255, 1)', titleFontSize: '27px', textFontSize: '27px'},
-                    {title: 'OIL', dataIndex: 'OIL', textAlign: 'center', textColor: 'rgba(255, 255, 255, 1)', titleColor: 'rgba(255, 255, 255, 1)', titleFontSize: '27px', textFontSize: '27px'},
-                    {title: 'ACC', dataIndex: 'ACC', textAlign: 'center', textColor: 'rgba(255, 255, 255, 1)', titleColor: 'rgba(255, 255, 255, 1)', titleFontSize: '27px', textFontSize: '27px'},
-                    {title: 'ASW', dataIndex: 'ASW', textAlign: 'center', textColor: 'rgba(255, 255, 255, 1)', titleColor: 'rgba(255, 255, 255, 1)', titleFontSize: '27px', textFontSize: '27px'}
+                    {title: 'LVL', dataIndex: 'LVL', textAlign: 'center', textColor: 'rgba(255, 255, 255, 1)', titleColor: 'rgba(255, 255, 255, 1)', titleFontSize: '29px', textFontSize: '29px'},
+                    {title: 'HP', dataIndex: 'HP', textAlign: 'center', textColor: 'rgba(255, 255, 255, 1)', titleColor: 'rgba(255, 255, 255, 1)', titleFontSize: '29px', textFontSize: '29px'},
+                    {title: 'RLD', dataIndex: 'RLD', textAlign: 'center', textColor: 'rgba(255, 255, 255, 1)', titleColor: 'rgba(255, 255, 255, 1)', titleFontSize: '29px', textFontSize: '29px'},
+                    {title: 'LCK', dataIndex: 'LCK', textAlign: 'center', textColor: 'rgba(255, 255, 255, 1)', titleColor: 'rgba(255, 255, 255, 1)', titleFontSize: '29px', textFontSize: '29px'},
+                    {title: 'FP', dataIndex: 'FP', textAlign: 'center', textColor: 'rgba(255, 255, 255, 1)', titleColor: 'rgba(255, 255, 255, 1)', titleFontSize: '29px', textFontSize: '29px'},
+                    {title: 'TRP', dataIndex: 'TRP', textAlign: 'center', textColor: 'rgba(255, 255, 255, 1)', titleColor: 'rgba(255, 255, 255, 1)', titleFontSize: '29px', textFontSize: '29px'},
+                    {title: 'EVA', dataIndex: 'EVA', textAlign: 'center', textColor: 'rgba(255, 255, 255, 1)', titleColor: 'rgba(255, 255, 255, 1)', titleFontSize: '29px', textFontSize: '29px'},
+                    {title: 'SPD', dataIndex: 'SPD', textAlign: 'center', textColor: 'rgba(255, 255, 255, 1)', titleColor: 'rgba(255, 255, 255, 1)', titleFontSize: '29px', textFontSize: '29px'},
+                    {title: 'AA', dataIndex: 'AA', textAlign: 'center', textColor: 'rgba(255, 255, 255, 1)', titleColor: 'rgba(255, 255, 255, 1)', titleFontSize: '29px', textFontSize: '29px'},
+                    {title: 'AVI', dataIndex: 'AVI', textAlign: 'center', textColor: 'rgba(255, 255, 255, 1)', titleColor: 'rgba(255, 255, 255, 1)', titleFontSize: '29px', textFontSize: '29px'},
+                    {title: 'OIL', dataIndex: 'OIL', textAlign: 'center', textColor: 'rgba(255, 255, 255, 1)', titleColor: 'rgba(255, 255, 255, 1)', titleFontSize: '29px', textFontSize: '29px'},
+                    {title: 'ACC', dataIndex: 'ACC', textAlign: 'center', textColor: 'rgba(255, 255, 255, 1)', titleColor: 'rgba(255, 255, 255, 1)', titleFontSize: '29px', textFontSize: '29px'},
+                    {title: 'ASW', dataIndex: 'ASW', textAlign: 'center', textColor: 'rgba(255, 255, 255, 1)', titleColor: 'rgba(255, 255, 255, 1)', titleFontSize: '29px', textFontSize: '29px'}
                 ]
 
                 const dataSrc = [
