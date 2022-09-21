@@ -384,13 +384,13 @@ export default new Command({
                     bgColor: '#2f3136'
                 });
 
-                const statsImage = await (channel as TextChannel).send(
-                    {files: [new MessageAttachment(table.canvas.toBuffer(), `${shipName}Stats.png`)]}
-                )
+                const statsMessage = await (channel as TextChannel).send({files: [new MessageAttachment(table.canvas.toBuffer(), 'image.png')]})
+                const statsImage = statsMessage.attachments.first().url
 
                 const stats: MessageEmbed = new MessageEmbed()
                     .setTitle(`${ship.names.en}'s Stats`)
                     .setColor(color)
+                    .setImage(statsImage)
                     .setThumbnail(ship.thumbnail)
                     .addFields(
                         {name: name, value: limitBreak},
@@ -399,7 +399,6 @@ export default new Command({
                         **${ship.slots[1].type}**: ${ship.slots[1].minEfficiency}%/${ship.slots[1].maxEfficiency}%
                         **${ship.slots[2].type}**: ${ship.slots[2].minEfficiency}%/${ship.slots[2].maxEfficiency}%`},
                     )
-                    .setImage(statsImage.attachments.first().proxyURL)
                 
 
                 // Skills
