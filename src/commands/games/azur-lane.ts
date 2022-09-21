@@ -1,13 +1,17 @@
 import { Command } from "../../structures/Command";
 import { AzurAPI } from "@azurapi/azurapi";
-import { InteractionCollector, Message, MessageActionRow, MessageEmbed, MessageSelectMenu, SelectMenuInteraction } from "discord.js";
+import { Guild, InteractionCollector, Message, MessageActionRow, MessageAttachment, MessageEmbed, MessageSelectMenu, SelectMenuInteraction, TextChannel } from "discord.js";
 import { ShinanoPaginator } from "../../structures/Pages";
 import { toTitleCase } from "../../structures/Utils";
-import { Table } from "embed-table";
+import { Canvas } from "canvas";
+import t2c from 'table2canvas'
 import fetch from 'node-fetch'
 import { config } from 'dotenv'
+import { client } from "../..";
 config()
 const AL = new AzurAPI();
+
+
  
 export default new Command({
     name: 'azur-lane',
@@ -141,6 +145,9 @@ export default new Command({
     run: async({interaction}) => {
         switch (interaction.options.getSubcommand()) {
             case 'ship': {
+                const guild: Guild = await client.guilds.fetch('1002188088942022807')
+                const channel = await guild.channels.fetch('1022191350835331203')
+
                 // Getting information about the ship
                 const shipName: string = interaction.options.getString('ship-name')
                 const ship: any = await AL.ships.get(shipName)
@@ -201,14 +208,9 @@ export default new Command({
                         }   
                     }
 
-                    
-                    if (maps.length > 0 && pools.length > 0) {
-                        // Pools + Maps ship appears in
-                        aprIn = aprIn + `\nMaps: ${maps.join(', ')}`
-                    } else if (maps.length > 0 && !(pools.length > 0)) {
-                        // Maps only
-                        aprIn = aprIn + `: ${maps.join(', ')}`
-                    }
+                    maps.length > 0 && pools.length > 0
+                        ? aprIn = aprIn + `\nMaps: ${maps.join(', ')}`
+                        : aprIn = aprIn + `: ${maps.join(', ')}`
                     
 
                     info
@@ -246,6 +248,147 @@ export default new Command({
                 }
 
                 
+                const columns: any = [
+                    {title: 'LVL', dataIndex: 'LVL', textAlign: 'center', textColor: 'rgba(255, 255, 255, 1)', titleColor: 'rgba(255, 255, 255, 1)', titleFontSize: '27px', textFontSize: '27px'},
+                    {title: 'HP', dataIndex: 'HP', textAlign: 'center', textColor: 'rgba(255, 255, 255, 1)', titleColor: 'rgba(255, 255, 255, 1)', titleFontSize: '27px', textFontSize: '27px'},
+                    {title: 'RLD', dataIndex: 'RLD', textAlign: 'center', textColor: 'rgba(255, 255, 255, 1)', titleColor: 'rgba(255, 255, 255, 1)', titleFontSize: '27px', textFontSize: '27px'},
+                    {title: 'LCK', dataIndex: 'LCK', textAlign: 'center', textColor: 'rgba(255, 255, 255, 1)', titleColor: 'rgba(255, 255, 255, 1)', titleFontSize: '27px', textFontSize: '27px'},
+                    {title: 'FP', dataIndex: 'FP', textAlign: 'center', textColor: 'rgba(255, 255, 255, 1)', titleColor: 'rgba(255, 255, 255, 1)', titleFontSize: '27px', textFontSize: '27px'},
+                    {title: 'TRP', dataIndex: 'TRP', textAlign: 'center', textColor: 'rgba(255, 255, 255, 1)', titleColor: 'rgba(255, 255, 255, 1)', titleFontSize: '27px', textFontSize: '27px'},
+                    {title: 'EVA', dataIndex: 'EVA', textAlign: 'center', textColor: 'rgba(255, 255, 255, 1)', titleColor: 'rgba(255, 255, 255, 1)', titleFontSize: '27px', textFontSize: '27px'},
+                    {title: 'SPD', dataIndex: 'SPD', textAlign: 'center', textColor: 'rgba(255, 255, 255, 1)', titleColor: 'rgba(255, 255, 255, 1)', titleFontSize: '27px', textFontSize: '27px'},
+                    {title: 'AA', dataIndex: 'AA', textAlign: 'center', textColor: 'rgba(255, 255, 255, 1)', titleColor: 'rgba(255, 255, 255, 1)', titleFontSize: '27px', textFontSize: '27px'},
+                    {title: 'AVI', dataIndex: 'AVI', textAlign: 'center', textColor: 'rgba(255, 255, 255, 1)', titleColor: 'rgba(255, 255, 255, 1)', titleFontSize: '27px', textFontSize: '27px'},
+                    {title: 'OIL', dataIndex: 'OIL', textAlign: 'center', textColor: 'rgba(255, 255, 255, 1)', titleColor: 'rgba(255, 255, 255, 1)', titleFontSize: '27px', textFontSize: '27px'},
+                    {title: 'ACC', dataIndex: 'ACC', textAlign: 'center', textColor: 'rgba(255, 255, 255, 1)', titleColor: 'rgba(255, 255, 255, 1)', titleFontSize: '27px', textFontSize: '27px'},
+                    {title: 'ASW', dataIndex: 'ASW', textAlign: 'center', textColor: 'rgba(255, 255, 255, 1)', titleColor: 'rgba(255, 255, 255, 1)', titleFontSize: '27px', textFontSize: '27px'}
+                ]
+
+                const dataSrc = [
+                    {
+                        LVL: '1',
+                        HP: ship.stats.baseStats.health,
+                        RLD: ship.stats.baseStats.reload,
+                        LCK: ship.stats.baseStats.luck,
+                        FP: ship.stats.baseStats.firepower,
+                        TRP: ship.stats.baseStats.torpedo,
+                        EVA: ship.stats.baseStats.evasion,
+                        SPD: ship.stats.baseStats.speed,
+                        AA: ship.stats.baseStats.antiair,
+                        AVI: ship.stats.baseStats.aviation,
+                        OIL: ship.stats.baseStats.oilConsumption,
+                        ACC: ship.stats.baseStats.accuracy,
+                        ASW: ship.stats.baseStats.antisubmarineWarfare
+                    },
+                    {
+                        LVL: '100',
+                        HP: ship.stats.level100.health,
+                        RLD: ship.stats.level100.reload,
+                        LCK: ship.stats.level100.luck,
+                        FP: ship.stats.level100.firepower,
+                        TRP: ship.stats.level100.torpedo,
+                        EVA: ship.stats.level100.evasion,
+                        SPD: ship.stats.level100.speed,
+                        AA: ship.stats.level100.antiair,
+                        AVI: ship.stats.level100.aviation,
+                        OIL: ship.stats.level100.oilConsumption,
+                        ACC: ship.stats.level100.accuracy,
+                        ASW: ship.stats.level100.antisubmarineWarfare
+                    },
+                    {
+                        LVL: '120',
+                        HP: ship.stats.level120.health,
+                        RLD: ship.stats.level120.reload,
+                        LCK: ship.stats.level120.luck,
+                        FP: ship.stats.level120.firepower,
+                        TRP: ship.stats.level120.torpedo,
+                        EVA: ship.stats.level120.evasion,
+                        SPD: ship.stats.level120.speed,
+                        AA: ship.stats.level120.antiair,
+                        AVI: ship.stats.level120.aviation,
+                        OIL: ship.stats.level120.oilConsumption,
+                        ACC: ship.stats.level120.accuracy,
+                        ASW: ship.stats.level120.antisubmarineWarfare
+                    },
+                    {
+                        LVL: '125',
+                        HP: ship.stats.level125.health,
+                        RLD: ship.stats.level125.reload,
+                        LCK: ship.stats.level125.luck,
+                        FP: ship.stats.level125.firepower,
+                        TRP: ship.stats.level125.torpedo,
+                        EVA: ship.stats.level125.evasion,
+                        SPD: ship.stats.level125.speed,
+                        AA: ship.stats.level125.antiair,
+                        AVI: ship.stats.level125.aviation,
+                        OIL: ship.stats.level125.oilConsumption,
+                        ACC: ship.stats.level125.accuracy,
+                        ASW: ship.stats.level125.antisubmarineWarfare
+                    }
+                ]
+
+                if (ship.stats.level100Retrofit) {
+                    dataSrc.push(
+                        {
+                            LVL: '100 (Retro)',
+                            HP: ship.stats.level100Retrofit.health,
+                            RLD: ship.stats.level100Retrofit.reload,
+                            LCK: ship.stats.level100Retrofit.luck,
+                            FP: ship.stats.level100Retrofit.firepower,
+                            TRP: ship.stats.level100Retrofit.torpedo,
+                            EVA: ship.stats.level100Retrofit.evasion,
+                            SPD: ship.stats.level100Retrofit.speed,
+                            AA: ship.stats.level100Retrofit.antiair,
+                            AVI: ship.stats.level100Retrofit.aviation,
+                            OIL: ship.stats.level100Retrofit.oilConsumption,
+                            ACC: ship.stats.level100Retrofit.accuracy,
+                            ASW: ship.stats.level100Retrofit.antisubmarineWarfare
+                        },
+                        {
+                            LVL: '120 (Retro)',
+                            HP: ship.stats.level120Retrofit.health,
+                            RLD: ship.stats.level120Retrofit.reload,
+                            LCK: ship.stats.level120Retrofit.luck,
+                            FP: ship.stats.level120Retrofit.firepower,
+                            TRP: ship.stats.level120Retrofit.torpedo,
+                            EVA: ship.stats.level120Retrofit.evasion,
+                            SPD: ship.stats.level120Retrofit.speed,
+                            AA: ship.stats.level120Retrofit.antiair,
+                            AVI: ship.stats.level120Retrofit.aviation,
+                            OIL: ship.stats.level120Retrofit.oilConsumption,
+                            ACC: ship.stats.level120Retrofit.accuracy,
+                            ASW: ship.stats.level120Retrofit.antisubmarineWarfare
+                        },
+                        {
+                            LVL: '125 (Retro)',
+                            HP: ship.stats.level125Retrofit.health,
+                            RLD: ship.stats.level125Retrofit.reload,
+                            LCK: ship.stats.level125Retrofit.luck,
+                            FP: ship.stats.level125Retrofit.firepower,
+                            TRP: ship.stats.level125Retrofit.torpedo,
+                            EVA: ship.stats.level125Retrofit.evasion,
+                            SPD: ship.stats.level125Retrofit.speed,
+                            AA: ship.stats.level125Retrofit.antiair,
+                            AVI: ship.stats.level125Retrofit.aviation,
+                            OIL: ship.stats.level125Retrofit.oilConsumption,
+                            ACC: ship.stats.level125Retrofit.accuracy,
+                            ASW: ship.stats.level125Retrofit.antisubmarineWarfare
+                        }
+                    )
+                }
+
+                const table = new t2c({
+                    canvas: new Canvas(4, 4),
+                    columns: columns,
+                    dataSource: dataSrc,
+                    bgColor: '#2f3136'
+                });
+                const statsImage = await (channel as TextChannel).send(
+                    {files: [
+                        new MessageAttachment(table.canvas.toBuffer(), 'image.png')
+                    ]}
+                )
+
                 const stats: MessageEmbed = new MessageEmbed()
                     .setTitle(`${ship.names.en}'s Stats`)
                     .setColor(color)
@@ -257,164 +400,8 @@ export default new Command({
                         **${ship.slots[1].type}**: ${ship.slots[1].minEfficiency}%/${ship.slots[1].maxEfficiency}%
                         **${ship.slots[2].type}**: ${ship.slots[2].minEfficiency}%/${ship.slots[2].maxEfficiency}%`},
                     )
-                const statsTable = new Table({//13
-                    titles: ['LVL', 'HP', 'RLD', 'LCK', 'FP', 'TRP', 'EVA', 'SPD', 'AA', 'AVI', 'OIL', 'ACC', 'ASW'],
-                    titleIndexes: [0, 8, 16, 24, 33, 40, 48, 56, 64, 72, 81, 88, 95],
-                    columnIndexes: [0, 5, 11, 17, 23, 28, 34, 40, 46, 52, 58, 63, 69],
-                    start: '`',
-                    end: '`',
-                    padEnd: 5
-                })
-
-
-                // Adding Stats
-                statsTable.addRow(
-                    [
-                        '1', 
-                        ship.stats.baseStats.health,
-                        ship.stats.baseStats.reload,
-                        ship.stats.baseStats.luck,
-                        ship.stats.baseStats.firepower,
-                        ship.stats.baseStats.torpedo,
-                        ship.stats.baseStats.evasion,
-                        ship.stats.baseStats.speed,
-                        ship.stats.baseStats.antiair,
-                        ship.stats.baseStats.aviation,
-                        ship.stats.baseStats.oilConsumption,
-                        ship.stats.baseStats.accuracy,
-                        ship.stats.baseStats.antisubmarineWarfare
-                    ]
-                )
-                statsTable.addRow(
-                    [
-                        '100',
-                        ship.stats.level100.health,
-                        ship.stats.level100.reload,
-                        ship.stats.level100.luck,
-                        ship.stats.level100.firepower,
-                        ship.stats.level100.torpedo,
-                        ship.stats.level100.evasion,
-                        ship.stats.level100.speed,
-                        ship.stats.level100.antiair,
-                        ship.stats.level100.aviation,
-                        ship.stats.level100.oilConsumption,
-                        ship.stats.level100.accuracy,
-                        ship.stats.level100.antisubmarineWarfare
-                    ]
-                )
-                statsTable.addRow(
-                    [
-                        '120',
-                        ship.stats.level120.health,
-                        ship.stats.level120.reload,
-                        ship.stats.level120.luck,
-                        ship.stats.level120.firepower,
-                        ship.stats.level120.torpedo,
-                        ship.stats.level120.evasion,
-                        ship.stats.level120.speed,
-                        ship.stats.level120.antiair,
-                        ship.stats.level120.aviation,
-                        ship.stats.level120.oilConsumption,
-                        ship.stats.level120.accuracy,
-                        ship.stats.level120.antisubmarineWarfare
-                    ]
-                )
-                statsTable.addRow(
-                    [
-                        '125',
-                        ship.stats.level125.health,
-                        ship.stats.level125.reload,
-                        ship.stats.level125.luck,
-                        ship.stats.level125.firepower,
-                        ship.stats.level125.torpedo,
-                        ship.stats.level125.evasion,
-                        ship.stats.level125.speed,
-                        ship.stats.level125.antiair,
-                        ship.stats.level125.aviation,
-                        ship.stats.level125.oilConsumption,
-                        ship.stats.level125.accuracy,
-                        ship.stats.level125.antisubmarineWarfare
-                    ]
-                )
+                    .setImage(statsImage.attachments.first().proxyURL)
                 
-                // Normal Stats
-                const stats2: MessageEmbed = new MessageEmbed()
-                    .setColor(color)
-                    .addFields(statsTable.field())
-                    .setFooter({text: 'Normal Stats'})
-                
-                // Retrofit Stats
-                const stats3: MessageEmbed = new MessageEmbed()
-                    .setColor(color)
-                    .setFooter({text: 'Retrofit Stats'})
-
-                if (ship.stats.level100Retrofit) {
-                    const statsTableRetro = new Table({//13
-                        titles: ['LVL', 'HP', 'RLD', 'LCK', 'FP', 'TRP', 'EVA', 'SPD', 'AA', 'AVI', 'OIL', 'ACC', 'ASW'],
-                        titleIndexes: [0, 8, 16, 24, 33, 40, 48, 56, 64, 72, 81, 88, 95],
-                        columnIndexes: [0, 5, 11, 17, 23, 28, 34, 40, 46, 52, 58, 63, 69],
-                        start: '`',
-                        end: '`',
-                        padEnd: 5
-                    })
-
-                    statsTableRetro.addRow(
-                        [
-                            '100',
-                            ship.stats.level100Retrofit.health,
-                            ship.stats.level100Retrofit.reload,
-                            ship.stats.level100Retrofit.luck,
-                            ship.stats.level100Retrofit.firepower,
-                            ship.stats.level100Retrofit.torpedo,
-                            ship.stats.level100Retrofit.evasion,
-                            ship.stats.level100Retrofit.speed,
-                            ship.stats.level100Retrofit.antiair,
-                            ship.stats.level100Retrofit.aviation,
-                            ship.stats.level100Retrofit.oilConsumption,
-                            ship.stats.level100Retrofit.accuracy,
-                            ship.stats.level100Retrofit.antisubmarineWarfare
-                        ]
-                    )
-
-                    statsTableRetro.addRow(
-                        [
-                            '120',
-                            ship.stats.level120Retrofit.health,
-                            ship.stats.level120Retrofit.reload,
-                            ship.stats.level120Retrofit.luck,
-                            ship.stats.level120Retrofit.firepower,
-                            ship.stats.level120Retrofit.torpedo,
-                            ship.stats.level120Retrofit.evasion,
-                            ship.stats.level120Retrofit.speed,
-                            ship.stats.level120Retrofit.antiair,
-                            ship.stats.level120Retrofit.aviation,
-                            ship.stats.level120Retrofit.oilConsumption,
-                            ship.stats.level120Retrofit.accuracy,
-                            ship.stats.level120Retrofit.antisubmarineWarfare
-                        ]
-                    )
-
-                    statsTableRetro.addRow(
-                        [
-                            '125',
-                            ship.stats.level125Retrofit.health,
-                            ship.stats.level125Retrofit.reload,
-                            ship.stats.level125Retrofit.luck,
-                            ship.stats.level125Retrofit.firepower,
-                            ship.stats.level125Retrofit.torpedo,
-                            ship.stats.level125Retrofit.evasion,
-                            ship.stats.level125Retrofit.speed,
-                            ship.stats.level125Retrofit.antiair,
-                            ship.stats.level125Retrofit.aviation,
-                            ship.stats.level125Retrofit.oilConsumption,
-                            ship.stats.level125Retrofit.accuracy,
-                            ship.stats.level125Retrofit.antisubmarineWarfare
-                        ]
-                    )
-
-                    stats3.addFields(statsTableRetro.field())
-                }
-
 
                 // Skills
                 const skills: MessageEmbed = new MessageEmbed()
@@ -519,6 +506,7 @@ export default new Command({
                     )
                 })
 
+                
                 // Selection Menu
                 const category = new MessageActionRow()
                     .addComponents(
@@ -620,10 +608,8 @@ export default new Command({
                                         : (category.components[0] as MessageSelectMenu).options[i].default = false
                                 }
 
-                                const statsEmbed = ship.stats.level100Retrofit ? [stats, stats2, stats3] : [stats, stats2]
-
                                 await i.editReply({
-                                    embeds: statsEmbed,
+                                    embeds: [stats],
                                     components: [category]
                                 })
                                 break
