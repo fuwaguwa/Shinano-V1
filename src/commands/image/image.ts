@@ -240,11 +240,11 @@ export default new Command({
             }
 
             case 'bronya': {
-                var canvas = Canvas.createCanvas(1547, 1920)
-                var context = canvas.getContext('2d')
-                var background = await Canvas.loadImage('https://i.imgur.com/EH71R7O.png')
+                let canvas = Canvas.createCanvas(1547, 1920)
+                let context = canvas.getContext('2d')
+                let background = await Canvas.loadImage('https://i.imgur.com/EH71R7O.png')
 
-                var applyText = (canvas, text) => {
+                let applyText = (canvas, text) => {
                     const context = canvas.getContext('2d');
                     let fontSize = 120;
                     do {
@@ -296,8 +296,8 @@ export default new Command({
             }
 
             case 'sigma': {
-                var canvas = Canvas.createCanvas(750, 750)
-                var context = canvas.getContext('2d')
+                let canvas = Canvas.createCanvas(750, 750)
+                let context = canvas.getContext('2d')
 
                 const sigmaImages = [
                     'https://i.imgur.com/G7i9yyS.jpg', 
@@ -308,9 +308,9 @@ export default new Command({
                     'https://i.imgur.com/bL1sqcf.png',
                     'https://i.imgur.com/DKuRMcU.png',
                 ]
-                var background = await Canvas.loadImage(sigmaImages[Math.floor(Math.random() * sigmaImages.length)])
+                let background = await Canvas.loadImage(sigmaImages[Math.floor(Math.random() * sigmaImages.length)])
 
-                var applyText = (canvas, text) => {
+                let applyText = (canvas, text) => {
                     const context = canvas.getContext('2d')
                     let fontSize = 130
                     do {
@@ -348,7 +348,7 @@ export default new Command({
             }
 
             case 'slap': {
-                var iuserimg = interaction.user.displayAvatarURL({size: 512, format: "png"})
+                const iuserimg = interaction.user.displayAvatarURL({size: 512, format: "png"})
                 image = await CVC.Canvas.slap(iuserimg, avatar)
                 break
             }

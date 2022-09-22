@@ -1,6 +1,14 @@
 import { ButtonInteraction, InteractionCollector, Message, MessageActionRow, MessageButton, MessageEmbed, User } from "discord.js";
 import { Command } from "../../structures/Command";
 
+const choiceToEmoji = (choice) => {
+    switch (choice) {
+        case 'ROCK': return '👊'
+        case 'PAPER': return '🖐️'
+        case 'SCISSOR': return '✌️'
+    }
+}
+
 export default new Command({
     name: 'rps',
     description: 'Play a game of rock paper scissor against someone or the bot!',
@@ -175,14 +183,7 @@ export default new Command({
                         await i.deferUpdate()
                         challengerChoice = choice
 
-                        const choiceToEmoji = (choice) => {
-                            switch (choice) {
-                                case 'ROCK': return '👊'
-                                case 'PAPER': return '🖐️'
-                                case 'SCISSOR': return '✌️'
-                            }
-                        }
-                        
+
                         const emojiChallengerChoice: string = choiceToEmoji(challengerChoice)
                         const emojiOpponentChoice: string = choiceToEmoji(opponentChoice)
 
@@ -279,15 +280,9 @@ export default new Command({
                 
 
                 // Converting Choices
-                if (customId === 'ROCK') var emojiChallengerChoice = '👊';
-                if (customId === 'PAPER') var emojiChallengerChoice = '🖐';
-                if (customId === 'SCISSOR') var emojiChallengerChoice = '✌';
-
-                if (botChoice === 'ROCK') var convertedBotChoice = '👊';
-                if (botChoice === 'PAPER') var convertedBotChoice = '🖐';
-                if (botChoice === 'SCISSOR') var convertedBotChoice = '✌';
-
-
+                const emojiChallengerChoice = choiceToEmoji(customId)
+                const convertedBotChoice = choiceToEmoji(botChoice)
+            
             
                 // Verifying Interaction
                 if (!i.customId.endsWith(i.user.id)) {
@@ -308,7 +303,7 @@ export default new Command({
                         (choices.components[i] as MessageButton).setStyle('SECONDARY');
                     }
                 }
-                var res: MessageEmbed = new MessageEmbed()
+                const res: MessageEmbed = new MessageEmbed()
                     .setColor('BLUE')
 
                 if (customId === botChoice) {

@@ -17,9 +17,10 @@ export function toTitleCase(str: string) {
 }
 
 export function msToHmsFormat(duration) {
-    var seconds:string | number = Math.floor((duration / 1000) % 60)
-    var minutes:string | number = Math.floor((duration / (1000 * 60)) % 60)
-    var hours:string | number = Math.floor((duration / (1000 * 60 * 60)) % 24);
+    let seconds:string | number = Math.floor((duration / 1000) % 60)
+    let minutes:string | number = Math.floor((duration / (1000 * 60)) % 60)
+    let hours:string | number = Math.floor((duration / (1000 * 60 * 60)) % 24);
+
     hours = (hours < 10) ? "0" + hours : hours;
     minutes = (minutes < 10) ? "0" + minutes : minutes;
     seconds = (seconds < 10) ? "0" + seconds : seconds;
@@ -31,9 +32,9 @@ export function isNum(value) {
 }
 
 export function randStr() {
-    var newName = "";
-    var string = "1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"; 
-    for (var i = 0; i < 6; i++)
+    let newName = "";
+    const string = "1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"; 
+    for (let i = 0; i < 6; i++)
         newName += string.charAt(Math.floor(Math.random() * string.length));
     return newName;
 }

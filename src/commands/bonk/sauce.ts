@@ -188,7 +188,7 @@ export default new Command({
 
             // Linking
             const sauceUrls: MessageActionRow = new MessageActionRow()
-            for (var link in filteredLink) {
+            for (let link in filteredLink) {
                 switch (link) {
                     case 'Pixiv': {
                         sauceUrls.addComponents(

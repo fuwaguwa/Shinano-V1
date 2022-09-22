@@ -36,7 +36,7 @@ export default new Command({
             .setColor('BLUE')
         switch (interaction.options.getSubcommand()) {
             case 'user': {
-                var user: User = interaction.options.getUser('user') || interaction.user
+                const user: User = interaction.options.getUser('user') || interaction.user
                 
                 avatarEmbed
                     .setDescription(`${user}'s avatar`)
