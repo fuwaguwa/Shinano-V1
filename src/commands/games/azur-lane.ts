@@ -1,14 +1,13 @@
 import { Command } from "../../structures/Command";
 import { AzurAPI } from "@azurapi/azurapi";
-import { Guild, InteractionCollector, Message, MessageActionRow, MessageAttachment, MessageEmbed, MessageSelectMenu, SelectMenuInteraction, TextChannel } from "discord.js";
+import { InteractionCollector, Message, MessageActionRow, MessageEmbed, MessageSelectMenu, SelectMenuInteraction } from "discord.js";
 import { ShinanoPaginator } from "../../structures/Pages";
 import { toTitleCase } from "../../structures/Utils";
-import { Canvas } from "canvas";
-import t2c from 'table2canvas'
 import fetch from 'node-fetch'
 import { config } from 'dotenv'
-import { client } from "../..";
+import { chapterInfo, gearFits, gearStats, generateStatsTable } from "../../structures/AL";
 config()
+
 const AL = new AzurAPI();
 
 
@@ -145,9 +144,6 @@ export default new Command({
     run: async({interaction}) => {
         switch (interaction.options.getSubcommand()) {
             case 'ship': {
-                const guild: Guild = await client.guilds.fetch('1002188088942022807')
-                const channel = await guild.channels.fetch('1022191350835331203')
-
                 // Getting information about the ship
                 const shipName: string = interaction.options.getString('ship-name')
                 const ship: any = await AL.ships.get(shipName)
@@ -183,7 +179,7 @@ export default new Command({
                     )
                 
 
-                // Checks for PR ship
+                // PR Checking
                 if (ship.rarity !== 'Decisive' && ship.rarity !== 'Priority') {
                     const pools: string[] = []
                     if (ship.construction.availableIn.exchange !== false) pools.push('Exchange')
@@ -192,12 +188,16 @@ export default new Command({
                     if (ship.construction.availableIn.aviation !== false) pools.push('Special Ship Pool');
                     if (ship.construction.availableIn.limited !== false) pools.push(`Limited Ship Pool: ${ship.construction.availableIn.limited}`);
                     
+
+                    // Banner Pool
                     let aprIn: string;
                     pools.length > 0
                         ? aprIn = pools.join('\n')
                         : aprIn = 'Maps'
 
-                    let maps: string[] = []
+
+                    // Map Pool
+                    const maps: string[] = []
                     if (ship.obtainedFrom.fromMaps.length > 0) {
                         for (let i = 0; i < ship.obtainedFrom.fromMaps.length; i++) {
                             if (ship.obtainedFrom.fromMaps[i].name !== undefined) {
@@ -233,171 +233,34 @@ export default new Command({
                     limitBreak = 'Ship cannot be limit broken.'
                 } else if ((ship.limitBreaks) && (!ship.devLevels)) {
                     name = 'Limit Breaks:'
-                    limitBreak = `
-                    **First**: ${ship.limitBreaks[0].join('/')}
-                    **Second**: ${ship.limitBreaks[1].join('/')}
-                    **Third**: ${ship.limitBreaks[2].join('/')}`
+                    limitBreak = 
+                    `**First**: ${ship.limitBreaks[0].join('/')}\n` +
+                    `**Second**: ${ship.limitBreaks[1].join('/')}\n` +
+                    `**Third**: ${ship.limitBreaks[2].join('/')}\n`
                 } else {
                     name = 'Dev Levels:'
-                    limitBreak = `**Dev 5**: ${ship.devLevels[0].buffs.join('/')}
-                    **Dev 10**: ${ship.devLevels[1].buffs.join('/')}
-                    **Dev 15**: ${ship.devLevels[2].buffs.join('/')}
-                    **Dev 20**: ${ship.devLevels[3].buffs.join('/')}
-                    **Dev 25**: ${ship.devLevels[4].buffs.join('/')}
-                    **Dev 30**: ${ship.devLevels[5].buffs.join('/')}`
+                    limitBreak = 
+                    `**Dev 5**: ${ship.devLevels[0].buffs.join('/')}\n` +
+                    `**Dev 10**: ${ship.devLevels[1].buffs.join('/')}\n` +
+                    `**Dev 15**: ${ship.devLevels[2].buffs.join('/')}\n` +
+                    `**Dev 20**: ${ship.devLevels[3].buffs.join('/')}\n` +
+                    `**Dev 25**: ${ship.devLevels[4].buffs.join('/')}\n` +
+                    `**Dev 30**: ${ship.devLevels[5].buffs.join('/')}\n`
                 }
 
-                
-                const columns: any = [
-                    {title: 'LVL', dataIndex: 'LVL', textAlign: 'center', textColor: 'rgba(255, 255, 255, 1)', titleColor: 'rgba(255, 255, 255, 1)', titleFontSize: '29px', textFontSize: '29px'},
-                    {title: 'HP', dataIndex: 'HP', textAlign: 'center', textColor: 'rgba(255, 255, 255, 1)', titleColor: 'rgba(255, 255, 255, 1)', titleFontSize: '29px', textFontSize: '29px'},
-                    {title: 'RLD', dataIndex: 'RLD', textAlign: 'center', textColor: 'rgba(255, 255, 255, 1)', titleColor: 'rgba(255, 255, 255, 1)', titleFontSize: '29px', textFontSize: '29px'},
-                    {title: 'LCK', dataIndex: 'LCK', textAlign: 'center', textColor: 'rgba(255, 255, 255, 1)', titleColor: 'rgba(255, 255, 255, 1)', titleFontSize: '29px', textFontSize: '29px'},
-                    {title: 'FP', dataIndex: 'FP', textAlign: 'center', textColor: 'rgba(255, 255, 255, 1)', titleColor: 'rgba(255, 255, 255, 1)', titleFontSize: '29px', textFontSize: '29px'},
-                    {title: 'TRP', dataIndex: 'TRP', textAlign: 'center', textColor: 'rgba(255, 255, 255, 1)', titleColor: 'rgba(255, 255, 255, 1)', titleFontSize: '29px', textFontSize: '29px'},
-                    {title: 'EVA', dataIndex: 'EVA', textAlign: 'center', textColor: 'rgba(255, 255, 255, 1)', titleColor: 'rgba(255, 255, 255, 1)', titleFontSize: '29px', textFontSize: '29px'},
-                    {title: 'SPD', dataIndex: 'SPD', textAlign: 'center', textColor: 'rgba(255, 255, 255, 1)', titleColor: 'rgba(255, 255, 255, 1)', titleFontSize: '29px', textFontSize: '29px'},
-                    {title: 'AA', dataIndex: 'AA', textAlign: 'center', textColor: 'rgba(255, 255, 255, 1)', titleColor: 'rgba(255, 255, 255, 1)', titleFontSize: '29px', textFontSize: '29px'},
-                    {title: 'AVI', dataIndex: 'AVI', textAlign: 'center', textColor: 'rgba(255, 255, 255, 1)', titleColor: 'rgba(255, 255, 255, 1)', titleFontSize: '29px', textFontSize: '29px'},
-                    {title: 'OIL', dataIndex: 'OIL', textAlign: 'center', textColor: 'rgba(255, 255, 255, 1)', titleColor: 'rgba(255, 255, 255, 1)', titleFontSize: '29px', textFontSize: '29px'},
-                    {title: 'ACC', dataIndex: 'ACC', textAlign: 'center', textColor: 'rgba(255, 255, 255, 1)', titleColor: 'rgba(255, 255, 255, 1)', titleFontSize: '29px', textFontSize: '29px'},
-                    {title: 'ASW', dataIndex: 'ASW', textAlign: 'center', textColor: 'rgba(255, 255, 255, 1)', titleColor: 'rgba(255, 255, 255, 1)', titleFontSize: '29px', textFontSize: '29px'}
-                ]
 
-                const dataSrc = [
-                    {
-                        LVL: '1',
-                        HP: ship.stats.baseStats.health,
-                        RLD: ship.stats.baseStats.reload,
-                        LCK: ship.stats.baseStats.luck,
-                        FP: ship.stats.baseStats.firepower,
-                        TRP: ship.stats.baseStats.torpedo,
-                        EVA: ship.stats.baseStats.evasion,
-                        SPD: ship.stats.baseStats.speed,
-                        AA: ship.stats.baseStats.antiair,
-                        AVI: ship.stats.baseStats.aviation,
-                        OIL: ship.stats.baseStats.oilConsumption,
-                        ACC: ship.stats.baseStats.accuracy,
-                        ASW: ship.stats.baseStats.antisubmarineWarfare
-                    },
-                    {
-                        LVL: '100',
-                        HP: ship.stats.level100.health,
-                        RLD: ship.stats.level100.reload,
-                        LCK: ship.stats.level100.luck,
-                        FP: ship.stats.level100.firepower,
-                        TRP: ship.stats.level100.torpedo,
-                        EVA: ship.stats.level100.evasion,
-                        SPD: ship.stats.level100.speed,
-                        AA: ship.stats.level100.antiair,
-                        AVI: ship.stats.level100.aviation,
-                        OIL: ship.stats.level100.oilConsumption,
-                        ACC: ship.stats.level100.accuracy,
-                        ASW: ship.stats.level100.antisubmarineWarfare
-                    },
-                    {
-                        LVL: '120',
-                        HP: ship.stats.level120.health,
-                        RLD: ship.stats.level120.reload,
-                        LCK: ship.stats.level120.luck,
-                        FP: ship.stats.level120.firepower,
-                        TRP: ship.stats.level120.torpedo,
-                        EVA: ship.stats.level120.evasion,
-                        SPD: ship.stats.level120.speed,
-                        AA: ship.stats.level120.antiair,
-                        AVI: ship.stats.level120.aviation,
-                        OIL: ship.stats.level120.oilConsumption,
-                        ACC: ship.stats.level120.accuracy,
-                        ASW: ship.stats.level120.antisubmarineWarfare
-                    },
-                    {
-                        LVL: '125',
-                        HP: ship.stats.level125.health,
-                        RLD: ship.stats.level125.reload,
-                        LCK: ship.stats.level125.luck,
-                        FP: ship.stats.level125.firepower,
-                        TRP: ship.stats.level125.torpedo,
-                        EVA: ship.stats.level125.evasion,
-                        SPD: ship.stats.level125.speed,
-                        AA: ship.stats.level125.antiair,
-                        AVI: ship.stats.level125.aviation,
-                        OIL: ship.stats.level125.oilConsumption,
-                        ACC: ship.stats.level125.accuracy,
-                        ASW: ship.stats.level125.antisubmarineWarfare
-                    }
-                ]
-
-                if (ship.stats.level100Retrofit) {
-                    dataSrc.push(
-                        {
-                            LVL: '100 (Retro)',
-                            HP: ship.stats.level100Retrofit.health,
-                            RLD: ship.stats.level100Retrofit.reload,
-                            LCK: ship.stats.level100Retrofit.luck,
-                            FP: ship.stats.level100Retrofit.firepower,
-                            TRP: ship.stats.level100Retrofit.torpedo,
-                            EVA: ship.stats.level100Retrofit.evasion,
-                            SPD: ship.stats.level100Retrofit.speed,
-                            AA: ship.stats.level100Retrofit.antiair,
-                            AVI: ship.stats.level100Retrofit.aviation,
-                            OIL: ship.stats.level100Retrofit.oilConsumption,
-                            ACC: ship.stats.level100Retrofit.accuracy,
-                            ASW: ship.stats.level100Retrofit.antisubmarineWarfare
-                        },
-                        {
-                            LVL: '120 (Retro)',
-                            HP: ship.stats.level120Retrofit.health,
-                            RLD: ship.stats.level120Retrofit.reload,
-                            LCK: ship.stats.level120Retrofit.luck,
-                            FP: ship.stats.level120Retrofit.firepower,
-                            TRP: ship.stats.level120Retrofit.torpedo,
-                            EVA: ship.stats.level120Retrofit.evasion,
-                            SPD: ship.stats.level120Retrofit.speed,
-                            AA: ship.stats.level120Retrofit.antiair,
-                            AVI: ship.stats.level120Retrofit.aviation,
-                            OIL: ship.stats.level120Retrofit.oilConsumption,
-                            ACC: ship.stats.level120Retrofit.accuracy,
-                            ASW: ship.stats.level120Retrofit.antisubmarineWarfare
-                        },
-                        {
-                            LVL: '125 (Retro)',
-                            HP: ship.stats.level125Retrofit.health,
-                            RLD: ship.stats.level125Retrofit.reload,
-                            LCK: ship.stats.level125Retrofit.luck,
-                            FP: ship.stats.level125Retrofit.firepower,
-                            TRP: ship.stats.level125Retrofit.torpedo,
-                            EVA: ship.stats.level125Retrofit.evasion,
-                            SPD: ship.stats.level125Retrofit.speed,
-                            AA: ship.stats.level125Retrofit.antiair,
-                            AVI: ship.stats.level125Retrofit.aviation,
-                            OIL: ship.stats.level125Retrofit.oilConsumption,
-                            ACC: ship.stats.level125Retrofit.accuracy,
-                            ASW: ship.stats.level125Retrofit.antisubmarineWarfare
-                        }
-                    )
-                }
-
-                const table = new t2c({
-                    canvas: new Canvas(4, 4),
-                    columns: columns,
-                    dataSource: dataSrc,
-                    bgColor: '#2f3136'
-                });
-
-                const statsMessage = await (channel as TextChannel).send({files: [new MessageAttachment(table.canvas.toBuffer(), 'image.png')]})
-                const statsImage = statsMessage.attachments.first().url
-
+                const statsTable = await generateStatsTable(ship.stats)
                 const stats: MessageEmbed = new MessageEmbed()
                     .setTitle(`${ship.names.en}'s Stats`)
                     .setColor(color)
-                    .setImage(statsImage)
+                    .setImage(statsTable)
                     .setThumbnail(ship.thumbnail)
                     .addFields(
                         {name: name, value: limitBreak},
-                        {name: 'Weapon Slots: MinEff%/MaxEff%: ', value: `
-                        **${ship.slots[0].type}**: ${ship.slots[0].minEfficiency}%/${ship.slots[0].maxEfficiency}%
-                        **${ship.slots[1].type}**: ${ship.slots[1].minEfficiency}%/${ship.slots[1].maxEfficiency}%
-                        **${ship.slots[2].type}**: ${ship.slots[2].minEfficiency}%/${ship.slots[2].maxEfficiency}%`},
+                        {name: 'Weapon Slots: MinEff%/MaxEff%: ', value: 
+                        `**${ship.slots[0].type}**: ${ship.slots[0].minEfficiency}%/${ship.slots[0].maxEfficiency}%\n` +
+                        `**${ship.slots[1].type}**: ${ship.slots[1].minEfficiency}%/${ship.slots[1].maxEfficiency}%\n` +
+                        `**${ship.slots[2].type}**: ${ship.slots[2].minEfficiency}%/${ship.slots[2].maxEfficiency}%`},
                     )
                 
 
@@ -421,7 +284,7 @@ export default new Command({
                 let techPts: string
                 let statsBonus: string
 
-                if (ship.fleetTech.statsBonus.collection == null || ship.fleetTech.techPoints == null) {
+                if ((!ship.fleetTech.statsBonus.collection) || (!ship.fleetTech.techPoints)) {
                     techPts = 'N/A'
                     statsBonus = 'N/A'
                 } else {
@@ -453,15 +316,15 @@ export default new Command({
                     } 
 
 
-                    techPts = `
-                    Unlocking The Ship: **${ship.fleetTech.techPoints.collection}**
-                    Max Limit Break: **${ship.fleetTech.techPoints.maxLimitBreak}**
-                    Reaching Level 120: **${ship.fleetTech.techPoints.maxLevel}**
-                    Total Tech Points: **${ship.fleetTech.techPoints.total}**`
+                    techPts = 
+                    `Unlocking The Ship: **${ship.fleetTech.techPoints.collection}**\n` +
+                    `Max Limit Break: **${ship.fleetTech.techPoints.maxLimitBreak}**\n` +
+                    `Reaching Level 120: **${ship.fleetTech.techPoints.maxLevel}**\n` +
+                    `Total Tech Points: **${ship.fleetTech.techPoints.total}**`
 
-                    statsBonus = `
-                    Unlocking The Ship: ${ship.fleetTech.statsBonus.collection.bonus} **${collection}** for ${toTitleCase(ship.fleetTech.statsBonus.collection.applicable.join(', '))}s
-                    Reaching Level 120: ${ship.fleetTech.statsBonus.maxLevel.bonus} **${maxLevel}** for ${toTitleCase(ship.fleetTech.statsBonus.maxLevel.applicable.join(', '))}s`
+                    statsBonus = 
+                    `Unlocking The Ship: ${ship.fleetTech.statsBonus.collection.bonus} **${collection}** for ${toTitleCase(ship.fleetTech.statsBonus.collection.applicable.join(', '))}s\n` +
+                    `Reaching Level 120: ${ship.fleetTech.statsBonus.maxLevel.bonus} **${maxLevel}** for ${toTitleCase(ship.fleetTech.statsBonus.maxLevel.applicable.join(', '))}s`
                 }
 
                 const tech: MessageEmbed = new MessageEmbed()
@@ -480,18 +343,18 @@ export default new Command({
 
                 ship.skins.forEach((skin) => {
                     if (skin.info.obtainedFrom === 'Skin Shop') {
-                        description = `
-                        **Skin Name**: ${skin.name}
-                        **Obtain From**: Skin Shop
-                        **Cost**: ${skin.info.cost} <:GEAMS:1002198674539036672>     
-                        **Live2D?** ${skin.info.live2dModel == false ? 'No' : 'Yes'}
-                        **Limited or Permanent**: ${skin.info.enLimited == undefined ? `${skin.info.enClient} on EN.` : skin.info.enLimited}`
+                        description = 
+                        `**Skin Name**: ${skin.name}\n` +
+                        `**Obtain From**: Skin Shop\n` +
+                        `**Cost**: ${skin.info.cost} <:GEAMS:1002198674539036672>\n` +
+                        `**Live2D?** ${skin.info.live2dModel == false ? 'No' : 'Yes'}\n` +
+                        `**Limited or Permanent**: ${skin.info.enLimited == undefined ? `${skin.info.enClient} on EN.` : skin.info.enLimited}`
                     } else if (skin.info.obtainedFrom === 'Default') {
                         description = `**Skin Name**: ${skin.name}`
                     } else {
-                        description = `
-                        **Skin Name**: ${skin.name}
-                        **Obtain From**: ${skin.info.obtainedFrom}`
+                        description = 
+                        `**Skin Name**: ${skin.name}\n ` +
+                        `**Obtain From**: ${skin.info.obtainedFrom}\n`
                     }
 
                     skinEmbed.push(
@@ -670,208 +533,114 @@ export default new Command({
                 const chapter = AL.chapters.filter((chapter) => {
                     return chapter.id === chapterNumber
                 })
+                
                 const info = chapter[0]
 
 
-                const title = `Chapter ${info.id}: ${info.names.en}`
                 // Normal
-                const normalLevels: MessageEmbed[] = []
-                for (let i = 1; i-1 < 4; i++) {
-                    const blueprints: string[] = []
-
-                    info[i].normal.blueprintDrops.forEach((blueprint) => {
-                        const name = blueprint.tier + ' ' + blueprint.name
-                        blueprints.push(name)
-                    })
-
-                    normalLevels.push(
-                        new MessageEmbed()
-                            .setTitle(`${title} | ${info[i].normal.code}`)
-                            .setDescription(`
-                                **${info[i].normal.title}**
-                                *${info[i].normal.introduction}*`
-                            )
-                            .addFields(
-                                {name: 'Unlock Requirements:', value: `${info[i].normal.unlockRequirements.text}`, inline: false},
-
-                                {name: 'Airspace Control:', value: `
-                                Actual: ${info[i].normal.airspaceControl.actual  ? info[i].normal.airspaceControl.actual : 'N/A'}
-                                Denial: ${info[i].normal.airspaceControl.denial ? info[i].normal.airspaceControl.denial : 'N/A'}
-                                Parity: ${info[i].normal.airspaceControl.parity  ? info[i].normal.airspaceControl.parity : 'N/A'}
-                                Superiority: ${info[i].normal.airspaceControl.superiority ? info[i].normal.airspaceControl.superiority : 'N/A'}
-                                Supremacy: ${info[i].normal.airspaceControl.supremacy ? info[i].normal.airspaceControl.supremacy : 'N/A'}`, inline: false},
-        
-                                {name: 'Base XP:', value: `
-                                **Small Fleet**: ${info[i].normal.baseXP.smallFleet}
-                                **Medium Fleet**: ${info[i].normal.baseXP.mediumFleet}
-                                **Large Fleet**: ${info[i].normal.baseXP.largeFleet}
-                                **Boss Fleet**: ${info[i].normal.baseXP.bossFleet}`, inline: true},
-        
-                                {name: 'Enemies Level:', value: `
-                                **Mob Level**: ${info[i].normal.enemyLevel.mobLevel}
-                                **Boss Level**: ${info[i].normal.enemyLevel.bossLevel}
-                                **Boss Ship**: ${info[i].normal.enemyLevel.boss}`, inline: true},
-        
-                                {name: 'Required Battles:', value: `
-                                **Battles Before Boss**: ${info[i].normal.requiredBattles}
-                                **Boss Battles For 100%**: ${info[i].normal.bossKillsToClear}`, inline: true},
-        
-                                {name: 'Drops:', value: info[i].normal.mapDrops.join('\n'), inline: true},
-                                {name: 'Blueprints:', value: blueprints.length > 0 ? blueprints.join('\n') : 'None', inline: true}
-                            )
-                    )
+                const normalLevels: MessageEmbed[] = chapterInfo(info, 'normal')
+                if (!info[1].hard) {
+                    return ShinanoPaginator({
+                        interaction: interaction,
+                        interactor_only: true,
+                        pages: normalLevels,
+                        timeout: 120000,
+                    }) 
                 }
 
 
                 // Hard
-                if (info[1].hard) {
-                    const hardLevels: MessageEmbed[] = []
-                    const title = `Chapter ${info.id}: ${info.names.en}`
+                const hardLevels: MessageEmbed[] = chapterInfo(info, 'hard')
+                
 
-                    for (let i = 1; i-1 < 4; i++) {
-                        const blueprints: string[] = []
+                // Selection Menu
+                const navigation = new MessageActionRow()
+                    .addComponents(
+                        new MessageSelectMenu()
+                            .setCustomId(`${chapterNumber}-${interaction.user.id}`)
+                            .setMaxValues(1)
+                            .setMinValues(1)
+                            .addOptions(
+                                {
+                                    label: 'Normal',
+                                    value: 'normal',
+                                    default: true
+                                },
+                                {
+                                    label: 'Hard',
+                                    value: 'hard',
+                                    default: false
+                                }
+                            )
+                    )
+                
 
-                        info[i].hard.blueprintDrops.forEach((blueprint) => {
-                            let name = blueprint.tier + ' ' + blueprint.name
-                            blueprints.push(name)
+
+                // Paginator
+                const message = await interaction.editReply({
+                    embeds: [normalLevels[0]],
+                    components: [navigation]
+                })
+
+                ShinanoPaginator({
+                    interaction: interaction,
+                    interactor_only: true,
+                    pages: normalLevels,
+                    timeout: 120000,
+                    menu: navigation,
+                })
+
+
+
+                // Collector
+                const collector: InteractionCollector<SelectMenuInteraction> = (message as Message).createMessageComponentCollector({
+                    componentType: 'SELECT_MENU',
+                    time: 60000
+                })
+
+                collector.on('collect', async (i) => {
+                    // Filtering Interaction
+                    if (!i.customId.endsWith(i.user.id)) {
+                        return i.reply({
+                            content: 'This menu is not for you!',
+                            ephemeral: true
                         })
-
-                        hardLevels.push(
-                            new MessageEmbed()
-                                .setTitle(`${title} | ${info[i].hard.code} | Hard`)
-                                .setDescription(`
-                                    **${info[i].hard.title}**
-                                    *${info[i].hard.introduction}*`
-                                )
-                                .addFields(
-                                    {name: 'Unlock Requirements:', value: `${info[i].hard.unlockRequirements.text}`, inline: false},
-
-                                    {name: 'Airspace Control:', value: `
-                                    Actual: ${info[i].hard.airspaceControl.actual ? info[i].hard.airspaceControl.actual : 'N/A'}
-                                    Denial: ${info[i].hard.airspaceControl.denial ? info[i].hard.airspaceControl.denial : 'N/A'}
-                                    Parity: ${info[i].hard.airspaceControl.parity ? info[i].hard.airspaceControl.parity : 'N/A'}
-                                    Superiority: ${info[i].hard.airspaceControl.superiority ? info[i].hard.airspaceControl.superiority : 'N/A'}
-                                    Supremacy: ${info[i].hard.airspaceControl.supremacy ? info[i].hard.airspaceControl.supremacy : 'N/A'}`, inline: false},    
-            
-                                    {name: 'Base XP:', value: `
-                                    **Small Fleet**: ${info[i].hard.baseXP.smallFleet}
-                                    **Medium Fleet**: ${info[i].hard.baseXP.mediumFleet}
-                                    **Large Fleet**: ${info[i].hard.baseXP.largeFleet}
-                                    **Boss Fleet**: ${info[i].hard.baseXP.bossFleet}`, inline: true},
-            
-                                    {name: 'Enemies Level:', value: `
-                                    **Mob Level**: ${info[i].normal.enemyLevel.mobLevel}
-                                    **Boss Level**: ${info[i].hard.enemyLevel.bossLevel}
-                                    **Boss Ship**: ${info[i].hard.enemyLevel.boss}`, inline: true},
-            
-                                    {name: 'Required Battles:', value: `
-                                    **Battles Before Boss**: ${info[i].hard.requiredBattles}
-                                    **Boss Battles For 100%**: ${info[i].hard.bossKillsToClear}`, inline: true},
-            
-                                    {name: 'Drops:', value: info[i].hard.mapDrops.join('\n'), inline: true},
-                                    {name: 'Blueprints:', value: blueprints.length > 0 ? blueprints.join('\n') : 'None', inline: true}
-                                )
-                        )
                     }
-                    
-                    
 
-                    // Selection Menu
-                    const navigation = new MessageActionRow()
-                        .addComponents(
-                            new MessageSelectMenu()
-                                .setCustomId(`${chapterNumber}-${interaction.user.id}`)
-                                .setMaxValues(1)
-                                .setMinValues(1)
-                                .addOptions(
-                                    {
-                                        label: 'Normal',
-                                        value: 'normal',
-                                        default: true
-                                    },
-                                    {
-                                        label: 'Hard',
-                                        value: 'hard',
-                                        default: false
-                                    }
-                                )
-                        )
-                    
+                    await i.deferUpdate()
+                    switch (i.values[0]) {
+                        case 'normal': {
+                            (navigation.components[0] as MessageSelectMenu).options[0].default = true;
+                            (navigation.components[0] as MessageSelectMenu).options[1].default = false;
 
-
-                    // Paginator
-                    const message = await interaction.editReply({
-                        embeds: [normalLevels[0]],
-                        components: [navigation]
-                    })
-
-                    ShinanoPaginator({
-                        interaction: interaction,
-                        interactor_only: true,
-                        pages: normalLevels,
-                        timeout: 120000,
-                        menu: navigation,
-                    })
-
-
-
-                    // Collector
-                    const collector: InteractionCollector<SelectMenuInteraction> = (message as Message).createMessageComponentCollector({
-                        componentType: 'SELECT_MENU',
-                        time: 60000
-                    })
-
-                    collector.on('collect', async (i) => {
-                        // Filtering Interaction
-                        if (!i.customId.endsWith(i.user.id)) {
-                            return i.reply({
-                                content: 'This menu is not for you!',
-                                ephemeral: true
+                            ShinanoPaginator({
+                                interaction: interaction,
+                                menu: navigation,
+                                interactor_only: true,
+                                pages: normalLevels,
+                                timeout: 120000,
                             })
+                            break                
                         }
 
-                        await i.deferUpdate()
-                        switch (i.values[0]) {
-                            case 'normal': {
-                                (navigation.components[0] as MessageSelectMenu).options[0].default = true;
-                                (navigation.components[0] as MessageSelectMenu).options[1].default = false;
+                        case 'hard': {
+                            (navigation.components[0] as MessageSelectMenu).options[0].default = false;
+                            (navigation.components[0] as MessageSelectMenu).options[1].default = true;
 
-                                ShinanoPaginator({
-                                    interaction: interaction,
-                                    menu: navigation,
-                                    interactor_only: true,
-                                    pages: normalLevels,
-                                    timeout: 120000,
-                                })
-                                break                
-                            }
-
-                            case 'hard': {
-                                (navigation.components[0] as MessageSelectMenu).options[0].default = false;
-                                (navigation.components[0] as MessageSelectMenu).options[1].default = true;
-
-                                ShinanoPaginator({
-                                    interaction: interaction,
-                                    menu: navigation,
-                                    interactor_only: true,
-                                    pages: hardLevels,
-                                    timeout: 120000,
-                                })                
-                                break
-                            }
+                            ShinanoPaginator({
+                                interaction: interaction,
+                                menu: navigation,
+                                interactor_only: true,
+                                pages: hardLevels,
+                                timeout: 120000,
+                            })                
+                            break
                         }
+                    }
 
-                        collector.resetTimer()
-                    })
-                } else {
-                    // Only pages is needed if hard levels don't exist
-                    ShinanoPaginator({
-                        interaction: interaction,
-                        interactor_only: true,
-                        pages: normalLevels,
-                        timeout: 120000,
-                    })    
-                }
+                    collector.resetTimer()
+                })
+
                 break
             }
 
@@ -897,6 +666,7 @@ export default new Command({
                 const infoEmbeds: MessageEmbed[] = []
                 const statsEmbeds: MessageEmbed[] = []
                 const equippableEmbeds: MessageEmbed[] = []
+
                 for (let i = 1; gear.tiers.length > 1 ? i-1 < gear.tiers.length - 1 : i-1 < gear.tiers.length; i++) {
 
                     let count = i
@@ -907,7 +677,7 @@ export default new Command({
                     let color: any;
                     if (gear.tiers[count].rarity === 'Normal') color = '#b0b7b8';
                     if (gear.tiers[count].rarity === 'Rare') color = '#03dbfc';
-                    if (gear.tiers[count].rarity === 'Elite') color= '#ec18f0';
+                    if (gear.tiers[count].rarity === 'Elite') color = '#ec18f0';
                     if (gear.tiers[count].rarity === 'Super Rare') color = '#eff233';
                     if (gear.tiers[count].rarity === 'Ultra Rare') color = 'BLACK';
 
@@ -940,131 +710,19 @@ export default new Command({
                             .setTitle(`${gear.names['wiki'] !== undefined ? gear.names['wiki'] : gear.names.en} | ${gear.tiers[count].rarity}`)
                     )
 
-                    for (let stat in gear.tiers[count].stats) {
-                        let name: string 
-                        let st = gear.tiers[count].stats[stat].formatted // Stats of {name}
-
-                        switch (stat.toLowerCase()) {
-                            case 'antiair':
-                                name = 'Anti-Air:'
-                                break
-                            case 'volleytime':
-                                name = 'Volley Time:'
-                                break
-                            case 'rateoffire':
-                                name = 'Rate of Fire:'
-                                break
-                            case 'opsdamageboost':
-                                name = 'OPS Damage Boost'
-                                break
-                            case 'ammotype':
-                                name = 'Ammo Type:'
-                                break
-                            case 'planehealth': 
-                                name = 'Plane\'s Health:'
-                                break
-                            case 'dodgelimit':
-                                name = 'Dodge Limit:'
-                                break
-                            case 'crashdamage':
-                                name = 'Crash Damage:'
-                                break
-                            case 'nooftorpedoes':
-                                name = 'Number of Torpedoes:'
-                                break
-                            case 'aaguns': {
-                                let guns: string[] = []
-
-                                gear.tiers[count].stats[stat].stats.forEach((unit) => {
-                                    guns.push(unit.formatted)
-                                })
-
-                                name = 'AA Guns'
-                                st = guns.join('\n')
-
-                                break
-                            }
-                            case 'ordnance': {
-                                let ordnances: string[] = []
-
-                                gear.tiers[count].stats[stat].stats.forEach((unit) => {
-                                    ordnances.push(unit.formatted)
-                                })
-
-                                name = toTitleCase(stat) + ':'
-                                st = ordnances.join('\n')
-
-                                break
-                            }
-                            default: { 
-                                name = toTitleCase(stat) + ':'
-                                break
-                            }
-                        } 
-
-                        statsEmbeds[gear.tiers.length > 1 ? count-1 : count]
-                            .addField(name, st)
-                    }    
+                    gearStats(gear.tiers[count].stats, statsEmbeds[gear.tiers.length > 1 ? count-1 : count])
 
 
                     // Equippables
-                    const fitted: string[] = []
-                    for (let ship in gear.fits) {
-                        if (gear.fits[ship] !== null) {
-                            switch (ship.toLowerCase()) {
-                                case 'destroyer':
-                                    fitted.push(`Destroyer: ${toTitleCase(gear.fits[ship])}`)
-                                    break
-                                case 'lightcruiser':
-                                    fitted.push(`Light Cruiser: ${toTitleCase(gear.fits[ship])}`)
-                                    break
-                                case 'heavycruiser':
-                                    fitted.push(`Heavy Cruiser: ${toTitleCase(gear.fits[ship])}`)
-                                    break
-                                case 'monitor':
-                                    fitted.push(`Monitor: ${toTitleCase(gear.fits[ship])}`)
-                                    break
-                                case 'largecruiser':
-                                    fitted.push(`Large Cruiser: ${toTitleCase(gear.fits[ship])}`)
-                                    break
-                                case 'battleship':
-                                    fitted.push(`Battleship: ${toTitleCase(gear.fits[ship])}`)
-                                    break
-                                case 'battlecruiser':
-                                    fitted.push(`Battlecruiser: ${toTitleCase(gear.fits[ship])}`)
-                                    break
-                                case 'aviationbattleship':
-                                    fitted.push(`Aviation Battleship: ${toTitleCase(gear.fits[ship])}`)
-                                    break
-                                case 'lightcarrier':
-                                    fitted.push(`Light Carrier: ${toTitleCase(gear.fits[ship])}`)
-                                    break
-                                case 'aircraftcarrier':
-                                    fitted.push(`Aircraft Carrier: ${toTitleCase(gear.fits[ship])}`)
-                                    break
-                                case 'repairship':
-                                    fitted.push(`Repair Ship: ${toTitleCase(gear.fits[ship])}`)
-                                    break
-                                case 'munitionship':
-                                    fitted.push(`Munition Ship: ${toTitleCase(gear.fits[ship])}`)
-                                    break
-                                case 'submarine':
-                                    fitted.push(`Submarine: ${toTitleCase(gear.fits[ship])}`)
-                                    break
-                                case 'submarinecarrier':
-                                    fitted.push(`Submarine Carrier: ${toTitleCase(gear.fits[ship])}`)
-                            }
-                        }
-                    }
-                    
                     equippableEmbeds.push(
                         new MessageEmbed()
                             .setColor(color)
                             .setThumbnail(gear.image)
                             .setTitle(`${gear.names['wiki'] !== undefined ? gear.names['wiki'] : gear.names.en}`)
-                            .addField('Equippable By:', fitted.join('\n'))
+                            .addField('Equippable By:', gearFits(gear.fits).join('\n'))
                     )
                 }
+
 
                 // Selection Menu
                 const navigationTiers = new MessageActionRow()
@@ -1118,6 +776,7 @@ export default new Command({
                         )    
                     )
 
+                    
                 // Collector
                 let message;
                 if (gear.tiers.length > 1) {
@@ -1131,6 +790,7 @@ export default new Command({
                         components: [navigationOptions]
                     })
                 }
+
 
                 const collector: InteractionCollector<SelectMenuInteraction> = message.createMessageComponentCollector({
                     componentType: 'SELECT_MENU',
@@ -1154,6 +814,7 @@ export default new Command({
                             case 'T1': {
                                 tierCount = 0
 
+                                // Resetting the selection
                                 for (let i = 0; i < 3; i++) {
                                     if (i !== 0) {
                                         (navigationTiers.components[0] as MessageSelectMenu).options[i].default = false;
@@ -1354,6 +1015,7 @@ export default new Command({
                 let prFSTableTotal: number[]
                 let color: any
 
+
                 const response = await fetch('https://amagi-api-back.herokuapp.com/azur-lane/ship-stats', {
                     method: "GET",
                     headers: {
@@ -1362,13 +1024,16 @@ export default new Command({
                 })
                 const data = (await response.json()).body
 
-                if (interaction.options.getString('fate-sim-level') == null) {
+
+                if (!interaction.options.getString('fate-sim-level')) {
                     fateSimLevel = 0
                 } else {
                     fateSimLevel = parseInt(interaction.options.getString('fate-sim-level'), 10)
                     devLevel = 30
                 }
 
+
+                // Validating Ship
                 const ship: any = await AL.ships.get(shipName)
                 if (!ship) {
                     const shipNotFound: MessageEmbed = new MessageEmbed()
@@ -1384,6 +1049,8 @@ export default new Command({
                     return interaction.reply({embeds: [shipNotPR]})
                 }
 
+
+                // Assigning PR/DR table
                 if (ship.rarity === 'Priority') {
                     color = 'GOLD'
                     prTable = data.PR
@@ -1398,7 +1065,8 @@ export default new Command({
                     totalPRBPs = prTable[30] + prFSTable[5]
                 }
                 
-
+                
+                // Validating Data
                 if (unusedBPs < 0 || devLevel < 0 || fateSimLevel < 0 || ((unusedBPs > totalPRBPs) && (devLevel > 0)) || devLevel > 30) {
                     const impossible: MessageEmbed = new MessageEmbed()
                         .setDescription('Your inputted data is wrong, please check again')
@@ -1433,19 +1101,19 @@ export default new Command({
                     .setTitle(`PR Completion | ${ship.rarity} | ${ship.names.en}`)
                     .setThumbnail(ship.thumbnail)
                     .addFields(
-                        {name: 'Ship Info:', value: `
-                        Unused BPs: **${unusedBPs}**
-                        Dev Level: **${devLevel}**
-                        Fate Sim Level: **${fateSimLevel}**`},
+                        {name: 'Ship Info:', value:
+                        `Unused BPs: **${unusedBPs}**\n` +
+                        `Dev Level: **${devLevel}**\n` +
+                        `Fate Sim Level: **${fateSimLevel}**`},
 
-                        {name: 'Current PR Progress:', value: `
-                        Total BPs: **${totalBPs}**
-                        BPs until Dev 30: **${BPsAwayFromDev30}**
-                        BPs until Fate Sim 5: **${BPsAwayFromFS5}**
-                        Final Dev Level: **${finalDevLevel}**
-                        Final Fate Sim Level: **${finalFSLevel}**
-                        PR Completion: **${PRcompletionPercentage.toFixed(2)}%**
-                        PR Completion (with Fate Sim): **${PRcompletionPercentageFS.toFixed(2)}%**`}
+                        {name: 'Current PR Progress:', value: 
+                        `Total BPs: **${totalBPs}**\n`+
+                        `BPs until Dev 30: **${BPsAwayFromDev30}**\n`+
+                        `BPs until Fate Sim 5: **${BPsAwayFromFS5}**\n`+
+                        `Final Dev Level: **${finalDevLevel}**\n` +
+                        `Final Fate Sim Level: **${finalFSLevel}**\n` +
+                        `PR Completion: **${PRcompletionPercentage.toFixed(2)}%**\n` +
+                        `PR Completion (with Fate Sim): **${PRcompletionPercentageFS.toFixed(2)}%**`}
                     )
                     .setFooter({text: 'Fate Sim is included regardless even if the ship does not have Fate Sim in game.'})
                 await interaction.editReply({embeds: [completion]})
