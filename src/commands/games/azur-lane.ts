@@ -147,13 +147,13 @@ export default new Command({
                 // Getting information about the ship
                 const shipName: string = interaction.options.getString('ship-name')
                 const ship: any = await AL.ships.get(shipName)
-                if (ship == undefined) {
+                if (!ship) {
                     const shipNotFound: MessageEmbed = new MessageEmbed()
                         .setDescription('Ship not found!')
                         .setColor('RED')
                     return interaction.reply({embeds:[shipNotFound], ephemeral: true})
                 }
-                
+
 
                 // Color Picking
                 let color: any
@@ -182,11 +182,11 @@ export default new Command({
                 // PR Checking
                 if (ship.rarity !== 'Decisive' && ship.rarity !== 'Priority') {
                     const pools: string[] = []
-                    if (ship.construction.availableIn.exchange !== false) pools.push('Exchange')
-                    if (ship.construction.availableIn.light !== false) pools.push('Light Ship Pool');
-                    if (ship.construction.availableIn.heavy !== false) pools.push('Heavy Ship Pool');
-                    if (ship.construction.availableIn.aviation !== false) pools.push('Special Ship Pool');
-                    if (ship.construction.availableIn.limited !== false) pools.push(`Limited Ship Pool: ${ship.construction.availableIn.limited}`);
+                    if (ship.construction.availableIn.exchange) pools.push('Exchange')
+                    if (ship.construction.availableIn.light) pools.push('Light Ship Pool');
+                    if (ship.construction.availableIn.heavy) pools.push('Heavy Ship Pool');
+                    if (ship.construction.availableIn.aviation) pools.push('Special Ship Pool');
+                    if (ship.construction.availableIn.limited) pools.push(`Limited Ship Pool: ${ship.construction.availableIn.limited}`);
                     
 
                     // Banner Pool
@@ -213,6 +213,7 @@ export default new Command({
                         : aprIn = aprIn + `: ${maps.join(', ')}`
                     
 
+                    // Adding Data
                     info
                         .addFields(
                             {name: 'Construction:', value: ship.construction.constructionTime === 'Drop Only' ? 'Cannot be Constructed' : ship.construction.constructionTime },
@@ -220,6 +221,7 @@ export default new Command({
                             {name: 'Obtainable From:', value: `${ship.obtainedFrom.obtainedFrom !== undefined ? ship.obtainedFrom.obtainedFrom : `Maps`}`}
                         )
                 } else {
+                    // PR/DR Ships
                     info.addField('Obtain From:', 'Shipyard')
                 }
 
@@ -248,6 +250,19 @@ export default new Command({
                     `**Dev 30**: ${ship.devLevels[5].buffs.join('/')}\n`
                 }
 
+                const scrapValue: string[] = []
+                for (let value in ship.scrapValue) {
+                    scrapValue.push(
+                        `${toTitleCase(value)}: ${ship.scrapValue[value]}`
+                    )
+                }
+
+                const enhanceValue: string[] = []
+                for (let value in ship.enhanceValue) {
+                    enhanceValue.push(
+                        `${toTitleCase(value)}: ${ship.enhanceValue[value]}`
+                    )
+                }
 
                 const statsTable = await generateStatsTable(ship.stats)
                 const stats: MessageEmbed = new MessageEmbed()
@@ -261,6 +276,9 @@ export default new Command({
                         `**${ship.slots[0].type}**: ${ship.slots[0].minEfficiency}%/${ship.slots[0].maxEfficiency}%\n` +
                         `**${ship.slots[1].type}**: ${ship.slots[1].minEfficiency}%/${ship.slots[1].maxEfficiency}%\n` +
                         `**${ship.slots[2].type}**: ${ship.slots[2].minEfficiency}%/${ship.slots[2].maxEfficiency}%`},
+                        {name: 'Scrap Value:', value: scrapValue.join('\n'), inline: true},
+                        {name: 'Enhance Value:', value: enhanceValue.join('\n'), inline: true}
+
                     )
                 
 
@@ -338,7 +356,7 @@ export default new Command({
 
 
                 // Skins
-                const skinEmbed: MessageEmbed[] = []
+                const skinEmbeds: MessageEmbed[] = []
                 let description: string;
 
                 ship.skins.forEach((skin) => {
@@ -357,7 +375,7 @@ export default new Command({
                         `**Obtain From**: ${skin.info.obtainedFrom}\n`
                     }
 
-                    skinEmbed.push(
+                    skinEmbeds.push(
                         new MessageEmbed()
                             .setTitle(`${ship.names.en}'s Skins`)
                             .setDescription(description)
@@ -410,10 +428,38 @@ export default new Command({
                                 }
                             )
                     )
-                const message = await interaction.editReply({embeds:[info], components: [category]})
+
+
+                // Gallery
+                const galleryEmbeds: MessageEmbed[] = []
+                if (ship.gallery.length != 0) {
+                    // Generating Embeds
+                    if (ship.gallery.length != 0) {
+                        ship.gallery.forEach((image) => {
+                            galleryEmbeds.push(
+                                new MessageEmbed()
+                                    .setColor(color)
+                                    .setTitle(`${ship.names.en}'s Image Gallery`)
+                                    .setDescription(image.description)
+                                    .setImage(image.url)
+                            )
+                        })
+                    };
+
+                    // Adding Options
+                    (category.components[0] as MessageSelectMenu).addOptions(
+                        {
+                            label: 'Gallery',
+                            value: 'gallery',
+                            default: false,
+                            emoji: '📸'
+                        }
+                    )
+                }
 
 
                 // Collector 
+                const message = await interaction.editReply({embeds:[info], components: [category]})
                 const collector: InteractionCollector<SelectMenuInteraction> = await (message as Message).createMessageComponentCollector({
                     componentType: 'SELECT_MENU',
                     time: 120000,
@@ -435,7 +481,7 @@ export default new Command({
                         await i.deferUpdate()
                         switch (i.values[0]) {
                             case 'info': {
-                                for (let i = 0; i < 5; i++) {
+                                for (let i = 0; i < (category.components[0] as MessageSelectMenu).options.length; i++) {
                                     i == 0
                                         ? (category.components[0] as MessageSelectMenu).options[i].default = true
                                         : (category.components[0] as MessageSelectMenu).options[i].default = false
@@ -449,7 +495,7 @@ export default new Command({
                             }
 
                             case 'tech': {
-                                for (let i = 0; i < 5; i++) {
+                                for (let i = 0; i < (category.components[0] as MessageSelectMenu).options.length; i++) {
                                     i == 1
                                         ? (category.components[0] as MessageSelectMenu).options[i].default = true
                                         : (category.components[0] as MessageSelectMenu).options[i].default = false
@@ -463,7 +509,7 @@ export default new Command({
                             }
                             
                             case 'stats': {
-                                for (let i = 0; i < 5; i++) {
+                                for (let i = 0; i < (category.components[0] as MessageSelectMenu).options.length; i++) {
                                     i == 2
                                         ? (category.components[0] as MessageSelectMenu).options[i].default = true
                                         : (category.components[0] as MessageSelectMenu).options[i].default = false
@@ -477,7 +523,7 @@ export default new Command({
                             }
 
                             case 'skills': {
-                                for (let i = 0; i < 5; i++) {
+                                for (let i = 0; i < (category.components[0] as MessageSelectMenu).options.length; i++) {
                                     i == 3
                                         ? (category.components[0] as MessageSelectMenu).options[i].default = true
                                         : (category.components[0] as MessageSelectMenu).options[i].default = false
@@ -492,21 +538,45 @@ export default new Command({
     
         
                             case 'skins': {
-                                for (let i = 0; i < 5; i++) {
+                                for (let i = 0; i < (category.components[0] as MessageSelectMenu).options.length; i++) {
                                     i == 4
                                         ? (category.components[0] as MessageSelectMenu).options[i].default = true
                                         : (category.components[0] as MessageSelectMenu).options[i].default = false
                                 }
 
-                                if (skinEmbed.length === 1) {
+                                if (skinEmbeds.length === 1) {
                                     await i.editReply({
-                                        embeds: [skinEmbed[0]],
+                                        embeds: [skinEmbeds[0]],
                                         components: [category]
                                     })
                                 } else {
                                     ShinanoPaginator({
                                         interaction: interaction,
-                                        pages: skinEmbed,
+                                        pages: skinEmbeds,
+                                        interactor_only: true,
+                                        timeout: 120000,
+                                        menu: category,
+                                    })
+                                }
+                                break
+                            }
+
+                            case 'gallery': {
+                                for (let i = 0; i < (category.components[0] as MessageSelectMenu).options.length; i++) {
+                                    i == 5
+                                        ? (category.components[0] as MessageSelectMenu).options[i].default = true
+                                        : (category.components[0] as MessageSelectMenu).options[i].default = false
+                                }
+
+                                if (galleryEmbeds.length === 1) {
+                                    await i.editReply({
+                                        embeds: [galleryEmbeds[0]],
+                                        components: [category]
+                                    })
+                                } else {
+                                    ShinanoPaginator({
+                                        interaction: interaction,
+                                        pages: galleryEmbeds,
                                         interactor_only: true,
                                         timeout: 120000,
                                         menu: category,
