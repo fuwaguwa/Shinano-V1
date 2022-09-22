@@ -440,7 +440,7 @@ export default new Command({
                                 new MessageEmbed()
                                     .setColor(color)
                                     .setTitle(`${ship.names.en}'s Image Gallery`)
-                                    .setDescription(image.description)
+                                    .setDescription(`[${image.description}](${image.url})`)
                                     .setImage(image.url)
                             )
                         })
