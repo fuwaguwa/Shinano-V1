@@ -10,7 +10,9 @@ export async function ShinanoPaginator(options: {
     timeout: number,
 }) {
     let pageCount: number = 0
-    const menuId = (options.menu.components[0] as MessageSelectMenu).customId.split('-')[0]
+    let menuId: string;
+    
+    if (options.menu) menuId = (options.menu.components[0] as MessageSelectMenu).customId.split('-')[0];
 
     // Deferring the reply
     if (options.interaction.deferred == false) await options.interaction.deferReply();
