@@ -250,19 +250,25 @@ export default new Command({
                     `**Dev 30**: ${ship.devLevels[5].buffs.join('/')}\n`
                 }
 
-                const scrapValue: string[] = []
-                for (let value in ship.scrapValue) {
-                    scrapValue.push(
-                        `${toTitleCase(value)}: ${ship.scrapValue[value]}`
-                    )
+
+                // Scrap/Enhance Value
+                let scrapValue: string[] = []
+                let enhanceValue: string[] = []
+
+                if (ship.rarity === 'Priority' || ship.rarity === 'Decisive') {
+                    for (let value in ship.scrapValue) {
+                        scrapValue.push(
+                            `${toTitleCase(value)}: ${ship.scrapValue[value]}`
+                        )
+                    }
+    
+                    for (let value in ship.enhanceValue) {
+                        enhanceValue.push(
+                            `${toTitleCase(value)}: ${ship.enhanceValue[value]}`
+                        )
+                    }
                 }
 
-                const enhanceValue: string[] = []
-                for (let value in ship.enhanceValue) {
-                    enhanceValue.push(
-                        `${toTitleCase(value)}: ${ship.enhanceValue[value]}`
-                    )
-                }
 
                 const statsTable = await generateStatsTable(ship.stats)
                 const stats: MessageEmbed = new MessageEmbed()
@@ -276,10 +282,14 @@ export default new Command({
                         `**${ship.slots[0].type}**: ${ship.slots[0].minEfficiency}%/${ship.slots[0].maxEfficiency}%\n` +
                         `**${ship.slots[1].type}**: ${ship.slots[1].minEfficiency}%/${ship.slots[1].maxEfficiency}%\n` +
                         `**${ship.slots[2].type}**: ${ship.slots[2].minEfficiency}%/${ship.slots[2].maxEfficiency}%`},
-                        {name: 'Scrap Value:', value: scrapValue.join('\n'), inline: true},
-                        {name: 'Enhance Value:', value: enhanceValue.join('\n'), inline: true}
-
                     )
+
+                if (scrapValue.length != 0) {
+                    stats.addFields(
+                        {name: 'Scrap Value: ', value: scrapValue.join('\n')},
+                        {name: 'Enhance Value:', value: enhanceValue.join('\n')}
+                    )
+                }
                 
 
                 // Skills
