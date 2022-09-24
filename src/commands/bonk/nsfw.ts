@@ -201,7 +201,7 @@ export default new Command({
             if (interaction.options.getSubcommandGroup() === 'hentai') {
                 switch (interaction.options.getSubcommand()) {
                     case 'random': {
-                        const response = await fetch('https://amagi-api-back.herokuapp.com/nsfw/random', {
+                        const response = await fetch('https://amagi-api-b.herokuapp.com/nsfw/random', {
                             method: "GET",
                             headers: {
                                 'apiKey': process.env['lewdApiKey']
@@ -216,7 +216,7 @@ export default new Command({
                     }
     
                     case 'bomb': {
-                        const response = await fetch('https://amagi-api-back.herokuapp.com/nsfw/bomb', {
+                        const response = await fetch('https://amagi-api-b.herokuapp.com/nsfw/bomb', {
                             method: "GET",
                             headers: {
                                 'apiKey': process.env['lewdApiKey']
@@ -232,7 +232,7 @@ export default new Command({
                     case 'elf': case 'genshin': case 'kemonomimi': case 'misc': case 'shipgirls': case 'undies':
                     case 'vtubers': case 'yuri': {
                         const category = interaction.options.getSubcommand()
-                        const response = await fetch(`https://amagi-api-back.herokuapp.com/nsfw/private/${category}`, {
+                        const response = await fetch(`https://amagi-api-b.herokuapp.com/nsfw/private/${category}`, {
                             method: "GET",
                             headers: {
                                 "apiKey": process.env['lewdApiKey']
@@ -249,7 +249,7 @@ export default new Command({
 
                     case 'video': {
                         async function videoFetch() {
-                            const response = await fetch(`https://amagi-api-back.herokuapp.com/nsfw/private/random?type=mp4`, {
+                            const response = await fetch(`https://amagi-api-b.herokuapp.com/nsfw/private/random?type=mp4`, {
                                 method: "GET",
                                 headers: {
                                     "apiKey": process.env['lewdApiKey']
@@ -267,7 +267,7 @@ export default new Command({
                     }
 
                     default: {
-                        const response = await fetch(`https://amagi-api-back.herokuapp.com/nsfw/public/${interaction.options.getSubcommand()}`, {
+                        const response = await fetch(`https://amagi-api-b.herokuapp.com/nsfw/public/${interaction.options.getSubcommand()}`, {
                             method: "GET",
                             headers: {
                                 'apiKey': process.env['lewdApiKey']
@@ -284,7 +284,7 @@ export default new Command({
             } else if (interaction.options.getSubcommandGroup() === 'porn') {
                 switch (interaction.options.getSubcommand()) {
                     default: {
-                        const response = await fetch(`https://amagi-api-back.herokuapp.com/nsfw/porn/${interaction.options.getSubcommand()}`, {
+                        const response = await fetch(`https://amagi-api-b.herokuapp.com/nsfw/porn/${interaction.options.getSubcommand()}`, {
                             method: "GET",
                             headers: {
                                 'apiKey': process.env['lewdApiKey']
