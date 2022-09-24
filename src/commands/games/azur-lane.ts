@@ -1059,9 +1059,6 @@ export default new Command({
                 // EXP Calculation
                 const response = await fetch('https://amagi-api-b.herokuapp.com/azur-lane/ship-stats', {
                     method: "GET",
-                    headers: {
-                        'apiKey': process.env['lewdApiKey']
-                    }
                 })
                 const data = (await response.json()).body
 
@@ -1098,9 +1095,6 @@ export default new Command({
 
                 const response = await fetch('https://amagi-api-b.herokuapp.com/azur-lane/ship-stats', {
                     method: "GET",
-                    headers: {
-                        'apiKey': process.env['lewdApiKey']
-                    }
                 })
                 const data = (await response.json()).body
 

@@ -8,7 +8,6 @@ declare global {
             dogApiKey: string;
             catApiKey: string;
             ninjaApiKey: string;
-            lewdApiKey: string;
             commandLogging: string;
             deepAIApiKey: string;
             saucenaoApiKey: string;

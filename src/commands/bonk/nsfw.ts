@@ -203,9 +203,6 @@ export default new Command({
                     case 'random': {
                         const response = await fetch('https://amagi-api-b.herokuapp.com/nsfw/random', {
                             method: "GET",
-                            headers: {
-                                'apiKey': process.env['lewdApiKey']
-                            }
                         })
                         const waifu = await response.json()
                         if (!(waifu.link as string).endsWith('mp4')) {
@@ -218,9 +215,6 @@ export default new Command({
                     case 'bomb': {
                         const response = await fetch('https://amagi-api-b.herokuapp.com/nsfw/bomb', {
                             method: "GET",
-                            headers: {
-                                'apiKey': process.env['lewdApiKey']
-                            }
                         })
                         const waifu = await response.json()
                         return interaction.editReply({
@@ -234,9 +228,6 @@ export default new Command({
                         const category = interaction.options.getSubcommand()
                         const response = await fetch(`https://amagi-api-b.herokuapp.com/nsfw/private/${category}`, {
                             method: "GET",
-                            headers: {
-                                "apiKey": process.env['lewdApiKey']
-                            }
                         })
                         const uwu = await response.json()
 
@@ -251,9 +242,6 @@ export default new Command({
                         async function videoFetch() {
                             const response = await fetch(`https://amagi-api-b.herokuapp.com/nsfw/private/random?type=mp4`, {
                                 method: "GET",
-                                headers: {
-                                    "apiKey": process.env['lewdApiKey']
-                                }
                             })
                             
                             const responseJson = await response.json()
@@ -269,9 +257,6 @@ export default new Command({
                     default: {
                         const response = await fetch(`https://amagi-api-b.herokuapp.com/nsfw/public/${interaction.options.getSubcommand()}`, {
                             method: "GET",
-                            headers: {
-                                'apiKey': process.env['lewdApiKey']
-                            }
                         })
                         const waifu = await response.json()
                         lewdEmbed.setImage(waifu.link)
@@ -286,9 +271,6 @@ export default new Command({
                     default: {
                         const response = await fetch(`https://amagi-api-b.herokuapp.com/nsfw/porn/${interaction.options.getSubcommand()}`, {
                             method: "GET",
-                            headers: {
-                                'apiKey': process.env['lewdApiKey']
-                            }
                         })
                         const result = await response.json()
 
