@@ -44,7 +44,7 @@ function animeInfo({anime, interaction}) {
                 `**Genres**: ${genres.join(', ')}\n` + 
                 `**JP Title**: ${anime.title_japanese ? anime.title_japanese : 'None'}\n` +
                 `**Trailer**: ${anime.trailer.url ? `[Trailer Link](${anime.trailer.url})` : "None"}\n` +
-                `**Studio(s)**: ${studios.join(', ')}\n`
+                `**Studio**: ${studios.join(', ')}\n`
             },
             {
                 name: 'Episodes Info:', 
