@@ -58,11 +58,6 @@ export default new Command({
             ]
         },
         {
-            type: 'SUB_COMMAND',
-            name: 'usage',
-            description: 'Check memory usage.'
-        },
-        {
             type: 'SUB_COMMAND_GROUP',
             name: 'blacklist',
             description: 'hehe',
