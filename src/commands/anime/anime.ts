@@ -91,6 +91,7 @@ export default new Command({
                         {name: 'TV', value: 'tv'},
                         {name: 'Movie', value: 'movie'},
                         {name: 'OVA (Original Video Animation)', value: 'ova'},
+                        {name: 'ONA (Original Net Animation)', value: 'ona'}
                     ]
                 }
            ]
@@ -124,6 +125,7 @@ export default new Command({
                 const query = `q=${animeName}&limit=10&order_by=popularity&type=${animeType}&sfw=true`
                 const response = await fetch(`https://api.jikan.moe/v4/anime?${query}`, {method: "GET"})
 
+
                 // Filtering
                 const animeResponse = (await response.json()).data
                 if (animeResponse.length == 0) {
@@ -141,8 +143,9 @@ export default new Command({
                             .setMaxValues(1)
                             .setMinValues(1)
                     )
+                
+                // Adding Search Results To Menu
                 animeResponse.forEach(result => {
-                    // Adding Search Results To Menu
                     (resultNavigation.components[0] as MessageSelectMenu).addOptions(
                         {
                             label: `${result.title} | ${result.title_japanese ? result.title_japanese : 'No Japanese Title'}`,
@@ -173,7 +176,7 @@ export default new Command({
 
                 resultCollector.on('end', async (collected, reason) => {
                     if (isNum(reason)) {
-                        // Await
+                        // Fetching info and displaying it
                         const waiting: MessageEmbed = new MessageEmbed()
                             .setDescription('Fetching data...')
                             .setColor('GREEN')
