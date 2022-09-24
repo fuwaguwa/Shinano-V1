@@ -8,7 +8,7 @@ import petpet from "pet-pet-gif"
 import deepAI from 'deepai'
 import { client } from "../..";
 config()
-deepAI.setApiKey(process.env['deepAIApiKey'])
+deepAI.setApiKey(process.env.deepAIApiKey)
 
 const CVC: any = Canvacord
 Canvas.registerFont(`Upright.otf`, {family: 'Upright'})

@@ -46,7 +46,7 @@ export async function updateServerCount() {
     await fetch(`https://api.discordservices.net/bot/1002193298229829682/stats`, {
         method: "POST",
         headers: {
-            "Authorization": process.env['discordServicesApiKey']
+            "Authorization": process.env.discordServicesApiKey
         },
         body: JSON.stringify({
             "servers": client.guilds.cache.size
@@ -58,7 +58,7 @@ export async function updateServerCount() {
         method: "POST",
         headers: {
             "content-type": "application/json",
-            "Authorization": process.env['topggApiKey']
+            "Authorization": process.env.topggApiKey
         },
         body: JSON.stringify({
             "server_count": client.guilds.cache.size

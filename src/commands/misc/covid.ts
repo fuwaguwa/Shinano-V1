@@ -45,7 +45,7 @@ export default new Command({
             method: "GET",
             headers: {
                 'X-RapidAPI-Host': 'covid-193.p.rapidapi.com',
-                'X-RapidAPI-Key': process.env['rapidApiKey']
+                'X-RapidAPI-Key': process.env.rapidApiKey
             }
         })
         const covid = await response.json()

@@ -22,7 +22,7 @@ export default new Command({
         const response = await fetch(`https://discord.com/api/v8/users/${user.id}`, {
             method: "GET",
             headers: {
-                Authorization: `Bot ${process.env['botToken']}`
+                Authorization: `Bot ${process.env.botToken}`
             }
         })
         

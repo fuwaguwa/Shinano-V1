@@ -7,14 +7,13 @@ const client = new Shinano();
 
 
 // Establishing Connections
-mongoose.connect(process.env['mongoDB']).then(() => {
+mongoose.connect(process.env.mongoDB).then(() => {
     console.log('Connected to database!')
 }).catch((err) => {
     console.log(err)
 })
 
 client.start();
-client.startEventListener()
 
 
 export {client}

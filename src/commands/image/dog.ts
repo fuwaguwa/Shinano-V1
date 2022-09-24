@@ -12,7 +12,7 @@ export default new Command({
         await interaction.deferReply()
         const response = await fetch('https://api.thedogapi.com/v1/images/search', {
             method:"GET",
-            headers:{"X-Api-Key": process.env['dogApiKey']}
+            headers:{"X-Api-Key": process.env.dogApiKey}
         })
         const dog = await response.json()
 

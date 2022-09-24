@@ -6,7 +6,7 @@ import {config} from 'dotenv'
 import fetch from 'node-fetch'
 config();
 
-const sauce: SauceNao = new SauceNao({api_key: process.env['saucenaoApiKey']})
+const sauce: SauceNao = new SauceNao({api_key: process.env.saucenaoApiKey})
 
 
 export default new Command({

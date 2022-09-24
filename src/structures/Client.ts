@@ -22,7 +22,25 @@ export class Shinano extends Client {
         this.registerModules();
         
         // Login
-        this.login(process.env['botToken']);
+        this.login(process.env.botToken);
+
+
+        // Error Catcher
+        process.on("unhandledRejection", async (err) => {
+            console.error("Unhandled Promise Rejection:\n", err);
+        });
+        process.on("uncaughtException", async (err) => {
+            console.error("Uncaught Promise Exception:\n", err);
+        });
+        process.on("uncaughtExceptionMonitor", async (err) => {
+            console.error("Uncaught Promise Exception (Monitor):\n", err);
+        });
+        process.on("multipleResolves", async (type, promise, reason) => {
+            if (reason.toLocaleString() === "Error: Cannot perform IP discovery - socket closed") return;
+            if (reason.toLocaleString() === "AbortError: The operation was aborted") return;
+            
+            console.error("Multiple Resolves:\n", type, promise, reason);
+        });        
     }
 
     startEventListener() {
@@ -75,7 +93,7 @@ export class Shinano extends Client {
         this.on("ready", () => {
             this.registerCommands({
                 commands: slashCommands,
-                guildId: process.env['guildId']
+                guildId: process.env.guildId
             });
         });
 

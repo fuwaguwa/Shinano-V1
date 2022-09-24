@@ -12,7 +12,7 @@ export default new Command({
         await interaction.deferReply()
         const response = await fetch('https://api.thecatapi.com/v1/images/search', {
             method: "GET",
-            headers: {"X-Api-Key": process.env['catApiKey']}
+            headers: {"X-Api-Key": process.env.catApiKey}
         })
         const cat = await response.json()
         const catEmbed = new MessageEmbed()
