@@ -747,26 +747,32 @@ export default new Command({
                 const statsEmbeds: MessageEmbed[] = []
                 const equippableEmbeds: MessageEmbed[] = []
 
-                for (let i = 1; gear.tiers.length > 1 ? i-1 < gear.tiers.length - 1 : i-1 < gear.tiers.length; i++) {
 
-                    let count = i
-                    if (gear.tiers.length === 1) count = i - 1;
+                // Skipping the 0th index for gears with 1+ tiers
+                let startingIndex;
+                gear.tiers.length != 1 ? startingIndex = 1 : startingIndex = 0;                
 
-
+                
+                for (let i = startingIndex; i < gear.tiers.length; i++) {
                     // Color Picking
                     let color: any;
-                    if (gear.tiers[count].rarity === 'Normal') color = '#b0b7b8';
-                    if (gear.tiers[count].rarity === 'Rare') color = '#03dbfc';
-                    if (gear.tiers[count].rarity === 'Elite') color = '#ec18f0';
-                    if (gear.tiers[count].rarity === 'Super Rare') color = '#eff233';
-                    if (gear.tiers[count].rarity === 'Ultra Rare') color = 'BLACK';
+                    if (gear.tiers[i].rarity === 'Normal') color = '#b0b7b8';
+                    if (gear.tiers[i].rarity === 'Rare') color = '#03dbfc';
+                    if (gear.tiers[i].rarity === 'Elite') color = '#ec18f0';
+                    if (gear.tiers[i].rarity === 'Super Rare') color = '#eff233';
+                    if (gear.tiers[i].rarity === 'Ultra Rare') color = 'BLACK';
+
+
+                    // Changing array index according for gears with 1+ tiers
+                    let arrayIndex;
+                    gear.tiers.length != 1 ? arrayIndex = i-1 : arrayIndex = i
 
 
                     // General Info
                     infoEmbeds.push(
                         new MessageEmbed()
-                            .setTitle(`${gear.names['wiki'] !== undefined ? gear.names['wiki'] : gear.names.en} | ${gear.tiers[count].rarity}`)
-                            .setDescription(`Stars: ${gear.tiers[count].stars.stars}`)
+                            .setTitle(`${gear.names['wiki'] !== undefined ? gear.names['wiki'] : gear.names.en} | ${gear.tiers[i].rarity}`)
+                            .setDescription(`Stars: ${gear.tiers[i].stars.stars}`)
                             .setColor(color)
                             .setThumbnail(gear.image)
                             .addFields(
@@ -777,7 +783,7 @@ export default new Command({
                     )
 
                     if (gear.misc.notes.length > 0) {
-                        infoEmbeds[gear.tiers.length > 1 ? count-1 : count]
+                        infoEmbeds[arrayIndex]
                             .addField('Notes:', gear.misc.notes)
                     }
                     
@@ -787,10 +793,10 @@ export default new Command({
                         new MessageEmbed()
                             .setColor(color)
                             .setThumbnail(gear.image)
-                            .setTitle(`${gear.names['wiki'] !== undefined ? gear.names['wiki'] : gear.names.en} | ${gear.tiers[count].rarity}`)
+                            .setTitle(`${gear.names['wiki'] !== undefined ? gear.names['wiki'] : gear.names.en} | ${gear.tiers[i].rarity}`)
                     )
 
-                    gearStats(gear.tiers[count].stats, statsEmbeds[gear.tiers.length > 1 ? count-1 : count])
+                    gearStats(gear.tiers[i].stats, statsEmbeds[arrayIndex])
 
 
                     // Equippables
@@ -798,7 +804,7 @@ export default new Command({
                         new MessageEmbed()
                             .setColor(color)
                             .setThumbnail(gear.image)
-                            .setTitle(`${gear.names['wiki'] !== undefined ? gear.names['wiki'] : gear.names.en}`)
+                            .setTitle(`${gear.names['wiki'] ? gear.names['wiki'] : gear.names.en}`)
                             .addField('Equippable By:', gearFits(gear.fits).join('\n'))
                     )
                 }
