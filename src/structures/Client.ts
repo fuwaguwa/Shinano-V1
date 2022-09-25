@@ -65,7 +65,7 @@ export class Shinano extends Client {
         // Registering Slash Commands
         const slashCommands: ApplicationCommandDataResolvable[] = [];
         const commandFiles = await promiseGlob(
-            `${__dirname}/../commands/*/*{.ts,.js}`
+            `${__dirname}/../commands/*/*.ts`
         )
 
         commandFiles.forEach(async (filePath) => {
@@ -86,7 +86,7 @@ export class Shinano extends Client {
 
         // Initiating Event Listeners
         const eventFiles = await promiseGlob(
-            `${__dirname}/../events/*{.ts,.js}`
+            `${__dirname}/../events/*.ts`
         )
 
         eventFiles.forEach(async (filePath) => {
