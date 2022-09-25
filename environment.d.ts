@@ -8,14 +8,11 @@ declare global {
             dogApiKey: string;
             catApiKey: string;
             ninjaApiKey: string;
-            commandLogging: string;
             deepAIApiKey: string;
             saucenaoApiKey: string;
             malClientId: string;
             discordServicesApiKey: string;
             topggApiKey: string;
-            nekobotApiKey: string;
-            environment: "dev" | "prod" | "debug";
         }
     }
 }
