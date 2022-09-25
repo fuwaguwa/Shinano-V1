@@ -8,34 +8,34 @@ export default new Command({
     cooldown: 4500,
     options: [
         {
+            type: 'SUB_COMMAND',
             name: 'info',
             description: 'Show information about the bot.',
-            type: 'SUB_COMMAND'
         },
         {
+            type: 'SUB_COMMAND',
             name: 'stats',
             description: 'Display bot\'s stats.',
-            type: 'SUB_COMMAND'
         },
         {
+            type:'SUB_COMMAND',
             name: 'uptime',
             description: 'Show the bot\'s uptime.',
-            type:'SUB_COMMAND'
         },
         {
+            type: 'SUB_COMMAND',
             name: 'ping',
             description: 'Show the bot\'s ping.',
-            type: 'SUB_COMMAND'
         },
         {
+            type: 'SUB_COMMAND',
             name: 'vote',
             description: 'Vote for the bot/Check your vote status!',
-            type: 'SUB_COMMAND'
         },
         {
+            type: 'SUB_COMMAND',
             name: 'support',
             description: 'Run this command if you got any problem with the bot!',
-            type: 'SUB_COMMAND'
         }
     ],
     run: async({interaction}) => {

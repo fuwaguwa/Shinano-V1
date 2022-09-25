@@ -7,14 +7,15 @@ export default new Command({
     cooldown: 4500,
     options: [
         {
+            type: 'SUB_COMMAND',
             name: 'add',
             description: 'Add a role to an user.',
             options: [
                 {
+                    type: 'USER',
                     required: true,
                     name: 'user',
                     description: 'User.',
-                    type: 'USER'
                 },
                 {
                     required: true,
@@ -23,26 +24,25 @@ export default new Command({
                     type: 'ROLE'
                 }
             ],
-            type: 'SUB_COMMAND'
         },
         {
+            type: 'SUB_COMMAND',
             name: 'remove',
             description: 'Remove a role from an user.',
             options: [
                 {
+                    type: 'USER',
                     required: true,
                     name: 'user',
                     description: 'User.',
-                    type: 'USER'
                 },
                 {
+                    type: 'ROLE',
                     required: true,
                     name: 'role',
                     description: 'The role you want to remove from the user.',
-                    type: 'ROLE'
                 }
             ],
-            type: 'SUB_COMMAND'
         }
     ],
     run: async({interaction}) => {

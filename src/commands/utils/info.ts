@@ -8,21 +8,21 @@ export default new Command({
     cooldown: 4500,
     options: [
         {
+            type:'SUB_COMMAND',
             name: 'user',
             description: 'Information about an user or yourself.',
             options: [
                 {
+                    type: 'USER',
                     name: 'user',
                     description: 'User.',
-                    type: 'USER'
                 }
             ],
-            type:'SUB_COMMAND'
         },
         {
+            type: 'SUB_COMMAND',
             name: 'guild',
             description: 'Information about the guild you are currently in.',
-            type: 'SUB_COMMAND'
         }
     ],
     run: async({interaction}) => {

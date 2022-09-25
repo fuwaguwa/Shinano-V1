@@ -33,17 +33,17 @@ export default new Command({
             ]
         },
         {
+            type: 'SUB_COMMAND',
             name: 'bronya',
             description: 'Bronya\'s certificate.',
             options: [
                 {
+                    type: 'STRING',
                     required: true,
                     name: 'text',
                     description:'Text to put on the certificate.',
-                    type:'STRING'
                 }
             ],
-            type: 'SUB_COMMAND'
         },
         {
             type: 'SUB_COMMAND',
@@ -59,151 +59,151 @@ export default new Command({
             ]
         },
         {
+            type: 'SUB_COMMAND',
             name: 'gay',
             description: 'Apply a rainbow filter to an user or yourself.',
             options: [
                 {
+                    type: 'USER',
                     name: 'user',
                     description:'User to turn gay.',
-                    type:'USER'
                 }
             ],
-            type: 'SUB_COMMAND'
         },
         {
+            type: 'SUB_COMMAND',
             name: 'jail',
             description: 'Put an user or yourself behind bars.',
             options: [
                 {
+                    type: 'USER',
                     name: 'user',
                     description:'User to put behind bars.',
-                    type:'USER'
                 }
             ],
-            type: 'SUB_COMMAND'
         },
         {
+            type: 'SUB_COMMAND',
             name: 'petpet',
             description: 'Headpats.',
             options: [
                 {
+                    type: 'USER',
                     name: 'user',
                     description:'User to give headpats to.',
-                    type:'USER'
                 }
             ],
-            type: 'SUB_COMMAND'
         },
         {
+            type: 'SUB_COMMAND',
             name: 'pixelate',
             description: 'Pixelate your avatar or an user\'s avatar.',
             options: [
                 {
+                    type: 'USER',
                     name: 'user',
                     description:'User to pixelate.',
-                    type:'USER'
                 }
             ],
-            type: 'SUB_COMMAND'
         },
         {
+            type: 'SUB_COMMAND',
             name: 'rip',
             description: 'F in the chat.',
             options: [
                 {
+                    type: 'USER',
                     name: 'user',
                     description:'RIP <user>.',
-                    type:'USER'
                 }
             ],
-            type: 'SUB_COMMAND'
         },
         {
+            type: 'SUB_COMMAND',
             name: 'sigma',
             description: 'Sigma Grindset.',
             options: [
                 {
+                    type: 'STRING',
                     required: true,
                     name: 'text',
                     description:'Sigma Mindset.',
-                    type:'STRING'
                 }
             ],
-            type: 'SUB_COMMAND'
         },
         {
+            type: 'SUB_COMMAND',
             name: 'slap',
             description: 'Will Smith moment.',
             options: [
                 {
+                    type: 'USER',
                     required: true,
                     name: 'user',
                     description:'User to slap.',
-                    type:'USER'
                 }
             ],
-            type: 'SUB_COMMAND'
         },
         {
+            type: 'SUB_COMMAND',
             name: 'shit',
             description: 'Ew, I stepped in shit.',
             options: [
                 {
+                    type: 'USER',
                     required: true,
                     name: 'user',
                     description:'User.',
-                    type:'USER'
                 }
             ],
-            type: 'SUB_COMMAND'
         },
         {
+            type: 'SUB_COMMAND',
             name: 'trash',
             description: 'Worthless.',
             options: [
                 {
+                    type: 'USER',
                     name: 'user',
                     description: 'User',
-                    type: 'USER'
                 }
             ],
-            type: 'SUB_COMMAND'
         },
         {
+            type: 'SUB_COMMAND',
             name: 'trigger',
             description: 'Get triggered.',
             options: [
                 {
+                    type: 'USER',
                     name: 'user',
                     description: 'User.',
-                    type: 'USER'
                 }
             ],
-            type: 'SUB_COMMAND'
         },
         {
+            type: 'SUB_COMMAND',
             name: 'wanted',
             description: 'Set a bounty on an user or yourself.',
             options: [
                 {
+                    type:'USER',
                     name: 'user',
                     description:'User to put a bounty onto.',
-                    type:'USER'
                 }
             ],
-            type: 'SUB_COMMAND'
         },
         {
+            type: 'SUB_COMMAND',
             name: 'wasted',
             description: 'Wasted.',
             options: [
                 {
+                    type: 'USER',
                     name: 'user',
                     description: 'User',
-                    type: 'USER'
                 }
             ],
-            type: 'SUB_COMMAND'
         }
     ],
     run: async({interaction}) => {

@@ -14,6 +14,7 @@ export default new Command({
     cooldown: 4500,
     options: [
         {
+            type: 'SUB_COMMAND',
             name: 'country',
             description: 'Show info about COVID in a country.',
             options: [
@@ -24,12 +25,11 @@ export default new Command({
                     type: 'STRING'
                 }
             ],
-            type: 'SUB_COMMAND'
         },
         {
+            type: 'SUB_COMMAND',
             name: 'world',
             description: 'Show info about COVID in the world.',
-            type: 'SUB_COMMAND'
         }
     ],
     run: async({interaction}) => {
