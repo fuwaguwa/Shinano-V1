@@ -216,7 +216,7 @@ export default new Command({
                     // Adding Data
                     info
                         .addFields(
-                            {name: 'Construction:', value: ship.construction.constructionTime === 'Drop Only' ? 'Cannot be Constructed' : ship.construction.constructionTime },
+                            {name: 'Construction:', value: ship.construction.constructionTime === 'Drop Only' ? 'Cannot Be Constructed' : ship.construction.constructionTime },
                             {name: 'Appears In:', value: aprIn},
                             {name: 'Obtainable From:', value: `${ship.obtainedFrom.obtainedFrom !== undefined ? ship.obtainedFrom.obtainedFrom : `Maps`}`}
                         )
