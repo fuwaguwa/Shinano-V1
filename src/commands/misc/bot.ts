@@ -107,8 +107,8 @@ export default new Command({
                         {name: 'Memory Usage:', value: 
                         `RSS: ${(memory.rss / 1024**2).toFixed(2)} MB\n` +
                         `External: ${(memory.external / 1024**2).toFixed(2)} MB\n` +
-                        `Heap Total Mem: ${(memory.heapTotal / 1024**2).toFixed(2)} MB\n` +
-                        `Heap Total Used: ${(memory.heapUsed / 1024**2).toFixed(2)} MB`}
+                        `Heap Total Used: ${(memory.heapUsed / 1024**2).toFixed(2)} MB\n` +
+                        `Heap Total Mem: ${(memory.heapTotal / 1024**2).toFixed(2)} MB`}
                     )
                 await interaction.editReply({embeds: [performance]})
                 break
