@@ -2,69 +2,9 @@ import { Command } from "../../structures/Command";
 import fetch from 'node-fetch'
 import { config } from "dotenv";
 import { isNum } from '../../structures/Utils'
+import { animeInfo, characterInfo } from "../../structures/Anime";
 import { InteractionCollector, Message, MessageActionRow, MessageEmbed, MessageSelectMenu, SelectMenuInteraction } from "discord.js";
-import { ShinanoPaginator } from "../../structures/Pages";
 config();
-
-function animeInfo({anime, interaction}) {
-    // Genres/Studios
-    let genres: string[] = []; anime.genres.forEach(genre => genres.push(genre.name))
-    let studios: string[] = []; anime.studios.forEach(studio => studios.push(`[${studio.name}](${studio.url})`))
-    
-
-    // Airing Time
-    const startDate = Math.floor((new Date(anime.aired.from)).getTime() / 1000)
-    const endDate = Math.floor((new Date(anime.aired.to)).getTime() / 1000)
-
-
-    // Embeds
-    const synopsisEmbed: MessageEmbed = new MessageEmbed()
-        .setColor('BLUE')
-        .setThumbnail(anime.images.jpg.large_image_url)
-        .setTitle(`${anime.title} | Synopsis`)
-        .setDescription(`*${anime.synopsis || 'No Sypnosis Can Be Found'}*`)
-    const generalInfoEmbed: MessageEmbed = new MessageEmbed()
-        .setColor('BLUE')
-        .setThumbnail(anime.images.jpg.large_image_url)
-        .setTitle(`${anime.title} | General Info`)
-        .addFields(
-            {
-                name: 'MyAnimeList Info:',
-                value: 
-                `**ID**: [${anime.mal_id}](${anime.url})\n` +
-                `**Rating**: ${anime.score} ⭐\n` +
-                `**Ranking**: #${anime.rank}\n` +
-                `**Favorites**: ${anime.favorites}\n` +
-                `**Popularity**: #${anime.popularity}\n` 
-            },
-            {
-                name: 'Anime Info:',
-                value: 
-                `**Rating**: ${anime.rating}\n` +
-                `**Genres**: ${genres.join(', ')}\n` + 
-                `**JP Title**: ${anime.title_japanese ? anime.title_japanese : 'None'}\n` +
-                `**Trailer**: ${anime.trailer.url ? `[Trailer Link](${anime.trailer.url})` : "None"}\n` +
-                `**Studio**: ${studios.join(', ')}\n`
-            },
-            {
-                name: 'Episodes Info:', 
-                value: 
-                `**Status**: ${anime.status}\n` +
-                `**Episodes**: ${anime.episodes}\n` +
-                `**Duration**: ${anime.duration}\n` +
-                `**Start Date**: <t:${startDate}>\n` +
-                `**End Date**: <t:${endDate == 0 ? startDate : endDate}>\n`
-            }
-        )
-    
-    // Paging
-    ShinanoPaginator({
-        interaction: interaction,
-        interactor_only: true,
-        timeout: 120000,
-        pages: [synopsisEmbed, generalInfoEmbed]
-    })
-}
 
 export default new Command({
     name: 'anime',
@@ -135,6 +75,8 @@ export default new Command({
                     return interaction.editReply({embeds: [noResult]})
                 }
 
+                
+                // Menu
                 const resultNavigation: MessageActionRow = new MessageActionRow()
                     .addComponents(
                         new MessageSelectMenu()
@@ -144,7 +86,6 @@ export default new Command({
                             .setMinValues(1)
                     )
                 
-                // Adding Search Results To Menu
                 animeResponse.forEach(result => {
                     (resultNavigation.components[0] as MessageSelectMenu).addOptions(
                         {
@@ -171,32 +112,34 @@ export default new Command({
                     }
                     
                     await i.deferUpdate()
-                    resultCollector.stop(i.values[0])
+
+                    // Fetching Anime Information
+                    const response = await fetch(`https://api.jikan.moe/v4/anime/${i.values[0]}/full`, {method: "GET"})
+                    const anime = (await response.json()).data
+
+                    // Setting Default Buttons
+                    const menu = (resultNavigation.components[0] as MessageSelectMenu)
+                    for (let n = 0; n < menu.options.length; n++) {
+                        (resultNavigation.components[0] as MessageSelectMenu).options[n].value === i.values[0]
+                            ?  menu.options[n].default = true
+                            :  menu.options[n].default = false;
+                    }
+
+                    animeInfo({anime: anime, interaction: interaction, menu: resultNavigation})
+
+                    resultCollector.resetTimer()
                 })
 
                 resultCollector.on('end', async (collected, reason) => {
-                    if (isNum(reason)) {
-                        // Fetching info and displaying it
-                        const waiting: MessageEmbed = new MessageEmbed()
-                            .setDescription('Fetching data...')
-                            .setColor('GREEN')
-                        await interaction.editReply({embeds: [waiting], components: []})
-
-
-                        const response = await fetch(`https://api.jikan.moe/v4/anime/${reason}/full`, {method: "GET"})
-                        const anime = (await response.json()).data
-                        animeInfo({anime: anime, interaction: interaction})
-                        
-                    } else {
-                        (resultNavigation.components[0] as MessageSelectMenu).setDisabled(true)
-                        await interaction.editReply({components: [resultNavigation]})
-                    }
+                    (resultNavigation.components[0] as MessageSelectMenu).setDisabled(true)
+                    await interaction.editReply({components: [resultNavigation]})
                 })
                 break
             }
 
+
             case 'character': {
-                // Query
+                // Query 
                 const characterName: string = interaction.options.getString('name').toLowerCase()
                 const query = `q=${characterName}&order_by=popularity&limit=10&sfw=true`
                 const response = await fetch(`https://api.jikan.moe/v4/characters?${query}`, {method: "GET"})
@@ -210,6 +153,9 @@ export default new Command({
                         .setDescription('No result can be found!')
                     return interaction.editReply({embeds: [noResult]})
                 }
+
+
+                // Menu
                 const resultNavigation: MessageActionRow = new MessageActionRow()
                     .addComponents(
                         new MessageSelectMenu()
@@ -218,8 +164,8 @@ export default new Command({
                             .setMinValues(1)
                             .setPlaceholder(`Character Search Results (${charResponse.length})`)
                     )   
+                
                 charResponse.forEach(result => {
-                    // Adding Search Results To Menu
                     (resultNavigation.components[0] as MessageSelectMenu).addOptions(
                         {
                             label: `${result.name} | ${result.name_kanji ? result.name_kanji : 'No Kanji Name'}`,
@@ -245,80 +191,50 @@ export default new Command({
                     }
 
                     await i.deferUpdate()
-                    resultCollector.stop(i.values[0])
+                    
+                    // Fetching Character Info
+                    const response = await fetch(`https://api.jikan.moe/v4/characters/${i.values[0]}/full`, {method: "GET"})
+                    const character = (await response.json()).data
+
+                    // Sorting VAs
+                    let VAs: string[] = []
+                    if (character && character.voices) {
+                        character.voices.forEach(va => {
+                            VAs.push(`[${va.person.name}](${va.person.url})`)
+                        })    
+                    }
+
+                    // Character Embed
+                    const characterEmbed = characterInfo({character: character, VAs: VAs})
+
+                    // Setting Default Buttons
+                    const menu = (resultNavigation.components[0] as MessageSelectMenu)
+                    for (let n = 0; n < menu.options.length; n++) {
+                        (resultNavigation.components[0] as MessageSelectMenu).options[n].value === i.values[0]
+                            ?  menu.options[n].default = true
+                            :  menu.options[n].default = false;
+                    }
+                    await interaction.editReply({embeds: [characterEmbed], components: [resultNavigation]})
+
+                    resultCollector.resetTimer()
                 })
 
                 resultCollector.on('end', async (collected, reason) => {
-                    if (isNum(reason)) {
-                        // Awaiting
-                        const waiting: MessageEmbed = new MessageEmbed()
-                            .setDescription('Fetching character info...')
-                            .setColor('GREEN')
-                        await interaction.editReply({embeds: [waiting], components: []})
-
-
-                        // Fetching Info
-                        const response = await fetch(`https://api.jikan.moe/v4/characters/${reason}/full`, {method: "GET"})
-                        const character = (await response.json()).data
-
-
-                        // Sorting VA
-                        let VAs: string[] = []
-                        if (character.voices) {
-                            character.voices.forEach(va => {
-                                VAs.push(`[${va.person.name}](${va.person.url})`)
-                            })    
-                        }
-
-
-                        // Embed
-                        const characterEmbed: MessageEmbed = new MessageEmbed()
-                            .setColor('RANDOM')
-                            .setTitle(`${character.name} | ${character.name_kanji ? character.name_kanji : 'No Kanji Name'}`)
-                            .setThumbnail(character.images.jpg.image_url)
-                            .setDescription(character.about ? character.about : 'No Biography Found')
-                        
-                        // Validating Character Information
-                        if (character.anime.length != 0) {
-                            characterEmbed.addFields(
-                                {
-                                    name: 'Extra Info:',
-                                    value: 
-                                    `**Anime**: [${character.anime[0].anime.title}](${character.anime[0].anime.url})\n` +
-                                    `**Voice Actors**: ${VAs.length != 0 ? VAs.join('; ') : 'None'}\n` +
-                                    `**Nicknames**: ${character.nicknames.length != 0 ? character.nicknames.join(', ') : 'None'}`
-                                },
-                                {
-                                    name: 'MyAnimeList Info',
-                                    value:
-                                    `**ID**: [${character.mal_id}](${character.url})\n` +
-                                    `**Favorites**: ${character.favorites}`
-                                }
-                            )
-                        } else {
-                            characterEmbed.addField(
-                                'MyAnimeList Info',
-                                `**ID**: [${character.mal_id}](${character.url})\n` +
-                                `**Favorites**: ${character.favorites}`
-                            )
-                        }
-
-                        await interaction.editReply({embeds: [characterEmbed]})
-                    } else {
-                        // Disabling menu due to timeout
-                        (resultNavigation.components[0] as MessageSelectMenu).setDisabled(true)
-                        await interaction.editReply({components: [resultNavigation]})
-                    }
+                    // Disable button on timeout
+                    (resultNavigation.components[0] as MessageSelectMenu).setDisabled(true);
+                    await interaction.editReply({components: [resultNavigation]})
                 })
+
                 break
             }
+
 
             case 'random': {
                 // Fetching
                 const response = await fetch(`https://api.jikan.moe/v4/random/anime`, {method: "GET"})
                 const anime = (await response.json()).data
 
-                animeInfo({anime: anime, interaction: interaction})
+                animeInfo({anime: anime, interaction: interaction, menu: null})
                 break
             }
         }
