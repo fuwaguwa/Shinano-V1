@@ -277,7 +277,10 @@ export default new Command({
                             .setTitle(`${character.name} | ${character.name_kanji ? character.name_kanji : 'No Kanji Name'}`)
                             .setThumbnail(character.images.jpg.image_url)
                             .setDescription(character.about ? character.about : 'No Biography Found')
-                            .addFields(
+                        
+                        // Validating Character Information
+                        if (character.anime.length != 0) {
+                            characterEmbed.addFields(
                                 {
                                     name: 'Extra Info:',
                                     value: 
@@ -292,8 +295,17 @@ export default new Command({
                                     `**Favorites**: ${character.favorites}`
                                 }
                             )
+                        } else {
+                            characterEmbed.addField(
+                                'MyAnimeList Info',
+                                `**ID**: [${character.mal_id}](${character.url})\n` +
+                                `**Favorites**: ${character.favorites}`
+                            )
+                        }
+
                         await interaction.editReply({embeds: [characterEmbed]})
                     } else {
+                        // Disabling menu due to timeout
                         (resultNavigation.components[0] as MessageSelectMenu).setDisabled(true)
                         await interaction.editReply({components: [resultNavigation]})
                     }
