@@ -219,25 +219,30 @@ export default new Command({
                 break
             }
 
+
             case 'wanted': {
                 image = await CVC.Canvas.wanted(avatar);
                 break
             }
+
 
             case 'pixelate': {
                 image = await CVC.Canvas.pixelate(avatar, 5);
                 break
             }
 
+
             case 'rip': {
                 image = await CVC.Canvas.rip(avatar);
                 break
             }
 
+
             case 'jail':{
                 image = await CVC.Canvas.jail(avatar, true);
                 break
             }
+
 
             case 'bronya': {
                 let canvas = Canvas.createCanvas(1547, 1920)
@@ -262,6 +267,7 @@ export default new Command({
                 image = canvas.toBuffer()
                 break
             }
+
 
             case 'album-cover': {
                 // Creating the base
@@ -290,10 +296,12 @@ export default new Command({
                 break
             }
 
+
             case 'petpet': {
                 image = await petpet(avatar)
                 break
             }
+
 
             case 'sigma': {
                 let canvas = Canvas.createCanvas(750, 750)
@@ -332,20 +340,24 @@ export default new Command({
                 break
             }
 
+
             case 'wasted': {
                 image = await CVC.Canvas.wasted(avatar)
                 break
             }
 
+
             case 'trash': {
                 image = await CVC.Canvas.trash(avatar)
                 break
             }
+            
 
             case 'trigger': {
                 image = await CVC.Canvas.trigger(avatar)
                 break
             }
+
 
             case 'slap': {
                 const iuserimg = interaction.user.displayAvatarURL({size: 512, format: "png"})
@@ -353,10 +365,12 @@ export default new Command({
                 break
             }
 
+
             case 'shit': {
                 image = await CVC.Canvas.shit(avatar)
                 break
             }
+
             
             case 'upscale': {
                 const accepted: MessageEmbed = new MessageEmbed()
@@ -416,6 +430,7 @@ export default new Command({
                 break
             }
         }
+        
         if (interaction.options.getSubcommand() !== "upscale") {
             let attachment = new MessageAttachment(image, 'image.gif')
             await interaction.editReply({files:[attachment]})

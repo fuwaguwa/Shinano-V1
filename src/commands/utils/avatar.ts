@@ -45,6 +45,7 @@ export default new Command({
                 break 
             }
 
+            
             case 'guild': {
                 const user: User = interaction.options.getUser('user') || interaction.user
 

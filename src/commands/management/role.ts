@@ -98,6 +98,7 @@ export default new Command({
                 break
             }
 
+            
             case 'remove': {
                 if (!guildMemberRoles.has(requestedRole.id)) {
                     const roleRemoveError: MessageEmbed = new MessageEmbed()

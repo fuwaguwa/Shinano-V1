@@ -100,20 +100,24 @@ export async function ShinanoPaginator(options: {
                 break
             }
 
+
             case 'NEXT': {
                 pageCount = pageCount + 1
                 break
             }
+
 
             case 'FIRST': {
                 pageCount = 0
                 break
             }
 
+
             case 'LAST': {
                 pageCount = options.pages.length - 1
                 break
             }
+            
             
         }
 
@@ -169,12 +173,9 @@ export async function ShinanoPaginator(options: {
         if (reason === 'messageDelete' || reason === 'interaction ended') return;
 
         if (options.menu) {
+            options.menu.components[0].setDisabled(true);
             for (let i = 0; i < navigation.components.length; i++) {
                 (navigation.components[i] as MessageButton).setStyle('SECONDARY').setDisabled(true);
-            }
-
-            for (let i = 0; i < options.menu.components.length; i++) {
-                options.menu.components[i].setDisabled(true);
             }
             
             await options.interaction.editReply({

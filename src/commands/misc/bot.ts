@@ -86,6 +86,7 @@ export default new Command({
                 break
             }
 
+
             case 'stats': {
                 await interaction.deferReply()
                 let totalSeconds = (client.uptime / 1000);
@@ -114,6 +115,7 @@ export default new Command({
                 break
             }
 
+
             case 'support': {
                 const supportEmbed: MessageEmbed = new MessageEmbed()
                     .setColor('BLUE')
@@ -129,6 +131,7 @@ export default new Command({
                 await interaction.reply({embeds: [supportEmbed], components: [supportButton]})
                 break
             }
+
 
             case 'uptime': {
                 let totalSeconds = (client.uptime / 1000);
@@ -148,6 +151,7 @@ export default new Command({
                 break
             }
 
+
             case 'ping': {
                 const pingEmbed: MessageEmbed = new MessageEmbed()
                     .setTitle('Pong 🏓')
@@ -157,6 +161,7 @@ export default new Command({
                 break
             }
 
+            
             case 'vote': {
                 await interaction.deferReply()
                 // Embed

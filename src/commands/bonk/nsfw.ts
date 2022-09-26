@@ -212,6 +212,7 @@ export default new Command({
                         return interaction.editReply({content: waifu.link})
                     }
     
+
                     case 'bomb': {
                         const response = await fetch('https://amagi-api-b.herokuapp.com/nsfw/bomb', {
                             method: "GET",
@@ -238,6 +239,7 @@ export default new Command({
                         await interaction.editReply({content: uwu.body.link}) 
                     }
 
+
                     case 'video': {
                         async function videoFetch() {
                             const response = await fetch(`https://amagi-api-b.herokuapp.com/nsfw/private/random?type=mp4`, {
@@ -254,6 +256,7 @@ export default new Command({
                         break
                     }
 
+                    
                     default: {
                         const response = await fetch(`https://amagi-api-b.herokuapp.com/nsfw/public/${interaction.options.getSubcommand()}`, {
                             method: "GET",

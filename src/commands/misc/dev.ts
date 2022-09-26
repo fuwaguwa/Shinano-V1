@@ -127,6 +127,7 @@ export default new Command({
                 break
             }
 
+
             case 'guild-count': {
                 const guild: MessageEmbed = new MessageEmbed()
                     .setColor('BLUE')
@@ -156,6 +157,7 @@ export default new Command({
                break
             }
 
+
             case 'usage': {
                 const memory = process.memoryUsage()
                 const performance: MessageEmbed = new MessageEmbed()
@@ -171,6 +173,7 @@ export default new Command({
                 await interaction.editReply({embeds: [performance]})
                 break
             }
+
 
             case 'guild-info': {
                 const guild: Guild = await client.guilds.fetch(interaction.options.getString('guild-id'))
@@ -253,6 +256,7 @@ export default new Command({
                             break
                         }
             
+
                         case 'remove': {
                             const blacklist = await Blacklist.findOne({userId: interaction.options.getUser('user').id})
                             if (blacklist != null) {
@@ -280,6 +284,7 @@ export default new Command({
                             break
                         }
 
+                        
                         case 'check': {
                             const blacklist = await Blacklist.findOne({userId: interaction.options.getUser('user').id})
                             if (blacklist != null) {

@@ -102,6 +102,7 @@ export default new Command({
                         acceptor.stop('ACCEPTED')
                         break
                     }
+                    
 
                     case 'DECLINE': {
                         const declined: MessageEmbed = new MessageEmbed()

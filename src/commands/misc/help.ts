@@ -387,6 +387,7 @@ export default new Command({
                             break
                         }
 
+
                         case 'image': {
                             for (let i = 0; i < select.options.length; i++) {
                                 i == 1
@@ -403,6 +404,7 @@ export default new Command({
                             })
                             break
                         }
+
 
                         case 'management': {
                             for (let i = 0; i < select.options.length; i++) {
@@ -421,6 +423,7 @@ export default new Command({
                             break
                         }
 
+
                         case 'misc': {
                             for (let i = 0; i < select.options.length; i++) {
                                 i == 3
@@ -437,6 +440,7 @@ export default new Command({
                             })
                             break
                         }
+
 
                         case 'reactions': {
                             for (let i = 0; i < select.options.length; i++) {
@@ -455,6 +459,7 @@ export default new Command({
                             break
                         }
 
+
                         case 'utilities': {
                             for (let i = 0; i < select.options.length; i++) {
                                 i == 5
@@ -472,6 +477,7 @@ export default new Command({
                             break
                         }
 
+
                         case 'azur-lane': {
                             for (let i = 0; i < select.options.length; i++) {
                                 i == 6
@@ -488,6 +494,7 @@ export default new Command({
                             })
                             break
                         }
+
 
                         case 'anime': {
                             for (let i = 0; i < select.options.length; i++) {
@@ -512,6 +519,7 @@ export default new Command({
                 break
             }
 
+            
             case 'nsfw': {
                 // NSFW Check 
                 if (!(interaction.channel as TextChannel).nsfw) {

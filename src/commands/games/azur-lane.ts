@@ -504,6 +504,7 @@ export default new Command({
                                 break
                             }
 
+
                             case 'tech': {
                                 for (let i = 0; i < (category.components[0] as MessageSelectMenu).options.length; i++) {
                                     i == 1
@@ -518,6 +519,7 @@ export default new Command({
                                 break
                             }
                             
+
                             case 'stats': {
                                 for (let i = 0; i < (category.components[0] as MessageSelectMenu).options.length; i++) {
                                     i == 2
@@ -531,6 +533,7 @@ export default new Command({
                                 })
                                 break
                             }
+
 
                             case 'skills': {
                                 for (let i = 0; i < (category.components[0] as MessageSelectMenu).options.length; i++) {
@@ -571,6 +574,7 @@ export default new Command({
                                 break
                             }
 
+
                             case 'gallery': {
                                 for (let i = 0; i < (category.components[0] as MessageSelectMenu).options.length; i++) {
                                     i == 5
@@ -606,6 +610,7 @@ export default new Command({
                 })
                 break
             }
+
 
             case 'chapter': {
                 await interaction.deferReply()
@@ -703,6 +708,7 @@ export default new Command({
                             break                
                         }
 
+
                         case 'hard': {
                             (navigation.components[0] as MessageSelectMenu).options[0].default = false;
                             (navigation.components[0] as MessageSelectMenu).options[1].default = true;
@@ -723,6 +729,7 @@ export default new Command({
 
                 break
             }
+
 
             case 'gear': {
                 await interaction.deferReply()
@@ -920,6 +927,7 @@ export default new Command({
                                 break
                             }
 
+
                             case 'T2': {
                                 tierCount = 1
 
@@ -941,6 +949,7 @@ export default new Command({
 
                                 break
                             }
+
 
                             case 'T3': {
                                 tierCount = 2
@@ -981,6 +990,7 @@ export default new Command({
                                 break
                             }
 
+
                             case 'stats': {
                                 for (let i = 0; i < 3; i++) {
                                     i == 1
@@ -996,6 +1006,7 @@ export default new Command({
                                 break
                             }
 
+                            
                             case 'fits': {
                                 for (let i = 0; i < 3; i++) {
                                     i == 2
@@ -1026,6 +1037,7 @@ export default new Command({
                 })
                 break
             }
+
 
             case 'exp-calculator': {
                 await interaction.deferReply()
@@ -1081,6 +1093,7 @@ export default new Command({
                     .setDescription(`You will need **${expDifference.toLocaleString()} EXP** to get ${rarity === 'normal' ? 'a Normal ship' : 'an Ultra Rare ship'} from level **${currentLevel}** to level **${targetLevel}**`)
                 return interaction.editReply({embeds: [expNeeded]})
             }
+
 
             case 'pr-completion-calculator': {
                 /*
