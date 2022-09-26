@@ -264,10 +264,11 @@ export default new Command({
 
                         // Sorting VA
                         let VAs: string[] = []
-                        character.voices.forEach(va => {
-                            VAs.push(`[${va.person.name}](${va.person.url})`)
-                        })
-
+                        if (character.voices) {
+                            character.voices.forEach(va => {
+                                VAs.push(`[${va.person.name}](${va.person.url})`)
+                            })    
+                        }
 
 
                         // Embed
