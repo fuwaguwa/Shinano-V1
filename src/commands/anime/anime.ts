@@ -231,7 +231,7 @@ export default new Command({
 
             case 'random': {
                 // Fetching
-                const response = await fetch(`https://api.jikan.moe/v4/random/anime`, {method: "GET"})
+                const response = await fetch(`https://api.jikan.moe/v4/random/anime?sfw=true`, {method: "GET"})
                 const anime = (await response.json()).data
 
                 animeInfo({anime: anime, interaction: interaction, menu: null})
