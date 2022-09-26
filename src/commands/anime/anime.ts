@@ -100,7 +100,7 @@ export default new Command({
                 const message = await interaction.editReply({components: [resultNavigation]})
                 const resultCollector: InteractionCollector<SelectMenuInteraction> = (message as Message).createMessageComponentCollector({
                     componentType: 'SELECT_MENU',
-                    time: 30000
+                    time: 120000
                 })
 
                 resultCollector.on('collect', async (i) => {
@@ -179,7 +179,7 @@ export default new Command({
                 const message = await interaction.editReply({components: [resultNavigation]})
                 const resultCollector: InteractionCollector<SelectMenuInteraction> = await (message as Message).createMessageComponentCollector({
                     componentType: 'SELECT_MENU',
-                    time: 30000
+                    time: 120000
                 })
 
                 resultCollector.on('collect', async (i) => {
