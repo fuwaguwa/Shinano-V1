@@ -277,7 +277,7 @@ export default new Command({
                         })
                         const result = await response.json()
 
-                        if ((result.link as string).includes('redgifs' || '.gifv')) return interaction.editReply({content: result.link})
+                        if ((result.link as string).includes('redgifs') || (result.link as string).includes('.gifv')) return interaction.editReply({content: result.link})
 
                         lewdEmbed.setImage(result.link)
                         await interaction.editReply({embeds: [lewdEmbed]})

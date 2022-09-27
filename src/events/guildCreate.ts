@@ -33,7 +33,7 @@ export default new Event('guildCreate', async (guild) => {
 
     // Join Message
     await guild.channels.cache.some((channel) => {
-        if (channel.name.includes('general' || 'lobby' || 'chat')) {
+        if (channel.name.includes('general') || channel.name.includes('lobby') || channel.name.includes('chat')) {
             const helloEmbed: MessageEmbed = new MessageEmbed()
                 .setColor('BLUE')
                 .setTitle('Hello Shikikans!')

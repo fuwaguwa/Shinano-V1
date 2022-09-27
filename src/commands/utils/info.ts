@@ -55,7 +55,7 @@ export default new Command({
                 function acknowledgment(user: User) {
                     if (user.id === guild.ownerId) return 'Owner';
                     if (keyPermsFormatted.includes('Administrator')) return 'Admin';
-                    if (keyPermsFormatted.includes('Kick Members' || 'Ban Members')) return 'Moderator';
+                    if (keyPermsFormatted.includes('Kick Members') || keyPermsFormatted.includes('Ban Members')) return 'Moderator';
                     return 'Member';
                 }
 
