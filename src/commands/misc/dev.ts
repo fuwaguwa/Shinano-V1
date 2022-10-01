@@ -261,7 +261,7 @@ export default new Command({
                             const blacklist = await Blacklist.findOne({userId: interaction.options.getUser('user').id})
                             if (blacklist != null) {
                                 try {
-                                    await Blacklist.findOneAndDelete({userId: interaction.options.getUser('user').id})
+                                    await Blacklist.deleteOne({userId: interaction.options.getUser('user').id})
             
                                     const success: MessageEmbed = new MessageEmbed()
                                         .setColor('GREEN')
