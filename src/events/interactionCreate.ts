@@ -3,8 +3,9 @@ import { client } from "..";
 import { Event } from "../structures/Event";
 import { ShinanoInteraction } from "../typings/Command";
 import Blacklist from '../schemas/Blacklist'
-import Votes from '../schemas/Voting'
+import topggVotes from '../schemas/TopGGVotes'
 import {config} from 'dotenv'
+import fetch from 'node-fetch'
 import ms from 'ms'
 config();
 
@@ -59,7 +60,23 @@ export default new Event("interactionCreate", async (interaction) => {
 
                 // Vote Checking
                 if (interaction.user.id !== owner) {
-                    const user = await Votes.findOne({id: interaction.user.id})
+                    const response = await fetch(`https://top.gg/api/bots/1002193298229829682/check?userId=${interaction.user.id}`, {
+                        method: "GET",
+                        headers: {
+                            "Authorization": process.env.topggApiKey
+                        }
+                    })
+                    const voteStatus = (await response.json()).voted    
+
+                    const user = await topggVotes.findOne({id: interaction.user.id})
+
+                    if (!user) {
+                        await topggVotes.create({
+                            id: interaction.user.id,
+                            hasVoted: false
+                        })
+                    }
+
                     const voteEmbed: MessageEmbed = new MessageEmbed()
                         .setColor('RED')
                         .setTitle('Hold on...')
@@ -79,22 +96,30 @@ export default new Event("interactionCreate", async (interaction) => {
                         )
                     
                     // Checking if user exist.
-                    if (!user) {
-                        voteEmbed
-                            .setDescription(
-                                `To **use NSFW commands**, you'll have to **vote for Shinano on top.gg** using the button below!\n` +
-                                `It only takes **a few seconds to vote**, after which you will have access to **premium quality NSFW commands until you are able vote again (12 hours!)**\n\n` +
-                                `Run the \`/support\` command if you have any problem with voting!`
-                            )
-                    
-                        return interaction.deferred 
-                            ? interaction.editReply({embeds: [voteEmbed], components: [voteLink]}) 
-                            : interaction.reply({embeds: [voteEmbed], components: [voteLink]})
-                    } else {
-                        const lastVoted = parseInt(user.lastVoted)
-                        const currentTime = Math.floor(Date.now() / 1000)
+                    if (voteStatus == 0) {
+                        let user = await topggVotes.findOne({id: interaction.user.id})
 
-                        if (currentTime - lastVoted >= 43200) { //43200 = 12 hours
+
+                        if (!user) {
+                            user = await topggVotes.create({
+                                id: interaction.user.id,
+                                hasVoted: false
+                            })
+                        }
+
+
+                        if (user.hasVotedBefore == false) {
+                            voteEmbed
+                                .setDescription(
+                                    `To **use NSFW commands**, you'll have to **vote for Shinano on top.gg** using the button below!\n` +
+                                    `It only takes **a few seconds to vote**, after which you will have access to **premium quality NSFW commands until you are able vote again (12 hours!)**\n\n` +
+                                    `Run the \`/support\` command if you have any problem with voting!`
+                                )
+
+                            return interaction.deferred 
+                                ? interaction.editReply({embeds: [voteEmbed], components: [voteLink]}) 
+                                : interaction.reply({embeds: [voteEmbed], components: [voteLink]})
+                        } else {
                             voteEmbed
                                 .setDescription(
                                     `The duration for your NSFW commands access has ran out (12 hours!). Please vote again if you want to continue using Shinano's NSFW features!\n\n` +
@@ -103,6 +128,18 @@ export default new Event("interactionCreate", async (interaction) => {
                             return interaction.deferred 
                                 ? interaction.editReply({embeds: [voteEmbed], components: [voteLink]}) 
                                 : interaction.reply({embeds: [voteEmbed], components: [voteLink]})
+                        }
+            
+                    } else {
+                        const user = await topggVotes.findOne({id: interaction.user.id})
+
+                        if (!user) {
+                            await topggVotes.create({
+                                id: interaction.user.id,
+                                hasVotedBefore: true
+                            })
+                        } else if (user.hasVotedBefore == false) {
+                            await topggVotes.updateOne({id: interaction.user.id}, {hasVotedBefore: true})
                         }
                     }
                 }
@@ -170,6 +207,7 @@ export default new Event("interactionCreate", async (interaction) => {
         })
     }
 
+
     if (interaction.isButton()) {
         if (interaction.customId === 'NONSFW') {
             const cantsee: MessageEmbed = new MessageEmbed()
@@ -193,7 +231,17 @@ export default new Event("interactionCreate", async (interaction) => {
         }
         
         if (interaction.customId === 'VOTE-CHECK') {
-            const user = await Votes.findOne({id: interaction.user.id})
+            const response = await fetch(`https://top.gg/api/bots/1002193298229829682/check?userId=${interaction.user.id}`,{
+                method: "GET",
+                headers: {
+                    "Authorization": process.env.topggApiKey
+                }
+            })
+
+            const voteStatus = (await response.json()).voted
+            const votingStatus: MessageEmbed = new MessageEmbed()
+                .setTitle('Voting Status')
+                .setTimestamp()
             const voteLink: MessageActionRow = new MessageActionRow()
                 .addComponents(
                     new MessageButton()
@@ -201,36 +249,41 @@ export default new Event("interactionCreate", async (interaction) => {
                         .setLabel('Vote for Shinano!')
                         .setEmoji('<:topgg:1002849574517477447>')
                         .setURL('https://top.gg/bot/1002193298229829682/vote'),
+                        
                 )
+            
+                
+            if (voteStatus == 0) {
+                let user = await topggVotes.findOne({id: interaction.user.id});
 
 
-            if (!user) {
-                const noVotes: MessageEmbed = new MessageEmbed()
-                    .setTitle('Voting Status')
-                    .setDescription('You haven\'t voted for Shinano! Please vote using the button below!')
-                    .setColor('RED')
-                    .setTimestamp()
-                return interaction.reply({embeds: [noVotes], components: [voteLink], ephemeral: true})
-            } else {
-                const lastVoted = parseInt(user.lastVoted)
-                const currentTime = Math.floor(Date.now() / 1000)
-                const votingStatus: MessageEmbed = new MessageEmbed()
-                    .setTitle('Voting Status')
-                    .setTimestamp()
+                if (!user) {
+                    user = await topggVotes.create({
+                        id: interaction.user.id,
+                        hasVotedBefore: false
+                    })
+                }
 
-                if (currentTime - lastVoted >= 43200) {
+                if (user.hasVotedBefore == false) {
+                    const noVotes: MessageEmbed = new MessageEmbed()
+                        .setTitle('Voting Status')
+                        .setDescription('You haven\'t voted for Shinano! Please vote using the button below!')
+                        .setColor('RED')
+                        .setTimestamp()
+                    return interaction.reply({embeds: [noVotes], components: [voteLink], ephemeral: true})
+                } else {
                     votingStatus
                         .setColor('GREEN')
-                        .setDescription(`Your last vote was on <t:${lastVoted}>. You can now vote again using the button below!`)
+                        .setDescription(`12 hours has passed, you can now vote again using the button below!`)
                     return interaction.reply({embeds: [votingStatus], components: [voteLink], ephemeral: true})
                 }
 
+            } else {
                 votingStatus
                     .setColor('RED')
-                    .setDescription(`Your last vote was on <t:${lastVoted}>. You can vote again <t:${lastVoted + 43200}:R>`)
+                    .setDescription(`12 hours has not passed, you cannot vote again yet!`)
                 return interaction.reply({embeds: [votingStatus], ephemeral: true})
             }
         }
-        
     }
 });
