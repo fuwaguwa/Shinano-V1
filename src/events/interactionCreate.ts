@@ -7,6 +7,7 @@ import topggVotes from '../schemas/TopGGVotes'
 import {config} from 'dotenv'
 import fetch from 'node-fetch'
 import ms from 'ms'
+import { checkVotes } from "../structures/Utils";
 config();
 
 const Cooldown: Collection<string, number> = new Collection()
@@ -60,14 +61,7 @@ export default new Event("interactionCreate", async (interaction) => {
 
                 // Vote Checking
                 if (interaction.user.id !== owner) {
-                    const response = await fetch(`https://top.gg/api/bots/1002193298229829682/check?userId=${interaction.user.id}`, {
-                        method: "GET",
-                        headers: {
-                            "Authorization": process.env.topggApiKey
-                        }
-                    })
-                    const voteStatus = (await response.json()).voted    
-
+                    const voteStatus = await checkVotes(interaction.user.id)   
                     const user = await topggVotes.findOne({id: interaction.user.id})
 
                     if (!user) {
@@ -77,23 +71,6 @@ export default new Event("interactionCreate", async (interaction) => {
                         })
                     }
 
-                    const voteEmbed: MessageEmbed = new MessageEmbed()
-                        .setColor('RED')
-                        .setTitle('Hold on...')
-                        .setImage('https://i.imgur.com/ca5zzXB.png')
-                    const voteLink: MessageActionRow = new MessageActionRow()
-                        .addComponents(
-                            new MessageButton()
-                                .setStyle('LINK')
-                                .setLabel('Vote for Shinano!')
-                                .setEmoji('<:topgg:1002849574517477447>')
-                                .setURL('https://top.gg/bot/1002193298229829682/vote'),
-                            new MessageButton()
-                                .setStyle('SECONDARY')
-                                .setLabel('Check Vote')
-                                .setCustomId('VOTE-CHECK')
-                                .setEmoji('🔎')
-                        )
                     
                     // Checking if user exist.
                     if (voteStatus == 0) {
@@ -106,6 +83,25 @@ export default new Event("interactionCreate", async (interaction) => {
                                 hasVoted: false
                             })
                         }
+
+                        
+                        const voteEmbed: MessageEmbed = new MessageEmbed()
+                            .setColor('RED')
+                            .setTitle('Hold on...')
+                            .setImage('https://i.imgur.com/ca5zzXB.png')
+                        const voteLink: MessageActionRow = new MessageActionRow()
+                            .addComponents(
+                                new MessageButton()
+                                    .setStyle('LINK')
+                                    .setLabel('Vote for Shinano!')
+                                    .setEmoji('<:topgg:1002849574517477447>')
+                                    .setURL('https://top.gg/bot/1002193298229829682/vote'),
+                                new MessageButton()
+                                    .setStyle('SECONDARY')
+                                    .setLabel('Check Vote')
+                                    .setCustomId('VOTE-CHECK')
+                                    .setEmoji('🔎')
+                            )
 
 
                         if (user.hasVotedBefore == false) {
@@ -231,14 +227,7 @@ export default new Event("interactionCreate", async (interaction) => {
         }
         
         if (interaction.customId === 'VOTE-CHECK') {
-            const response = await fetch(`https://top.gg/api/bots/1002193298229829682/check?userId=${interaction.user.id}`,{
-                method: "GET",
-                headers: {
-                    "Authorization": process.env.topggApiKey
-                }
-            })
-
-            const voteStatus = (await response.json()).voted
+            const voteStatus = await checkVotes(interaction.user.id)
             const votingStatus: MessageEmbed = new MessageEmbed()
                 .setTitle('Voting Status')
                 .setTimestamp()

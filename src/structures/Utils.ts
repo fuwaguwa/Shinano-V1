@@ -72,3 +72,17 @@ export async function updateServerCount() {
 
     channel.setName(`Server Count: ${client.guilds.cache.size}`)
 }
+
+
+// Check topgg votes
+export async function checkVotes(userId: string) {
+    const response = await fetch(`https://top.gg/api/bots/1002193298229829682/check?userId=${userId}`,{
+        method: "GET",
+        headers: {
+            "Authorization": process.env.topggApiKey
+        }
+    })
+
+    const voteStatus = (await response.json()).voted
+    return voteStatus;
+}
