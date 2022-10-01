@@ -5,7 +5,6 @@ declare global {
             guildId: string;
             mongoDB: string;
             rapidApiKey: string;
-            ninjaApiKey: string;
             deepAIApiKey: string;
             saucenaoApiKey: string;
             malClientId: string;
