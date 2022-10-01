@@ -72,22 +72,12 @@ export default new Command({
                         <:curve:1021036738161950800>Go to horny jail!
                         **nekomimi**
                         <:curve:1021036738161950800>Generate a (SFW) picture of a catgirl!
-                        **pixelate**
-                        <:curve:1021036738161950800>64 bits, 32 bits, 16 bits, 8 bits, ...
                         **rip**
                         <:curve:1021036738161950800>*dies*
+                        **shit**
+                        <:curve:1021036738161950800>Put a bounty on someone
                         **sigma**
                         <:curve:1021036738161950800>Sigma Grindset`
-                    )
-                const imageCommand2: MessageEmbed = new MessageEmbed()
-                    .setColor('BLUE')
-                    .setDescription(`
-                        /<command>
-                        
-                        **wanted**
-                        <:curve:1021036738161950800>Put a bounty on someone
-                        **upscale**
-                        <:curve:1021036738161950800>Upscale an image using DeepAI`
                     )
 
                 
@@ -212,7 +202,6 @@ export default new Command({
                 ]
                 const imageCommands: MessageEmbed[] = [
                     imageCommand1,
-                    imageCommand2
                 ]
                 const miscCommands: MessageEmbed[] = [
                     miscCommand1

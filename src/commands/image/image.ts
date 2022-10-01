@@ -1,14 +1,10 @@
 import { Command } from "../../structures/Command";
-import { MessageActionRow, MessageAttachment, MessageButton, MessageEmbed, TextChannel } from "discord.js";
+import { MessageAttachment } from "discord.js";
 import Canvacord from "canvacord"
-import axios from 'axios'
 import Canvas from "canvas"
 import {config} from 'dotenv'
-import petpet from "pet-pet-gif"
-import deepAI from 'deepai'
-import { client } from "../..";
 config()
-deepAI.setApiKey(process.env.deepAIApiKey)
+
 
 const CVC: any = Canvacord
 Canvas.registerFont(`Upright.otf`, {family: 'Upright'})
@@ -21,19 +17,6 @@ export default new Command({
     options: [
         {
             type: 'SUB_COMMAND',
-            name: 'upscale',
-            description: 'Upscale an image using DeepAI!',
-            options: [
-                {
-                    type: 'ATTACHMENT',
-                    required: true,
-                    name: 'image',
-                    description: 'The image you want to upscale!'
-                }
-            ]
-        },
-        {
-            type: 'SUB_COMMAND',
             name: 'bronya',
             description: 'Bronya\'s certificate.',
             options: [
@@ -44,19 +27,6 @@ export default new Command({
                     description:'Text to put on the certificate.',
                 }
             ],
-        },
-        {
-            type: 'SUB_COMMAND',
-            name: 'album-cover',
-            description: 'Turn an image into an album cover',
-            options: [
-                {
-                    type: 'ATTACHMENT',
-                    required: true,
-                    name: 'image',
-                    description: 'Image to turn into album cover.'
-                }
-            ]
         },
         {
             type: 'SUB_COMMAND',
@@ -79,30 +49,6 @@ export default new Command({
                     type: 'USER',
                     name: 'user',
                     description:'User to put behind bars.',
-                }
-            ],
-        },
-        {
-            type: 'SUB_COMMAND',
-            name: 'petpet',
-            description: 'Headpats.',
-            options: [
-                {
-                    type: 'USER',
-                    name: 'user',
-                    description:'User to give headpats to.',
-                }
-            ],
-        },
-        {
-            type: 'SUB_COMMAND',
-            name: 'pixelate',
-            description: 'Pixelate your avatar or an user\'s avatar.',
-            options: [
-                {
-                    type: 'USER',
-                    name: 'user',
-                    description:'User to pixelate.',
                 }
             ],
         },
@@ -157,54 +103,6 @@ export default new Command({
                 }
             ],
         },
-        {
-            type: 'SUB_COMMAND',
-            name: 'trash',
-            description: 'Worthless.',
-            options: [
-                {
-                    type: 'USER',
-                    name: 'user',
-                    description: 'User',
-                }
-            ],
-        },
-        {
-            type: 'SUB_COMMAND',
-            name: 'trigger',
-            description: 'Get triggered.',
-            options: [
-                {
-                    type: 'USER',
-                    name: 'user',
-                    description: 'User.',
-                }
-            ],
-        },
-        {
-            type: 'SUB_COMMAND',
-            name: 'wanted',
-            description: 'Set a bounty on an user or yourself.',
-            options: [
-                {
-                    type:'USER',
-                    name: 'user',
-                    description:'User to put a bounty onto.',
-                }
-            ],
-        },
-        {
-            type: 'SUB_COMMAND',
-            name: 'wasted',
-            description: 'Wasted.',
-            options: [
-                {
-                    type: 'USER',
-                    name: 'user',
-                    description: 'User',
-                }
-            ],
-        }
     ],
     run: async({interaction}) => {
         const target = interaction.options.getUser('user') || interaction.user
@@ -214,35 +112,14 @@ export default new Command({
         let image: Buffer
 
         switch (interaction.options.getSubcommand()) {
+            default: {
+                image = await CVC.Canvas[interaction.options.getSubcommand()](avatar)
+            }
+
             case 'gay': {
                 image = await CVC.Canvas.rainbow(avatar);
                 break
             }
-
-
-            case 'wanted': {
-                image = await CVC.Canvas.wanted(avatar);
-                break
-            }
-
-
-            case 'pixelate': {
-                image = await CVC.Canvas.pixelate(avatar, 5);
-                break
-            }
-
-
-            case 'rip': {
-                image = await CVC.Canvas.rip(avatar);
-                break
-            }
-
-
-            case 'jail':{
-                image = await CVC.Canvas.jail(avatar, true);
-                break
-            }
-
 
             case 'bronya': {
                 let canvas = Canvas.createCanvas(1547, 1920)
@@ -265,40 +142,6 @@ export default new Command({
                 context.fillText(interaction.options.getString('text'), canvas.width/2 + 5, 1485);
 
                 image = canvas.toBuffer()
-                break
-            }
-
-
-            case 'album-cover': {
-                // Creating the base
-                const attachmentUrl = interaction.options.getAttachment('image').proxyURL
-                let canvas = Canvas.createCanvas(1500, 1500)
-                let context = canvas.getContext('2d')
-                let background = await Canvas.loadImage(attachmentUrl)
-                let sticker = await Canvas.loadImage('https://i.imgur.com/RIzNmyG.png')
-                
-                context.drawImage(background, 0, 0, canvas.width, canvas.height)
-
-                let imgData = context.getImageData(0, 0, context.canvas.width, context.canvas.height)
-                let pixels = imgData.data
-                
-                for (let i = 0; i < pixels.length; i = i + 4) {
-                    let lightness = (pixels[i] + pixels[i + 1] + pixels[i + 2]) / 3
-
-                    pixels[i] = lightness 
-                    pixels[i + 1] = lightness
-                    pixels[i + 2] = lightness
-                }
-                context.putImageData(imgData, 0, 0)
-                context.drawImage(sticker, 75, 1500 - 250, 280, 170.5)
-
-                image = canvas.toBuffer()
-                break
-            }
-
-
-            case 'petpet': {
-                image = await petpet(avatar)
                 break
             }
 
@@ -340,25 +183,6 @@ export default new Command({
                 break
             }
 
-
-            case 'wasted': {
-                image = await CVC.Canvas.wasted(avatar)
-                break
-            }
-
-
-            case 'trash': {
-                image = await CVC.Canvas.trash(avatar)
-                break
-            }
-            
-
-            case 'trigger': {
-                image = await CVC.Canvas.trigger(avatar)
-                break
-            }
-
-
             case 'slap': {
                 const iuserimg = interaction.user.displayAvatarURL({size: 512, format: "png"})
                 image = await CVC.Canvas.slap(iuserimg, avatar)
@@ -370,70 +194,9 @@ export default new Command({
                 image = await CVC.Canvas.shit(avatar)
                 break
             }
-
-            
-            case 'upscale': {
-                const accepted: MessageEmbed = new MessageEmbed()
-                    .setTitle('Processing...')
-                    .setColor('GREEN')
-                    .setDescription('<a:lod:1021265223707000923> | Validating Link...\n<a:lod:1021265223707000923> | Upscaling Image...')
-                await interaction.editReply({embeds: [accepted]})
-    
-                // Upscaling
-                const link = interaction.options.getAttachment('image').proxyURL
-                const contentType = interaction.options['_hoistedOptions'][0]['attachment'].contentType
-                if (contentType == 'image/gif' || !(contentType.includes('image'))) {
-                    const fail: MessageEmbed = new MessageEmbed()
-                        .setColor('RED')
-                        .setDescription('Must be an image!')
-                    return interaction.editReply({embeds:[fail]})
-                }
-
-                accepted.setDescription('✅ | Valid Link!\n<a:lod:1021265223707000923> | Upscaling Image...')
-                await interaction.editReply({embeds: [accepted]})
-
-                
-                const logGuild = await client.guilds.fetch('1002188088942022807')
-                const logChannel: any = await logGuild.channels.fetch('1002189516574052433')
-
-                const response = await deepAI.callStandardApi("torch-srgan", {image: link})
-                const buffer = await axios.get(response.output_url, {responseType: 'arraybuffer'})
-                const image = Buffer.from(buffer.data, "utf-8")
-                const attachment = new MessageAttachment(image, 'image.png')
-                const message = await logChannel.send({
-                    files:[attachment]
-                })
-
-
-                const output: MessageEmbed = new MessageEmbed()
-                    .setColor('RANDOM')
-                    .setTitle('Preview')
-                    .setImage(message.attachments.first().proxyURL)
-                    .setTimestamp()
-                
-                const linkButton: MessageActionRow = new MessageActionRow()
-                    .addComponents(
-                        new MessageButton()
-                            .setStyle('LINK')
-                            .setLabel('Direct Image Link')
-                            .setEmoji('🔗')
-                            .setURL(message.attachments.first().proxyURL)
-                    )
-                
-                accepted.setDescription('✅ | Valid Link!\n✅ | Upscaled Image!')
-                await interaction.editReply({embeds: [accepted]})
-
-                await interaction.editReply({
-                    embeds: [output],
-                    components: [linkButton]
-                })
-                break
-            }
         }
         
-        if (interaction.options.getSubcommand() !== "upscale") {
-            let attachment = new MessageAttachment(image, 'image.gif')
-            await interaction.editReply({files:[attachment]})
-        }
+        let attachment = new MessageAttachment(image, 'image.gif')
+        await interaction.editReply({files:[attachment]})
     }
 })
