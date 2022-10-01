@@ -228,20 +228,11 @@ export default new Event("interactionCreate", async (interaction) => {
         
         if (interaction.customId === 'VOTE-CHECK') {
             const voteStatus = await checkVotes(interaction.user.id)
+                
             const votingStatus: MessageEmbed = new MessageEmbed()
                 .setTitle('Voting Status')
                 .setTimestamp()
-            const voteLink: MessageActionRow = new MessageActionRow()
-                .addComponents(
-                    new MessageButton()
-                        .setStyle('LINK')
-                        .setLabel('Vote for Shinano!')
-                        .setEmoji('<:topgg:1002849574517477447>')
-                        .setURL('https://top.gg/bot/1002193298229829682/vote'),
-                        
-                )
-            
-                
+
             if (voteStatus == 0) {
                 let user = await topggVotes.findOne({id: interaction.user.id});
 
@@ -252,6 +243,18 @@ export default new Event("interactionCreate", async (interaction) => {
                         hasVotedBefore: false
                     })
                 }
+
+
+                const voteLink: MessageActionRow = new MessageActionRow()
+                    .addComponents(
+                        new MessageButton()
+                            .setStyle('LINK')
+                            .setLabel('Vote for Shinano!')
+                            .setEmoji('<:topgg:1002849574517477447>')
+                            .setURL('https://top.gg/bot/1002193298229829682/vote'),
+                            
+                    )
+
 
                 if (user.hasVotedBefore == false) {
                     const noVotes: MessageEmbed = new MessageEmbed()
