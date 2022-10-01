@@ -37,20 +37,18 @@ export default new Command({
                     <:curve:1021036738161950800>Get a word's definition from Urban Dictionary
                     **dadjoke**
                     <:curve:1021036738161950800>Guranteed funny dadjoke
-                    **fact**
-                    <:curve:1021036738161950800>Get a fact about an animal
                     **match**
                     <:curve:1021036738161950800>Checks two person love percentage
                     **roll**
-                    <:curve:1021036738161950800>Roll a dice`
+                    <:curve:1021036738161950800>Roll a dice
+                    **rps**
+                    <:curve:1021036738161950800>Play rock paper scissor against the bot!`
                 )
                 const funCommand2: MessageEmbed = new MessageEmbed()
                     .setColor('BLUE')
                     .setDescription(`
                         /<command>
                         
-                        **rps**
-                        <:curve:1021036738161950800>Play rock paper scissor against the bot!
                         **ttt**
                         <:curve:1021036738161950800>Play tictactoe against the bot or against someone!
                         **trivia**
@@ -68,51 +66,29 @@ export default new Command({
                         
                         **bronya**
                         <:curve:1021036738161950800>Bronya's certificate
-                        **cat**
-                        <:curve:1021036738161950800>Generate a picture of a cat!
-                        **dog**
-                        <:curve:1021036738161950800>Generate a picture of a dog!
-                        **fox**
-                        <:curve:1021036738161950800>Generate a picture of a fox!
                         **gay**
                         <:curve:1021036738161950800>Taste the rainbow
                         **jail**
                         <:curve:1021036738161950800>Go to horny jail!
                         **nekomimi**
-                        <:curve:1021036738161950800>Generate a (SFW) picture of a catgirl!`
+                        <:curve:1021036738161950800>Generate a (SFW) picture of a catgirl!
+                        **pixelate**
+                        <:curve:1021036738161950800>64 bits, 32 bits, 16 bits, 8 bits, ...
+                        **rip**
+                        <:curve:1021036738161950800>*dies*
+                        **sigma**
+                        <:curve:1021036738161950800>Sigma Grindset`
                     )
                 const imageCommand2: MessageEmbed = new MessageEmbed()
                     .setColor('BLUE')
                     .setDescription(`
                         /<command>
                         
-                        **pixelate**
-                        <:curve:1021036738161950800>64 bits, 32 bits, 16 bits, 8 bits, ...
-                        **rip**
-                        <:curve:1021036738161950800>*dies*
-                        **sigma**
-                        <:curve:1021036738161950800>Sigma Grindset
                         **wanted**
                         <:curve:1021036738161950800>Put a bounty on someone
                         **upscale**
                         <:curve:1021036738161950800>Upscale an image using DeepAI`
                     )
-
-
-
-                // Management Embeds
-                const managementCommand1: MessageEmbed = new MessageEmbed()
-                    .setColor('BLUE')
-                    .setDescription(`
-                        /<command>
-                        
-                        **purge**
-                        <:curve:1021036738161950800>Purge messages that aren't older than 14 days
-                        **role**
-                        <:curve:1021036738161950800>Add or remove roles from someone`
-                    )
-                
-
 
                 
                 // Misc Embeds
@@ -145,20 +121,18 @@ export default new Command({
                         <:curve:1021036738161950800>Cringe at someone
                         **cuddle**
                         <:curve:1021036738161950800>uwu you so snuggable
-                        **glomp**
-                        <:curve:1021036738161950800>Give someone an affectionate hug!
                         **handhold**
                         <:curve:1021036738161950800>Lewd!
                         **hug**
-                        <:curve:1021036738161950800>uwu you so warm`
+                        <:curve:1021036738161950800>uwu you so warm
+                        **kiss**
+                        <:curve:1021036738161950800>Kiss someone!`
                     )
                 const reactionCommand2: MessageEmbed = new MessageEmbed()
                     .setColor('BLUE')
                     .setDescription(`
                         /<command>
                         
-                        **kiss**
-                        <:curve:1021036738161950800>Kiss someone!
                         **lick**
                         <:curve:1021036738161950800>...wtf?
                         **pat**
@@ -168,16 +142,7 @@ export default new Command({
                         **slap**
                         <:curve:1021036738161950800>Eat that, sucker.
                         **smile**
-                        <:curve:1021036738161950800>Ehe.
-                        **smug**
-                        <:curve:1021036738161950800>mmmmmmm`
-                    )
-                const reactionCommand3: MessageEmbed = new MessageEmbed()
-                    .setColor('BLUE')
-                    .setDescription(`
-                        /<command>
-                        **wink**
-                        <:curve:1021036738161950800>Wink at someone`
+                        <:curve:1021036738161950800>Ehe.`
                     )
 
 
@@ -249,16 +214,12 @@ export default new Command({
                     imageCommand1,
                     imageCommand2
                 ]
-                const managementCommands: MessageEmbed[] = [
-                    managementCommand1
-                ]
                 const miscCommands: MessageEmbed[] = [
                     miscCommand1
                 ]
                 const reactionCommands: MessageEmbed[] = [
                     reactionCommand1,
                     reactionCommand2,
-                    reactionCommand3
                 ]
                 const utilsCommands: MessageEmbed[] = [
                     utilsCommand1
@@ -292,13 +253,6 @@ export default new Command({
                                     value: 'image',
                                     default: false,
                                     emoji: '📸'
-                                },
-                                {
-                                    label: 'Management',
-                                    description: 'Commands that help you with managing your server!',
-                                    value: 'management',
-                                    default: false,
-                                    emoji: '⚙'
                                 },
                                 {
                                     label: 'Misc',
@@ -406,27 +360,9 @@ export default new Command({
                         }
 
 
-                        case 'management': {
-                            for (let i = 0; i < select.options.length; i++) {
-                                i == 2
-                                    ? select.options[i].default = true
-                                    : select.options[i].default = false
-                            }
-
-                            ShinanoPaginator({
-                                interaction: interaction,
-                                timeout: 30000,
-                                menu: navigation,
-                                interactor_only: true,
-                                pages: managementCommands
-                            })
-                            break
-                        }
-
-
                         case 'misc': {
                             for (let i = 0; i < select.options.length; i++) {
-                                i == 3
+                                i == 2
                                     ? select.options[i].default = true
                                     : select.options[i].default = false
                             }
@@ -444,7 +380,7 @@ export default new Command({
 
                         case 'reactions': {
                             for (let i = 0; i < select.options.length; i++) {
-                                i == 4
+                                i == 3
                                     ? select.options[i].default = true
                                     : select.options[i].default = false
                             }
@@ -462,7 +398,7 @@ export default new Command({
 
                         case 'utilities': {
                             for (let i = 0; i < select.options.length; i++) {
-                                i == 5
+                                i == 4
                                     ? select.options[i].default = true
                                     : select.options[i].default = false
                             }
@@ -480,7 +416,7 @@ export default new Command({
 
                         case 'azur-lane': {
                             for (let i = 0; i < select.options.length; i++) {
-                                i == 6
+                                i == 5
                                     ? select.options[i].default = true
                                     : select.options[i].default = false
                             }
@@ -498,7 +434,7 @@ export default new Command({
 
                         case 'anime': {
                             for (let i = 0; i < select.options.length; i++) {
-                                i == 7
+                                i == 6
                                     ? select.options[i].default = true
                                     : select.options[i].default = false
                             }
