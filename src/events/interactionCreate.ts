@@ -3,9 +3,9 @@ import { client } from "..";
 import { Event } from "../structures/Event";
 import { ShinanoInteraction } from "../typings/Command";
 import Blacklist from '../schemas/Blacklist'
-import Votes from '../schemas/Voting'
 import {config} from 'dotenv'
 import ms from 'ms'
+import { checkVotes } from "../structures/Utils";
 config();
 
 const Cooldown: Collection<string, number> = new Collection()
@@ -59,7 +59,8 @@ export default new Event("interactionCreate", async (interaction) => {
 
                 // Vote Checking
                 if (interaction.user.id !== owner) {
-                    const user = await Votes.findOne({id: interaction.user.id})
+                    const voteStatus = await checkVotes(interaction.user.id)
+
                     const voteEmbed: MessageEmbed = new MessageEmbed()
                         .setColor('RED')
                         .setTitle('Hold on...')
@@ -79,7 +80,8 @@ export default new Event("interactionCreate", async (interaction) => {
                         )
                     
                     // Checking if user exist.
-                    if (!user) {
+                    if (voteStatus == 0) {
+
                         voteEmbed
                             .setDescription(
                                 `To **use NSFW commands**, you'll have to **vote for Shinano on top.gg** using the button below!\n` +
@@ -90,20 +92,6 @@ export default new Event("interactionCreate", async (interaction) => {
                         return interaction.deferred 
                             ? interaction.editReply({embeds: [voteEmbed], components: [voteLink]}) 
                             : interaction.reply({embeds: [voteEmbed], components: [voteLink]})
-                    } else {
-                        const lastVoted = parseInt(user.lastVoted)
-                        const currentTime = Math.floor(Date.now() / 1000)
-
-                        if (currentTime - lastVoted >= 43200) { //43200 = 12 hours
-                            voteEmbed
-                                .setDescription(
-                                    `The duration for your NSFW commands access has ran out (12 hours!). Please vote again if you want to continue using Shinano's NSFW features!\n\n` +
-                                    `Run the \`/support\` command if you have any problem with voting!`
-                                )
-                            return interaction.deferred 
-                                ? interaction.editReply({embeds: [voteEmbed], components: [voteLink]}) 
-                                : interaction.reply({embeds: [voteEmbed], components: [voteLink]})
-                        }
                     }
                 }
             }
@@ -193,7 +181,7 @@ export default new Event("interactionCreate", async (interaction) => {
         }
         
         if (interaction.customId === 'VOTE-CHECK') {
-            const user = await Votes.findOne({id: interaction.user.id})
+            const voteStatus = await checkVotes(interaction.user.id)
             const voteLink: MessageActionRow = new MessageActionRow()
                 .addComponents(
                     new MessageButton()
@@ -204,31 +192,23 @@ export default new Event("interactionCreate", async (interaction) => {
                 )
 
 
-            if (!user) {
+            if (voteStatus == 0) {
                 const noVotes: MessageEmbed = new MessageEmbed()
                     .setTitle('Voting Status')
-                    .setDescription('You haven\'t voted for Shinano! Please vote using the button below!')
+                    .setDescription('You haven\'t voted for Shinano today! Please vote using the button below!')
                     .setColor('RED')
+                    .setFooter({text: 'You can vote every 12 hours!'})
                     .setTimestamp()
                 return interaction.reply({embeds: [noVotes], components: [voteLink], ephemeral: true})
             } else {
-                const lastVoted = parseInt(user.lastVoted)
-                const currentTime = Math.floor(Date.now() / 1000)
                 const votingStatus: MessageEmbed = new MessageEmbed()
                     .setTitle('Voting Status')
                     .setTimestamp()
-
-                if (currentTime - lastVoted >= 43200) {
-                    votingStatus
-                        .setColor('GREEN')
-                        .setDescription(`Your last vote was on <t:${lastVoted}>. You can now vote again using the button below!`)
-                    return interaction.reply({embeds: [votingStatus], components: [voteLink], ephemeral: true})
-                }
-
-                votingStatus
-                    .setColor('RED')
-                    .setDescription(`Your last vote was on <t:${lastVoted}>. You can vote again <t:${lastVoted + 43200}:R>`)
+                    .setColor('GREEN')
+                    .setDescription(`You have voted for Shinano! Thank you for the support!`)
+                    .setFooter({text: 'You can vote every 12 hours!'})
                 return interaction.reply({embeds: [votingStatus], ephemeral: true})
+                
             }
         }
         
