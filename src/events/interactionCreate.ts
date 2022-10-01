@@ -81,7 +81,6 @@ export default new Event("interactionCreate", async (interaction) => {
                     
                     // Checking if user exist.
                     if (voteStatus == 0) {
-
                         voteEmbed
                             .setDescription(
                                 `To **use NSFW commands**, you'll have to **vote for Shinano on top.gg** using the button below!\n` +
