@@ -132,7 +132,7 @@ export default new Event("interactionCreate", async (interaction) => {
         let fullCommand = interaction.commandName
         const options: any = interaction.options
         if (options._group) fullCommand = fullCommand + ' ' + options._group;
-        if (options._subcommandw) fullCommand = fullCommand + ' ' + options._subcommand
+        if (options._subcommand) fullCommand = fullCommand + ' ' + options._subcommand
         if (options._hoistedOptions.length > 0) {
             options._hoistedOptions.forEach((option) => {
                 option.attachment
