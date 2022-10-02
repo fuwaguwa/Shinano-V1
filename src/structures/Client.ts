@@ -1,6 +1,7 @@
 import glob from "glob";
-import { Event } from "./Event"
-import { config } from 'dotenv'
+import mongoose from "mongoose";
+import { Event } from "./Event";
+import { config } from 'dotenv';
 import { promisify } from "util";
 import { CommandType } from "../typings/Command";
 import { RegisterCommandsOptions } from "../typings/CommandRegistration";
@@ -18,10 +19,10 @@ export class Shinano extends Client {
         })  
     }
 
+
     start() {
         this.registerModules();
-        
-        // Login
+        this.connectToDatabase();
         this.login(process.env.botToken);
 
 
@@ -46,12 +47,22 @@ export class Shinano extends Client {
         })       
     }
 
+    
+    private connectToDatabase() {
+        mongoose.connect(process.env.mongoDB).then(() => {
+            console.log('Connected to database!')
+        }).catch((err) => {
+            console.log(err)
+        })
+    }
 
-    async importFile(filePath: string) {
+
+    private async importFile(filePath: string) {
         return (await import(filePath))?.default;
     }
 
-    async registerCommands({commands, guildId}: RegisterCommandsOptions) {
+
+    private async registerCommands({commands, guildId}: RegisterCommandsOptions) {
         if (guildId) {
             this.guilds.cache.get(guildId)?.commands.set(commands);
             console.log(`Registering Commands | Guild: ${guildId}`);
@@ -61,7 +72,8 @@ export class Shinano extends Client {
         }
     }
 
-    async registerModules() {
+
+    private async registerModules() {
         // Registering Slash Commands
         const slashCommands: ApplicationCommandDataResolvable[] = [];
         const commandFiles = await promiseGlob(
