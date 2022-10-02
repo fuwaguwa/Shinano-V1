@@ -854,16 +854,19 @@ export default new Command({
                             {
                                 label: 'Info',
                                 value: 'info',
+                                emoji: '🔎',
                                 default: true
                             },
                             {
                                 label: 'Stats',
                                 value: 'stats',
+                                emoji: '📝',
                                 default: false
                             },
                             {
                                 label: 'Fits',
                                 value: 'fits',
+                                emoji: '🚢',
                                 default: false
                             }
                         )    
