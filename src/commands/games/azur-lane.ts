@@ -168,12 +168,12 @@ export default new Command({
                 await interaction.deferReply()
                 const info: MessageEmbed = new MessageEmbed()
                     .setTitle(`${ship.names.en} | ${ship.names.code}`)
-                    .setDescription(`[Wiki Link](${ship.wikiUrl})\nDrawn by ${ship.misc.artist.name}\nVoiced by ${ship.misc.voice.name !== undefined ? ship.misc.voice.name : "Unknown"}`)
+                    .setDescription(`[Wiki Link](${ship.wikiUrl})\nDrawn by ${ship.misc.artist.name}\nVoiced by ${ship.misc.voice.name ? ship.misc.voice.name : "Unknown"}`)
                     .setThumbnail(ship.thumbnail)
                     .setColor(color)
                     .addFields(
                         {name: 'Rarity:', value: ship.rarity},
-                        {name: 'Nationality:', value: `${ship.nationality !== undefined ? ship.nationality : `None`}`},
+                        {name: 'Nationality:', value: `${ship.nationality ? ship.nationality : `None`}`},
                         {name: 'Class:', value: ship.class},
                         {name: 'Hull Type:', value: ship.hullType},
                     )
@@ -200,7 +200,7 @@ export default new Command({
                     const maps: string[] = []
                     if (ship.obtainedFrom.fromMaps.length > 0) {
                         for (let i = 0; i < ship.obtainedFrom.fromMaps.length; i++) {
-                            if (ship.obtainedFrom.fromMaps[i].name !== undefined) {
+                            if (ship.obtainedFrom.fromMaps[i].name) {
                                 maps.push(ship.obtainedFrom.fromMaps[i].name)
                             } else {
                                 maps.push(ship.obtainedFrom.fromMaps[i])
@@ -218,7 +218,7 @@ export default new Command({
                         .addFields(
                             {name: 'Construction:', value: ship.construction.constructionTime === 'Drop Only' ? 'Cannot Be Constructed' : ship.construction.constructionTime },
                             {name: 'Appears In:', value: aprIn},
-                            {name: 'Obtainable From:', value: `${ship.obtainedFrom.obtainedFrom !== undefined ? ship.obtainedFrom.obtainedFrom : `Maps`}`}
+                            {name: 'Obtainable From:', value: `${ship.obtainedFrom.obtainedFrom ? ship.obtainedFrom.obtainedFrom : `Maps`}`}
                         )
                 } else {
                     // PR/DR Ships
@@ -376,7 +376,7 @@ export default new Command({
                         `**Obtain From**: Skin Shop\n` +
                         `**Cost**: ${skin.info.cost} <:GEAMS:1002198674539036672>\n` +
                         `**Live2D?** ${skin.info.live2dModel == false ? 'No' : 'Yes'}\n` +
-                        `**Limited or Permanent**: ${skin.info.enLimited == undefined ? `${skin.info.enClient} on EN.` : skin.info.enLimited}`
+                        `**Limited or Permanent**: ${!skin.info.enLimited ? `${skin.info.enClient} on EN.` : skin.info.enLimited}`
                     } else if (skin.info.obtainedFrom === 'Default') {
                         description = `**Skin Name**: ${skin.name}`
                     } else {
@@ -740,7 +740,7 @@ export default new Command({
                     if (gear.names.en.toLowerCase() === gearName.toLowerCase()) return gear;
                 })
 
-                if (gearFiltered.length === 0 || gearFiltered == undefined) {
+                if (gearFiltered.length === 0 || !gearFiltered) {
                     const noResult: MessageEmbed = new MessageEmbed()
                         .setColor('RED')
                         .setDescription('Gear not found! Make sure you entered the gear\'s full name or spelt the gear\'s name properly!')
@@ -778,7 +778,7 @@ export default new Command({
                     // General Info
                     infoEmbeds.push(
                         new MessageEmbed()
-                            .setTitle(`${gear.names['wiki'] !== undefined ? gear.names['wiki'] : gear.names.en} | ${gear.tiers[i].rarity}`)
+                            .setTitle(`${gear.names['wiki'] ? gear.names['wiki'] : gear.names.en} | ${gear.tiers[i].rarity}`)
                             .setDescription(`Stars: ${gear.tiers[i].stars.stars}`)
                             .setColor(color)
                             .setThumbnail(gear.image)
@@ -800,7 +800,7 @@ export default new Command({
                         new MessageEmbed()
                             .setColor(color)
                             .setThumbnail(gear.image)
-                            .setTitle(`${gear.names['wiki'] !== undefined ? gear.names['wiki'] : gear.names.en} | ${gear.tiers[i].rarity}`)
+                            .setTitle(`${gear.names['wiki'] ? gear.names['wiki'] : gear.names.en} | ${gear.tiers[i].rarity}`)
                     )
 
                     gearStats(gear.tiers[i].stats, statsEmbeds[arrayIndex])

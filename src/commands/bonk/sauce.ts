@@ -121,7 +121,7 @@ export default new Command({
             for (let i = 0; i < 5; i++) {
                 const source = sauce.results[i]
 
-                if (source == undefined) return;
+                if (!source) return;
                 if (source.data.ext_urls) {
                     links.push(`${source.data.ext_urls[0]}|${source.header.similarity}%`)
                 }

@@ -52,7 +52,7 @@ export default new Command({
                 const guild: Guild = interaction.guild
                 const guildMember: GuildMember  = await guild.members.fetch(user)
 
-                if (guildMember.avatarURL({dynamic: true, size: 1024}) == null) {
+                if (!guildMember.avatarURL({dynamic: true, size: 1024})) {
                     const errorEmbed: MessageEmbed = new MessageEmbed()
                         .setDescription('User does not have a guild avatar! Please use `/avatar user` instead!')
                         .setColor('RED')

@@ -84,19 +84,19 @@ export default new Command({
             .setColor('#548ed1')
             .setFields(
                 {name:'Cases Today', value:`${
-                    covidInfo.newCases === null
+                    !covidInfo.newCases
                         ? "+0"
                         : addCommas(covidInfo.newCases)
             }`, inline: true},
                 {name:'Active Cases', value:`${
-                    covidInfo.activeCases === null
+                    !covidInfo.activeCases
                         ? "+0"
                         : addCommas(covidInfo.activeCases)
             }`, inline: true},
                 {name:'Total Cases', value:`${addCommas(covidInfo.totalCases)}`, inline: true},
                 {name:'Recovered Cases', value:`${addCommas(covidInfo.recovered)}`, inline: true},
                 {name:'Deaths Today', value:`${
-                    covidInfo.newDeaths === null
+                    !covidInfo.newDeaths
                         ? "+0"
                         : addCommas(covidInfo.newDeaths)
                 }`, inline: true},

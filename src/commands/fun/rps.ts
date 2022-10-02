@@ -22,7 +22,7 @@ export default new Command({
     ],
     run: async({interaction}) => {
         const user: User = interaction.options.getUser('user')
-        if (user !== null && user.id !== '977510446447874109' && user.id !== interaction.user.id) {
+        if (user && user.id !== '977510446447874109' && user.id !== interaction.user.id) {
             await interaction.reply(`<@${user.id}>`)
             // Verifying if the duel gonna happens
             

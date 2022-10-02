@@ -34,7 +34,7 @@ export default new Event("interactionCreate", async (interaction) => {
             
             // Blacklist
             const blacklist = await Blacklist.findOne({userId: interaction.user.id})
-            if (blacklist !== null) {
+            if (blacklist) {
                 const blacklisted = new MessageEmbed()
                     .setColor('RED')
                     .setTitle('You have been blacklisted!')
@@ -131,11 +131,11 @@ export default new Event("interactionCreate", async (interaction) => {
 
         let fullCommand = interaction.commandName
         const options: any = interaction.options
-        if (options._group !== null) fullCommand = fullCommand + ' ' + options._group;
-        if (options._subcommand !== null) fullCommand = fullCommand + ' ' + options._subcommand
+        if (options._group) fullCommand = fullCommand + ' ' + options._group;
+        if (options._subcommandw) fullCommand = fullCommand + ' ' + options._subcommand
         if (options._hoistedOptions.length > 0) {
             options._hoistedOptions.forEach((option) => {
-                option.attachment != undefined
+                option.attachment
                     ? fullCommand = fullCommand + ' ' + `${option.name}:${option.attachment.proxyURL}`
                     : fullCommand = fullCommand + ' ' + `${option.name}:${option.value} `
             })

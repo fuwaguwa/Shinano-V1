@@ -79,7 +79,7 @@ export default new Command({
                 .setColor('RED')
             return interaction.reply({embeds: [tooLong], ephemeral: true})
         }
-        if (title !== null && title.length > 256) {
+        if (title && title.length > 256) {
             const tooLong: MessageEmbed = new MessageEmbed()
                 .setDescription('You can only have 256 characters in the embed\'s title field!')
                 .setColor('RED')
@@ -91,7 +91,7 @@ export default new Command({
             .setDescription(text)
             .setColor('BLUE')
         if (author) announcement.setAuthor({name: interaction.user.tag, iconURL: interaction.user.displayAvatarURL({dynamic: true})});
-        if (title !== null) announcement.setTitle(title);
+        if (title) announcement.setTitle(title);
         everyone == false
             ? await guildChannel.send({embeds:[announcement]})
             : await guildChannel.send({content: `@everyone`, embeds:[announcement]})

@@ -247,7 +247,7 @@ export default new Command({
                             })
                             
                             const responseJson = await response.json()
-                            if (responseJson.body == undefined) return videoFetch()
+                            if (!responseJson.body) return videoFetch()
                             return responseJson.body.link
                         }
                         

@@ -212,13 +212,13 @@ export default new Command({
         }
         
         const options = interaction.options
-        if (options['_group'] != undefined) {
+        if (options['_group']) {
             switch (interaction.options.getSubcommandGroup()) {
                 case 'blacklist': {
                     switch (interaction.options.getSubcommand()) {
                         case 'add': {
                             const blacklist = await Blacklist.findOne({userId: interaction.options.getUser('user').id})
-                            if (blacklist == null) {
+                            if (!blacklist) {
                                 try {
                                     await Blacklist.create({
                                         blacklistedBy: interaction.user.id,
@@ -253,13 +253,14 @@ export default new Command({
                                     )
                                 await interaction.editReply({embeds: [noOne]})
                             }
+
                             break
                         }
             
 
                         case 'remove': {
                             const blacklist = await Blacklist.findOne({userId: interaction.options.getUser('user').id})
-                            if (blacklist != null) {
+                            if (blacklist) {
                                 try {
                                     await Blacklist.deleteOne({userId: interaction.options.getUser('user').id})
             
@@ -281,15 +282,16 @@ export default new Command({
                                     .setDescription('User is not blacklisted!')
                                 await interaction.editReply({embeds: [noOne]})
                             }
+
                             break
                         }
 
                         
                         case 'check': {
                             const blacklist = await Blacklist.findOne({userId: interaction.options.getUser('user').id})
-                            if (blacklist != null) {
+                            if (blacklist) {
                                 const blacklisted: MessageEmbed = new MessageEmbed()
-                                    .setColor('GREEN')
+                                    .setColor('RED')
                                     .setTitle('Uh oh, user is blacklisted!')
                                     .addFields(
                                         {name: 'User:', value: `${interaction.options.getUser('user')}`},
@@ -303,6 +305,7 @@ export default new Command({
                                     .setDescription('User is not blacklisted!')
                                 await interaction.editReply({embeds: [noOne]})
                             }
+
                             break
                         }
                     }

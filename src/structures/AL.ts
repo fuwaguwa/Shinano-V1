@@ -78,7 +78,7 @@ export function gearStats(gearStats, embed) {
 export function gearFits(fits) {
     const fitted: string[] = []
     for (let ship in fits) {
-        if (fits[ship] !== null) {
+        if (fits[ship]) {
             const slot = toTitleCase(fits[ship])
             switch (ship.toLowerCase()) {
                 case 'destroyer':
