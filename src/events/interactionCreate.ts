@@ -18,6 +18,7 @@ export default new Event("interactionCreate", async (interaction) => {
         const command = client.commands.get(interaction.commandName);
         if (!command) return interaction.reply({content: "This command no longer exists!", ephemeral: true});
 
+        // Cooldown
         if (command.cooldown) {
             // Cooldown Check
             if (Cooldown.has(`${command.name}${owner}`)) Cooldown.delete(`${command.name}${owner}`);
