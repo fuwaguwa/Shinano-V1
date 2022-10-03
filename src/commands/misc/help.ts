@@ -66,6 +66,8 @@ export default new Command({
                         
                         **bronya**
                         <:curve:1021036738161950800>Bronya's certificate
+                        **fox**
+                        <:curve:1021036738161950800>Send an image of a fox!
                         **gay**
                         <:curve:1021036738161950800>Taste the rainbow
                         **jail**
@@ -75,7 +77,13 @@ export default new Command({
                         **rip**
                         <:curve:1021036738161950800>*dies*
                         **shit**
-                        <:curve:1021036738161950800>Put a bounty on someone
+                        <:curve:1021036738161950800>Put a bounty on someone`
+                    )
+                const imageCommand2: MessageEmbed = new MessageEmbed()
+                    .setColor('BLUE')
+                    .setDescription(`
+                        /<command>
+
                         **sigma**
                         <:curve:1021036738161950800>Sigma Grindset`
                     )
@@ -202,6 +210,7 @@ export default new Command({
                 ]
                 const imageCommands: MessageEmbed[] = [
                     imageCommand1,
+                    imageCommand2
                 ]
                 const miscCommands: MessageEmbed[] = [
                     miscCommand1
