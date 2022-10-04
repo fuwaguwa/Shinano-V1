@@ -23,6 +23,7 @@ export default new Command({
         })
         const definition = await response.json()
         
+        
         // No Result
         if (definition.list.length == 0) {
             const noResult: MessageEmbed = new MessageEmbed()
@@ -30,6 +31,7 @@ export default new Command({
                 .setDescription(`No definition for the word \`${word}\` can be found!`)
             return interaction.editReply({embeds: [noResult]})
         }
+
 
         // Outputting Definition
         const wordInfo = definition.list[0]

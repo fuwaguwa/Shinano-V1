@@ -10,6 +10,7 @@ export default new Command({
     description: 'Make a dadjoke.',
     run: async({interaction}) => {
         await interaction.deferReply()
+        
         const response = await fetch(`https://dad-jokes.p.rapidapi.com/random/joke`,{
             method: "GET",
             headers: {
@@ -18,6 +19,8 @@ export default new Command({
             }
         })
         const dadjoke = await response.json()
+
+
         const dadjokeEmbed = new MessageEmbed()
             .setDescription(`**${dadjoke.body[0].setup}**\n${dadjoke.body[0].punchline}`)
             .setColor('RANDOM')

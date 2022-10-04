@@ -24,7 +24,6 @@ export default new Command({
         const person2: User = interaction.options.getUser('user2')
 
         let love = Math.round(Math.random() * 100)
-        if (person1.id === '571311326861983745' && person2.id === '844412767854526494') love = 100;
         const loveIndex = Math.floor(love / 10)
         const loveLevel = "💖".repeat(loveIndex) + "💔".repeat(10 - loveIndex)
 

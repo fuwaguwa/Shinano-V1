@@ -26,6 +26,7 @@ export default new Command({
             await interaction.reply(`<@${user.id}>`)
             // Verifying if the duel gonna happens
             
+
             // Buttons
             const AoD = new MessageActionRow()
                 .addComponents(
@@ -74,7 +75,8 @@ export default new Command({
                 componentType: 'BUTTON'
             })
 
-            // Initiating the due;
+
+            // Initiating the duel
             acceptor.on('collect', async (i) => {
                 const customId = i.customId.split('-')[0]
 

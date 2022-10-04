@@ -182,7 +182,6 @@ export default new Command({
 
                 collector.stop('End')
                 await i.editReply({components:[row], embeds:[question], content: 'You\'re correct!'})
-
             } else {
                 for (let i = 0; i < 4; i++) {
                     switch (true) {
@@ -207,7 +206,6 @@ export default new Command({
 
                 collector.stop('End')
                 await i.editReply({components:[row], embeds:[question], content: `That was incorrect, the answer was \`${trivia[0]['correctAnswer']}\`.`})
-                
             }
             
         })
