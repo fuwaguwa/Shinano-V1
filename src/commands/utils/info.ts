@@ -116,6 +116,7 @@ export default new Command({
                 break
             }
 
+            
             case 'guild': {
                 const guild: Guild = interaction.guild
                 const botMembers = guild.members.cache.filter(member => member.user.bot)
