@@ -1,7 +1,7 @@
 import { Command } from "../../structures/Command";
 import { MessageEmbed } from "discord.js";
 import fetch from 'node-fetch'
-import {config} from 'dotenv'
+import { config } from 'dotenv'
 config();
 
 function addCommas(n) {

@@ -3,7 +3,7 @@ import { client } from "..";
 import { Event } from "../structures/Event";
 import { ShinanoInteraction } from "../typings/Command";
 import Blacklist from '../schemas/Blacklist'
-import {config} from 'dotenv'
+import { config } from 'dotenv'
 import ms from 'ms'
 import { checkVotes } from "../structures/Utils";
 config();

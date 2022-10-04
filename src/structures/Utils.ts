@@ -1,6 +1,6 @@
 import { Guild, VoiceChannel } from "discord.js";
 import fetch from 'node-fetch'
-import {client} from '..'
+import { client } from '..'
 
 export function isImage(url) {
     return(url.match(/^http[^\?]*.(jpg|jpeg|png)(\?(.*))?$/gmi) != null);

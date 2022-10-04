@@ -1,7 +1,6 @@
 import { Command } from "../../structures/Command";
 import fetch from 'node-fetch'
 import { config } from "dotenv";
-import { isNum } from '../../structures/Utils'
 import { animeInfo, characterInfo } from "../../structures/Anime";
 import { InteractionCollector, Message, MessageActionRow, MessageEmbed, MessageSelectMenu, SelectMenuInteraction } from "discord.js";
 config();

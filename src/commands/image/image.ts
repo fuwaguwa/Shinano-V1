@@ -2,7 +2,7 @@ import { Command } from "../../structures/Command";
 import { MessageAttachment } from "discord.js";
 import Canvacord from "canvacord"
 import Canvas from "canvas"
-import {config} from 'dotenv'
+import { config } from 'dotenv'
 config()
 
 
