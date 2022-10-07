@@ -48,7 +48,6 @@ export async function ShinanoPaginator(options: {
     
     // Disables all the button if there is only one page
     if (options.pages.length == 1) {
-        console.log('sad')
         for (let i = 0; i < navigation.components.length; i++) {
             (navigation.components[i] as MessageButton).setStyle('SECONDARY').setDisabled(true);
         }
