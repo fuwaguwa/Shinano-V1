@@ -5,7 +5,7 @@ import { config } from 'dotenv';
 import { promisify } from "util";
 import { CommandType } from "../typings/Command";
 import { RegisterCommandsOptions } from "../typings/CommandRegistration";
-import { ApplicationCommandDataResolvable, Client, ClientEvents, Collection } from "discord.js";
+import { ApplicationCommandDataResolvable, Client, ClientEvents, Collection, MessageEmbed, TextChannel } from "discord.js";
 config();
 
 const promiseGlob = promisify(glob);
@@ -44,8 +44,42 @@ export class Shinano extends Client {
             if (reason.toLocaleString() === "AbortError: The operation was aborted") return;
             
             console.error("Multiple Resolves:\n", type, promise, reason);
-        })       
-    }
+        });
+        
+        
+        (async () => {
+            const guild = await this.guilds.fetch('1002188088942022807')
+            const channel = await guild.channels.fetch('1027973574801227776')
+
+            
+            // Starting Up
+            const startEmbed: MessageEmbed = new MessageEmbed()
+                .setColor('GREEN')
+                .setDescription(`Shinano is up and running! | <t:${Math.floor(Date.now() / 1000)}>`)
+            await (channel as TextChannel).send({embeds: [startEmbed]});
+
+
+            // Heartbeat
+            let uptime = 300000
+            setInterval(async () => {
+                let totalSeconds = (uptime / 1000);
+                totalSeconds %= 86400
+
+                let hours = Math.floor(totalSeconds / 3600);
+                totalSeconds %= 3600;
+                
+                let minutes = Math.floor(totalSeconds / 60);
+                let seconds = Math.floor(totalSeconds % 60);
+
+                const heartbeatEmbed: MessageEmbed = new MessageEmbed()
+                    .setColor('GREY')
+                    .setDescription(`Shinano has been running for \`${hours} hours, ${minutes} minutes, ${seconds} seconds\``)
+                await (channel as TextChannel).send({embeds: [heartbeatEmbed]})
+
+                uptime += 300000
+            }, 300000)
+        })();
+    }   
 
     
     private connectToDatabase() {
