@@ -205,6 +205,7 @@ export default new Command({
                             method: "GET",
                         })
                         const waifu = await response.json()
+
                         if (!(waifu.link as string).endsWith('mp4')) {
                             lewdEmbed.setImage(waifu.link)
                             return interaction.editReply({embeds:[lewdEmbed]})
@@ -218,6 +219,8 @@ export default new Command({
                             method: "GET",
                         })
                         const waifu = await response.json()
+
+
                         return interaction.editReply({
                             content: waifu.links.join("\n")
                         })
@@ -236,7 +239,9 @@ export default new Command({
                             lewdEmbed.setImage(uwu.body.link)
                             return interaction.editReply({embeds: [lewdEmbed]})
                         }
-                        await interaction.editReply({content: uwu.body.link}) 
+
+
+                        return interaction.editReply({content: uwu.body.link}) 
                     }
 
 
@@ -263,6 +268,8 @@ export default new Command({
                         })
                         const waifu = await response.json()
                         lewdEmbed.setImage(waifu.link)
+
+
                         await interaction.editReply({embeds:[lewdEmbed]})
                         break
                     }
@@ -278,8 +285,9 @@ export default new Command({
                         const result = await response.json()
 
                         if ((result.link as string).includes('redgifs') || (result.link as string).includes('.gifv')) return interaction.editReply({content: result.link})
-
                         lewdEmbed.setImage(result.link)
+
+
                         await interaction.editReply({embeds: [lewdEmbed]})
                     }
                 }
