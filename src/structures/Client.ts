@@ -55,7 +55,8 @@ export class Shinano extends Client {
             // Starting Up
             const startEmbed: MessageEmbed = new MessageEmbed()
                 .setColor('GREEN')
-                .setDescription(`Shinano is up and running! | <t:${Math.floor(Date.now() / 1000)}>`)
+                .setDescription(`Shinano has been started!`)
+                .setTimestamp()
             await (channel as TextChannel).send({embeds: [startEmbed]});
 
 
@@ -74,6 +75,7 @@ export class Shinano extends Client {
                 const heartbeatEmbed: MessageEmbed = new MessageEmbed()
                     .setColor('GREY')
                     .setDescription(`Shinano has been running for \`${hours} hours, ${minutes} minutes, ${seconds} seconds\``)
+                    .setTimestamp()
                 await (channel as TextChannel).send({embeds: [heartbeatEmbed]})
 
                 uptime += 300000
