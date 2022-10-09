@@ -99,17 +99,20 @@ export async function azurLaneGear(interaction: ShinanoInteraction, AL: any) {
             .addOptions(
                 {
                     label: 'Tier 1',
+                    emoji: '1️⃣',
                     value: 'T1',
                     default: true
                 },
                 {
                     label: 'Tier 2',
                     value: 'T2',
+                    emoji: '2️⃣',
                     default: false
                 },
                 {
                     label: 'Tier 3',
                     value: 'T3',
+                    emoji: '3️⃣',
                     default: false
                 },
             )    
