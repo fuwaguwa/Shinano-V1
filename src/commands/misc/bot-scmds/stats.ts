@@ -13,18 +13,23 @@ export async function botStats(interaction: ShinanoInteraction) {
     let minutes = Math.floor(totalSeconds / 60);
     let seconds = Math.floor(totalSeconds % 60);
 
-    const memory = process.memoryUsage()
+
+    let memberCount = 0;
+    client.guilds.cache.forEach((guild) => {
+        memberCount += guild.memberCount
+    })
+
+
+
     const performance: MessageEmbed = new MessageEmbed()
         .setColor('BLUE')
         .setTitle('Shinano\'s Stats')
         .addFields(
             {name: 'Uptime:', value: `${hours} hours, ${minutes} minutes, ${seconds} seconds`},
             {name: 'Latency:', value: `Latency: ${Date.now() - interaction.createdTimestamp}ms\nAPI Latency: ${Math.round(client.ws.ping)}ms`},
-            {name: 'Memory Usage:', value: 
-            `RSS: ${(memory.rss / 1024**2).toFixed(2)} MB\n` +
-            `External: ${(memory.external / 1024**2).toFixed(2)} MB\n` +
-            `Heap Total Used: ${(memory.heapUsed / 1024**2).toFixed(2)} MB\n` +
-            `Heap Total Mem: ${(memory.heapTotal / 1024**2).toFixed(2)} MB`}
+            {name: 'Bot Stats:', value: 
+            `Guilds: ${client.guilds.cache.size}\n`+
+            `Users: ${memberCount.toLocaleString("en-US")}\n`}
         )
     await interaction.editReply({embeds: [performance]})
 }
