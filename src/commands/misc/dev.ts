@@ -1,6 +1,5 @@
 import { Command } from "../../structures/Command";
 import { devEval } from "./dev-scmds/eval";
-import { devGuildCount } from "./dev-scmds/guildCount";
 import { devLeave } from "./dev-scmds/leave";
 import { devUsage } from "./dev-scmds/usage";
 import { devGuildInfo } from "./dev-scmds/guildInfo";
@@ -28,8 +27,8 @@ export default new Command({
         },
         {
             type: 'SUB_COMMAND',
-            name: 'guild-count',
-            description: 'Check the number of guilds Shinano is in.'
+            name: 'usage',
+            description: 'Shows bot memory usage.'
         },
         {
             type: 'SUB_COMMAND',
@@ -115,12 +114,6 @@ export default new Command({
         switch (interaction.options.getSubcommand()) {
             case 'eval': {
                 await devEval(interaction)
-                break
-            }
-
-
-            case 'guild-count': {
-                await devGuildCount(interaction)
                 break
             }
 
