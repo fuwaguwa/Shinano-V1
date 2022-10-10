@@ -5,7 +5,7 @@ import { ShinanoInteraction } from "../typings/Command";
 import Blacklist from '../schemas/Blacklist'
 import { config } from 'dotenv'
 import ms from 'ms'
-import { checkVotes } from "../structures/Utils";
+import Votes from '../schemas/Votes'
 config();
 
 const Cooldown: Collection<string, number> = new Collection()
@@ -63,8 +63,6 @@ export default new Event("interactionCreate", async (interaction) => {
 
             // Vote Checking
             if (interaction.user.id !== owner) {
-                const voteStatus = await checkVotes(interaction.user.id)
-
                 const voteEmbed: MessageEmbed = new MessageEmbed()
                     .setColor('RED')
                     .setTitle('Hold on...')
@@ -72,19 +70,21 @@ export default new Event("interactionCreate", async (interaction) => {
                 const voteLink: MessageActionRow = new MessageActionRow()
                     .addComponents(
                         new MessageButton()
-                            .setStyle('LINK')
-                            .setLabel('Vote for Shinano!')
-                            .setEmoji('<:topgg:1002849574517477447>')
-                            .setURL('https://top.gg/bot/1002193298229829682/vote'),
+                        .setStyle('LINK')
+                        .setLabel('Vote for Shinano!')
+                        .setEmoji('<:topgg:1002849574517477447>')
+                        .setURL('https://top.gg/bot/1002193298229829682/vote'),
                         new MessageButton()
-                            .setStyle('SECONDARY')
-                            .setLabel('Check Vote')
-                            .setCustomId('VOTE-CHECK')
-                            .setEmoji('🔎')
-                    )
-                
+                        .setStyle('SECONDARY')
+                        .setLabel('Check Vote')
+                        .setCustomId('VOTE-CHECK')
+                        .setEmoji('🔎')
+                        )
+                    
                 // Checking if user has voted
-                if (voteStatus == 0) {
+                const userVotes = await Votes.findOne({userId: interaction.user.id})
+                if (!userVotes) {
+                    // Have not voted before
                     voteEmbed
                         .setDescription(
                             `To **use NSFW commands**, you'll have to **vote for Shinano on top.gg** using the button below!\n` +
@@ -95,6 +95,16 @@ export default new Event("interactionCreate", async (interaction) => {
                     return interaction.deferred 
                         ? interaction.editReply({embeds: [voteEmbed], components: [voteLink]}) 
                         : interaction.reply({embeds: [voteEmbed], components: [voteLink]})
+                } else if (Math.floor(Date.now() / 1000) - userVotes.voteTimestamp > 43200) {
+                    // Voted before but 12 hours has passed
+                    voteEmbed
+                        .setDescription(
+                            `Your **12 hours** access to NSFW commands ran out!\n` +
+                            `Please **vote again** if you want to continue using **Shinano's NSFW features**`
+                        )
+                        return interaction.deferred 
+                            ? interaction.editReply({embeds: [voteEmbed], components: [voteLink]}) 
+                            : interaction.reply({embeds: [voteEmbed], components: [voteLink]})
                 }
             }
         }

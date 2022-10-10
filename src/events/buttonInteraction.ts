@@ -1,6 +1,6 @@
 import { MessageEmbed, MessageActionRow, MessageButton } from "discord.js";
 import { Event } from "../structures/Event";
-import { checkVotes } from "../structures/Utils";
+import Votes from '../schemas/Votes'
 
 
 export default new Event('interactionCreate', async (interaction) => {
@@ -31,7 +31,8 @@ export default new Event('interactionCreate', async (interaction) => {
 
         
         case 'VOTE-CHECK': {
-            const voteStatus = await checkVotes(interaction.user.id)
+            const userVotes = await Votes.findOne({userId: interaction.user.id})
+
             const voteLink: MessageActionRow = new MessageActionRow()
                 .addComponents(
                     new MessageButton()
@@ -41,23 +42,31 @@ export default new Event('interactionCreate', async (interaction) => {
                         .setURL('https://top.gg/bot/1002193298229829682/vote'),
                 )
     
-    
-            if (voteStatus == 0) {
+            if (!userVotes) {
+                // Haven't vote at all
                 const noVotes: MessageEmbed = new MessageEmbed()
-                    .setTitle('Voting Status')
-                    .setDescription('You haven\'t voted for Shinano today! Please vote using the button below!')
                     .setColor('RED')
-                    .setFooter({text: 'You can vote every 12 hours!'})
+                    .setDescription('You have not voted for Shinano! Please vote using the button below!')
                     .setTimestamp()
                 return interaction.reply({embeds: [noVotes], components: [voteLink], ephemeral: true})
-            } else {
-                const votingStatus: MessageEmbed = new MessageEmbed()
-                    .setTitle('Voting Status')
-                    .setTimestamp()
+            } else if (Math.floor(Date.now() / 1000) - userVotes.voteTimestamp > 43200) {
+                // 12 hours has passed
+                const votable: MessageEmbed = new MessageEmbed()
                     .setColor('GREEN')
-                    .setDescription(`You have voted for Shinano! Thank you for the support!`)
-                    .setFooter({text: 'You can vote every 12 hours!'})
-                return interaction.reply({embeds: [votingStatus], ephemeral: true})
+                    .setDescription(
+                        `Your last vote was <t:${userVotes.voteTimestamp}:R>, you can now vote again using the button below!`
+                    )
+                    .setTimestamp()
+                return interaction.reply({embeds: [votable], components: [voteLink], ephemeral: true})
+            } else {
+                // 12 hours has not passed
+                const unvotable: MessageEmbed = new MessageEmbed()
+                    .setColor('RED')
+                    .setDescription(
+                        `Your last vote was <t:${userVotes.voteTimestamp}:R>, you can vote again <t:${userVotes.voteTimestamp + 43200}:R>`
+                    )
+                    .setTimestamp()
+                return interaction.reply({embeds: [unvotable], ephemeral: true})
             }
         }
     }
