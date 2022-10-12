@@ -9,7 +9,6 @@ export default new Event("ready", async () => {
 
     
     await updateServerCount();
-    
 
     // Activities
     client.user.setStatus('online')
@@ -25,11 +24,10 @@ export default new Event("ready", async () => {
     const activitiesList: any = [
         {type: 'PLAYING', message: 'with Laffey'},
         {type: 'WATCHING', message: 'Akagi and Kaga fight'},
-        {type: 'WATCHING', message: 'the Shikikan'},
-        {type: 'WATCHING', message: 'people typing /help'},
+        {type: 'WATCHING', message: 'the shikikan'},
         {type: 'LISTENING', message: 'Sandy\'s singing'},
-        {type: 'WATCHING', message: 'thighs pics'},
-        {type: 'WATCHING', message: 'you'},
+        {type: 'PLAYING', message: 'with a supercar'},
+        {type: 'PLAYING', message: 'Azur Lane'},
         {type: 'WATCHING', message: `${shikikansCount.toLocaleString("en-US")} shikikans`}
     ]
     
