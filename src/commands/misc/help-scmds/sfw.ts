@@ -126,7 +126,9 @@ export async function helpSFW(interaction: ShinanoInteraction) {
             **slap**
             <:curve:1021036738161950800>Eat that, sucker.
             **smile**
-            <:curve:1021036738161950800>Ehe.`
+            <:curve:1021036738161950800>Ehe.
+            **wave**
+            <:curve:1021036738161950800>Wave at someone`
         )
 
 

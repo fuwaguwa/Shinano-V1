@@ -1,6 +1,4 @@
 import { Command } from "../../structures/Command";
-import { InteractionCollector, Message, MessageActionRow, MessageButton, MessageEmbed, MessageSelectMenu, SelectMenuInteraction, TextChannel } from "discord.js";
-import { ShinanoPaginator } from "../../structures/Pages";
 import { helpSFW } from "./help-scmds/sfw";
 import { helpNSFW } from "./help-scmds/nsfw";
 
