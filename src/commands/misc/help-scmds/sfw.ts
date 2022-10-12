@@ -48,6 +48,10 @@ export async function helpSFW(interaction: ShinanoInteraction) {
             
             **bronya**
             <:curve:1021036738161950800>Bronya's certificate
+            **cat**
+            <:curve:1021036738161950800>Generate a picture of a cat
+            **dog**
+            <:curve:1021036738161950800>Generate a picture of a dog
             **fox**
             <:curve:1021036738161950800>Send an image of a fox!
             **gay**
@@ -55,17 +59,17 @@ export async function helpSFW(interaction: ShinanoInteraction) {
             **jail**
             <:curve:1021036738161950800>Go to horny jail!
             **nekomimi**
-            <:curve:1021036738161950800>Generate a (SFW) picture of a catgirl!
-            **rip**
-            <:curve:1021036738161950800>*dies*
-            **shit**
-            <:curve:1021036738161950800>Put a bounty on someone`
+            <:curve:1021036738161950800>Generate a (SFW) picture of a catgirl!`
         )
     const imageCommand2: MessageEmbed = new MessageEmbed()
         .setColor('BLUE')
         .setDescription(`
             /<command>
 
+            **rip**
+            <:curve:1021036738161950800>*dies*
+            **shit**
+            <:curve:1021036738161950800>Put a bounty on someone
             **sigma**
             <:curve:1021036738161950800>Sigma Grindset`
         )
