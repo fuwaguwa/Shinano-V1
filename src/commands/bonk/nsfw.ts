@@ -53,11 +53,6 @@ export default new Command({
                 },
                 {
                     type: 'SUB_COMMAND',
-                    name: 'paizuri',
-                    description: 'Squished between titties!'
-                },
-                {
-                    type: 'SUB_COMMAND',
                     name: 'pussy',
                     description: '🐱'
                 },
