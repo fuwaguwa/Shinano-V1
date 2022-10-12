@@ -71,9 +71,9 @@ export async function infoUser(interaction: ShinanoInteraction) {
         return color
     })
 
-
+    
     const infoEmbed: MessageEmbed = new MessageEmbed()
-        .setColor(embedColor(userRoles[0].hexColor))
+        .setColor(embedColor(userRoles.length == 0 ? 'GREY' : userRoles[0].hexColor))
         .setAuthor({name: `${user.tag}`, iconURL: `${user.displayAvatarURL({dynamic: true, size: 512})}`})
         .setThumbnail(user.displayAvatarURL({dynamic: true, size: 512}))
         .setFooter({text: `UID: ${user.id}`})
