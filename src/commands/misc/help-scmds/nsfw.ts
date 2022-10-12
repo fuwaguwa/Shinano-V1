@@ -24,9 +24,22 @@ export async function helpNSFW(interaction: ShinanoInteraction) {
         .setColor('BLUE')
         .setDescription('Tip: You can quickly type `/<tag>` or `/<category>` for the commands. E.g `/random`, `/porn`')
         .setFields(
-            {name: 'Sauce Lookup Command:', value: '`/sauce`'},
-            {name: "/nsfw hentai <tag>", value:"`anal`, `ass`, `blowjob`, `bomb`, `boobs`, `cum`, `elf`, `feet`, `genshin`, `gif`, `kemonomimi`, `masturbation`, `nekomimi`, `paizuri`, `pussy`, `random`, `shipgirls`, `succubus`, `thighs`, `undies`, `vtubers`, `yuri`"},
-            {name: "/nsfw porn <tag>", value: "`anal`, `ass`, `blowjob`, `boobs`, `cosplay`,`cum`, `random`, `pussy`, `video`"},
+            {
+                name: 'Sauce Lookup Command:',
+                value: '`sauce`'
+            },
+            {
+                name: 'Porn Commands:',
+                value: "`anal`, `ass`, `blowjob`, `boobs`, `cosplay`, `cum`, `random`, `pussy`, `video`"
+            },
+            {
+                name: 'Hentai Commands:',
+                value: "`anal`, `ass`, `blowjob`, `bomb`, `boobs`, `cum`, `feet`, `gif`, `masturbation`, `nekomimi`, `pussy`, `random`, `succubus`, `thighs`"
+            },
+            {
+                name: "Private Collection (High-Quality):",
+                value: "`elf`, `genshin`, `kemonomimi`, `misc`, `shipgirls`, `undies`, `vtubers`, `yuri`"
+            }
         )
     await interaction.reply({embeds:[nsfwEmbed], components: [navigation]})
 }
