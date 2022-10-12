@@ -2,6 +2,10 @@ import { MessageEmbed } from "discord.js";
 import { Command } from "../../structures/Command";
 import fetch from "node-fetch"
 import {config} from 'dotenv'
+import { nsfwRandom } from "./nsfw-scmds/random";
+import { nsfwBomb } from "./nsfw-scmds/bomb";
+import { nsfwPrivateCollection } from "./nsfw-scmds/privateColle";
+import { nsfwVideo } from "./nsfw-scmds/video";
 config();
 
 export default new Command({
@@ -196,63 +200,26 @@ export default new Command({
             if (interaction.options.getSubcommandGroup() === 'hentai') {
                 switch (interaction.options.getSubcommand()) {
                     case 'random': {
-                        const response = await fetch('https://AmagiAPI.fuwafuwa08.repl.co/nsfw/random', {
-                            method: "GET",
-                        })
-                        const waifu = await response.json()
-
-                        if (!(waifu.link as string).endsWith('mp4')) {
-                            lewdEmbed.setImage(waifu.link)
-                            return interaction.editReply({embeds:[lewdEmbed]})
-                        }
-                        return interaction.editReply({content: waifu.link})
+                        await nsfwRandom(interaction, lewdEmbed)
+                        break
                     }
     
 
                     case 'bomb': {
-                        const response = await fetch('https://AmagiAPI.fuwafuwa08.repl.co/nsfw/bomb', {
-                            method: "GET",
-                        })
-                        const waifu = await response.json()
-
-
-                        return interaction.editReply({
-                            content: waifu.links.join("\n")
-                        })
+                        await nsfwBomb(interaction, lewdEmbed)
+                        break
                     }
 
 
                     case 'elf': case 'genshin': case 'kemonomimi': case 'misc': case 'shipgirls': case 'undies':
                     case 'vtubers': case 'yuri': {
-                        const category = interaction.options.getSubcommand()
-                        const response = await fetch(`https://AmagiAPI.fuwafuwa08.repl.co/nsfw/private/${category}`, {
-                            method: "GET",
-                        })
-                        const uwu = await response.json()
-
-                        if (!((uwu.body.link as string).endsWith('mp4'))) {
-                            lewdEmbed.setImage(uwu.body.link)
-                            return interaction.editReply({embeds: [lewdEmbed]})
-                        }
-
-
-                        return interaction.editReply({content: uwu.body.link}) 
+                        await nsfwPrivateCollection(interaction, lewdEmbed, interaction.options.getSubcommand())
+                        break
                     }
 
 
                     case 'video': {
-                        async function videoFetch() {
-                            const response = await fetch(`https://AmagiAPI.fuwafuwa08.repl.co/nsfw/private/random?type=mp4`, {
-                                method: "GET",
-                            })
-                            
-                            const responseJson = await response.json()
-                            if (!responseJson.body) return videoFetch()
-                            return responseJson.body.link
-                        }
-                        
-                    
-                        await interaction.editReply({content: await videoFetch()}) 
+                        await nsfwVideo(interaction)
                         break
                     }
 
@@ -272,20 +239,15 @@ export default new Command({
                 }
                 
             } else if (interaction.options.getSubcommandGroup() === 'porn') {
-                switch (interaction.options.getSubcommand()) {
-                    default: {
-                        const response = await fetch(`https://AmagiAPI.fuwafuwa08.repl.co/nsfw/porn/${interaction.options.getSubcommand()}`, {
-                            method: "GET",
-                        })
-                        const result = await response.json()
+                const response = await fetch(`https://AmagiAPI.fuwafuwa08.repl.co/nsfw/porn/${interaction.options.getSubcommand()}`, {
+                    method: "GET",
+                })
+                const result = await response.json()
 
-                        if ((result.link as string).includes('redgifs') || (result.link as string).includes('.gifv')) return interaction.editReply({content: result.link})
-                        lewdEmbed.setImage(result.link)
-
-
-                        await interaction.editReply({embeds: [lewdEmbed]})
-                    }
-                }
+                if ((result.link as string).includes('redgifs') || (result.link as string).includes('.gifv')) return interaction.editReply({content: result.link})
+                lewdEmbed.setImage(result.link)
+                
+                await interaction.editReply({embeds: [lewdEmbed]})
             }
         } 
     }
