@@ -16,7 +16,7 @@ export default new Event("interactionCreate", async (interaction) => {
     if (!interaction.guild) return;
     if (!interaction.isCommand()) return;
 
-
+    
     const command = client.commands.get(interaction.commandName);
     if (!command) return interaction.reply({content: "This command no longer exists!", ephemeral: true});
 
@@ -62,49 +62,51 @@ export default new Event("interactionCreate", async (interaction) => {
 
 
             // Vote Checking
-            if (interaction.user.id !== owner) {
-                const voteEmbed: MessageEmbed = new MessageEmbed()
-                    .setColor('RED')
-                    .setTitle('Hold on...')
-                    .setImage('https://i.imgur.com/ca5zzXB.png')
-                const voteLink: MessageActionRow = new MessageActionRow()
-                    .addComponents(
-                        new MessageButton()
-                        .setStyle('LINK')
-                        .setLabel('Vote for Shinano!')
-                        .setEmoji('<:topgg:1002849574517477447>')
-                        .setURL('https://top.gg/bot/1002193298229829682/vote'),
-                        new MessageButton()
-                        .setStyle('SECONDARY')
-                        .setLabel('Check Vote')
-                        .setCustomId('VOTE-CHECK')
-                        .setEmoji('🔎')
-                        )
+            if (interaction.commandName === 'nsfw') {
+                if (interaction.user.id !== owner) {
+                    const voteEmbed: MessageEmbed = new MessageEmbed()
+                        .setColor('RED')
+                        .setTitle('Hold on...')
+                        .setImage('https://i.imgur.com/ca5zzXB.png')
+                    const voteLink: MessageActionRow = new MessageActionRow()
+                        .addComponents(
+                            new MessageButton()
+                            .setStyle('LINK')
+                            .setLabel('Vote for Shinano!')
+                            .setEmoji('<:topgg:1002849574517477447>')
+                            .setURL('https://top.gg/bot/1002193298229829682/vote'),
+                            new MessageButton()
+                            .setStyle('SECONDARY')
+                            .setLabel('Check Vote')
+                            .setCustomId('VOTE-CHECK')
+                            .setEmoji('🔎')
+                            )
+                        
+                    // Checking if user has voted
+                    const userVotes = await Votes.findOne({userId: interaction.user.id})
+                    if (!userVotes) {
+                        // Have not voted before
+                        voteEmbed
+                            .setDescription(
+                                `To **use NSFW commands**, you'll have to **vote for Shinano on top.gg** using the button below!\n` +
+                                `It only takes **a few seconds to vote**, after which you will have access to **premium quality NSFW commands until you are able vote again (12 hours!)**\n\n` +
+                                `Run the \`/support\` command if you have any problem with voting!`
+                            )
                     
-                // Checking if user has voted
-                const userVotes = await Votes.findOne({userId: interaction.user.id})
-                if (!userVotes) {
-                    // Have not voted before
-                    voteEmbed
-                        .setDescription(
-                            `To **use NSFW commands**, you'll have to **vote for Shinano on top.gg** using the button below!\n` +
-                            `It only takes **a few seconds to vote**, after which you will have access to **premium quality NSFW commands until you are able vote again (12 hours!)**\n\n` +
-                            `Run the \`/support\` command if you have any problem with voting!`
-                        )
-                
-                    return interaction.deferred 
-                        ? interaction.editReply({embeds: [voteEmbed], components: [voteLink]}) 
-                        : interaction.reply({embeds: [voteEmbed], components: [voteLink]})
-                } else if (Math.floor(Date.now() / 1000) - userVotes.voteTimestamp > 43200) {
-                    // Voted before but 12 hours has passed
-                    voteEmbed
-                        .setDescription(
-                            `Your **12 hours** access to NSFW commands ran out!\n` +
-                            `Please **vote again** if you want to continue using **Shinano's NSFW features**`
-                        )
                         return interaction.deferred 
                             ? interaction.editReply({embeds: [voteEmbed], components: [voteLink]}) 
                             : interaction.reply({embeds: [voteEmbed], components: [voteLink]})
+                    } else if (Math.floor(Date.now() / 1000) - userVotes.voteTimestamp > 43200) {
+                        // Voted before but 12 hours has passed
+                        voteEmbed
+                            .setDescription(
+                                `Your **12 hours** access to NSFW commands ran out!\n` +
+                                `Please **vote again** if you want to continue using **Shinano's NSFW features**`
+                            )
+                            return interaction.deferred 
+                                ? interaction.editReply({embeds: [voteEmbed], components: [voteLink]}) 
+                                : interaction.reply({embeds: [voteEmbed], components: [voteLink]})
+                    }
                 }
             }
         }
