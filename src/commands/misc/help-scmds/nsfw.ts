@@ -38,7 +38,7 @@ export async function helpNSFW(interaction: ShinanoInteraction) {
             },
             {
                 name: "Private Collection (High-Quality):",
-                value: "`elf`, `genshin`, `kemonomimi`, `misc`, `shipgirls`, `undies`, `vtubers`, `yuri`"
+                value: "`elf`, `genshin`, `kemonomimi`, `shipgirls`, `undies`, `vtubers`, `yuri`"
             }
         )
     await interaction.reply({embeds:[nsfwEmbed], components: [navigation]})
