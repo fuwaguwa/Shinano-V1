@@ -166,9 +166,9 @@ export async function helpSFW(interaction: ShinanoInteraction) {
             <:curve:1021036738161950800>Get info about an Azur Lane chapter
             **gear**
             <:curve:1021036738161950800>Get info about an Azur Lane gear
-            **exp-calculator**
+            **exp**
             <:curve:1021036738161950800>Calculate the EXP needed to get your ship to the desired level
-            **pr-completion-calculator**
+            **pr-completion**
             <:curve:1021036738161950800>Calculate your PR completion!`
 
         )

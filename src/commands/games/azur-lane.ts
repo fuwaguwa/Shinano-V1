@@ -74,7 +74,7 @@ export default new Command({
         },
         {
             type: 'SUB_COMMAND',
-            name: 'exp-calculator',
+            name: 'exp',
             description: 'Calculate the EXP needed for the ship to reach the target level.',
             options: [
                 {
@@ -103,7 +103,7 @@ export default new Command({
         },
         {
             type: 'SUB_COMMAND',
-            name: 'pr-completion-calculator',
+            name: 'pr-completion',
             description: 'Calculate your PR completion!',
             options: [
                 {
@@ -161,13 +161,13 @@ export default new Command({
             }
 
 
-            case 'exp-calculator': {
+            case 'exp': {
                 await azurLaneExpCalculator(interaction, AL)
                 break
             }
 
 
-            case 'pr-completion-calculator': {
+            case 'pr-completion': {
                 await azurLanePRCompletion(interaction, AL)
                 break
             }       
