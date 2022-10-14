@@ -13,13 +13,7 @@ export default new Event("ready", async () => {
     // Activities
     client.user.setStatus('online')
 
-
-    let shikikansCount = 0
-    client.guilds.cache.forEach(guild => {
-        shikikansCount += guild.memberCount
-    })
-
-
+    let shikikansCount = client.users.cache.size
 
     const activitiesList: any = [
         {type: 'PLAYING', message: 'with Laffey'},

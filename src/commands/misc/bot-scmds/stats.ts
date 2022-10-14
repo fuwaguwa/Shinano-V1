@@ -14,11 +14,7 @@ export async function botStats(interaction: ShinanoInteraction) {
     let seconds = Math.floor(totalSeconds % 60);
 
 
-    let memberCount = 0;
-    client.guilds.cache.forEach((guild) => {
-        memberCount += guild.memberCount
-    })
-
+    let memberCount = client.users.cache.size
 
 
     const performance: MessageEmbed = new MessageEmbed()
