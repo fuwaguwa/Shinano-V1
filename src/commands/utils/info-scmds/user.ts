@@ -14,7 +14,7 @@ export async function infoUser(interaction: ShinanoInteraction) {
     if (!guildMember) {
         const notAMember: MessageEmbed = new MessageEmbed()
             .setColor('RED')
-            .setDescription('Member does not exist or not apart of this guild')
+            .setDescription('Member does not exist or not apart of this guild!')
         return interaction.editReply({embeds: [notAMember]})
     }
 
