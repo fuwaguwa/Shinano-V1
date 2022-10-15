@@ -28,7 +28,7 @@ export default new Command({
                 {
                     type: 'SUB_COMMAND',
                     name: 'random',
-                    description: 'Send you hentai from a random category.'
+                    description: 'Send hentai from a random category.'
                 },
                 {
                     type: 'SUB_COMMAND',
@@ -134,6 +134,11 @@ export default new Command({
                     type: 'SUB_COMMAND',
                     name: 'boobs',
                     description: 'Girls with big jugs!'
+                },
+                {
+                    type: 'SUB_COMMAND',
+                    name: 'misc',
+                    description: 'Any other hentai category!'
                 }
             ]
         },
@@ -212,7 +217,7 @@ export default new Command({
 
 
                     case 'elf': case 'genshin': case 'kemonomimi': case 'misc': case 'shipgirls': case 'undies':
-                    case 'vtubers': case 'yuri': {
+                    case 'vtubers': case 'yuri': case 'misc': {
                         await nsfwPrivateCollection(interaction, lewdEmbed, interaction.options.getSubcommand())
                         break
                     }
