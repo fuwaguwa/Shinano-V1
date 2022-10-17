@@ -4,6 +4,7 @@ import { devLeave } from "./dev-scmds/leave";
 import { devUsage } from "./dev-scmds/usage";
 import { devGuildInfo } from "./dev-scmds/guildInfo";
 import { devBlacklist } from "./dev-scmds/blacklist";
+import { devVoteCheck } from "./dev-scmds/vote-check";
 
 export default new Command({
     name: 'dev',
@@ -53,6 +54,19 @@ export default new Command({
                     required: true,
                     name: 'guild-id',
                     description: 'Guild\'s ID'
+                }
+            ]
+        },
+        {
+            type: 'SUB_COMMAND',
+            name: 'vote-check',
+            description: "Check an user\'s vote",
+            options: [
+                {
+                    type: 'USER',
+                    required: true,
+                    name: 'user',
+                    description: 'User to vote check.'
                 }
             ]
         },
@@ -132,6 +146,11 @@ export default new Command({
 
             case 'guild-info': {
                 await devGuildInfo(interaction)
+                break
+            }
+
+            case 'vote-check': {
+                await devVoteCheck(interaction)
                 break
             }
         }
