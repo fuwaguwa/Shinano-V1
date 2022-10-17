@@ -11,6 +11,8 @@ export function gearStats(gearStats, embed) {
         let name: string 
         let st = gearStats[stat].formatted // Stats of {name}
 
+        if (!st) continue;
+
         switch (stat.toLowerCase()) {
             case 'antiair':
                 name = 'Anti-Air:'
@@ -68,7 +70,7 @@ export function gearStats(gearStats, embed) {
                 break
             }
         } 
-
+        console.log(st)
         embed.addField(name, st)
     }    
 }
