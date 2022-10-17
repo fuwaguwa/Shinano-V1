@@ -1,7 +1,9 @@
 import { ShinanoInteraction } from "../../../typings/Command";
 import fetch from 'node-fetch'
 import Votes from '../../../schemas/Votes'
+import { config } from "dotenv";
 import { ButtonInteraction, InteractionCollector, Message, MessageActionRow, MessageButton, MessageEmbed } from "discord.js";
+config();
 
 export async function devVoteCheck(interaction: ShinanoInteraction) {
     const user = interaction.options.getUser('user')
@@ -28,7 +30,12 @@ export async function devVoteCheck(interaction: ShinanoInteraction) {
     // Top.gg Database
     let topggVoteStatus: boolean = false
 
-    const response = await fetch(`https://top.gg/api/bots/1002193298229829682/check?user=${user.id}`)
+    const response = await fetch(`https://top.gg/api/bots/1002193298229829682/check?user=${user.id}`, {
+        method: "GET",
+        headers: {
+            "Authorization": process.env.topggApiKey
+        }
+    })
     const topggResult = await response.json()
 
     if (topggResult.voted == 1) topggVoteStatus = true
