@@ -94,7 +94,7 @@ export default new Command({
             if (sauce.results.length == 0) {
                 const noResult: MessageEmbed = new MessageEmbed()
                     .setColor('RED')
-                    .setDescription('No result was found...')
+                    .setDescription('❌ | No result was found...')
                     .setImage('https://cdn.discordapp.com/attachments/977409556638474250/999486337822507058/akairo-azur-lane.gif')
                 return interaction.editReply({embeds: [noResult]})
             }

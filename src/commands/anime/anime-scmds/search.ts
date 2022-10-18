@@ -17,7 +17,7 @@ export async function animeSearch(interaction: ShinanoInteraction) {
     if (animeResponse.length == 0) {
         const noResult: MessageEmbed = new MessageEmbed()
             .setColor('RED')
-            .setDescription('No result can be found!')
+            .setDescription('❌ | No result can be found!')
         return interaction.editReply({embeds: [noResult]})
     }
 

@@ -55,7 +55,7 @@ export default new Command({
         if (covid.results === 0) {
             const noResult: MessageEmbed = new MessageEmbed()
                 .setColor('RED')
-                .setDescription('Couldn\'t find the country!')
+                .setDescription('❌ | Couldn\'t find the country!')
             return interaction.editReply({embeds: [noResult]})
         }
 

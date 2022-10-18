@@ -8,7 +8,7 @@ export async function devGuildInfo(interaction: ShinanoInteraction) {
     if (!guild) {
         const noResult: MessageEmbed = new MessageEmbed()
             .setColor('RED')
-            .setDescription('No guild of that ID can be found!')
+            .setDescription('❌ | No guild of that ID can be found!')
         return interaction.editReply({embeds: [noResult]})
     }
 
