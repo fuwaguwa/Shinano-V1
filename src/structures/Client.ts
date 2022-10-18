@@ -15,7 +15,7 @@ export class Shinano extends Client {
 
     constructor() {
         super({
-            intents: 0,  
+            intents: 513,  
         })  
     }
 
