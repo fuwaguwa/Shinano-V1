@@ -65,7 +65,7 @@ export async function devVoteCheck(interaction: ShinanoInteraction) {
     const approve: MessageActionRow = new MessageActionRow()
         .addComponents(
             new MessageButton()
-                .setLabel('Update the user in the database?')
+                .setLabel('Update user in database')
                 .setEmoji('✅')
                 .setStyle('SUCCESS')
                 .setCustomId('ADB')
