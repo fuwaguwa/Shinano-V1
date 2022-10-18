@@ -2,7 +2,6 @@ import { Command } from "../../structures/Command";
 import { devEval } from "./dev-scmds/eval";
 import { devLeave } from "./dev-scmds/leave";
 import { devUsage } from "./dev-scmds/usage";
-import { devGuildInfo } from "./dev-scmds/guildInfo";
 import { devBlacklist } from "./dev-scmds/blacklist";
 import { devVoteCheck } from "./dev-scmds/vote-check";
 
@@ -30,19 +29,6 @@ export default new Command({
             type: 'SUB_COMMAND',
             name: 'usage',
             description: 'Shows bot memory usage.'
-        },
-        {
-            type: 'SUB_COMMAND',
-            name: 'guild-info',
-            description: 'Get info about a guild.',
-            options: [
-                {
-                    type: 'STRING',
-                    required: true,
-                    name: 'guild-id',
-                    description: 'Guild ID.'
-                }
-            ]
         },
         {
             type: 'SUB_COMMAND',
@@ -140,12 +126,6 @@ export default new Command({
 
             case 'usage': {
                 await devUsage(interaction)
-                break
-            }
-
-
-            case 'guild-info': {
-                await devGuildInfo(interaction)
                 break
             }
 
