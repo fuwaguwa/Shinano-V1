@@ -427,7 +427,7 @@ export async function azurLaneShip(interaction: ShinanoInteraction, AL: any) {
                         ShinanoPaginator({
                             interaction: interaction,
                             pages: skinEmbeds,
-                            interactor_only: true,
+                            interactorOnly: true,
                             timeout: 120000,
                             menu: category,
                         })
@@ -452,7 +452,7 @@ export async function azurLaneShip(interaction: ShinanoInteraction, AL: any) {
                         ShinanoPaginator({
                             interaction: interaction,
                             pages: galleryEmbeds,
-                            interactor_only: true,
+                            interactorOnly: true,
                             timeout: 120000,
                             menu: category,
                         })

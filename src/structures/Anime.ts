@@ -56,7 +56,7 @@ export function animeInfo({anime, interaction, menu}) {
     if (menu) {
         ShinanoPaginator({
             interaction: interaction,
-            interactor_only: true,
+            interactorOnly: true,
             timeout: 120000,
             menu: menu,
             pages: [synopsisEmbed, generalInfoEmbed]
@@ -64,7 +64,7 @@ export function animeInfo({anime, interaction, menu}) {
     } else {
         ShinanoPaginator({
             interaction: interaction,
-            interactor_only: true,
+            interactorOnly: true,
             timeout: 120000,
             pages: [synopsisEmbed, generalInfoEmbed]
         })

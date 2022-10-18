@@ -18,7 +18,7 @@ export async function azurLaneChapter(interaction: ShinanoInteraction, AL: any) 
     if (!info[1].hard) {
         return ShinanoPaginator({
             interaction: interaction,
-            interactor_only: true,
+            interactorOnly: true,
             pages: normalLevels,
             timeout: 120000,
         }) 
@@ -60,7 +60,7 @@ export async function azurLaneChapter(interaction: ShinanoInteraction, AL: any) 
 
     ShinanoPaginator({
         interaction: interaction,
-        interactor_only: true,
+        interactorOnly: true,
         pages: normalLevels,
         timeout: 120000,
         menu: navigation,
@@ -92,7 +92,7 @@ export async function azurLaneChapter(interaction: ShinanoInteraction, AL: any) 
                 ShinanoPaginator({
                     interaction: interaction,
                     menu: navigation,
-                    interactor_only: true,
+                    interactorOnly: true,
                     pages: normalLevels,
                     timeout: 120000,
                 })
@@ -107,7 +107,7 @@ export async function azurLaneChapter(interaction: ShinanoInteraction, AL: any) 
                 ShinanoPaginator({
                     interaction: interaction,
                     menu: navigation,
-                    interactor_only: true,
+                    interactorOnly: true,
                     pages: hardLevels,
                     timeout: 120000,
                 })                

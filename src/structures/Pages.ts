@@ -5,7 +5,7 @@ import { ShinanoInteraction } from "../typings/Command";
 export async function ShinanoPaginator(options: {
     interaction: ShinanoInteraction | ButtonInteraction | SelectMenuInteraction, 
     pages: MessageEmbed[],
-    interactor_only: boolean,
+    interactorOnly: boolean,
     menu?: MessageActionRow,
     timeout: number,
 }) {
@@ -84,7 +84,7 @@ export async function ShinanoPaginator(options: {
         } 
 
 
-        if (options.interactor_only == true) {
+        if (options.interactorOnly == true) {
             if (i.customId.split('-')[1] !== i.user.id) {
                 return i.reply({
                     content: 'This button is not for you!',
