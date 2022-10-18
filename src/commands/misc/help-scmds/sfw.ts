@@ -137,18 +137,12 @@ export async function helpSFW(interaction: ShinanoInteraction) {
         .setDescription(`
             /<command>
             
-            **announce**
-            <:curve:1021036738161950800>Announce something using the bot
             **avatar**
             <:curve:1021036738161950800>Get someone's avatar
             **banner**
             <:curve:1021036738161950800>Get someone's banner
             **id**
-            <:curve:1021036738161950800>Get someone's UID
-            **info**
-            <:curve:1021036738161950800>Get info about the current guild or an user
-            **snipe**
-            <:curve:1021036738161950800>Get the most recently deleted message`
+            <:curve:1021036738161950800>Get someone's UID`
         )
             
     
@@ -189,6 +183,17 @@ export async function helpSFW(interaction: ShinanoInteraction) {
         )
 
 
+    // Genshin 
+    const genshinCommand1: MessageEmbed = new MessageEmbed()
+    .setColor('BLUE')
+    .setDescription(`
+        /genshin <command>
+
+        **character**
+        <:curve:1021036738161950800>Return information on a Genshin's character.`
+    )
+
+
     // Embeds Array
     const funCommands: MessageEmbed[] = [
         funCommand1,
@@ -213,6 +218,9 @@ export async function helpSFW(interaction: ShinanoInteraction) {
     ]
     const aniCommands: MessageEmbed[] = [
         aniCommand1
+    ]
+    const genshinCommands: MessageEmbed[] = [
+        genshinCommand1
     ]
 
     // Selection Menu
@@ -267,6 +275,13 @@ export async function helpSFW(interaction: ShinanoInteraction) {
                         emoji: '⚓'
                     },
                     {
+                        label: 'Genshin',
+                        description: 'Genshin utilities commands!',
+                        value: 'genshin',
+                        default: false,
+                        emoji: '⚔️'
+                    },
+                    {
                         label: 'Anime',
                         description: 'Search up information about an anime/anime character!',
                         value: 'anime',
@@ -285,7 +300,7 @@ export async function helpSFW(interaction: ShinanoInteraction) {
         interaction: interaction,
         menu: navigation,
         pages: funCommands,
-        interactor_only: true,
+        interactorOnly: true,
         timeout: 30000
     })
 
@@ -317,7 +332,7 @@ export async function helpSFW(interaction: ShinanoInteraction) {
                     interaction: interaction,
                     timeout: 30000,
                     menu: navigation,
-                    interactor_only: true,
+                    interactorOnly: true,
                     pages: funCommands
                 })
                 break
@@ -335,7 +350,7 @@ export async function helpSFW(interaction: ShinanoInteraction) {
                     interaction: interaction,
                     timeout: 30000,
                     menu: navigation,
-                    interactor_only: true,
+                    interactorOnly: true,
                     pages: imageCommands
                 })
                 break
@@ -353,7 +368,7 @@ export async function helpSFW(interaction: ShinanoInteraction) {
                     interaction: interaction,
                     timeout: 30000,
                     menu: navigation,
-                    interactor_only: true,
+                    interactorOnly: true,
                     pages: miscCommands
                 })
                 break
@@ -371,7 +386,7 @@ export async function helpSFW(interaction: ShinanoInteraction) {
                     interaction: interaction,
                     timeout: 30000,
                     menu: navigation,
-                    interactor_only: true,
+                    interactorOnly: true,
                     pages: reactionCommands
                 })
                 break
@@ -389,7 +404,7 @@ export async function helpSFW(interaction: ShinanoInteraction) {
                     interaction: interaction,
                     timeout: 30000,
                     menu: navigation,
-                    interactor_only: true,
+                    interactorOnly: true,
                     pages: utilsCommands
                 })
                 break
@@ -407,14 +422,14 @@ export async function helpSFW(interaction: ShinanoInteraction) {
                     interaction: interaction,
                     timeout: 30000,
                     menu: navigation,
-                    interactor_only: true,
+                    interactorOnly: true,
                     pages: alCommands
                 })
                 break
             }
 
 
-            case 'anime': {
+            case 'genshin': {
                 for (let i = 0; i < select.options.length; i++) {
                     i == 6
                         ? select.options[i].default = true
@@ -425,7 +440,25 @@ export async function helpSFW(interaction: ShinanoInteraction) {
                     interaction: interaction,
                     timeout: 30000,
                     menu: navigation,
-                    interactor_only: true,
+                    interactorOnly: true,
+                    pages: genshinCommands
+                })
+                break
+            }
+
+
+            case 'anime': {
+                for (let i = 0; i < select.options.length; i++) {
+                    i == 7
+                        ? select.options[i].default = true
+                        : select.options[i].default = false
+                }
+
+                ShinanoPaginator({
+                    interaction: interaction,
+                    timeout: 30000,
+                    menu: navigation,
+                    interactorOnly: true,
                     pages: aniCommands
                 })
                 break

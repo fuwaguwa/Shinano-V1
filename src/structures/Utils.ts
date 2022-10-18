@@ -39,6 +39,11 @@ export function randStr() {
     return newName;
 }
 
+export function strFormat(str: string, obj: []) {
+    return str.replace(/\{\s*([^}\s]+)\s*\}/g, (m, p1, offset, string) => {
+        return obj[p1]
+    })
+}
 
 export async function updateServerCount() {
     if (client.user.id === '1002189046619045908') return 'Not Main Bot'
