@@ -3,6 +3,7 @@ import genshin from 'genshin-db'
 import { InteractionCollector, Message, MessageActionRow, MessageEmbed, MessageSelectMenu, SelectMenuInteraction } from "discord.js";
 import { Element } from "../../../../typings/Genshin";
 import { color, icon, stars } from "../../../../structures/Genshin";
+import { ShinanoPaginator } from "../../../../structures/Pages";
 
 
 export async function genshinCharacterInfo(interaction: ShinanoInteraction, character: genshin.Character, elementColors: Element, elementIcons: Element) {
@@ -55,7 +56,64 @@ export async function genshinCharacterInfo(interaction: ShinanoInteraction, char
         consEmbed
             .addField(cons.name, cons.description)
     })
-    
+
+
+    // Talents
+    const talents = genshin.talents(character.name)
+    const charTalents: MessageEmbed[] = []
+
+
+    // Combat Talent
+    for (let i = 0; i < 3; i++) {
+        const embed: MessageEmbed = new MessageEmbed()
+            .setColor(embedColor)
+            .setTitle(`${character.name}'s Talents`)
+            .setThumbnail(character.images.icon)
+
+        if (i + 1 != 1) embed.setDescription(`*${talents[`combat${i + 1}`].description}*`)
+        switch (i + 1) {
+            case 1: {
+                embed
+                    .addField(
+                        talents.combat1.name,
+                        talents.combat1.info
+                    )
+                break
+            }
+
+            case 2: {
+                embed
+                    .addField(
+                        `Elemental Skill: ${talents.combat2.name}`,
+                        talents.combat2.info
+                    )
+                break
+            }
+
+            case 3: 
+                embed 
+                    .addField(
+                        `Elemental Burst: ${talents.combat3.name}`,
+                        talents.combat3.info
+                    )
+                break
+        }
+        charTalents.push(embed)
+    }
+
+    // Passive Talents
+    for (let i = 0; i < 2; i++) {
+        const embed: MessageEmbed = new MessageEmbed()
+            .setColor(embedColor)
+            .setTitle(`${character.name}'s Talents`)
+            .setThumbnail(character.images.icon)
+            .addField(
+                `Passive: ${talents[`passive${i + 1}`].name}`,
+                talents[`passive${i + 1}`].info
+            )
+        charTalents.push(embed)
+    }
+
 
 
     // Menu
@@ -79,6 +137,12 @@ export async function genshinCharacterInfo(interaction: ShinanoInteraction, char
                         emoji: '⭐',
                         default: false
                     },
+                    {
+                        label: 'Talents',
+                        value: 'talents',
+                        emoji: '⚔️',
+                        default: false
+                    }
                 )
         )
     
@@ -104,18 +168,40 @@ export async function genshinCharacterInfo(interaction: ShinanoInteraction, char
 
         switch (i.values[0]) {
             case 'info': {
-                selectMenu.options[0].default = true
-                selectMenu.options[1].default = false
+                for (let i = 0; i < selectMenu.options.length; i++) {
+                    i == 0
+                        ? selectMenu.options[i].default = true
+                        : selectMenu.options[i].default = false
+                }
 
                 await interaction.editReply({embeds: [infoEmbed], components: [navigation]})
                 break
             }
 
             case 'constellations': {
-                selectMenu.options[0].default = false
-                selectMenu.options[1].default = true
-
+                for (let i = 0; i < selectMenu.options.length; i++) {
+                    i == 1
+                        ? selectMenu.options[i].default = true
+                        : selectMenu.options[i].default = false
+                }
                 await interaction.editReply({embeds: [consEmbed], components: [navigation]})
+                break
+            }
+
+            case 'talents': {
+                for (let i = 0; i < selectMenu.options.length; i++) {
+                    i == 2
+                        ? selectMenu.options[i].default = true
+                        : selectMenu.options[i].default = false
+                }
+
+                ShinanoPaginator({
+                    interaction: interaction,
+                    interactorOnly: true, 
+                    pages: charTalents,
+                    menu: navigation,
+                    timeout: 120000,
+                })
                 break
             }
         }
