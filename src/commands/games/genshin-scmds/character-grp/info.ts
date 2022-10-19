@@ -2,11 +2,7 @@ import { ShinanoInteraction } from "../../../../typings/Command";
 import genshin from 'genshin-db'
 import { InteractionCollector, Message, MessageActionRow, MessageEmbed, MessageSelectMenu, SelectMenuInteraction } from "discord.js";
 import { Element } from "../../../../typings/Genshin";
-
-
-const stars = (item: genshin.Character | genshin.Weapon) => {return "⭐".repeat(parseInt(item.rarity, 10))}
-const color = (char: genshin.Character, elementColors: Element) => {return elementColors[char.element]}
-const icon = (char: genshin.Character, elementIcons: Element) => {return elementIcons[char.element]}
+import { color, icon, stars } from "../../../../structures/Genshin";
 
 
 export async function genshinCharacterInfo(interaction: ShinanoInteraction, elementColors: Element, elementIcons: Element) {

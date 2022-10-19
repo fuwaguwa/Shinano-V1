@@ -59,6 +59,38 @@ export default new Command({
                             description: 'The character\'s name.'
                         }
                     ]
+                },
+                {
+                    type: 'SUB_COMMAND',
+                    name: 'stats',
+                    description: 'Stats of a Genshin\'s character.',
+                    options: [
+                        {
+                            type: 'STRING',
+                            required: true,
+                            name: 'character-name',
+                            description: 'The character\'s name.'
+                        },
+                        {
+                            type: 'INTEGER',
+                            required: true,
+                            name: 'character-level',
+                            description: 'The character\'s level.'
+                        }, 
+                        {
+                            type: 'STRING',
+                            name: 'ascension-phase',
+                            description: 'The character\'s ascension phase.',
+                            choices: [
+                                {name: '1', value: '1'},
+                                {name: '2', value: '2'},
+                                {name: '3', value: '3'},
+                                {name: '4', value: '4'},
+                                {name: '5', value: '5'},
+                                {name: '6', value: '6'},
+                            ]
+                        }
+                    ]
                 }
             ]
         }
