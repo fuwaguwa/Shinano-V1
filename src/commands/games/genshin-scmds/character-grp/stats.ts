@@ -1,10 +1,9 @@
 import { ShinanoInteraction } from "../../../../typings/Command";
-import genshin, { characters } from 'genshin-db'
-import { Element } from "../../../../typings/Genshin";
+import genshin from 'genshin-db'
 import { color } from "../../../../structures/Genshin";
 import { MessageEmbed } from "discord.js";
 
-export async function genshinCharacterStats(interaction: ShinanoInteraction, character: genshin.Character, elementColors: Element) {
+export async function genshinCharacterStats(interaction: ShinanoInteraction, character: genshin.Character) {
     // Prcessing levels
     let level: number = interaction.options.getInteger('character-level')
     let ascension: string = interaction.options.getString('ascension-phase')
@@ -17,7 +16,7 @@ export async function genshinCharacterStats(interaction: ShinanoInteraction, cha
 
     // MC Checking
     let MC: boolean = false
-    let embedColor = color(character, elementColors)
+    let embedColor = color(character)
     if (character.name === 'Aether' || character.name === 'Lumine') embedColor = 'GREY'
 
 
