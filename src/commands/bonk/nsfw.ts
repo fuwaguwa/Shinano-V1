@@ -17,7 +17,7 @@ export default new Command({
     options: [
         {   
             type: 'SUB_COMMAND_GROUP',
-            name: 'hentai',
+            name: 'anime',
             description: 'Hentai',
             options: [
                 {
@@ -42,13 +42,8 @@ export default new Command({
                 },
                 {
                     type: 'SUB_COMMAND',
-                    name: 'blowjob',
+                    name: 'head',
                     description: 'Girls "playing the trumpet"'
-                },
-                {
-                    type: 'SUB_COMMAND',
-                    name: 'cum',
-                    description: 'Baby Gravy.'
                 },
                 {
                     type: 'SUB_COMMAND',
@@ -122,11 +117,6 @@ export default new Command({
                 },
                 {
                     type: 'SUB_COMMAND',
-                    name: 'masturbation',
-                    description: 'Mode: Solo'
-                },
-                {
-                    type: 'SUB_COMMAND',
                     name: 'feet',
                     description: 'Shinano will not question your kink.'
                 }, 
@@ -144,7 +134,7 @@ export default new Command({
         },
         {
             type: 'SUB_COMMAND_GROUP',
-            name: 'porn',
+            name: 'irl',
             description: 'Real People.',
             options: [
                 {
@@ -154,7 +144,7 @@ export default new Command({
                 },
                 {
                     type: 'SUB_COMMAND',
-                    name: 'blowjob',
+                    name: 'head',
                     description: 'Girls eating up meat sticks.'
                 },
                 {
@@ -169,11 +159,6 @@ export default new Command({
                 },
                 {
                     type: 'SUB_COMMAND',
-                    name: 'anal',
-                    description: 'A tighter hole.'
-                },
-                {
-                    type: 'SUB_COMMAND',
                     name: 'random',
                     description: 'Porn from random category.'
                 },
@@ -181,11 +166,6 @@ export default new Command({
                     type: 'SUB_COMMAND',
                     name: 'cosplay',
                     description: 'Life imitates art.'
-                },
-                {
-                    type: 'SUB_COMMAND',
-                    name: 'cum',
-                    description: 'Sticky white stuff.'
                 },
                 {
                     type: 'SUB_COMMAND',

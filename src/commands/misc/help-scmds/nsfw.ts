@@ -22,7 +22,7 @@ export async function helpNSFW(interaction: ShinanoInteraction) {
     const nsfwEmbed = new MessageEmbed()
         .setTitle('NSFW Commands')
         .setColor('BLUE')
-        .setDescription('Tip: You can quickly type `/<tag>` or `/<category>` for the commands. E.g `/random`, `/porn`')
+        .setDescription('Tip: You can quickly type `/<tag>` or `/<category>` for the commands. E.g `/random`, `/irl`')
         .setFields(
             {
                 name: 'Sauce Lookup Command:',
@@ -30,11 +30,11 @@ export async function helpNSFW(interaction: ShinanoInteraction) {
             },
             {
                 name: 'Porn Commands:',
-                value: "`anal`, `ass`, `blowjob`, `boobs`, `cosplay`, `cum`, `random`, `pussy`, `video`"
+                value: "`ass`, `boobs`, `cosplay`, `head (blowjob)`, `random`, `pussy`, `video`"
             },
             {
                 name: 'Hentai Commands:',
-                value: "`anal`, `ass`, `blowjob`, `bomb`, `boobs`, `cum`, `feet`, `gif`, `masturbation`, `nekomimi`, `pussy`, `random`, `succubus`, `thighs`"
+                value: "`ass`, `bomb`, `boobs`, `feet`, `gif`, `head (blowjob)`, `nekomimi`, `pussy`, `random`, `succubus`, `thighs`"
             },
             {
                 name: "Private Collection (High-Quality):",

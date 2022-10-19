@@ -92,8 +92,8 @@ export default new Command({
         },
         {
             type: 'SUB_COMMAND',
-            name: 'shit',
-            description: 'Ew, I stepped in shit.',
+            name: 'poop',
+            description: 'Ew, I stepped in poop.',
             options: [
                 {
                     type: 'USER',
@@ -190,7 +190,7 @@ export default new Command({
             }
 
 
-            case 'shit': {
+            case 'poop': {
                 image = await CVC.Canvas.shit(avatar)
                 break
             }
