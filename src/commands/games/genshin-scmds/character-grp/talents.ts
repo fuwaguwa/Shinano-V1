@@ -1,6 +1,6 @@
 import { ShinanoInteraction } from "../../../../typings/Command";
 import genshin from 'genshin-db'
-import { MessageEmbed } from "discord.js";
+import { InteractionCollector, Message, MessageActionRow, MessageEmbed, MessageSelectMenu, SelectMenuInteraction } from "discord.js";
 import { color } from "../../../../structures/Genshin";
 import { toTitleCase } from "../../../../structures/Utils";
 import { ShinanoPaginator } from "../../../../structures/Pages";
@@ -33,9 +33,9 @@ export async function genshinCharacterTalents(interaction: ShinanoInteraction) {
     }
 
 
-    // Talents
+    // Talents Info
     const talents = genshin.talents(characterName)
-    const charTalents: MessageEmbed[] = []
+    const charTalentsEmbeds: MessageEmbed[] = []
 
     if (!talents) {
         const noResult: MessageEmbed = new MessageEmbed()
@@ -93,7 +93,7 @@ export async function genshinCharacterTalents(interaction: ShinanoInteraction) {
             }
 
         }
-        charTalents.push(embed)
+        charTalentsEmbeds.push(embed)
     }
 
     // Passive Talents
@@ -110,15 +110,120 @@ export async function genshinCharacterTalents(interaction: ShinanoInteraction) {
                 `Passive: ${talents[`passive${i + 1}`].name}`,
                 talents[`passive${i + 1}`].info
             )
-        charTalents.push(embed)
+        charTalentsEmbeds.push(embed)
     }
 
     
-    // Displaying data
+    // Talents Costs
+    const talentCosts = talents.costs
+
+    const costs = []
+    const talentsCostsEmbeds: MessageEmbed[] = []
+    
+
+    for (let level in talentCosts) {
+        let matz = []
+        talentCosts[level].forEach((item) => {
+            matz.push(
+                `${item.count}x **${item.name}**`
+            )
+        })
+        costs.push(matz.join("\n"))
+    }
+   
+    for (let i = 0; i < costs.length; i++) {
+        talentsCostsEmbeds.push(
+            new MessageEmbed()
+                .setColor(embedColor)
+                .setTitle(`${character.name}'s Talents Costs`)
+                .setThumbnail(character.images.icon)
+                .addField(`Level ${i + 2}`, costs[i])
+        )
+    }
+
+
+    
+    // Menu
+    const navigation: MessageActionRow = new MessageActionRow()
+        .addComponents(
+            new MessageSelectMenu()
+                .setMinValues(1)
+                .setMaxValues(1)
+                .setCustomId(`${character.name}-${interaction.user.id}`)
+                .setDisabled(false)
+                .addOptions(
+                    {
+                        label: 'Talent Info',
+                        value: 'info',
+                        emoji: '📝',
+                        default: true
+                    },
+                    {
+                        label: 'Talent Costs',
+                        value: 'costs',
+                        emoji: '💵',
+                        default: false
+                    },
+                )
+        )
+    
+
+    // Collector
+    const message = await interaction.editReply({embeds: [charTalentsEmbeds[0]], components: [navigation]})
+    const collector: InteractionCollector<SelectMenuInteraction> = await (message as Message).createMessageComponentCollector({
+        componentType: 'SELECT_MENU',
+        time: 120000
+    })
+
     ShinanoPaginator({
         interaction: interaction,
         interactorOnly: true,
-        pages: charTalents,
-        timeout: 120000
+        pages: charTalentsEmbeds,
+        timeout: 120000,
+        menu: navigation
+    })
+
+    collector.on("collect", async (i) => {
+        if (!i.customId.endsWith(interaction.user.id)) {
+            return i.reply({
+                content: 'This menu is not for you!',
+                ephemeral: true
+            })
+        }
+        
+
+        await i.deferUpdate()
+        const selectMenu = navigation.components[0] as MessageSelectMenu
+
+        switch (i.values[0]) {
+            case 'info': {
+                selectMenu.options[0].default = false
+                selectMenu.options[1].default = true 
+                
+                ShinanoPaginator({
+                    interaction: interaction,
+                    interactorOnly: true,
+                    pages: charTalentsEmbeds,
+                    timeout: 120000,
+                    menu: navigation
+                })
+                break
+            }
+
+
+            case 'costs': {
+                selectMenu.options[0].default = false
+                selectMenu.options[1].default = true 
+                
+                ShinanoPaginator({
+                    interaction: interaction,
+                    interactorOnly: true,
+                    pages: talentsCostsEmbeds,
+                    timeout: 120000,
+                    menu: navigation
+                })
+                break
+            }
+        }
     })
 }
