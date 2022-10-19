@@ -165,7 +165,7 @@ export default new Command({
                 {
                     type: 'SUB_COMMAND',
                     name: 'video',
-                    description: 'Porn Videos on RedGIFS.'
+                    description: 'Videos from RedGIFS.'
                 }
             ]
         }
