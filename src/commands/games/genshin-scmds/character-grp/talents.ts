@@ -197,8 +197,8 @@ export async function genshinCharacterTalents(interaction: ShinanoInteraction) {
 
         switch (i.values[0]) {
             case 'info': {
-                selectMenu.options[0].default = false
-                selectMenu.options[1].default = true 
+                selectMenu.options[0].default = true
+                selectMenu.options[1].default = false 
                 
                 ShinanoPaginator({
                     interaction: interaction,
