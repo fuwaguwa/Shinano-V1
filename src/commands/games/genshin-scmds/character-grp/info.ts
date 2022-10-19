@@ -1,7 +1,6 @@
 import { ShinanoInteraction } from "../../../../typings/Command";
 import genshin from 'genshin-db'
 import { InteractionCollector, Message, MessageActionRow, MessageEmbed, MessageSelectMenu, SelectMenuInteraction } from "discord.js";
-import { Element } from "../../../../typings/Genshin";
 import { color, icon, stars } from "../../../../structures/Genshin";
 import { ShinanoPaginator } from "../../../../structures/Pages";
 
@@ -29,19 +28,107 @@ function queryConstellations(characterName: string, character: genshin.Character
     return consEmbed
 }
 
-function queryTravelerConstellations(elementColor: Element) {
-    const consPages: MessageEmbed[] = []
+
+function queryTravelerConstellations(character: genshin.Character) {
+    const travelerConsPages: MessageEmbed[] = []
     for (let i = 0; i < 4; i++) {
         let element: string
-        let elementColor 
+        let elementColor
         switch (i) {
             case 0: {
                 element = 'Anemo',
                 elementColor = color(element)
+                break
+            }
+
+            case 1: {
+                element = 'Geo',
+                elementColor = color(element)
+                break
+            }
+
+            case 2: {
+                element = 'Electro',
+                elementColor = color(element)
+                break
+            }
+
+            case 3: {
+                element = 'Dendro',
+                elementColor = color(element)
+                break
+            }
+        }
+
+        travelerConsPages.push(
+            queryConstellations(`Traveler ${element}`, character, elementColor)
+        )
+    }
+    return travelerConsPages
+}
+
+
+function queryGallery(character: genshin.Character, embedColor: any) {
+    const galleryImages: MessageEmbed[] = []
+    for (let image in character.images) {
+        if (character.images[image]) {
+            const imageEmbed: MessageEmbed = new MessageEmbed()
+                .setColor(embedColor)
+                .setTitle(`${character.name}'s Gallery`)
+            switch (image) {
+                case "card": {
+                    imageEmbed
+                        .setDescription(`**Card**`)
+                        .setImage(character.images[image])
+                    galleryImages.push(imageEmbed)
+                    break
+                }
+
+                case "portrait": {
+                    imageEmbed
+                        .setDescription(`**Portrait**`)
+                        .setImage(character.images[image])
+                    galleryImages.push(imageEmbed)
+                    break
+                }
+
+                case "icon": {
+                    imageEmbed
+                        .setDescription(`**Icon**`)
+                        .setImage(character.images[image])
+                    galleryImages.push(imageEmbed)
+                    break
+                }
+
+                case "sideicon": {
+                    imageEmbed
+                        .setDescription(`**Side Icon**`)
+                        .setImage(character.images[image])
+                    galleryImages.push(imageEmbed)
+                    break
+                }
+
+                case "cover1": {
+                    imageEmbed
+                        .setDescription(`**Cover 1**`)
+                        .setImage(character.images[image])
+                    galleryImages.push(imageEmbed)
+                    break
+                }
+
+                case "cover2": {
+                    imageEmbed
+                        .setDescription(`**Cover 2**`)
+                        .setImage(character.images[image])
+                    galleryImages.push(imageEmbed)
+                    break
+                }
             }
         }
     }
+    return galleryImages
 }
+
 
 export async function genshinCharacterInfo(interaction: ShinanoInteraction, character: genshin.Character) {
     // MC Checking
@@ -71,94 +158,17 @@ export async function genshinCharacterInfo(interaction: ShinanoInteraction, char
         .setFooter({text: `Added in Version ${character.version}`})
     
     
-    // Constellation
+    // Constellations
     let consEmbed: MessageEmbed
-    if (MC == true) {
-        for (let i = 0; i < 4; i++) {
-            let element: string
-            switch (i) {
-                case 0: 
-                
-            }
-        }
+    let travelerConsPages: MessageEmbed[]
 
-    } else {
-        consEmbed = queryConstellations(character.name, character, embedColor)
-    }
-
+    MC == true
+        ? travelerConsPages = queryTravelerConstellations(character)
+        : consEmbed = queryConstellations(character.name, character, embedColor)
     
 
-
-    // Talents
-    const talents = genshin.talents(character.name)
-    const charTalents: MessageEmbed[] = []
-
-
-    // Combat Talent
-    for (let i = 0; i < 4; i++) {
-        const embed: MessageEmbed = new MessageEmbed()
-            .setColor(embedColor)
-            .setTitle(`${character.name}'s Talents`)
-            .setThumbnail(character.images.icon)
-        switch (i + 1) {
-            case 1: {
-                embed
-                    .setDescription(`*${talents.combat1.description}*`)
-                    .addField(
-                        talents.combat1.name,
-                        talents.combat1.info
-                    )
-                return charTalents.push(embed)
-            }
-
-            case 2: {
-                embed
-                    .setDescription(`*${talents.combat2.description}*`)
-                    .addField(
-                        `Elemental Skill: ${talents.combat2.name}`,
-                        talents.combat2.info
-                    )
-                return charTalents.push(embed)
-            }
-
-            case 3: {
-                embed 
-                    .setDescription(`*${talents.combat3.description}*`)
-                    .addField(
-                        `Elemental Burst: ${talents.combat3.name}`,
-                        talents.combat3.info
-                    )
-                return charTalents.push(embed)
-            }
-
-            default: {
-                if (talents.combatsp) {
-                    embed
-                        .setDescription(`*${talents.combatsp.description}*`)
-                        .addField(
-                            `Alternate Sprint`,
-                            talents.combatsp.info
-                        )
-                }
-                return charTalents.push(embed)
-            }
-
-        }
-    }
-
-
-    // Passive Talents
-    for (let i = 0; i < 2; i++) {
-        const embed: MessageEmbed = new MessageEmbed()
-            .setColor(embedColor)
-            .setTitle(`${character.name}'s Talents`)
-            .setThumbnail(character.images.icon)
-            .addField(
-                `Passive: ${talents[`passive${i + 1}`].name}`,
-                talents[`passive${i + 1}`].info
-            )
-        charTalents.push(embed)
-    }
+    // Gallery
+    const galleryImagesEmbed = queryGallery(character, embedColor)
 
 
 
@@ -184,10 +194,9 @@ export async function genshinCharacterInfo(interaction: ShinanoInteraction, char
                         default: false
                     },
                     {
-                        label: 'Talents',
-                        value: 'talents',
-                        emoji: '⚔️',
-                        default: false
+                        label: 'Gallery',
+                        value: 'gallery',
+                        emoji: '📸'
                     }
                 )
         )
@@ -230,11 +239,22 @@ export async function genshinCharacterInfo(interaction: ShinanoInteraction, char
                         ? selectMenu.options[i].default = true
                         : selectMenu.options[i].default = false
                 }
-                await interaction.editReply({embeds: [consEmbed], components: [navigation]})
+                
+                if (MC == true) {
+                    ShinanoPaginator({
+                        interaction: interaction,
+                        interactorOnly: true,
+                        pages: travelerConsPages,
+                        timeout: 120000,
+                        menu: navigation
+                    })
+                } else {
+                    await interaction.editReply({embeds: [consEmbed], components: [navigation]})
+                }
                 break
             }
 
-            case 'talents': {
+            case 'gallery': {
                 for (let i = 0; i < selectMenu.options.length; i++) {
                     i == 2
                         ? selectMenu.options[i].default = true
@@ -243,10 +263,10 @@ export async function genshinCharacterInfo(interaction: ShinanoInteraction, char
 
                 ShinanoPaginator({
                     interaction: interaction,
-                    interactorOnly: true, 
-                    pages: charTalents,
-                    menu: navigation,
+                    interactorOnly: true,
+                    pages: galleryImagesEmbed,
                     timeout: 120000,
+                    menu: navigation
                 })
                 break
             }
