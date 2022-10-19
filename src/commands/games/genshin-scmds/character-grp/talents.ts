@@ -3,6 +3,7 @@ import genshin from 'genshin-db'
 import { MessageEmbed } from "discord.js";
 import { color } from "../../../../structures/Genshin";
 import { toTitleCase } from "../../../../structures/Utils";
+import { ShinanoPaginator } from "../../../../structures/Pages";
 
 export async function genshinCharacterTalents(interaction: ShinanoInteraction) {
     // Reordering 
@@ -45,13 +46,12 @@ export async function genshinCharacterTalents(interaction: ShinanoInteraction) {
 
 
     // Combat Talent
-    for (let i = 0; i < 3; i++) {
+    for (let i = 0; i < 4; i++) {
         const embed: MessageEmbed = new MessageEmbed()
             .setColor(embedColor)
             .setTitle(`${characterName}'s Talents`)
             .setThumbnail(character.images.icon)
 
-        if (i + 1 != 1) embed.setDescription(`*${talents[`combat${i + 1}`].description}*`)
         switch (i + 1) {
             case 1: {
                 embed
@@ -64,6 +64,7 @@ export async function genshinCharacterTalents(interaction: ShinanoInteraction) {
 
             case 2: {
                 embed
+                    .setDescription(`*${talents.combat2.description}*`)
                     .addField(
                         `Elemental Skill: ${talents.combat2.name}`,
                         talents.combat2.info
@@ -71,19 +72,36 @@ export async function genshinCharacterTalents(interaction: ShinanoInteraction) {
                 break
             }
 
-            case 3: 
+            case 3: {
                 embed 
+                    .setDescription(`*${talents.combatsp.description}*`)
+                    .addField(
+                        `Alternate Sprint`,
+                        talents.combatsp.info
+                    )
+                break
+            }
+
+            case 4: {
+                embed 
+                    .setDescription(`*${talents.combat3.description}*`)
                     .addField(
                         `Elemental Burst: ${talents.combat3.name}`,
                         talents.combat3.info
                     )
                 break
+            }
+
         }
         charTalents.push(embed)
     }
 
     // Passive Talents
-    for (let i = 0; i < 2; i++) {
+    let count = 2;
+    if (talents.passive3) count++;
+    if (talents.passive4) count++;
+
+    for (let i = 0; i < count; i++) {
         const embed: MessageEmbed = new MessageEmbed()
             .setColor(embedColor)
             .setTitle(`${characterName}'s Talents`)
@@ -94,4 +112,13 @@ export async function genshinCharacterTalents(interaction: ShinanoInteraction) {
             )
         charTalents.push(embed)
     }
+
+    
+    // Displaying data
+    ShinanoPaginator({
+        interaction: interaction,
+        interactorOnly: true,
+        pages: charTalents,
+        timeout: 120000
+    })
 }
