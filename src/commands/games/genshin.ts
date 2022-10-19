@@ -14,20 +14,7 @@ export default new Command({
                 {
                     type: 'SUB_COMMAND',
                     name: 'info',
-                    description: 'General information about a Genshin\'s character.',
-                    options: [
-                        {
-                            type: 'STRING',
-                            required: true,
-                            name: 'character-name',
-                            description: 'The character\'s name.'
-                        }
-                    ]
-                },
-                {
-                    type: 'SUB_COMMAND',
-                    name: 'costs',
-                    description: 'Information about Genshin\'s character talents and ascensions costs.',
+                    description: 'General information about a Genshin\'s character (General Info, Constellations, Ascension Costs).',
                     options: [
                         {
                             type: 'STRING',
@@ -72,7 +59,7 @@ export default new Command({
                 {
                     type: 'SUB_COMMAND',
                     name: 'talents',
-                    description: 'Get information about a Genshin\'s character talents.',
+                    description: 'Get information about a Genshin\'s character talents (General Info, Talent Costs).',
                     options: [
                         {
                             type: 'STRING',

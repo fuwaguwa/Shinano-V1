@@ -1,10 +1,8 @@
 import { ShinanoInteraction } from "../../../typings/Command";
 import { genshinCharacterCosts } from "./character-grp/costs";
 import { genshinCharacterInfo } from "./character-grp/info";
-import { genshinCharacterStats } from "./character-grp/stats";
-import genshin from 'genshin-db';
-import { MessageEmbed } from "discord.js";
 import { genshinCharacterTalents } from "./character-grp/talents";
+import genshin from 'genshin-db';
 
 
 export async function genshinCharacter(interaction: ShinanoInteraction) {
@@ -22,11 +20,6 @@ export async function genshinCharacter(interaction: ShinanoInteraction) {
 
         case 'costs': {
             await genshinCharacterCosts(interaction, character)
-            break
-        }
-
-        case 'stats': {
-            await genshinCharacterStats(interaction, character)
             break
         }
 
