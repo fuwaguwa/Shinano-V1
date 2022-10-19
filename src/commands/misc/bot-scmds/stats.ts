@@ -23,9 +23,7 @@ export async function botStats(interaction: ShinanoInteraction) {
         .addFields(
             {name: 'Uptime:', value: `${hours} hours, ${minutes} minutes, ${seconds} seconds`},
             {name: 'Latency:', value: `Latency: ${Date.now() - interaction.createdTimestamp}ms\nAPI Latency: ${Math.round(client.ws.ping)}ms`},
-            {name: 'Bot Stats:', value: 
-            `Guilds: ${client.guilds.cache.size}\n`+
-            `Users: ${memberCount.toLocaleString("en-US")}\n`}
+            {name: 'Bot Stats:', value: `Guilds: ${client.guilds.cache.size}`}
         )
     await interaction.editReply({embeds: [performance]})
 }
