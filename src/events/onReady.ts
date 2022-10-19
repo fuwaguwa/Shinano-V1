@@ -20,6 +20,7 @@ export default new Event("ready", async () => {
         {type: 'LISTENING', message: 'Sandy\'s singing'},
         {type: 'PLAYING', message: 'with a supercar'},
         {type: 'PLAYING', message: 'Azur Lane'},
+        {type: 'PLAYING', message: 'Genshin Impact'},
     ]
 
     setInterval(() => {
