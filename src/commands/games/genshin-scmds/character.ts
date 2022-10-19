@@ -1,5 +1,4 @@
 import { ShinanoInteraction } from "../../../typings/Command";
-import { Element } from "../../../typings/Genshin";
 import { genshinCharacterCosts } from "./character-grp/costs";
 import { genshinCharacterInfo } from "./character-grp/info";
 import { genshinCharacterStats } from "./character-grp/stats";
@@ -7,7 +6,7 @@ import genshin from 'genshin-db';
 import { MessageEmbed } from "discord.js";
 
 
-export async function genshinCharacter(interaction: ShinanoInteraction, elementColors: Element, elementIcons: Element) {
+export async function genshinCharacter(interaction: ShinanoInteraction) {
     // Fetching data
     const name = interaction.options.getString('character-name').toLowerCase()
     const character = genshin.characters(name)
@@ -23,17 +22,17 @@ export async function genshinCharacter(interaction: ShinanoInteraction, elementC
     // Processing data
     switch (interaction.options.getSubcommand()) {
         case 'info': {
-            await genshinCharacterInfo(interaction, character, elementColors, elementIcons)
+            await genshinCharacterInfo(interaction, character)
             break
         }
 
         case 'costs': {
-            await genshinCharacterCosts(interaction, character, elementColors)
+            await genshinCharacterCosts(interaction, character)
             break
         }
 
         case 'stats': {
-            await genshinCharacterStats(interaction, character, elementColors)
+            await genshinCharacterStats(interaction, character)
             break
         }
     }
