@@ -5,19 +5,7 @@ import { Element } from "../../../../typings/Genshin";
 import { color, icon, stars } from "../../../../structures/Genshin";
 
 
-export async function genshinCharacterInfo(interaction: ShinanoInteraction, elementColors: Element, elementIcons: Element) {
-    // Fetching info
-    const name: string = interaction.options.getString('character-name').toLowerCase()
-    const character: genshin.Character = await genshin.characters(name)
-    
-    if (!character) {
-        const noResult: MessageEmbed = new MessageEmbed()
-            .setColor('RED')
-            .setDescription('❌ | No character found!')
-        await interaction.editReply({embeds: [noResult]})
-    }
-
-
+export async function genshinCharacterInfo(interaction: ShinanoInteraction, character: genshin.Character, elementColors: Element, elementIcons: Element) {
     // MC Checking
     let MC: boolean = false
     let embedColor = color(character, elementColors)

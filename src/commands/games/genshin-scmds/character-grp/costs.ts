@@ -1,32 +1,15 @@
 import { ShinanoInteraction } from "../../../../typings/Command";
 import { Element } from "../../../../typings/Genshin";
-import genshin, { talents } from 'genshin-db'
+import genshin from 'genshin-db'
 import { InteractionCollector, Message, MessageActionRow, MessageEmbed, MessageSelectMenu, SelectMenuInteraction } from "discord.js";
 import { ShinanoPaginator } from "../../../../structures/Pages";
 
 const color = (char: genshin.Character, elementColors: Element) => {return elementColors[char.element]}
 
-export async function genshinCharacterCosts(interaction: ShinanoInteraction, elementColors: Element) {
-    // Fetching Information
-    const name: string = interaction.options.getString('character-name').toLowerCase()
-    const character: genshin.Character = genshin.characters(name)
-
-
-    if (!character) {
-        const noResult: MessageEmbed = new MessageEmbed()
-            .setColor('RED')
-            .setDescription('❌ | No character found!')
-        await interaction.editReply({embeds: [noResult]})
-    }
-
-
+export async function genshinCharacterCosts(interaction: ShinanoInteraction, character: genshin.Character, elementColors: Element) {
     // MC Checking
-    let MC: boolean = false
     let embedColor = color(character, elementColors)
-    if (character.name === 'Aether' || character.name === 'Lumine') {
-        MC = true
-        embedColor = 'GREY'
-    }
+    if (character.name === 'Aether' || character.name === 'Lumine') embedColor = 'GREY'
 
 
     // Ascensions
