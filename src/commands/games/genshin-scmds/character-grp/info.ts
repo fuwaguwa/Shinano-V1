@@ -13,7 +13,7 @@ export async function genshinCharacterInfo(interaction: ShinanoInteraction, elem
     if (!character) {
         const noResult: MessageEmbed = new MessageEmbed()
             .setColor('RED')
-            .setDescription('❌ | No character found')
+            .setDescription('❌ | No character found!')
         await interaction.editReply({embeds: [noResult]})
     }
 
