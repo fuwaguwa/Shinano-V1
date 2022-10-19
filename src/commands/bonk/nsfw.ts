@@ -47,8 +47,8 @@ export default new Command({
                 },
                 {
                     type: 'SUB_COMMAND',
-                    name: 'cooch',
-                    description: '🐱'
+                    name: 'puss',
+                    description: 'The other kind of puss.'
                 },
                 {
                     type: 'SUB_COMMAND',
@@ -149,8 +149,8 @@ export default new Command({
                 },
                 {
                     type: 'SUB_COMMAND',
-                    name: 'cooch',
-                    description: '🐱'
+                    name: 'puss',
+                    description: 'The other kind of puss.'
                 },
                 {
                     type: 'SUB_COMMAND',
@@ -207,7 +207,7 @@ export default new Command({
                     default: {
                         let tag = interaction.options.getSubcommand()
 
-                        if (tag === 'cooch') tag = 'pussy'
+                        if (tag === 'puss') tag = 'pussy'
                         if (tag === 'head') tag = 'blowjob'
                         if (tag === 'breasts') tag = 'boobs'
 
@@ -227,7 +227,7 @@ export default new Command({
             } else if (interaction.options.getSubcommandGroup() === 'irl') {
                 let tag = interaction.options.getSubcommand()
 
-                if (tag === 'cooch') tag = 'pussy'
+                if (tag === 'puss') tag = 'pussy'
                 if (tag === 'head') tag = 'blowjob'
                 if (tag === 'breasts') tag = 'boobs'
 
