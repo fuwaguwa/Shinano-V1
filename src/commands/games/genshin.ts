@@ -1,28 +1,5 @@
 import { Command } from "../../structures/Command";
 import { genshinCharacter } from "./genshin-scmds/character";
-import { Element } from "../../typings/Genshin";
-
-
-const elementColors: Element = {
-    "Pyro": "#b7242a",
-    "Hydro": "#248fbd",
-    "Anemo": "#2a9d90",
-    "Electro": "#7553c3",
-    "Dendro": "#6cae22",
-    "Cryo": "#7ba6db",
-    "Geo": "#e5a659"
-}
-
-const elementIcons: Element = {
-    "Pyro": "<:pyro:1003213063199133759>",
-    "Hydro": "<:hydro:1003213061575954442>",
-    "Anemo": "<:anemo:1003213059394895922>",
-    "Electro": "<:electro:1003213057046102037>",
-    "Dendro": "<:dendro:1003213054634377216>",
-    "Cryo": "<:cryo:1003213052579164200>",
-    "Geo": "<:geo:1003213050561699897>"
-}        
-
 
 export default new Command({
     name: 'genshin',
@@ -100,7 +77,7 @@ export default new Command({
         if (interaction.options['_group']) {
             switch (interaction.options.getSubcommandGroup()) {
                 case 'character': {
-                    await genshinCharacter(interaction, elementColors, elementIcons)
+                    await genshinCharacter(interaction)
                     break
                 }
             }
