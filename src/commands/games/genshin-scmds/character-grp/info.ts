@@ -178,6 +178,32 @@ export async function genshinCharacterInfo(interaction: ShinanoInteraction, char
         : consEmbed = queryConstellations(character.name, character, embedColor)
     
 
+    // Ascensions Costs
+    const ascensionsCosts = []
+    const ascensionsCostsEmbeds: MessageEmbed[] = []
+
+
+    for (let ascensionLevel in character.costs) {
+        let matz = []
+        character.costs[ascensionLevel].forEach((material) => {
+            matz.push(
+                `${material.count}x **${material.name}**`
+            )
+        })
+        ascensionsCosts.push(matz.join('\n'))
+    }
+
+    for (let i = 0; i < ascensionsCosts.length; i++) {
+        ascensionsCostsEmbeds.push(
+            new MessageEmbed()
+                .setColor(embedColor)
+                .setTitle(`${character.name}'s Ascension Costs`)
+                .setThumbnail(character.images.icon)
+                .addField(`Ascension ${i + 1}:`, ascensionsCosts[i])
+        )
+    }
+
+
     // Gallery
     const galleryImagesEmbed = queryGallery(character, embedColor)
 
@@ -202,6 +228,12 @@ export async function genshinCharacterInfo(interaction: ShinanoInteraction, char
                         label: 'Constellations',
                         value: 'constellations',
                         emoji: '⭐',
+                        default: false
+                    },
+                    {
+                        label: 'Ascension Costs',
+                        value: 'costs',
+                        emoji: '💵',
                         default: false
                     },
                     {
@@ -244,6 +276,7 @@ export async function genshinCharacterInfo(interaction: ShinanoInteraction, char
                 break
             }
 
+
             case 'constellations': {
                 for (let i = 0; i < selectMenu.options.length; i++) {
                     i == 1
@@ -265,9 +298,28 @@ export async function genshinCharacterInfo(interaction: ShinanoInteraction, char
                 break
             }
 
-            case 'gallery': {
+
+            case 'costs': {
                 for (let i = 0; i < selectMenu.options.length; i++) {
                     i == 2
+                        ? selectMenu.options[i].default = true
+                        : selectMenu.options[i].default = false
+                }
+                
+                ShinanoPaginator({
+                    interaction: interaction,
+                    interactorOnly: true,
+                    pages: ascensionsCostsEmbeds,
+                    timeout: 120000,
+                    menu: navigation
+                })
+                break
+            }
+
+
+            case 'gallery': {
+                for (let i = 0; i < selectMenu.options.length; i++) {
+                    i == 3
                         ? selectMenu.options[i].default = true
                         : selectMenu.options[i].default = false
                 }
