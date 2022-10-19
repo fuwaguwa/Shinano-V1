@@ -64,43 +64,58 @@ export async function genshinCharacterInfo(interaction: ShinanoInteraction, char
 
 
     // Combat Talent
-    for (let i = 0; i < 3; i++) {
+    for (let i = 0; i < 4; i++) {
         const embed: MessageEmbed = new MessageEmbed()
             .setColor(embedColor)
             .setTitle(`${character.name}'s Talents`)
             .setThumbnail(character.images.icon)
-
-        if (i + 1 != 1) embed.setDescription(`*${talents[`combat${i + 1}`].description}*`)
         switch (i + 1) {
             case 1: {
                 embed
+                    .setDescription(`*${talents.combat1.description}*`)
                     .addField(
                         talents.combat1.name,
                         talents.combat1.info
                     )
-                break
+                return charTalents.push(embed)
             }
 
             case 2: {
                 embed
+                    .setDescription(`*${talents.combat2.description}*`)
                     .addField(
                         `Elemental Skill: ${talents.combat2.name}`,
                         talents.combat2.info
                     )
-                break
+                return charTalents.push(embed)
             }
 
-            case 3: 
+            case 3: {
                 embed 
+                    .setDescription(`*${talents.combat3.description}*`)
                     .addField(
                         `Elemental Burst: ${talents.combat3.name}`,
                         talents.combat3.info
                     )
-                break
+                return charTalents.push(embed)
+            }
+
+            default: {
+                if (talents.combatsp) {
+                    embed
+                        .setDescription(`*${talents.combatsp.description}*`)
+                        .addField(
+                            `Alternate Sprint`,
+                            talents.combatsp.info
+                        )
+                }
+                return charTalents.push(embed)
+            }
+
         }
-        charTalents.push(embed)
     }
 
+    
     // Passive Talents
     for (let i = 0; i < 2; i++) {
         const embed: MessageEmbed = new MessageEmbed()
