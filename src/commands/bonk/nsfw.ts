@@ -23,7 +23,7 @@ export default new Command({
                 {
                     type: 'SUB_COMMAND',
                     name: 'bomb',
-                    description: 'Bombs you with hentai!'
+                    description: 'Bombs you with pics/gifs/videos!'
                 },
                 {
                     type: 'SUB_COMMAND',
