@@ -145,7 +145,7 @@ export default new Command({
                 {
                     type: 'SUB_COMMAND',
                     name: 'breasts', 
-                    description: 'Booba.'
+                    description: 'Big and heavy.'
                 },
                 {
                     type: 'SUB_COMMAND',
