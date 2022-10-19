@@ -18,7 +18,7 @@ export default new Command({
         {   
             type: 'SUB_COMMAND_GROUP',
             name: 'anime',
-            description: 'Hentai',
+            description: 'uwu',
             options: [
                 {
                     type: 'SUB_COMMAND',
@@ -28,12 +28,7 @@ export default new Command({
                 {
                     type: 'SUB_COMMAND',
                     name: 'random',
-                    description: 'Send hentai from a random category.'
-                },
-                {
-                    type: 'SUB_COMMAND',
-                    name: 'anal',
-                    description: 'There\'s more than one hole...'
+                    description: 'Return a random image/gif/video from a random category.'
                 },
                 {
                     type: 'SUB_COMMAND',
@@ -52,7 +47,7 @@ export default new Command({
                 },
                 {
                     type: 'SUB_COMMAND',
-                    name: 'pussy',
+                    name: 'cooch',
                     description: '🐱'
                 },
                 {
@@ -128,7 +123,7 @@ export default new Command({
                 {
                     type: 'SUB_COMMAND',
                     name: 'misc',
-                    description: 'Any other hentai category!'
+                    description: 'Categories that are not mentioned here!'
                 }
             ]
         },
@@ -154,13 +149,13 @@ export default new Command({
                 },
                 {
                     type: 'SUB_COMMAND',
-                    name: 'pussy',
+                    name: 'cooch',
                     description: '🐱'
                 },
                 {
                     type: 'SUB_COMMAND',
                     name: 'random',
-                    description: 'Porn from random category.'
+                    description: 'Return image/video from a random category.'
                 },
                 {
                     type: 'SUB_COMMAND',
@@ -208,9 +203,14 @@ export default new Command({
                         break
                     }
 
-                    
+
                     default: {
-                        const response = await fetch(`https://AmagiAPI.fuwafuwa08.repl.co/nsfw/public/${interaction.options.getSubcommand()}`, {
+                        let tag = interaction.options.getSubcommand()
+
+                        if (tag === 'cooch') tag = 'pussy'
+                        if (tag === 'head') tag = 'blowjob'
+
+                        const response = await fetch(`https://AmagiAPI.fuwafuwa08.repl.co/nsfw/public/${tag}`, {
                             method: "GET",
                         })
                         const waifu = await response.json()
@@ -224,7 +224,13 @@ export default new Command({
                 }
                 
             } else if (interaction.options.getSubcommandGroup() === 'porn') {
-                const response = await fetch(`https://AmagiAPI.fuwafuwa08.repl.co/nsfw/porn/${interaction.options.getSubcommand()}`, {
+                let tag = interaction.options.getSubcommand()
+
+                if (tag === 'cooch') tag = 'pussy'
+                if (tag === 'head') tag = 'blowjob'
+
+
+                const response = await fetch(`https://AmagiAPI.fuwafuwa08.repl.co/nsfw/porn/${tag}`, {
                     method: "GET",
                 })
                 const result = await response.json()
