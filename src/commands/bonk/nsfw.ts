@@ -117,7 +117,7 @@ export default new Command({
                 }, 
                 {
                     type: 'SUB_COMMAND',
-                    name: 'boobs',
+                    name: 'breasts',
                     description: 'Girls with big jugs!'
                 },
                 {
@@ -144,7 +144,7 @@ export default new Command({
                 },
                 {
                     type: 'SUB_COMMAND',
-                    name: 'boobs', 
+                    name: 'breasts', 
                     description: 'Booba.'
                 },
                 {
@@ -177,7 +177,7 @@ export default new Command({
             .setFooter({text:`Requested by ${interaction.user.tag}`, iconURL: interaction.user.displayAvatarURL({dynamic:true})})
             .setTimestamp()
         if (interaction.options['_group']) {
-            if (interaction.options.getSubcommandGroup() === 'hentai') {
+            if (interaction.options.getSubcommandGroup() === 'anime') {
                 switch (interaction.options.getSubcommand()) {
                     case 'random': {
                         await nsfwRandom(interaction, lewdEmbed)
@@ -209,6 +209,7 @@ export default new Command({
 
                         if (tag === 'cooch') tag = 'pussy'
                         if (tag === 'head') tag = 'blowjob'
+                        if (tag === 'breasts') tag = 'boobs'
 
                         const response = await fetch(`https://AmagiAPI.fuwafuwa08.repl.co/nsfw/public/${tag}`, {
                             method: "GET",
@@ -223,11 +224,12 @@ export default new Command({
       
                 }
                 
-            } else if (interaction.options.getSubcommandGroup() === 'porn') {
+            } else if (interaction.options.getSubcommandGroup() === 'irl') {
                 let tag = interaction.options.getSubcommand()
 
                 if (tag === 'cooch') tag = 'pussy'
                 if (tag === 'head') tag = 'blowjob'
+                if (tag === 'breasts') tag = 'boobs'
 
 
                 const response = await fetch(`https://AmagiAPI.fuwafuwa08.repl.co/nsfw/porn/${tag}`, {
