@@ -68,6 +68,19 @@ export default new Command({
                             ]
                         }
                     ]
+                },
+                {
+                    type: 'SUB_COMMAND',
+                    name: 'talents',
+                    description: 'Get information about a Genshin\'s character talents.',
+                    options: [
+                        {
+                            type: 'STRING',
+                            required: true,
+                            name: 'character-name',
+                            description: 'The character\'s name (Tip: Use \'Traveler <Element>\' for the info on the Traveler)'
+                        }
+                    ]
                 }
             ]
         }

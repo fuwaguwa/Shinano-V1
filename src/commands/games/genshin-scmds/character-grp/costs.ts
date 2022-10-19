@@ -6,6 +6,15 @@ import { color } from "../../../../structures/Genshin";
 
 
 export async function genshinCharacterCosts(interaction: ShinanoInteraction, character: genshin.Character) {
+    // Checking for character
+    if (!character) {
+        const noResult: MessageEmbed = new MessageEmbed()
+            .setColor('RED')
+            .setDescription('❌ | No character found!')
+        await interaction.editReply({embeds: [noResult]})
+    }
+
+
     // MC Checking
     let embedColor = color(character)
     if (character.name === 'Aether' || character.name === 'Lumine') embedColor = 'GREY'

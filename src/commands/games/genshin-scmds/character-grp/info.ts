@@ -61,7 +61,7 @@ function queryTravelerConstellations(character: genshin.Character) {
         }
 
         travelerConsPages.push(
-            queryConstellations(`Traveler ${element}`, character, elementColor)
+            queryConstellations(`Traveler (${element})`, character, elementColor)
         )
     }
     return travelerConsPages
@@ -131,12 +131,23 @@ function queryGallery(character: genshin.Character, embedColor: any) {
 
 
 export async function genshinCharacterInfo(interaction: ShinanoInteraction, character: genshin.Character) {
+    // Checking for character
+    if (!character) {
+        const noResult: MessageEmbed = new MessageEmbed()
+            .setColor('RED')
+            .setDescription('❌ | No character found!')
+        await interaction.editReply({embeds: [noResult]})
+    }
+
+
     // MC Checking
     let MC: boolean = false
-    let embedColor = color(character)
+    let embedColor;
     if (character.name === 'Aether' || character.name === 'Lumine') {
         MC = true
         embedColor = 'GREY'
+    } else {
+        embedColor = color(character)
     }
 
 
