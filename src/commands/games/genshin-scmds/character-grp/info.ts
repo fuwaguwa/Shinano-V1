@@ -5,11 +5,48 @@ import { Element } from "../../../../typings/Genshin";
 import { color, icon, stars } from "../../../../structures/Genshin";
 import { ShinanoPaginator } from "../../../../structures/Pages";
 
+function queryConstellations(characterName: string, character: genshin.Character, embedColor: any) {
+    const characterCons = genshin.constellations(characterName)
+    const consInfo = []
+    for (let cons in characterCons) {
+        if (cons !== 'name' && cons !== 'images' && cons !== 'version') {
+            consInfo.push({
+                name: cons.toUpperCase() + ' | ' + characterCons[cons].name,
+                description: characterCons[cons].effect
+            })
+        }
+    }
 
-export async function genshinCharacterInfo(interaction: ShinanoInteraction, character: genshin.Character, elementColors: Element, elementIcons: Element) {
+
+    const consEmbed = new MessageEmbed()
+        .setColor(embedColor)
+        .setTitle(`${characterName}'s Constellations`)
+        .setThumbnail(character.images.icon)
+    consInfo.forEach((cons) => {
+        consEmbed
+            .addField(cons.name, cons.description)
+    })
+    return consEmbed
+}
+
+function queryTravelerConstellations(elementColor: Element) {
+    const consPages: MessageEmbed[] = []
+    for (let i = 0; i < 4; i++) {
+        let element: string
+        let elementColor 
+        switch (i) {
+            case 0: {
+                element = 'Anemo',
+                elementColor = color(element)
+            }
+        }
+    }
+}
+
+export async function genshinCharacterInfo(interaction: ShinanoInteraction, character: genshin.Character) {
     // MC Checking
     let MC: boolean = false
-    let embedColor = color(character, elementColors)
+    let embedColor = color(character)
     if (character.name === 'Aether' || character.name === 'Lumine') {
         MC = true
         embedColor = 'GREY'
@@ -23,7 +60,7 @@ export async function genshinCharacterInfo(interaction: ShinanoInteraction, char
         .setDescription(`"${character.description}"\n\n${character.url ? `[Wiki Link](${character.url.fandom})` : ""}`)
         .setThumbnail(character.images.icon)
         .addFields(
-            {name: 'Element:', value: MC == true ? 'All' : icon(character, elementIcons)},
+            {name: 'Element:', value: MC == true ? 'All' : icon(character)},
             {name: 'Rarity:', value: stars(character)},
             {name: 'Weapon Type:', value: character.weapontype},
             {name: 'Constellation', value: character.constellation},
@@ -35,27 +72,21 @@ export async function genshinCharacterInfo(interaction: ShinanoInteraction, char
     
     
     // Constellation
-    const characterCons = genshin.constellations(character.name)
-
-    const consInfo = []
-    for (let cons in characterCons) {
-        if (cons !== 'name' && cons !== 'images' && cons !== 'version') {
-            consInfo.push({
-                name: cons.toUpperCase() + ' | ' + characterCons[cons].name,
-                description: characterCons[cons].effect
-            })
+    let consEmbed: MessageEmbed
+    if (MC == true) {
+        for (let i = 0; i < 4; i++) {
+            let element: string
+            switch (i) {
+                case 0: 
+                
+            }
         }
+
+    } else {
+        consEmbed = queryConstellations(character.name, character, embedColor)
     }
 
-
-    const consEmbed: MessageEmbed = new MessageEmbed()
-        .setColor(embedColor)
-        .setTitle(`${character.name}'s Constellations`)
-        .setThumbnail(character.images.icon)
-    consInfo.forEach((cons) => {
-        consEmbed
-            .addField(cons.name, cons.description)
-    })
+    
 
 
     // Talents
@@ -115,7 +146,7 @@ export async function genshinCharacterInfo(interaction: ShinanoInteraction, char
         }
     }
 
-    
+
     // Passive Talents
     for (let i = 0; i < 2; i++) {
         const embed: MessageEmbed = new MessageEmbed()

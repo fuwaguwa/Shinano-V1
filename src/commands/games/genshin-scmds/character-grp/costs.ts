@@ -1,14 +1,13 @@
 import { ShinanoInteraction } from "../../../../typings/Command";
-import { Element } from "../../../../typings/Genshin";
 import genshin from 'genshin-db'
 import { InteractionCollector, Message, MessageActionRow, MessageEmbed, MessageSelectMenu, SelectMenuInteraction } from "discord.js";
 import { ShinanoPaginator } from "../../../../structures/Pages";
+import { color } from "../../../../structures/Genshin";
 
-const color = (char: genshin.Character, elementColors: Element) => {return elementColors[char.element]}
 
-export async function genshinCharacterCosts(interaction: ShinanoInteraction, character: genshin.Character, elementColors: Element) {
+export async function genshinCharacterCosts(interaction: ShinanoInteraction, character: genshin.Character) {
     // MC Checking
-    let embedColor = color(character, elementColors)
+    let embedColor = color(character)
     if (character.name === 'Aether' || character.name === 'Lumine') embedColor = 'GREY'
 
 
