@@ -53,7 +53,7 @@ export default new Command({
                 {
                     type: 'SUB_COMMAND',
                     name: 'minge',
-                    description: 'The other kind of minge.'
+                    description: 'Down there.'
                 },
                 {
                     type: 'SUB_COMMAND',
@@ -160,7 +160,7 @@ export default new Command({
                 {
                     type: 'SUB_COMMAND',
                     name: 'minge',
-                    description: 'The other kind of minge.'
+                    description: 'Down there.'
                 },
                 {
                     type: 'SUB_COMMAND',
@@ -217,7 +217,7 @@ export default new Command({
                     default: {
                         let tag = interaction.options.getSubcommand()
 
-                        if (tag === 'minge') tag = 'mingey'
+                        if (tag === 'minge') tag = 'pussy'
                         if (tag === 'head') tag = 'blowjob'
                         if (tag === 'breasts') tag = 'boobs'
                         if (tag === 'a-level') tag = 'anal'
@@ -238,7 +238,7 @@ export default new Command({
             } else if (interaction.options.getSubcommandGroup() === 'irl') {
                 let tag = interaction.options.getSubcommand()
 
-                if (tag === 'minge') tag = 'mingey'
+                if (tag === 'minge') tag = 'pussy'
                 if (tag === 'head') tag = 'blowjob'
                 if (tag === 'breasts') tag = 'boobs'
                 if (tag === 'a-level') tag = 'anal'
