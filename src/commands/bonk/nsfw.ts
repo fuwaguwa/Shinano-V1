@@ -27,6 +27,11 @@ export default new Command({
                 },
                 {
                     type: 'SUB_COMMAND',
+                    name: 'a-level',
+                    description: 'There\'s more than one hole'
+                },
+                {
+                    type: 'SUB_COMMAND',
                     name: 'random',
                     description: 'Return a random image/gif/video from a random category.'
                 },
@@ -47,8 +52,8 @@ export default new Command({
                 },
                 {
                     type: 'SUB_COMMAND',
-                    name: 'puss',
-                    description: 'The other kind of puss.'
+                    name: 'minge',
+                    description: 'The other kind of minge.'
                 },
                 {
                     type: 'SUB_COMMAND',
@@ -139,6 +144,11 @@ export default new Command({
                 },
                 {
                     type: 'SUB_COMMAND',
+                    name: 'a-level',
+                    description: 'There\'s more than one hole'
+                },
+                {
+                    type: 'SUB_COMMAND',
                     name: 'head',
                     description: 'Girls eating up meat sticks.'
                 },
@@ -149,8 +159,8 @@ export default new Command({
                 },
                 {
                     type: 'SUB_COMMAND',
-                    name: 'puss',
-                    description: 'The other kind of puss.'
+                    name: 'minge',
+                    description: 'The other kind of minge.'
                 },
                 {
                     type: 'SUB_COMMAND',
@@ -207,9 +217,10 @@ export default new Command({
                     default: {
                         let tag = interaction.options.getSubcommand()
 
-                        if (tag === 'puss') tag = 'pussy'
+                        if (tag === 'minge') tag = 'mingey'
                         if (tag === 'head') tag = 'blowjob'
                         if (tag === 'breasts') tag = 'boobs'
+                        if (tag === 'a-level') tag = 'anal'
 
                         const response = await fetch(`https://AmagiAPI.fuwafuwa08.repl.co/nsfw/public/${tag}`, {
                             method: "GET",
@@ -227,9 +238,10 @@ export default new Command({
             } else if (interaction.options.getSubcommandGroup() === 'irl') {
                 let tag = interaction.options.getSubcommand()
 
-                if (tag === 'puss') tag = 'pussy'
+                if (tag === 'minge') tag = 'mingey'
                 if (tag === 'head') tag = 'blowjob'
                 if (tag === 'breasts') tag = 'boobs'
+                if (tag === 'a-level') tag = 'anal'
 
 
                 const response = await fetch(`https://AmagiAPI.fuwafuwa08.repl.co/nsfw/porn/${tag}`, {

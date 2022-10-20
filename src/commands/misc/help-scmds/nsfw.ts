@@ -30,11 +30,11 @@ export async function helpNSFW(interaction: ShinanoInteraction) {
             },
             {
                 name: 'Porn Commands:',
-                value: "`ass`, `breasts`, `cosplay`, `head (blowjob)`, `random`, `puss (pussy)`, `video`"
+                value: "`ass`, `a-level (anal)`, `breasts`, `cosplay`, `head (blowjob)`, `random`, `minge (pussy)`, `video`"
             },
             {
                 name: 'Hentai Commands:',
-                value: "`ass`, `bomb`, `breasts`, `feet`, `gif`, `head (blowjob)`, `nekomimi`, `puss (pussy)`, `random`, `succubus`, `thighs`"
+                value: "`ass`, `a-level (anal)`, `bomb`, `breasts`, `feet`, `gif`, `head (blowjob)`, `nekomimi`, `minge (pussy)`, `random`, `succubus`, `thighs`"
             },
             {
                 name: "Private Collection (High-Quality):",
