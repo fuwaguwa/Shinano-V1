@@ -20,15 +20,15 @@ const elementIcons = {
     "Geo": "<:geo:1003213050561699897>"
 }  
 
-const stars = (item: genshin.Character | genshin.Weapon) => {return "⭐".repeat(parseInt(item.rarity, 10))}
-const color = (char: genshin.Character | string) => {
+export function stars (item: genshin.Character | genshin.Weapon) {return "⭐".repeat(parseInt(item.rarity, 10))}
+
+export function color (char: genshin.Character | string) {
     if (typeof char == 'string') return elementColors[char]
     return elementColors[char.element]
 }
-const icon = (char: genshin.Character | string) => {
+
+export function icon (char: genshin.Character | string) {
     if (typeof char == 'string') return elementIcons[char]
     return elementIcons[char.element]
 }
 
-
-export {stars, color, icon}
