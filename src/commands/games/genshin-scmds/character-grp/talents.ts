@@ -71,18 +71,8 @@ export async function genshinCharacterTalents(interaction: ShinanoInteraction) {
                     )
                 break
             }
-
+            
             case 3: {
-                embed 
-                    .setDescription(`*${talents.combatsp.description}*`)
-                    .addField(
-                        `Alternate Sprint`,
-                        talents.combatsp.info
-                    )
-                break
-            }
-
-            case 4: {
                 embed 
                     .setDescription(`*${talents.combat3.description}*`)
                     .addField(
@@ -91,6 +81,18 @@ export async function genshinCharacterTalents(interaction: ShinanoInteraction) {
                     )
                 break
             }
+
+            case 4: {
+                if (talents.combatsp) {
+                    embed 
+                    .addField(
+                        `Alternate Sprint`,
+                        talents.combatsp.info
+                    )
+                }
+                break
+            }
+
 
         }
         charTalentsEmbeds.push(embed)
