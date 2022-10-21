@@ -1,6 +1,5 @@
 import { Command } from "../../structures/Command";
 import { genshinCharacter } from "./genshin-scmds/character";
-import { genshinWeapon } from "./genshin-scmds/weapon";
 
 export default new Command({
     name: 'genshin',
