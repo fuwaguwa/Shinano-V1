@@ -1,11 +1,11 @@
 import { Command } from "../../structures/Command";
 import { AzurAPI } from "@azurapi/azurapi";
 import { config } from 'dotenv'
-import { azurLaneShip } from "./azur-lane-scmds/ship";
-import { azurLaneChapter } from "./azur-lane-scmds/chapter";
-import { azurLaneGear } from "./azur-lane-scmds/gear";
-import { azurLaneExpCalculator } from "./azur-lane-scmds/exp-calculator";
-import { azurLanePRCompletion } from "./azur-lane-scmds/pr-completion";
+import { azurLaneShip } from "./subcommands/azur-lane/ship";
+import { azurLaneChapter } from "./subcommands/azur-lane/chapter";
+import { azurLaneGear } from "./subcommands/azur-lane/gear";
+import { azurLaneExpCalculator } from "./subcommands/azur-lane/exp-calculator";
+import { azurLanePRCompletion } from "./subcommands/azur-lane/pr-completion";
 config()
 
 const AL = new AzurAPI();

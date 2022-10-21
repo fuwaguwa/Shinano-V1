@@ -1,10 +1,10 @@
 import { Command } from "../../structures/Command";
-import { botInfo } from "./bot-scmds/info";
-import { botStats } from "./bot-scmds/stats";
-import { botSupport } from "./bot-scmds/support";
-import { botUptime } from "./bot-scmds/uptime";
-import { botVote } from "./bot-scmds/vote";
-import { botPing } from "./bot-scmds/ping";
+import { botInfo } from "./subcommands/bot/info";
+import { botStats } from "./subcommands/bot/stats";
+import { botSupport } from "./subcommands/bot/support";
+import { botUptime } from "./subcommands/bot/uptime";
+import { botVote } from "./subcommands/bot/vote";
+import { botPing } from "./subcommands/bot/ping";
 
 export default new Command({
     name: 'bot',

@@ -1,8 +1,8 @@
 import { Command } from "../../structures/Command";
 import { config } from "dotenv";
-import { animeSearch } from "./anime-scmds/search";
-import { animeCharacter } from "./anime-scmds/character";
-import { animeRandom } from "./anime-scmds/random";
+import { animeSearch } from "./subcommands/anime/search";
+import { animeCharacter } from "./subcommands/anime/character";
+import { animeRandom } from "./subcommands/anime/random";
 config();
 
 export default new Command({

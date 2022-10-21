@@ -1,6 +1,6 @@
 import { Command } from "../../structures/Command";
-import { helpSFW } from "./help-scmds/sfw";
-import { helpNSFW } from "./help-scmds/nsfw";
+import { helpSFW } from "./subcommands/help/sfw";
+import { helpNSFW } from "./subcommands/help/nsfw";
 
 export default new Command({
     name: 'help',

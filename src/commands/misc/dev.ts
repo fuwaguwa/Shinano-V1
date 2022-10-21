@@ -1,10 +1,10 @@
 import { Command } from "../../structures/Command";
-import { devEval } from "./dev-scmds/eval";
-import { devLeave } from "./dev-scmds/leave";
-import { devUsage } from "./dev-scmds/usage";
-import { devBlacklist } from "./dev-scmds/blacklist";
-import { devVoteCheck } from "./dev-scmds/vote-check";
-import { devGuildInfo } from "./dev-scmds/guildInfo";
+import { devEval } from "./subcommands/dev/eval";
+import { devLeave } from "./subcommands/dev/leave";
+import { devUsage } from "./subcommands/dev/usage";
+import { devBlacklist } from "./subcommands/dev/blacklist";
+import { devVoteCheck } from "./subcommands/dev/vote-check";
+import { devGuildInfo } from "./subcommands/dev/guildInfo";
 
 export default new Command({
     name: 'dev',

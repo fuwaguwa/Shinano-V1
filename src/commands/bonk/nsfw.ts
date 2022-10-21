@@ -2,10 +2,10 @@ import { MessageEmbed } from "discord.js";
 import { Command } from "../../structures/Command";
 import fetch from "node-fetch"
 import {config} from 'dotenv'
-import { nsfwRandom } from "./nsfw-scmds/random";
-import { nsfwBomb } from "./nsfw-scmds/bomb";
-import { nsfwPrivateCollection } from "./nsfw-scmds/privateColle";
-import { nsfwVideo } from "./nsfw-scmds/video";
+import { nsfwRandom } from "./subcommands/nsfw/random";
+import { nsfwBomb } from "./subcommands/nsfw/bomb";
+import { nsfwPrivateCollection } from "./subcommands/nsfw/privateColle";
+import { nsfwVideo } from "./subcommands/nsfw/video";
 config();
 
 export default new Command({
