@@ -11,9 +11,9 @@ export async function genshinWeaponInfo(interaction: ShinanoInteraction, weapon:
     let subValue: string
     if (weapon.substat) {
         if (weapon.substat.toLowerCase() !== 'elemental mastery') {
-            subValue = `Base Substat: ${weapon.subvalue}% ${weapon.substat}`
+            subValue = `${weapon.subvalue}% ${weapon.substat}`
         } else {
-            subValue = `Base Substat: ${weapon.subvalue} ${weapon.substat}`
+            subValue = `${weapon.subvalue} ${weapon.substat}`
         }
     }
 
@@ -62,8 +62,8 @@ export async function genshinWeaponInfo(interaction: ShinanoInteraction, weapon:
             {
                 name: 'Base Stats',
                 value: 
-                `Base ATK: ${weapon.baseatk} ATK\n` + 
-                `${subValue ? `${subValue}\n` : ``}`
+                `Base ATK: **${weapon.baseatk} ATK**\n` + 
+                `${subValue ? `Base Substat: **${subValue}**\n` : ``}`
             }
         )
     if (weapon.effect) {
