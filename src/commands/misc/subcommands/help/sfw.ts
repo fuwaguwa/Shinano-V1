@@ -83,10 +83,8 @@ export async function shinanoHelpSFW(interaction: ShinanoInteraction) {
             
             **bot**
             <:curve:1021036738161950800>Information about the bot
-            **covid**
-            <:curve:1021036738161950800>Information about COVID
-            **help**
-            <:curve:1021036738161950800>Information about commands`
+            **shinano-help**
+            <:curve:1021036738161950800>Information about all of Shinano's commands`
         )
 
 
