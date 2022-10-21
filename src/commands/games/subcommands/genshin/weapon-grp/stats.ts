@@ -40,7 +40,7 @@ export async function genshinWeaponStats(interaction: ShinanoInteraction, weapon
                 value: 
                 `Level: **${weaponStats.level}**\n` +
                 `Ascensions: **${weaponStats.ascension}**\n` +
-                `${weapon.effect ? `Refinement Level: ${refinementLevel}` : ``}`
+                `${weapon.effect ? `Refinement Level: **${refinementLevel}**` : ``}`
             },
             {
                 name: 'Weapon\'s Stats:',
