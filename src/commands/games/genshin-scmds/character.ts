@@ -18,10 +18,12 @@ export async function genshinCharacter(interaction: ShinanoInteraction) {
             break
         }
 
+
         case 'costs': {
             await genshinCharacterCosts(interaction, character)
             break
         }
+        
 
         case 'talents': {
             await genshinCharacterTalents(interaction)
