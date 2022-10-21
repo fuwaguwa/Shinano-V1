@@ -12,7 +12,7 @@ Canvas.registerFont(`Upright.otf`, {family: 'Upright'})
 
 export default new Command({
     name: 'image',
-    description: 'Image Manipulation.',
+    description: 'Image Generation + Manipulation Command!',
     cooldown: 10000,
     options: [
         {

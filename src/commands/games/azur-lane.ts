@@ -14,7 +14,7 @@ const AL = new AzurAPI();
  
 export default new Command({
     name: 'azur-lane',
-    description: 'Get info about an Azur Lane ship!',
+    description: 'Get information related to Azur Lane!',
     cooldown: 5000,
     options: [
         {

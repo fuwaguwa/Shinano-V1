@@ -4,7 +4,7 @@ import { MessageEmbed } from "discord.js";
 
 export default new Command({
     name: 'nekomimi',
-    description: 'Generate a picture of a catgirl (SFW)',
+    description: 'Generate a SFW catgirl pic.',
     cooldown: 4500,
     run: async({interaction}) => {
         await interaction.deferReply()

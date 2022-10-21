@@ -3,7 +3,7 @@ import { genshinCharacter } from "./subcommands/genshin/character";
 
 export default new Command({
     name: 'genshin',
-    description: "Genshin Commands",
+    description: "Get information related to Genshin!",
     cooldown: 5000,
     options: [
         {
@@ -71,6 +71,26 @@ export default new Command({
                 }
             ]
         },
+        {
+            type: 'SUB_COMMAND_GROUP',
+            name: 'weapon',
+            description: 'weapon',
+            options: [
+                {
+                    type: 'SUB_COMMAND',
+                    name: 'info',
+                    description: 'Information about a weapon from Genshin.',
+                    options: [
+                        {
+                            type: 'STRING',
+                            required: true,
+                            name: 'weapon-name',
+                            description: 'The weapon\'s name.'
+                        }
+                    ]
+                }
+            ]
+        }
     ],
     run: async({interaction}) => {
         await interaction.deferReply()
