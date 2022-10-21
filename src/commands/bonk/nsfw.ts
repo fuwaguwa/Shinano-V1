@@ -10,7 +10,7 @@ config();
 
 export default new Command({
     name: 'nsfw',
-    description: 'NSFW Commands',
+    description: 'NSFW Commands - Anime and IRL',
     defaultPermission: false,
     nsfw: true,
     cooldown: 3500,

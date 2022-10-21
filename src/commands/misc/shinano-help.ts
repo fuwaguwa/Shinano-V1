@@ -4,7 +4,7 @@ import { shinanoHelpSFW } from "./subcommands/help/sfw";
 
 export default new Command({
     name: 'shinano-help',
-    description: 'The list of all commands and what they do',
+    description: 'The list of all commands and what they do.',
     cooldown: 4500,
     options: [
         {

@@ -5,7 +5,7 @@ import { Command } from '../../structures/Command'
 
 export default new Command({
     name: 'cat',
-    description: 'Generate a picture of a cat',
+    description: 'Generate a picture of a cat.',
     cooldown: 4500,
     run: async({interaction}) => {
         await interaction.deferReply()

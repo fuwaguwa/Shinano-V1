@@ -7,7 +7,7 @@ config();
 
 export default new Command({
     name: 'anime',
-    description: 'anime',
+    description: 'Get information about animes and its characters!',
     cooldown: 4500,
     options: [
         {
