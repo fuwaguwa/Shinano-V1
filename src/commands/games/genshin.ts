@@ -1,5 +1,6 @@
 import { Command } from "../../structures/Command";
 import { genshinCharacter } from "./genshin-scmds/character";
+import { genshinWeapon } from "./genshin-scmds/weapon";
 
 export default new Command({
     name: 'genshin',
@@ -14,7 +15,7 @@ export default new Command({
                 {
                     type: 'SUB_COMMAND',
                     name: 'info',
-                    description: 'General information about a Genshin\'s character (General Info, Constellations, Ascension Costs).',
+                    description: 'Information about a Genshin\'s character (General Info, Constellations, Ascension Costs).',
                     options: [
                         {
                             type: 'STRING',
@@ -70,7 +71,7 @@ export default new Command({
                     ]
                 }
             ]
-        }
+        },
     ],
     run: async({interaction}) => {
         await interaction.deferReply()

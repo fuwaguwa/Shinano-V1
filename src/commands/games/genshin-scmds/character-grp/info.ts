@@ -158,13 +158,34 @@ export async function genshinCharacterInfo(interaction: ShinanoInteraction, char
         .setDescription(`"${character.description}"\n\n${character.url ? `[Wiki Link](${character.url.fandom})` : ""}`)
         .setThumbnail(character.images.icon)
         .addFields(
-            {name: 'Element:', value: MC == true ? 'All' : icon(character)},
-            {name: 'Rarity:', value: stars(character)},
-            {name: 'Weapon Type:', value: character.weapontype},
-            {name: 'Constellation', value: character.constellation},
-            {name: 'Birthday:', value: MC == true ? 'Player\'s Birthday' : character.birthday},
-            {name: 'Region | Affiliation', value: MC == true ? '? | Many' : `${character.region} | ${character.affiliation}`},
-            {name:"VAs:", value:`CN: ${character.cv.chinese}\nJP: ${character.cv.japanese}\nKR: ${character.cv.korean}\nEN: ${character.cv.english}`}
+            {
+                name: 'Element:', 
+                value: MC == true ? 'All' : icon(character)
+            },
+            {
+                name: 'Rarity:', 
+                value: stars(character)
+            },
+            {
+                name: 'Weapon Type:',
+                value: character.weapontype
+            },
+            {
+                name: 'Constellation', 
+                value: character.constellation
+            },
+            {
+                name: 'Birthday:',
+                value: MC == true ? 'Player\'s Birthday' : character.birthday
+            },
+            {
+                name: 'Region | Affiliation',
+                value: MC == true ? '? | Many' : `${character.region} | ${character.affiliation}`
+            },
+            {
+                name:"VAs:",
+                value:`CN: ${character.cv.chinese}\nJP: ${character.cv.japanese}\nKR: ${character.cv.korean}\nEN: ${character.cv.english}`
+            }
         )
         .setFooter({text: `Added in Version ${character.version}`})
     
