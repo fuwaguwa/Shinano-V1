@@ -1,8 +1,8 @@
 import { MessageEmbed, MessageActionRow, MessageSelectMenu, InteractionCollector, SelectMenuInteraction, Message } from "discord.js";
-import { ShinanoPaginator } from "../../../../../structures/Pages";
-import { ShinanoInteraction } from "../../../../../typings/Command";
+import { ShinanoPaginator } from "../../../../structures/Pages";
+import { ShinanoInteraction } from "../../../../typings/Command";
 
-export async function botHelpSFW(interaction: ShinanoInteraction) {
+export async function shinanoHelpSFW(interaction: ShinanoInteraction) {
     await interaction.deferReply()
     // Setup 
     // Fun Embeds

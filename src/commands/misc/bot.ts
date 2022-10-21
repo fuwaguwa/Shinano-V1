@@ -5,7 +5,6 @@ import { botSupport } from "./subcommands/bot/support";
 import { botUptime } from "./subcommands/bot/uptime";
 import { botVote } from "./subcommands/bot/vote";
 import { botPing } from "./subcommands/bot/ping";
-import { botHelp } from "./subcommands/bot/help";
 
 export default new Command({
     name: 'bot',
@@ -42,29 +41,6 @@ export default new Command({
             name: 'support',
             description: 'Run this command if you got any problem with the bot!',
         },
-        {
-            type: 'SUB_COMMAND',
-            name: 'help',
-            description: 'The list of all commands and what they do!',
-            options: [
-                {
-                    type: 'STRING',
-                    required: true,
-                    name: 'command-type',
-                    description: 'The type of the command',
-                    choices: [
-                        {
-                            name: 'Normal Commands',
-                            value: 'sfw'
-                        },
-                        {
-                            name: 'NSFW Commands',
-                            value: 'nsfw'
-                        }
-                    ]
-                }
-            ]
-        }
     ],
     run: async({interaction}) => {
         switch (interaction.options.getSubcommand()) {
@@ -100,11 +76,6 @@ export default new Command({
             
             case 'vote': {
                 await botVote(interaction)
-                break
-            }
-
-            case 'help': {
-                await botHelp(interaction)
                 break
             }
         }

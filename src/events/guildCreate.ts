@@ -39,7 +39,7 @@ export default new Event('guildCreate', async (guild) => {
                 .setDescription(
                     'I am Shinano, a multi-purpose Discord bot designed to serve users all over the world. ' +
                     'Whether it is providing information about shipfus, query information in Genshin, or to entertain you, I can do it all while being half-asleep...zzz\n\n' + 
-                    'You can learn more about what I can do by using `/bot help`. If you\'re experiencing any trouble with the bot, please join the support server down below!'
+                    'You can learn more about what I can do by using `/shinano-help`. If you\'re experiencing any trouble with the bot, please join the support server down below!'
                 )
                 .setThumbnail('https://cdn.discordapp.com/avatars/1002193298229829682/1981b3d0b4b61f5cc011ca223bc4e6b1.png?size=1024')
             const supportServer: MessageActionRow = new MessageActionRow()
