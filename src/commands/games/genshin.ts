@@ -1,5 +1,6 @@
 import { Command } from "../../structures/Command";
 import { genshinCharacter } from "./subcommands/genshin/character";
+import { genshinWeapon } from "./subcommands/genshin/weapon";
 
 export default new Command({
     name: 'genshin',
@@ -71,6 +72,70 @@ export default new Command({
                 }
             ]
         },
+        {
+            type: 'SUB_COMMAND_GROUP',
+            name: 'weapon',
+            description: 'weapon',
+            options: [
+                {
+                    type: 'SUB_COMMAND',
+                    name: 'info',
+                    description: 'Information about a weapon from Genshin.',
+                    options: [
+                        {
+                            type: 'STRING',
+                            required: true,
+                            name: 'weapon-name',
+                            description: 'The weapon\'s name.'
+                        }
+                    ]
+                },
+                {
+                    type: 'SUB_COMMAND',
+                    name: 'stats',
+                    description: 'Stats of a weapon from Genshin.',
+                    options: [
+                        {
+                            type: 'STRING',
+                            required: true,
+                            name: 'weapon-name',
+                            description: 'The weapon\'s name.'
+                        },
+                        {
+                            type: 'INTEGER',
+                            required: true,
+                            name: 'weapon-level',
+                            description: 'The weapon\'s level.'
+                        },
+                        {
+                            type: 'STRING',
+                            name: 'ascension-phase',
+                            description: 'The weapon\'s ascension phase.',
+                            choices: [
+                                {name: '1', value: '1'},
+                                {name: '2', value: '2'},
+                                {name: '3', value: '3'},
+                                {name: '4', value: '4'},
+                                {name: '5', value: '5'},
+                                {name: '6', value: '6'},
+                            ]
+                        },
+                        {
+                            type: 'STRING',
+                            name: 'refinement-level',
+                            description: 'The weapon\'s ascension phase.',
+                            choices: [
+                                {name: '1', value: '1'},
+                                {name: '2', value: '2'},
+                                {name: '3', value: '3'},
+                                {name: '4', value: '4'},
+                                {name: '5', value: '5'},
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
     ],
     run: async({interaction}) => {
         await interaction.deferReply()
@@ -78,6 +143,12 @@ export default new Command({
             switch (interaction.options.getSubcommandGroup()) {
                 case 'character': {
                     await genshinCharacter(interaction)
+                    break
+                }
+
+                
+                case 'weapon': {
+                    await genshinWeapon(interaction)
                     break
                 }
             }
