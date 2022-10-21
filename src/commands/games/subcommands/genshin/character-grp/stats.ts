@@ -4,21 +4,13 @@ import { color } from "../../../../../structures/Genshin";
 import { MessageEmbed } from "discord.js";
 
 export async function genshinCharacterStats(interaction: ShinanoInteraction, character: genshin.Character) {
-    // Checing for characters
-    if (!character) {
-        const noResult: MessageEmbed = new MessageEmbed()
-            .setColor('RED')
-            .setDescription('❌ | No character found!')
-        await interaction.editReply({embeds: [noResult]})
-    }
-
-    
     // Prcessing levels
     let level: number = interaction.options.getInteger('character-level')
     let ascension: string = interaction.options.getString('ascension-phase')
-    let characterStats: genshin.StatResult = character.stats(level)
     
+    let characterStats: genshin.StatResult = character.stats(level)
     if (ascension) characterStats = character.stats(level, parseInt(ascension, 10))
+
     if (level < 1) level = 1
     if (level > 90) level = 90
 
