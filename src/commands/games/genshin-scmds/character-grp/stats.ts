@@ -51,9 +51,9 @@ export async function genshinCharacterStats(interaction: ShinanoInteraction, cha
             {
                 name: 'Current Level Stats:',
                 value:
-                `Base HP: **${characterStats.hp ? characterStats.hp.toFixed(2) : 'N/A'}**\n` +
-                `Base ATK: **${characterStats.attack ? characterStats.attack.toFixed(2) : 'N/A'}**\n` +
-                `Base DEF: **${characterStats.defense ? characterStats.defense.toFixed(2) : 'N/A'}**\n` +
+                `Base HP: **${characterStats.hp ? `${characterStats.hp.toFixed(2)} HP` : 'N/A'}**\n` +
+                `Base ATK: **${characterStats.attack ? `${characterStats.attack.toFixed(2)} ATK` : 'N/A'}**\n` +
+                `Base DEF: **${characterStats.defense ? `${characterStats.defense.toFixed(2)} DEF` : 'N/A'}**\n` +
                 `Specialized Stats: **${characterStats.specialized ? `${characterSpecializedStat} ${character.substat}` : 'N/A'}**\n` 
             }
         )
