@@ -25,7 +25,7 @@ export default new Command({
         }
     ],
     run: async({interaction}) => {
-        switch (interaction.options.getSubcommand()) {
+        switch (interaction.options.getString('command-type')) {
             case 'sfw': {
                 await shinanoHelpSFW(interaction)
                 break
