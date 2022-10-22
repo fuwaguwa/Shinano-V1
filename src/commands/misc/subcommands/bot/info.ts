@@ -6,7 +6,7 @@ export async function botInfo(interaction: ShinanoInteraction) {
         .setColor('BLUE')
         .setTitle('Shinano')
         .setDescription(
-            'Shinano - The Multi-purpose Azur Lane Bot!\n' + 
+            'Shinano - The Multi-Purpose Azur Lane/Genshin Bot!\n' + 
             'Developed and Maintained by **Fuwafuwa#2272**\n\n' +
             '**APIs**: AzurAPI, Nekobot, RapidAPI, The Cat/Dog API, Some Random API, waifu.pics, nekos.fun, jikan.moe, genshin-db\n\n' +
             'Liking the bot so far? Please **vote** and leave Shinano a **rating** on **top.gg**!'

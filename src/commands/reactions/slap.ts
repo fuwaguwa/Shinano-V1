@@ -4,7 +4,7 @@ import fetch from 'node-fetch'
 
 export default new Command({
     name: 'slap',
-    description: 'Will Smith moment.',
+    description: 'Slap someone.',
     cooldown: 4500,
     options: [
         {

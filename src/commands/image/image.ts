@@ -80,7 +80,7 @@ export default new Command({
         {
             type: 'SUB_COMMAND',
             name: 'slap',
-            description: 'Will Smith moment.',
+            description: ' Batman slapping.',
             options: [
                 {
                     type: 'USER',
