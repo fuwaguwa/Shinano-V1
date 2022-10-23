@@ -38,10 +38,6 @@ export async function botStats(interaction: ShinanoInteraction) {
                 value: `${hours} hours, ${minutes} minutes, ${seconds} seconds`
             },
             {
-                name: 'Latency:', 
-                value: `Latency: **${Date.now() - interaction.createdTimestamp}ms**\nAPI Latency: **${Math.round(client.ws.ping)}ms**`
-            },
-            {
                 name: 'Bot Stats:', 
                 value:
                 `Total Guilds: **${client.guilds.cache.size}**\n` +
