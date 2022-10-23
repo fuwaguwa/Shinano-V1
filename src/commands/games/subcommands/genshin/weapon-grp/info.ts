@@ -44,7 +44,7 @@ export async function genshinWeaponInfo(interaction: ShinanoInteraction, weapon:
     const weaponInfo: MessageEmbed = new MessageEmbed()
         .setColor(embedColor)
         .setTitle(weapon.name)
-        .setDescription(`"${weapon.description}"\n\n${weapon.url ? `[Wiki Link](${weapon.url.fandom})` : ""}`)
+        .setDescription(`*${weapon.description}*\n\n${weapon.url ? `[Wiki Link](${weapon.url.fandom})` : ""}`)
         .setThumbnail(weapon.images.icon)
         .addFields(
             {
