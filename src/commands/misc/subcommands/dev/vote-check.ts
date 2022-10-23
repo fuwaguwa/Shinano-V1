@@ -44,7 +44,7 @@ export async function devVoteCheck(interaction: ShinanoInteraction) {
 
     // Response
     const voteEmbed: MessageEmbed = new MessageEmbed()
-        .setColor('BLUE')
+        .setColor('#2f3136')
         .addFields(
             {
                 name: 'Top.gg Database:',

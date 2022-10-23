@@ -35,7 +35,7 @@ export default new Event('guildCreate', async (guild) => {
     await guild.channels.cache.some((channel) => {
         if (channel.name.includes('general') || channel.name.includes('lobby') || channel.name.includes('chat')) {
             const helloEmbed: MessageEmbed = new MessageEmbed()
-                .setColor('BLUE')
+                .setColor('#2f3136')
                 .setDescription(
                     'I am Shinano, a multi-purpose Discord bot designed to serve users all over the world. ' +
                     'Whether it is providing information about shipfus, query information in Genshin, or to entertain you, I can do it all while being half-asleep...zzz\n\n' + 

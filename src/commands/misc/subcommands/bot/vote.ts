@@ -7,7 +7,7 @@ export async function botVote(interaction: ShinanoInteraction) {
 
     // Embed
     const voteEmbed: MessageEmbed = new MessageEmbed()
-        .setColor('BLUE')
+        .setColor('#2f3136')
         .setDescription('You can vote for Shinano using the buttons below. Thank you for the support!\n')
     
     // Components

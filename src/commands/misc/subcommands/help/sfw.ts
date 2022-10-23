@@ -7,7 +7,7 @@ export async function shinanoHelpSFW(interaction: ShinanoInteraction) {
     // Setup 
     // Fun Embeds
     const funCommand1: MessageEmbed = new MessageEmbed()
-    .setColor('BLUE')
+    .setColor('#2f3136')
     .setDescription(`
         /<command>
         
@@ -27,7 +27,7 @@ export async function shinanoHelpSFW(interaction: ShinanoInteraction) {
         <:curve:1021036738161950800>Play rock paper scissor against the bot!`
     )
     const funCommand2: MessageEmbed = new MessageEmbed()
-        .setColor('BLUE')
+        .setColor('#2f3136')
         .setDescription(`
             /<command>
             
@@ -42,7 +42,7 @@ export async function shinanoHelpSFW(interaction: ShinanoInteraction) {
     
     // Image Embeds
     const imageCommand1: MessageEmbed = new MessageEmbed()
-        .setColor('BLUE')
+        .setColor('#2f3136')
         .setDescription(`
             /<command>
             
@@ -62,7 +62,7 @@ export async function shinanoHelpSFW(interaction: ShinanoInteraction) {
             <:curve:1021036738161950800>Generate a (SFW) picture of a catgirl!`
         )
     const imageCommand2: MessageEmbed = new MessageEmbed()
-        .setColor('BLUE')
+        .setColor('#2f3136')
         .setDescription(`
             /<command>
 
@@ -77,7 +77,7 @@ export async function shinanoHelpSFW(interaction: ShinanoInteraction) {
     
     // Misc Embeds
     const miscCommand1: MessageEmbed = new MessageEmbed()
-        .setColor('BLUE')
+        .setColor('#2f3136')
         .setDescription(`
             /<command>
             
@@ -91,7 +91,7 @@ export async function shinanoHelpSFW(interaction: ShinanoInteraction) {
 
     // Reactions Embed
     const reactionCommand1: MessageEmbed = new MessageEmbed()
-        .setColor('BLUE')
+        .setColor('#2f3136')
         .setDescription(`
             /<command>
             
@@ -111,7 +111,7 @@ export async function shinanoHelpSFW(interaction: ShinanoInteraction) {
             <:curve:1021036738161950800>Kiss someone!`
         )
     const reactionCommand2: MessageEmbed = new MessageEmbed()
-        .setColor('BLUE')
+        .setColor('#2f3136')
         .setDescription(`
             /<command>
             
@@ -131,7 +131,7 @@ export async function shinanoHelpSFW(interaction: ShinanoInteraction) {
 
     // Utils Embeds
     const utilsCommand1: MessageEmbed = new MessageEmbed()
-        .setColor('BLUE')
+        .setColor('#2f3136')
         .setDescription(`
             /<command>
             
@@ -148,7 +148,7 @@ export async function shinanoHelpSFW(interaction: ShinanoInteraction) {
 
     // Azur Lane
     const alCommand1: MessageEmbed = new MessageEmbed()
-        .setColor('BLUE')
+        .setColor('#2f3136')
         .setDescription(`
             /azur-lane <command>
             
@@ -168,7 +168,7 @@ export async function shinanoHelpSFW(interaction: ShinanoInteraction) {
 
     // Anime 
     const aniCommand1: MessageEmbed = new MessageEmbed()
-        .setColor('BLUE')
+        .setColor('#2f3136')
         .setDescription(`
             /anime <command>
 
@@ -183,7 +183,7 @@ export async function shinanoHelpSFW(interaction: ShinanoInteraction) {
 
     // Genshin 
     const genshinCommand1: MessageEmbed = new MessageEmbed()
-    .setColor('BLUE')
+    .setColor('#2f3136')
     .setDescription(`
         /genshin <command>
 

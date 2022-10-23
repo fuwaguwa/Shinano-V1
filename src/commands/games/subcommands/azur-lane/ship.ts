@@ -22,7 +22,7 @@ export async function azurLaneShip(interaction: ShinanoInteraction, AL: any) {
     if (ship.rarity === 'Rare') color = '#03dbfc';
     if (ship.rarity === 'Elite') color = '#ec18f0';
     if (ship.rarity === 'Super Rare' || ship.rarity === 'Priority') color = '#eff233';
-    if (ship.rarity === 'Ultra Rare' || ship.rarity === 'Decisive') color = 'BLACK';
+    if (ship.rarity === 'Ultra Rare' || ship.rarity === 'Decisive') color = '#2f3136';
    
 
     // General Info

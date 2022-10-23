@@ -38,7 +38,7 @@ export default new Command({
         if (received.banner.substring(0,2) === 'a_') format = 'gif';
 
         const banner: MessageEmbed = new MessageEmbed()
-            .setColor('BLUE')
+            .setColor('#2f3136')
             .setDescription(`${user}'s Banner`)
             .setImage(`https://cdn.discordapp.com/banners/${user.id}/${received.banner}.${format}?size=512`)
         await interaction.editReply({embeds: [banner]})

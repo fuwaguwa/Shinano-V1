@@ -19,7 +19,7 @@ export async function azurLaneExpCalculator(interaction: ShinanoInteraction, AL:
 
     const expNeeded: MessageEmbed = new MessageEmbed()
         .setTitle('Experience Calculator')
-        .setColor('BLUE')
+        .setColor('#2f3136')
     
 
     // 0 LEVEL DIFFERENCE

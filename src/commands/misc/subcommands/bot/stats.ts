@@ -30,7 +30,7 @@ export async function botStats(interaction: ShinanoInteraction) {
 
     // Outputting Data
     const performance: MessageEmbed = new MessageEmbed()
-        .setColor('BLUE')
+        .setColor('#2f3136')
         .setTitle('Shinano\'s Stats')
         .addFields(
             {

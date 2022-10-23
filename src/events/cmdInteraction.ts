@@ -157,7 +157,7 @@ export default new Event("interactionCreate", async (interaction) => {
     }
     
     const commandExecuted: MessageEmbed = new MessageEmbed()
-        .setColor('BLUE')
+        .setColor('#2f3136')
         .setTitle(`Command Executed!`)
         .setThumbnail(interaction.user.displayAvatarURL({dynamic: true}))
         .addFields(

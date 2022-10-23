@@ -3,7 +3,7 @@ import { ShinanoInteraction } from "../../../../typings/Command";
 
 export async function botSupport(interaction: ShinanoInteraction) {
     const supportEmbed: MessageEmbed = new MessageEmbed()
-        .setColor('BLUE')
+        .setColor('#2f3136')
         .setDescription('If you got any issue with the bot, please contact us in the support server down below!')
     const supportButton: MessageActionRow = new MessageActionRow()
         .addComponents(

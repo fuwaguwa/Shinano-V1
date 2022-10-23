@@ -3,7 +3,7 @@ import { ShinanoInteraction } from "../../../../typings/Command";
 
 export async function botInfo(interaction: ShinanoInteraction) {
     const shinanoEmbed: MessageEmbed = new MessageEmbed()
-        .setColor('BLUE')
+        .setColor('#2f3136')
         .setTitle('Shinano')
         .setDescription(
             'Shinano - The Multi-Purpose Azur Lane/Genshin Bot!\n' + 

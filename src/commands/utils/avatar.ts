@@ -15,7 +15,7 @@ export default new Command({
     run: async({interaction}) => {
         const user: User = interaction.options.getUser('user') || interaction.user
         const avatarEmbed: MessageEmbed = new MessageEmbed()
-            .setColor('BLUE')
+            .setColor('#2f3136')
             .setDescription(`${user}'s avatar`)
             .setImage(user.displayAvatarURL({dynamic:true, size: 1024}))
             .setFooter({text:`UID: ${user.id}` })

@@ -38,7 +38,7 @@ export default new Command({
         ]
 
         const response: MessageEmbed = new MessageEmbed()
-            .setColor('BLUE')
+            .setColor('#2f3136')
             .setDescription(
                 `> **${interaction.options.getString('question')}**\n`+
                 responses[Math.floor(Math.random() * responses.length)]

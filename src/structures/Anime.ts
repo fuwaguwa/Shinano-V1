@@ -14,12 +14,12 @@ export function animeInfo({anime, interaction, menu}) {
 
     // Embeds
     const synopsisEmbed: MessageEmbed = new MessageEmbed()
-        .setColor('BLUE')
+        .setColor('#2f3136')
         .setThumbnail(anime.images.jpg.large_image_url)
         .setTitle(`${anime.title} | Synopsis`)
         .setDescription(`*${anime.synopsis || 'No Sypnosis Can Be Found'}*`)
     const generalInfoEmbed: MessageEmbed = new MessageEmbed()
-        .setColor('BLUE')
+        .setColor('#2f3136')
         .setThumbnail(anime.images.jpg.large_image_url)
         .setTitle(`${anime.title} | General Info`)
         .addFields(

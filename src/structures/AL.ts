@@ -148,7 +148,7 @@ export function chapterInfo(chapterInfo, chapterMode) {
 
         levels.push(
             new MessageEmbed()
-                .setColor(chapterMode === 'normal' ? 'BLUE' : 'RED')
+                .setColor(chapterMode === 'normal' ? '#2f3136' : 'RED')
                 .setTitle(`${title} | ${chapterInfo[i][chapterMode].code}`)
                 .setDescription(
                     `**${chapterInfo[i][chapterMode].title}**\n` +

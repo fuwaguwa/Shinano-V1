@@ -10,7 +10,7 @@ export default new Event('interactionCreate', async (interaction) => {
     switch (interaction.customId) {
         case 'NONSFW': {
             const cantSee: MessageEmbed = new MessageEmbed()
-                .setColor('BLUE')
+                .setColor('#2f3136')
                 .setTitle('Enabling The NSFW Commands')
                 .addFields(
                     {

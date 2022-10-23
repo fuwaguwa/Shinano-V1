@@ -36,7 +36,7 @@ export default new Command({
         // Outputting Definition
         const wordInfo = definition.list[0]
         const definitionEmbed: MessageEmbed = new MessageEmbed()
-            .setColor('BLUE')
+            .setColor('#2f3136')
             .setTitle(`"${wordInfo.word}"`)
             .addField('Definition', wordInfo.definition)
             .setFooter({text: `Defintion by ${wordInfo.author} | ${wordInfo.thumbs_up} 👍 /  ${wordInfo.thumbs_down} 👎`})

@@ -21,7 +21,7 @@ export async function shinanoHelpNSFW(interaction: ShinanoInteraction) {
 
     const nsfwEmbed = new MessageEmbed()
         .setTitle('NSFW Commands')
-        .setColor('BLUE')
+        .setColor('#2f3136')
         .setDescription('Tip: You can quickly type `/<tag>` or `/<category>` for the commands. E.g `/random`, `/irl`')
         .setFields(
             {

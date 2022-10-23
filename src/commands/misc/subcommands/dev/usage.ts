@@ -5,7 +5,7 @@ import os from 'os'
 export async function devUsage(interaction: ShinanoInteraction) {
     const memory = process.memoryUsage()
     const performance: MessageEmbed = new MessageEmbed()
-        .setColor('BLUE')
+        .setColor('#2f3136')
         .setTitle('Memory Stats')
         .addFields(
             {name: 'Memory Usage:', value: 

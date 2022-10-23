@@ -6,6 +6,6 @@ export async function botPing(interaction: ShinanoInteraction) {
     const pingEmbed: MessageEmbed = new MessageEmbed()
         .setTitle('Pong 🏓')
         .setDescription(`Latency: ${Date.now() - interaction.createdTimestamp}ms\nAPI Latency: ${Math.round(client.ws.ping)}ms`)
-        .setColor('BLUE')
+        .setColor('#2f3136')
     await interaction.reply({embeds:[pingEmbed]})
 }

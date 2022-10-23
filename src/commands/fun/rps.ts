@@ -64,7 +64,7 @@ export default new Command({
             
             // Accepting 
             const check: MessageEmbed = new MessageEmbed()
-                .setColor('BLUE')
+                .setColor('#2f3136')
                 .setTitle('⚔ It\'s Time To D-D-D-DUEL!')
                 .setDescription(`${user}\n**${interaction.user.username} challenged you to a game of RPS!**\nReact to this message to accept or decline the duel!`)
 
@@ -92,7 +92,7 @@ export default new Command({
                 switch (customId) {
                     case 'ACCEPT': {
                         const res: MessageEmbed = new MessageEmbed()
-                            .setColor('BLUE')
+                            .setColor('#2f3136')
                             .setDescription(`\`${interaction.user.username}\` vs \`${user.username}\`\n\n${user}, make your choice!`)
 
                         await i.editReply({
@@ -162,7 +162,7 @@ export default new Command({
 
                             // Announcing it's the challenger turn
                             const res: MessageEmbed = new MessageEmbed()
-                                .setColor('BLUE')
+                                .setColor('#2f3136')
                                 .setDescription(`\`${interaction.user.username}\` vs \`${user.username}\`\n\n${interaction.user}, make your choice!`)
                             
                             await i.editReply({
@@ -193,7 +193,7 @@ export default new Command({
 
                         // Outputting the winner
                         const finalResult: MessageEmbed = new MessageEmbed()
-                            .setColor('BLUE')
+                            .setColor('#2f3136')
                         if (challengerChoice === opponentChoice) {
                             finalResult
                                 .setDescription(`\`${interaction.user.username}\` vs \`${user.username}\`\n\n${user.username} picked ${emojiOpponentChoice}\n${interaction.user.username} picked ${emojiChallengerChoice}\nIt's a draw!`)
@@ -263,7 +263,7 @@ export default new Command({
 
 
             const res: MessageEmbed = new MessageEmbed()
-                .setColor('BLUE')
+                .setColor('#2f3136')
                 .setDescription(`\`${interaction.user.username}\` vs \`Shinano\`\n\nMake your choice!`)
             
 
@@ -307,7 +307,7 @@ export default new Command({
                     }
                 }
                 const res: MessageEmbed = new MessageEmbed()
-                    .setColor('BLUE')
+                    .setColor('#2f3136')
 
                 if (customId === botChoice) {
                     res
@@ -338,7 +338,7 @@ export default new Command({
                         (choices.components[i] as MessageButton).setStyle('SECONDARY');
                     }
                     const res: MessageEmbed = new MessageEmbed()
-                        .setColor('BLUE')
+                        .setColor('#2f3136')
                         .setDescription(`\`${interaction.user.username}\` vs \`Shinano\`\n\nUser didn't make a choice!`) 
 
                     await interaction.editReply({
