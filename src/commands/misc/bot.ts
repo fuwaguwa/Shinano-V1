@@ -34,7 +34,7 @@ export default new Command({
         {
             type: 'SUB_COMMAND',
             name: 'vote',
-            description: 'Vote for the bot/Check your vote status!',
+            description: 'Vote for the bot or check your vote status!',
         },
         {
             type: 'SUB_COMMAND',
