@@ -41,14 +41,19 @@ export default new Event('guildCreate', async (guild) => {
                     'Whether it is providing information about shipfus, query information in Genshin, or to entertain you, I can do it all while being half-asleep...zzz\n\n' + 
                     'You can learn more about what I can do by using `/shinano-help`. If you\'re experiencing any trouble with the bot, please join the support server down below!'
                 )
-                .setThumbnail('https://cdn.discordapp.com/avatars/1002193298229829682/1981b3d0b4b61f5cc011ca223bc4e6b1.png?size=1024')
+                .setThumbnail('https://cdn.discordapp.com/avatars/1002193298229829682/14d86d9092130bb9b6dfc49af0a110b2.webp?size=1024')
             const supportServer: MessageActionRow = new MessageActionRow()
                 .addComponents(
                     new MessageButton()
                         .setStyle('LINK')
                         .setURL('https://discord.gg/NFkMxFeEWr')
                         .setLabel('Support Server')
-                        .setEmoji('⚙️')
+                        .setEmoji('⚙️'),
+                    new MessageButton()
+                        .setStyle('LINK')
+                        .setURL('https://top.gg/bot/1002193298229829682')
+                        .setLabel('Top.gg')
+                        .setEmoji('<:topgg:1002849574517477447>')
                 );
             (async () => await (channel as TextChannel).send({embeds: [helloEmbed], components: [supportServer]}))();
             
