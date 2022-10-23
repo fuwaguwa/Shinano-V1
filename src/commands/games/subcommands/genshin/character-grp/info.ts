@@ -155,7 +155,7 @@ export async function genshinCharacterInfo(interaction: ShinanoInteraction, char
     const infoEmbed: MessageEmbed = new MessageEmbed()
         .setColor(embedColor)
         .setTitle(`${character.name} | ${MC == true ? 'Main Character' : character.title}`)
-        .setDescription(`"${character.description}"\n\n${character.url ? `[Wiki Link](${character.url.fandom})` : ""}`)
+        .setDescription(`*${character.description}*\n\n${character.url ? `[Wiki Link](${character.url.fandom})` : ""}`)
         .setThumbnail(character.images.icon)
         .addFields(
             {
