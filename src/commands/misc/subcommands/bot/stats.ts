@@ -39,14 +39,14 @@ export async function botStats(interaction: ShinanoInteraction) {
             },
             {
                 name: 'Latency:', 
-                value: `Latency: ${Date.now() - interaction.createdTimestamp}ms\nAPI Latency: ${Math.round(client.ws.ping)}ms`
+                value: `Latency: **${Date.now() - interaction.createdTimestamp}ms**\nAPI Latency: **${Math.round(client.ws.ping)}ms**`
             },
             {
                 name: 'Bot Stats:', 
                 value:
-                `Total Guilds: ${client.guilds.cache.size}\n` +
-                `Total Top.gg Votes: ${topggStats.points}\n` +
-                `Monthly Top.gg Votes: ${topggStats.monthlyPoints}\n`
+                `Total Guilds: **${client.guilds.cache.size}**\n` +
+                `Current Votes: **${topggStats.monthlyPoints}**\n` +
+                `Total Votes: **${topggStats.points}**\n`
             }
         )
     await interaction.editReply({embeds: [performance]})
