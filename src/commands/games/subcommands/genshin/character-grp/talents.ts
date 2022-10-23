@@ -20,7 +20,7 @@ export async function genshinCharacterTalents(interaction: ShinanoInteraction) {
             const noResult: MessageEmbed = new MessageEmbed()
                 .setColor('RED')
                 .setDescription('❌ | No character found!')
-            await interaction.editReply({embeds: [noResult]}) 
+            return interaction.editReply({embeds: [noResult]}) 
         }
     }
 
