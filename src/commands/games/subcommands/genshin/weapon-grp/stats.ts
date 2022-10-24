@@ -46,7 +46,7 @@ export async function genshinWeaponStats(interaction: ShinanoInteraction, weapon
                 name: 'Weapon\'s Stats:',
                 value:
                 `ATK: **${weaponStats.attack ? `${weaponStats.attack.toFixed(2)} ATK` : 'N/A'}**\n` +
-                `Specialized: **${weaponStats.specialized ? weaponSpecializedStat : 'N/A'}**\n` 
+                `Main Stat: **${weaponStats.specialized ? weaponSpecializedStat : 'N/A'}**\n` 
             },
         )
     if (weapon.effect) {
