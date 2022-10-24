@@ -31,11 +31,21 @@ export async function genshinMaterial(interaction: ShinanoInteraction) {
             {
                 name: 'Material Type:',
                 value: material.materialtype
-            },
-            {
-                name: 'Material Source',
-                value: material.source.join('\n')
             }
+        )
+    if (!material.daysofweek) {
+        materialEmbed
+            .addField(
+                'Material Source:',
+                material.source.join("\n")
             )
+    } else {
+        materialEmbed
+            .addField(
+                'Material Source',
+                `${material.source.join("\n")}\n` +
+                `${material.dropdomain} (${material.daysofweek.join("/")})`
+            )
+    }
     await interaction.editReply({embeds: [materialEmbed]})
 }
