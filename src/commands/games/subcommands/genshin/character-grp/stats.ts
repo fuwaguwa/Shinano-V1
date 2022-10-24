@@ -46,7 +46,7 @@ export async function genshinCharacterStats(interaction: ShinanoInteraction, cha
                 `HP: **${characterStats.hp ? `${characterStats.hp.toFixed(2)} HP` : 'N/A'}**\n` +
                 `ATK: **${characterStats.attack ? `${characterStats.attack.toFixed(2)} ATK` : 'N/A'}**\n` +
                 `DEF: **${characterStats.defense ? `${characterStats.defense.toFixed(2)} DEF` : 'N/A'}**\n` +
-                `Specialized: **${characterStats.specialized ? `${characterSpecializedStat} ${character.substat}` : 'N/A'}**\n` 
+                `Ascension Stat: **${characterStats.specialized ? `${characterSpecializedStat} ${character.substat}` : 'N/A'}**\n` 
             }
         )
     await interaction.editReply({embeds: [statsEmbed]})
