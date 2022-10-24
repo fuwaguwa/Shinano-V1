@@ -32,12 +32,12 @@ export function icon(char: genshin.Character | string) {
     return elementIcons[char.element]
 }
 
-export function rarityColor(weapon: genshin.Weapon) {
-    switch (weapon.rarity) {
+export function rarityColor(item: genshin.Weapon | genshin.Material) {
+    switch (item.rarity) {
         case '1': return 'GREY'
-        case '2': return 'GREEN';
-        case '3': return 'AQUA';
-        case '4': return 'PURPLE';
+        case '2': return '#568666';
+        case '3': return '#59869e';
+        case '4': return '#a67dbc';
         case '5': return 'GOLD';
     }
 }
