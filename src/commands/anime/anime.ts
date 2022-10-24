@@ -19,7 +19,7 @@ export default new Command({
                     type: 'STRING',
                     required: true,
                     name: 'name',
-                    description: 'The anime\'s name.'
+                    description: 'The anime\'s name (Japanese name is recommended).'
                 },
                 {
                     type: 'STRING',

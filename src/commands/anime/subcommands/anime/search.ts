@@ -35,7 +35,7 @@ export async function animeSearch(interaction: ShinanoInteraction) {
     animeResponse.forEach(result => {
         (resultNavigation.components[0] as MessageSelectMenu).addOptions(
             {
-                label: `${result.title} | ${result.title_japanese ? result.title_japanese : 'No Japanese Title'}`,
+                label: `${result.title}`,
                 value: `${result.mal_id}`
             }
         )
