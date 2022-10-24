@@ -151,8 +151,8 @@ export default new Event("interactionCreate", async (interaction) => {
     if (options._hoistedOptions.length > 0) {
         options._hoistedOptions.forEach((option) => {
             option.attachment
-                ? fullCommand = fullCommand + ' ' + `${option.name}:${option.attachment.proxyURL}`
-                : fullCommand = fullCommand + ' ' + `${option.name}:${option.value} `
+                ? fullCommand = `${fullCommand} ${option.name}:${option.attachment.proxyURL}`
+                : fullCommand = `${fullCommand} ${option.name}:${option.value}`
         })
     }
     
