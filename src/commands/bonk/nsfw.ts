@@ -1,4 +1,4 @@
-import { MessageEmbed } from "discord.js";
+import { MessageActionRow, MessageButton, MessageEmbed } from "discord.js";
 import { Command } from "../../structures/Command";
 import fetch from "node-fetch"
 import {config} from 'dotenv'
@@ -6,6 +6,7 @@ import { nsfwRandom } from "./subcommands/nsfw/random";
 import { nsfwBomb } from "./subcommands/nsfw/bomb";
 import { nsfwPrivateCollection } from "./subcommands/nsfw/privateColle";
 import { nsfwVideo } from "./subcommands/nsfw/video";
+import { nsfwPrivateFanbox } from "./subcommands/nsfw/fanbox";
 config();
 
 export default new Command({
@@ -206,19 +207,13 @@ export default new Command({
                     }
 
                     case 'fanbox': {
-                        const response = await fetch('https://AmagiAPI.fuwafuwa08.repl.co/nsfw/private/fanbox', {
-                            method: "GET",
-                        })
-                        const waifu = await response.json()
-                        lewdEmbed.setImage(waifu.body.link)
-
-                        await interaction.editReply({embeds:[lewdEmbed]})
+                        await nsfwPrivateFanbox(interaction, lewdEmbed)
                         break
                     }
 
 
-                    case 'elf': case 'genshin': case 'kemonomimi': case 'misc': case 'shipgirls': case 'undies':
-                    case 'vtubers': case 'yuri': case 'misc': {
+                    case 'elf': case 'genshin': case 'kemonomimi': case 'misc': case 'shipgirls': case 'undies': case 'uniform':
+                    case 'vtubers': case 'yuri': {
                         await nsfwPrivateCollection(interaction, lewdEmbed, interaction.options.getSubcommand())
                         break
                     }

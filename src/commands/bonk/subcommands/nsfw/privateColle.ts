@@ -1,4 +1,4 @@
-import { MessageEmbed } from "discord.js";
+import { MessageActionRow, MessageButton, MessageEmbed } from "discord.js";
 import { ShinanoInteraction } from "../../../../typings/Command";
 import Collection from '../../../../schemas/PrivateCollection'
 
@@ -8,7 +8,16 @@ export async function nsfwPrivateCollection(interaction: ShinanoInteraction, lew
 
     if (!(image.link as string).endsWith('mp4')) {
         lewdEmbed.setImage(image.link)
-        return interaction.editReply({embeds: [lewdEmbed]})
+
+        const imageLink = new MessageActionRow()
+            .addComponents(
+                new MessageButton()
+                    .setStyle('LINK')
+                    .setEmoji('🔗')
+                    .setLabel('High-Res Link')
+                    .setURL(image.link)
+            )
+        return interaction.editReply({embeds: [lewdEmbed], components: [imageLink]})
     }
     return interaction.editReply({content: image.link})
 }
