@@ -41,7 +41,6 @@ export default new Command({
         }
 
         const pickEmbed: MessageEmbed = new MessageEmbed()
-            .setTitle('Picking...')
             .setDescription(
                 `> **${choices.join(', ')}**\n` +
                 `I pick...**${choices[Math.floor(Math.random() * choices.length)]}**!`
