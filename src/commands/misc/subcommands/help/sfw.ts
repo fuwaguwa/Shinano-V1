@@ -19,18 +19,20 @@ export async function shinanoHelpSFW(interaction: ShinanoInteraction) {
         <:curve:1021036738161950800>Get a word's definition from Urban Dictionary
         **dadjoke**
         <:curve:1021036738161950800>Guranteed funny dadjoke
+        **pick**
+        <:curve:1021036738161950800>Let Shinano make decision for you!
         **match**
         <:curve:1021036738161950800>Checks two person love percentage
         **roll**
-        <:curve:1021036738161950800>Roll a dice
-        **rps**
-        <:curve:1021036738161950800>Play rock paper scissor against the bot!`
+        <:curve:1021036738161950800>Roll a dice`
     )
     const funCommand2: MessageEmbed = new MessageEmbed()
         .setColor('#2f3136')
         .setDescription(`
             /<command>
             
+            **rps**
+            <:curve:1021036738161950800>Play rock paper scissor against the bot!
             **ttt**
             <:curve:1021036738161950800>Play tictactoe against the bot or against someone!
             **trivia**
