@@ -135,7 +135,7 @@ export async function genshinWeaponInfo(interaction: ShinanoInteraction, weapon:
     })
 
     collector.on('collect', async (i) => {
-        if (!i.customId.endsWith(interaction.user.id)) {
+        if (!i.customId.endsWith(i.user.id)) {
             return i.reply({
                 content: 'This menu is not for you!',
                 ephemeral: true

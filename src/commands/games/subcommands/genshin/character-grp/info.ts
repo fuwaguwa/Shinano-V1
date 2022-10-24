@@ -274,7 +274,7 @@ export async function genshinCharacterInfo(interaction: ShinanoInteraction, char
     })    
 
     collector.on('collect', async (i) => {
-        if (!i.customId.endsWith(interaction.user.id)) {
+        if (!i.customId.endsWith(i.user.id)) {
             return i.reply({
                 content: 'This menu is not for you!',
                 ephemeral: true
