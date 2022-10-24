@@ -1,4 +1,4 @@
-import { MessageActionRow, MessageButton, MessageEmbed } from "discord.js";
+import { MessageEmbed } from "discord.js";
 import { Command } from "../../structures/Command";
 import fetch from "node-fetch"
 import {config} from 'dotenv'
@@ -14,7 +14,7 @@ export default new Command({
     description: 'NSFW Commands - Anime and IRL',
     defaultPermission: false,
     nsfw: true,
-    cooldown: 3500,
+    cooldown: 4000,
     options: [
         {   
             type: 'SUB_COMMAND_GROUP',
