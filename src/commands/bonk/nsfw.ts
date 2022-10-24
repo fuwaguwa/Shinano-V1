@@ -42,6 +42,11 @@ export default new Command({
                 },
                 {
                     type: 'SUB_COMMAND',
+                    name: 'fanbox',
+                    description: 'Images from artists\' Fanbox/Patreon (High Quality)'
+                },
+                {
+                    type: 'SUB_COMMAND',
                     name: 'head',
                     description: 'Girls "playing the trumpet"'
                 },
@@ -197,6 +202,17 @@ export default new Command({
 
                     case 'bomb': {
                         await nsfwBomb(interaction, lewdEmbed)
+                        break
+                    }
+
+                    case 'fanbox': {
+                        const response = await fetch('https://AmagiAPI.fuwafuwa08.repl.co/nsfw/private/fanbox', {
+                            method: "GET",
+                        })
+                        const waifu = await response.json()
+                        lewdEmbed.setImage(waifu.body.link)
+
+                        await interaction.editReply({embeds:[lewdEmbed]})
                         break
                     }
 
