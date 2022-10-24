@@ -1,4 +1,5 @@
 import { Command } from "../../structures/Command";
+import { genshinArtifact } from "./subcommands/genshin/artifact";
 import { genshinCharacter } from "./subcommands/genshin/character";
 import { genshinMaterial } from "./subcommands/genshin/material";
 import { genshinWeapon } from "./subcommands/genshin/weapon";
@@ -8,6 +9,19 @@ export default new Command({
     description: "Get information related to Genshin!",
     cooldown: 5000,
     options: [
+        {
+            type: 'SUB_COMMAND',
+            name: 'artifact',
+            description: 'Get information about a Genshin artifact set!',
+            options: [
+                {
+                    type: 'STRING',
+                    required: true,
+                    name: 'artifact-name',
+                    description: 'The name of an artifact set.'
+                }
+            ]
+        },
         {
             type: 'SUB_COMMAND',
             name: 'material',
@@ -170,6 +184,12 @@ export default new Command({
             switch (interaction.options.getSubcommand()) {
                 case 'material': {
                     await genshinMaterial(interaction)
+                    break
+                }
+
+                
+                case 'artifact': {
+                    await genshinArtifact(interaction)
                     break
                 }
             }

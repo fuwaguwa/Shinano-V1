@@ -190,7 +190,11 @@ export async function shinanoHelpSFW(interaction: ShinanoInteraction) {
         **character**
         <:curve:1021036738161950800>Return information on a Genshin character.
         **weapon**
-        <:curve:1021036738161950800>Return information on a Genshin weapon.`
+        <:curve:1021036738161950800>Return information on a Genshin weapon.
+        **material**
+        <:curve:1021036738161950800>Return information on a Genshin material.
+        **artifact**
+        <:curve:1021036738161950800>Return information on a Genshin artifact set.`
     )
 
 
