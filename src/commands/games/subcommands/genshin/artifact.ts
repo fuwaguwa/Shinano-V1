@@ -28,9 +28,21 @@ export async function genshinArtifact(interaction: ShinanoInteraction) {
     const infoEmbed: MessageEmbed = new MessageEmbed()
         .setTitle(artifact.name)
         .setColor(embedColor)
-        .setThumbnail(artifact.images.flower)
     if (artifact.url.fandom) infoEmbed.setDescription(`[Wiki Link](${artifact.url.fandom})`)
-    if (artifact["1pc"]) infoEmbed.addField('1-piece Effect:', artifact["1pc"])
+    
+
+    // 1 Piece
+    if (artifact["1pc"]) {
+        infoEmbed
+            .setThumbnail(artifact.images.circlet)
+            .setDescription(`*${artifact.circlet.description}*`)
+            .addField('1-piece Effect:', artifact["1pc"])
+        return interaction.editReply({embeds: [infoEmbed]})
+    }
+
+
+    // 2 Pieces+
+    infoEmbed.setThumbnail(artifact.images.flower)
     if (artifact["2pc"]) infoEmbed.addField('2-pieces Effect:', artifact["2pc"])
     if (artifact["4pc"]) infoEmbed.addField('4-pieces Effect:', artifact["4pc"])
 
@@ -143,5 +155,4 @@ export async function genshinArtifact(interaction: ShinanoInteraction) {
             }
         }
     })
-
 }
