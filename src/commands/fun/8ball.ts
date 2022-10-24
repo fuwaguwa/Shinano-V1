@@ -43,10 +43,6 @@ export default new Command({
                 `> **${interaction.options.getString('question')}**\n`+
                 responses[Math.floor(Math.random() * responses.length)]
             )
-            .setFooter({
-                text: `${interaction.user.username}#${interaction.user.discriminator}`,
-                iconURL: interaction.user.displayAvatarURL({dynamic: true})
-            })
         await interaction.reply({embeds: [response]})
     }
 })
