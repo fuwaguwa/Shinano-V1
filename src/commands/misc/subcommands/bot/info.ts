@@ -19,7 +19,7 @@ export async function botInfo(interaction: ShinanoInteraction) {
                 .setStyle('LINK')
                 .setEmoji('👋')
                 .setLabel('Invite Shinano!')
-                .setURL('https://discord.com/api/oauth2/authorize?client_id=1002193298229829682&permissions=8&redirect_uri=https%3A%2F%2Fdiscord.gg%2FNFkMxFeEWr&response_type=code&scope=bot%20applications.commands%20guilds.join'),
+                .setURL('https://discord.com/api/oauth2/authorize?client_id=1002193298229829682&permissions=137439332480&scope=bot%20applications.commands'),
             new MessageButton()
                 .setStyle('LINK')
                 .setEmoji('⚙️')
