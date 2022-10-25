@@ -1,6 +1,7 @@
 import { Command } from "../../structures/Command";
 import { genshinArtifact } from "./subcommands/genshin/artifact";
 import { genshinCharacter } from "./subcommands/genshin/character";
+import { genshinEnemy } from "./subcommands/genshin/enemies";
 import { genshinMaterial } from "./subcommands/genshin/material";
 import { genshinWeapon } from "./subcommands/genshin/weapon";
 
@@ -43,7 +44,7 @@ export default new Command({
                 {
                     type: 'SUB_COMMAND',
                     name: 'info',
-                    description: 'Information about a Genshin\'s character (General Info, Constellations, Ascension Costs).',
+                    description: 'Information about a Genshin character (General Info, Constellations, Ascension Costs).',
                     options: [
                         {
                             type: 'STRING',
@@ -56,7 +57,7 @@ export default new Command({
                 {
                     type: 'SUB_COMMAND',
                     name: 'stats',
-                    description: 'Stats of a Genshin\'s character.',
+                    description: 'Stats of a Genshin character.',
                     options: [
                         {
                             type: 'STRING',
@@ -88,7 +89,7 @@ export default new Command({
                 {
                     type: 'SUB_COMMAND',
                     name: 'talents',
-                    description: 'Get information about a Genshin\'s character talents (General Info, Talent Costs).',
+                    description: 'Get information about a Genshin character talents (General Info, Talent Costs).',
                     options: [
                         {
                             type: 'STRING',
@@ -163,6 +164,45 @@ export default new Command({
                     ]
                 }
             ]
+        },
+        {
+            type: 'SUB_COMMAND_GROUP',
+            name: 'enemy',
+            description: 'enemy',
+            options: [
+                {
+                    type: 'SUB_COMMAND',
+                    name: 'info',
+                    description: 'Get general information about a Genshin enemy.',
+                    options: [
+                        {
+                            type: 'STRING',
+                            required: true,
+                            name: 'enemy-name',
+                            description: 'The enemy\'s name.'
+                        }
+                    ]
+                },
+                {
+                    type: 'SUB_COMMAND',
+                    name: 'stats',
+                    description: 'Get a Genshin enemy\'s stats.',
+                    options: [
+                        {
+                            type: 'STRING',
+                            required: true,
+                            name: 'enemy-name',
+                            description: 'The enemy\'s name.'
+                        },
+                        {
+                            type: 'INTEGER',
+                            required: true,
+                            name: 'enemy-level',
+                            description: 'The enemy\'s level.'
+                        }
+                    ]
+                }
+            ]
         }
     ],
     run: async({interaction}) => {
@@ -177,6 +217,12 @@ export default new Command({
                 
                 case 'weapon': {
                     await genshinWeapon(interaction)
+                    break
+                }
+
+                
+                case 'enemy': {
+                    await genshinEnemy(interaction)
                     break
                 }
             }
