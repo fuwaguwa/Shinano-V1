@@ -18,7 +18,7 @@ export async function nsfwPrivateCollection(interaction: ShinanoInteraction, lew
                     .setURL(image.link)
             )
 
-        if (image.link.includes('_ellieAL_') && interaction.channelId === '1020991018507698206') return interaction.editReply({content: '<@557567996890185730>',embeds: [lewdEmbed], components: [imageLink]})
+        if (image.link.includes('_ellieAL_') && interaction.channelId === '1020991018507698206') return interaction.editReply({content: '<@557567996890185730>,',embeds: [lewdEmbed], components: [imageLink]})
         return interaction.editReply({embeds: [lewdEmbed], components: [imageLink]})
     }
     return interaction.editReply({content: image.link})
