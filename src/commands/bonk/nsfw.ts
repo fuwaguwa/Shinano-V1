@@ -89,7 +89,7 @@ export default new Command({
                 {
                     type: 'SUB_COMMAND',
                     name: 'kemonomimi',
-                    description: 'Kemonomimi & Succubus.'
+                    description: 'Girls possessing animal features (foxgirls, catgirls, etc) and succubus.'
                 },
                 {
                     type: 'SUB_COMMAND',
@@ -119,7 +119,7 @@ export default new Command({
                 {
                     type: 'SUB_COMMAND',
                     name: 'nekomimi',
-                    description: '\'Cause everyone need a catgirl in their life.'
+                    description: 'Catgirls!'
                 },
                 {
                     type: 'SUB_COMMAND',
