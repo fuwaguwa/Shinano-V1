@@ -62,6 +62,7 @@ export default new Command({
                             name: 'gif-category',
                             description: 'The category you want GIFs from. Don\'t choose this option if you want random category.',
                             choices: [
+                                {name: 'High-Quality Random', value: 'random'},
                                 {name: 'Shipgirls', value: 'shipgirls'},
                                 {name: 'Undies', value: 'undies'},
                                 {name: 'Elf', value: 'elf'},
@@ -70,7 +71,6 @@ export default new Command({
                                 {name: 'Misc', value: 'misc'},
                                 {name: 'Uniform', value: 'uniform'},
                                 {name: 'VTubers', value: 'vtubers'},
-                                {name: 'Random (Categories Listed Here)', value: 'random'},
                             ]
                         }
                     ]
@@ -148,7 +148,6 @@ export default new Command({
                                 {name: 'Misc', value: 'misc'},
                                 {name: 'Uniform', value: 'uniform'},
                                 {name: 'VTubers', value: 'vtubers'},
-                                {name: 'Random (Categories Listed Here)', value: 'random'},
                             ]
                         }
                     ]
