@@ -4,7 +4,7 @@ import Collection from '../../../../schemas/PrivateCollection'
 
 export async function nsfwPrivateFanbox(interaction: ShinanoInteraction, lewdEmbed: MessageEmbed) {
     const tags = ['elf', 'genshin', 'kemonomimi', 'shipgirls', 'undies', 'misc', 'uniform']
-    const tag = tags[Math.floor(Math.random() * tags.length)]
+    const tag = interaction.options.getString('category') || tags[Math.floor(Math.random() * tags.length)]
 
     const data = await Collection.findOne({type: tag})
 

@@ -24,6 +24,28 @@ export default new Command({
             options: [
                 {
                     type: 'SUB_COMMAND',
+                    name: 'fanbox',
+                    description: 'Images from artists\' FANBOX/Patreon (High Quality)',
+                    options: [
+                        {
+                            type: 'STRING',
+                            name: 'category',
+                            description: 'The category you want FANBOX/Patreon content from. Ignore this option for random category.',
+                            choices: [
+                                {name: 'Shipgirls', value: 'shipgirls'},
+                                {name: 'Undies', value: 'undies'},
+                                {name: 'Elf', value: 'elf'},
+                                {name: 'Genshin', value: 'genshin'},
+                                {name: 'Kemonomimi', value: 'kemonomimi'},
+                                {name: 'Misc', value: 'misc'},
+                                {name: 'Uniform', value: 'uniform'},
+                                {name: 'VTubers', value: 'vtubers'},
+                            ]
+                        }
+                    ]
+                },
+                {
+                    type: 'SUB_COMMAND',
                     name: 'bomb',
                     description: 'Bombs you with pics/gifs/videos!'
                 },
@@ -44,11 +66,6 @@ export default new Command({
                 },
                 {
                     type: 'SUB_COMMAND',
-                    name: 'fanbox',
-                    description: 'Images from artists\' Fanbox/Patreon (High Quality)'
-                },
-                {
-                    type: 'SUB_COMMAND',
                     name: 'head',
                     description: 'Girls "playing the trumpet"'
                 },
@@ -59,8 +76,8 @@ export default new Command({
                     options: [
                         {
                             type: 'STRING',
-                            name: 'gif-category',
-                            description: 'The category you want GIFs from. Don\'t choose this option if you want random category.',
+                            name: 'category',
+                            description: 'The category you want GIFs from. Ignore this option for random category.',
                             choices: [
                                 {name: 'High-Quality Random', value: 'random'},
                                 {name: 'Shipgirls', value: 'shipgirls'},
@@ -137,8 +154,8 @@ export default new Command({
                     options: [
                         {
                             type: 'STRING',
-                            name: 'video-category',
-                            description: 'The category you want videos from. Don\'t choose this option if you want random category.',
+                            name: 'category',
+                            description: 'The category you want videos from. Ignore this option for random category.',
                             choices: [
                                 {name: 'Shipgirls', value: 'shipgirls'},
                                 {name: 'Undies', value: 'undies'},
