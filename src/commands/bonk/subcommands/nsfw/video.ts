@@ -2,16 +2,18 @@ import { ShinanoInteraction } from "../../../../typings/Command";
 import fetch from 'node-fetch'
 
 export async function nsfwVideo(interaction: ShinanoInteraction) {
-    async function videoFetch() {
-        const response = await fetch(`https://AmagiAPI.fuwafuwa08.repl.co/nsfw/private/random?type=mp4`, {
+    const videoCategory: string = interaction.options.getString('video-category') || 'random'
+
+    async function videoFetch(category) {
+        const response = await fetch(`https://AmagiAPI.fuwafuwa08.repl.co/nsfw/private/${category}?type=mp4`, {
             method: "GET",
         })
         
         const responseJson = await response.json()
-        if (!responseJson.body) return videoFetch()
+        if (!responseJson.body) return videoFetch(videoCategory)
         return responseJson.body.link
     }
     
 
-    await interaction.editReply({content: await videoFetch()}) 
+    await interaction.editReply({content: await videoFetch(videoCategory)}) 
 }

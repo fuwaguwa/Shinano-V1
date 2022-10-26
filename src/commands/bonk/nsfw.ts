@@ -7,6 +7,7 @@ import { nsfwBomb } from "./subcommands/nsfw/bomb";
 import { nsfwPrivateCollection } from "./subcommands/nsfw/privateColle";
 import { nsfwVideo } from "./subcommands/nsfw/video";
 import { nsfwPrivateFanbox } from "./subcommands/nsfw/fanbox";
+import { nsfwGif } from "./subcommands/nsfw/gif";
 config();
 
 export default new Command({
@@ -54,7 +55,25 @@ export default new Command({
                 {
                     type: 'SUB_COMMAND',
                     name: 'gif',
-                    description: 'In case pictures are not enough to your satisfaction.'
+                    description: 'In case pictures are not enough to your satisfaction.',
+                    options: [
+                        {
+                            type: 'STRING',
+                            name: 'gif-category',
+                            description: 'The category you want GIFs from. Don\'t choose this option if you want random category.',
+                            choices: [
+                                {name: 'Shipgirls', value: 'shipgirls'},
+                                {name: 'Undies', value: 'undies'},
+                                {name: 'Elf', value: 'elf'},
+                                {name: 'Genshin', value: 'genshin'},
+                                {name: 'Kemonomimi', value: 'kemonomimi'},
+                                {name: 'Misc', value: 'misc'},
+                                {name: 'Uniform', value: 'uniform'},
+                                {name: 'VTubers', value: 'vtubers'},
+                                {name: 'Random', value: 'random'},
+                            ]
+                        }
+                    ]
                 },
                 {
                     type: 'SUB_COMMAND',
@@ -114,7 +133,25 @@ export default new Command({
                 {
                     type: 'SUB_COMMAND',
                     name: 'video',
-                    description: 'GIFs! WITH SOUND!'
+                    description: 'GIFs! WITH SOUND!',
+                    options: [
+                        {
+                            type: 'STRING',
+                            name: 'video-category',
+                            description: 'The category you want videos from. Don\'t choose this option if you want random category.',
+                            choices: [
+                                {name: 'Shipgirls', value: 'shipgirls'},
+                                {name: 'Undies', value: 'undies'},
+                                {name: 'Elf', value: 'elf'},
+                                {name: 'Genshin', value: 'genshin'},
+                                {name: 'Kemonomimi', value: 'kemonomimi'},
+                                {name: 'Misc', value: 'misc'},
+                                {name: 'Uniform', value: 'uniform'},
+                                {name: 'VTubers', value: 'vtubers'},
+                                {name: 'Random', value: 'random'},
+                            ]
+                        }
+                    ]
                 },
                 {
                     type: 'SUB_COMMAND',
@@ -221,6 +258,11 @@ export default new Command({
 
                     case 'video': {
                         await nsfwVideo(interaction)
+                        break
+                    }
+
+                    case 'gif': {
+                        await nsfwGif(interaction, lewdEmbed)
                         break
                     }
 
