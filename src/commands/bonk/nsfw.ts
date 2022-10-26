@@ -70,7 +70,7 @@ export default new Command({
                                 {name: 'Misc', value: 'misc'},
                                 {name: 'Uniform', value: 'uniform'},
                                 {name: 'VTubers', value: 'vtubers'},
-                                {name: 'Random', value: 'random'},
+                                {name: 'Random (Categories Listed Here)', value: 'random'},
                             ]
                         }
                     ]
@@ -148,7 +148,7 @@ export default new Command({
                                 {name: 'Misc', value: 'misc'},
                                 {name: 'Uniform', value: 'uniform'},
                                 {name: 'VTubers', value: 'vtubers'},
-                                {name: 'Random', value: 'random'},
+                                {name: 'Random (Categories Listed Here)', value: 'random'},
                             ]
                         }
                     ]
