@@ -47,7 +47,7 @@ export default new Command({
         {
             type: 'SUB_COMMAND',
             name: 'vote-check',
-            description: "Check an user\'s vote",
+            description: "Check an user\'s vote status.",
             options: [
                 {
                     type: 'USER',
