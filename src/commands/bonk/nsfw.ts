@@ -30,7 +30,7 @@ export default new Command({
                     options: [
                         {
                             type: 'STRING',
-                            name: 'category',
+                            name: 'fanbox-category',
                             description: 'The category you want FANBOX/Patreon content from. Ignore this option for random category.',
                             choices: [
                                 {name: 'Shipgirls', value: 'shipgirls'},
@@ -77,7 +77,7 @@ export default new Command({
                     options: [
                         {
                             type: 'STRING',
-                            name: 'category',
+                            name: 'gif-category',
                             description: 'The category you want GIFs from. Ignore this option for random category.',
                             choices: [
                                 {name: 'High-Quality Random', value: 'random'},
@@ -155,7 +155,7 @@ export default new Command({
                     options: [
                         {
                             type: 'STRING',
-                            name: 'category',
+                            name: 'video-category',
                             description: 'The category you want videos from. Ignore this option for random category.',
                             choices: [
                                 {name: 'Shipgirls', value: 'shipgirls'},
