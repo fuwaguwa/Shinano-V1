@@ -62,7 +62,7 @@ export default new Event("interactionCreate", async (interaction) => {
 
 
             // Vote Checking
-            if (interaction.commandName === 'nsfw') {
+            if (command.voteRequired == true) {
                 if (interaction.user.id !== owner && interaction.guild.id !== '1020960562710052895') {
                     const voteEmbed: MessageEmbed = new MessageEmbed()
                         .setColor('RED')

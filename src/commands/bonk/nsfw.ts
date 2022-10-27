@@ -15,6 +15,7 @@ export default new Command({
     description: 'NSFW Commands - Anime and IRL',
     defaultPermission: false,
     nsfw: true,
+    voteRequired: true,
     cooldown: 4000,
     options: [
         {   
