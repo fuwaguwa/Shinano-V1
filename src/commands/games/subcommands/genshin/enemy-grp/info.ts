@@ -7,7 +7,7 @@ export async function genshinEnemyInfo(interaction: ShinanoInteraction, enemy: g
     // Getting drops
     const possibleDrops: string[] = []
     enemy.rewardpreview.forEach(reward => {
-        possibleDrops.push(reward.name)
+        if (!possibleDrops.includes(reward.name)) possibleDrops.push(reward.name)
     })
 
 
