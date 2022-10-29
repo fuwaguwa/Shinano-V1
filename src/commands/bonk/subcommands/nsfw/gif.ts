@@ -8,6 +8,9 @@ export async function nsfwGif(interaction: ShinanoInteraction, lewdEmbed: Messag
     if (!gifTag) {
         const response = await fetch(`https://AmagiAPI.fuwafuwa08.repl.co/nsfw/public/gif`, {
             method: "GET",
+            headers: {
+                "Authorization": process.env.amagiApiKey
+            }
         })
         const waifu = await response.json()
         lewdEmbed.setImage(waifu.link)
@@ -15,6 +18,9 @@ export async function nsfwGif(interaction: ShinanoInteraction, lewdEmbed: Messag
     } else {
         const response = await fetch(`https://AmagiAPI.fuwafuwa08.repl.co/nsfw/private/${gifTag}?type=gif`, {
             method: "GET",
+            headers: {
+                "Authorization": process.env.amagiApiKey
+            }
         })
         const waifu = await response.json()
         lewdEmbed.setImage(waifu.body.link)

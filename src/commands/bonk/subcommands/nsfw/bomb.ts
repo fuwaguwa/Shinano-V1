@@ -5,6 +5,9 @@ import fetch from 'node-fetch'
 export async function nsfwBomb(interaction: ShinanoInteraction, lewdEmbed: MessageEmbed) {
     const response = await fetch('https://AmagiAPI.fuwafuwa08.repl.co/nsfw/bomb', {
         method: "GET",
+        headers: {
+            "Authorization": process.env.amagiApiKey
+        }
     })
     const waifu = await response.json()
 

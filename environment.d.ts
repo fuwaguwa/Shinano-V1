@@ -4,6 +4,7 @@ declare global {
             botToken: string;
             guildId: string;
             mongoDB: string;
+            amagiApiKey: string;
             rapidApiKey: string;
             deepAIApiKey: string;
             saucenaoApiKey: string;

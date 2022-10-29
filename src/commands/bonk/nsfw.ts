@@ -294,6 +294,9 @@ export default new Command({
 
                         const response = await fetch(`https://AmagiAPI.fuwafuwa08.repl.co/nsfw/public/${tag}`, {
                             method: "GET",
+                            headers: {
+                                "Authorization": process.env.amagiApiKey
+                            }
                         })
                         const waifu = await response.json()
                         lewdEmbed.setImage(waifu.link)
@@ -316,6 +319,9 @@ export default new Command({
 
                 const response = await fetch(`https://AmagiAPI.fuwafuwa08.repl.co/nsfw/porn/${tag}`, {
                     method: "GET",
+                    headers: {
+                        "Authorization": process.env.amagiApiKey
+                    }
                 })
                 const result = await response.json()
 
