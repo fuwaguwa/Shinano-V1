@@ -245,7 +245,6 @@ export default new Command({
         let lewdEmbed: MessageEmbed = new MessageEmbed()
             .setColor('RANDOM')
             .setFooter({text:`Requested by ${interaction.user.tag}`, iconURL: interaction.user.displayAvatarURL({dynamic:true})})
-            .setTimestamp()
         if (interaction.options['_group']) {
             if (interaction.options.getSubcommandGroup() === 'anime') {
                 switch (interaction.options.getSubcommand()) {
