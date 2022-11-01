@@ -48,7 +48,25 @@ export default new Command({
                 {
                     type: 'SUB_COMMAND',
                     name: 'bomb',
-                    description: 'Bombs you with pics/gifs/videos!'
+                    description: 'Bombs you with pics/gifs/videos!',
+                    options: [
+                        {
+                            type: "STRING",
+                            name: 'category',
+                            description: 'The category you want to be bombed with. Ignore this option for random category.',
+                            choices: [
+                                {name: 'Fanbox', value: 'fanbox'},
+                                {name: 'Shipgirls', value: 'shipgirls'},
+                                {name: 'Undies', value: 'undies'},
+                                {name: 'Elf', value: 'elf'},
+                                {name: 'Genshin', value: 'genshin'},
+                                {name: 'Kemonomimi', value: 'kemonomimi'},
+                                {name: 'Misc', value: 'misc'},
+                                {name: 'Uniform', value: 'uniform'},
+                                {name: 'VTubers', value: 'vtubers'},
+                            ]
+                        }
+                    ]
                 },
                 {
                     type: 'SUB_COMMAND',
@@ -255,7 +273,7 @@ export default new Command({
     
 
                     case 'bomb': {
-                        await nsfwBomb(interaction, lewdEmbed)
+                        await nsfwBomb(interaction)
                         break
                     }
 
