@@ -95,28 +95,36 @@ export async function azurLanePRCompletion(interaction: ShinanoInteraction, AL: 
     const BPsAwayFromFS5: number = (prTable[30] + prFSTable[5]) - totalBPs
     const PRcompletionPercentage: number = fateSimLevel > 0 ? 100 : (totalBPs / prTable[30]) * 100
     const PRcompletionPercentageFS: number = (totalBPs / (prTable[30] + prFSTable[5])) * 100
-    const finalDevLevel: number = closest(totalBPs, prTable)
-    const finalFSLevel: number = closest(totalBPs, prFSTableTotal)
+    let finalDevLevel: number = closest(totalBPs, prTable)
+    let finalFSLevel: number = closest(totalBPs, prFSTableTotal)
 
+    if (prTable[finalDevLevel] > totalBPs && finalDevLevel != 0) finalDevLevel -= 1;
+    if (prFSTableTotal[finalFSLevel] > totalBPs && finalFSLevel != 0) finalFSLevel -= 1;
 
     const completion: MessageEmbed = new MessageEmbed()
         .setColor(color)
         .setTitle(`PR Completion | ${ship.rarity} | ${ship.names.en}`)
         .setThumbnail(ship.thumbnail)
         .addFields(
-            {name: 'Ship Info:', value:
-            `Unused BPs: **${unusedBPs}**\n` +
-            `Dev Level: **${devLevel}**\n` +
-            `Fate Sim Level: **${fateSimLevel}**`},
+            {
+                name: 'Ship Info:', 
+                value:
+                `Unused BPs: **${unusedBPs}**\n` +
+                `Dev Level: **${devLevel}**\n` +
+                `Fate Sim Level: **${fateSimLevel}**`
+            },
 
-            {name: 'Current PR Progress:', value: 
-            `Total BPs: **${totalBPs}**\n`+
-            `BPs until Dev 30: **${BPsAwayFromDev30}**\n`+
-            `BPs until Fate Sim 5: **${BPsAwayFromFS5}**\n`+
-            `Final Dev Level: **${finalDevLevel}**\n` +
-            `Final Fate Sim Level: **${finalFSLevel}**\n` +
-            `PR Completion: **${PRcompletionPercentage.toFixed(2)}%**\n` +
-            `PR Completion (with Fate Sim): **${PRcompletionPercentageFS.toFixed(2)}%**`}
+            {
+                name: 'Current PR Progress:', 
+                value: 
+                `Total BPs: **${totalBPs}**\n`+
+                `BPs until Dev 30: **${BPsAwayFromDev30}**\n`+
+                `BPs until Fate Sim 5: **${BPsAwayFromFS5}**\n`+
+                `Final Dev Level: **${finalDevLevel}**\n` +
+                `Final Fate Sim Level: **${finalFSLevel}**\n` +
+                `PR Completion: **${PRcompletionPercentage.toFixed(2)}%**\n` +
+                `PR Completion (with Fate Sim): **${PRcompletionPercentageFS.toFixed(2)}%**`
+            }
         )
         .setFooter({text: 'Fate Sim is included regardless even if the ship does not have Fate Sim in game.'})
     await interaction.editReply({embeds: [completion]})
