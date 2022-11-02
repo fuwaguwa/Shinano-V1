@@ -31,14 +31,6 @@ export function isNum(value) {
     return !isNaN(value)
 }
 
-export function randStr() {
-    let newName = "";
-    const string = "1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"; 
-    for (let i = 0; i < 6; i++)
-        newName += string.charAt(Math.floor(Math.random() * string.length));
-    return newName;
-}
-
 export function strFormat(str: string, obj: any[]) {
     return str.replace(/\{\s*([^}\s]+)\s*\}/g, (m, p1, offset, string) => {
         return obj[p1]
