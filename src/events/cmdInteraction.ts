@@ -51,7 +51,7 @@ export default new Event("interactionCreate", async (interaction) => {
 
 
         // NSFW Check
-        if (command.nsfw == true) {
+        if (command.nsfw) {
             if (!(interaction.channel as TextChannel).nsfw) {
                 const nsfwCommand: MessageEmbed = new MessageEmbed()
                     .setColor('RED')
@@ -62,7 +62,7 @@ export default new Event("interactionCreate", async (interaction) => {
 
 
             // Vote Checking
-            if (command.voteRequired == true) {
+            if (command.voteRequired) {
                 if (interaction.user.id !== owner && interaction.guild.id !== '1020960562710052895') {
                     const voteEmbed: MessageEmbed = new MessageEmbed()
                         .setColor('RED')
@@ -113,7 +113,7 @@ export default new Event("interactionCreate", async (interaction) => {
 
 
         // Owner Check
-        if (command.ownerOnly == true) {
+        if (command.ownerOnly) {
             if (owner !== interaction.user.id) {
                 const notForYou: MessageEmbed = new MessageEmbed()
                     .setColor('RED')

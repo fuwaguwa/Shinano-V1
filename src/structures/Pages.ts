@@ -84,7 +84,7 @@ export async function ShinanoPaginator(options: {
         } 
 
 
-        if (options.interactorOnly == true) {
+        if (options.interactorOnly) {
             if (i.customId.split('-')[1] !== i.user.id) {
                 return i.reply({
                     content: 'This button is not for you!',

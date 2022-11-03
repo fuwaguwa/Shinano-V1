@@ -154,13 +154,13 @@ export async function genshinCharacterInfo(interaction: ShinanoInteraction, char
     // General Info
     const infoEmbed: MessageEmbed = new MessageEmbed()
         .setColor(embedColor)
-        .setTitle(`${character.name} | ${MC == true ? 'Main Character' : character.title}`)
+        .setTitle(`${character.name} | ${MC ? 'Main Character' : character.title}`)
         .setDescription(`*${character.description}*\n\n${character.url ? `[Wiki Link](${character.url.fandom})` : ""}`)
         .setThumbnail(character.images.icon)
         .addFields(
             {
                 name: 'Element:', 
-                value: MC == true ? 'All' : icon(character)
+                value: MC ? 'All' : icon(character)
             },
             {
                 name: 'Rarity:', 
@@ -176,11 +176,11 @@ export async function genshinCharacterInfo(interaction: ShinanoInteraction, char
             },
             {
                 name: 'Birthday:',
-                value: MC == true ? 'Player\'s Birthday' : character.birthday
+                value: MC ? 'Player\'s Birthday' : character.birthday
             },
             {
                 name: 'Region | Affiliation',
-                value: MC == true ? '? | Many' : `${character.region} | ${character.affiliation}`
+                value: MC ? '? | Many' : `${character.region} | ${character.affiliation}`
             },
             {
                 name:"VAs:",
@@ -194,7 +194,7 @@ export async function genshinCharacterInfo(interaction: ShinanoInteraction, char
     let consEmbed: MessageEmbed
     let travelerConsPages: MessageEmbed[]
 
-    MC == true
+    MC
         ? travelerConsPages = queryTravelerConstellations(character)
         : consEmbed = queryConstellations(character.name, character, embedColor)
     
@@ -305,7 +305,7 @@ export async function genshinCharacterInfo(interaction: ShinanoInteraction, char
                         : selectMenu.options[i].default = false
                 }
                 
-                if (MC == true) {
+                if (MC) {
                     ShinanoPaginator({
                         interaction: interaction,
                         interactorOnly: true,
