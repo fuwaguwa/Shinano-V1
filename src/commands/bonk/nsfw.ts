@@ -48,7 +48,7 @@ export default new Command({
                 {
                     type: 'SUB_COMMAND',
                     name: 'bomb',
-                    description: 'Bombs you with pics/gifs/videos!',
+                    description: 'Bombs you with lewdness!',
                     options: [
                         {
                             type: "STRING",
@@ -76,7 +76,7 @@ export default new Command({
                 {
                     type: 'SUB_COMMAND',
                     name: 'random',
-                    description: 'Return a random image/gif/video from a random category.'
+                    description: 'Return images/GIFs/videos from a random category.'
                 },
                 {
                     type: 'SUB_COMMAND',
