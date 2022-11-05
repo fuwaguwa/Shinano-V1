@@ -46,17 +46,20 @@ export async function genshinCharacterTalents(interaction: ShinanoInteraction) {
 
 
     // Combat Talent
-    for (let i = 0; i < 4; i++) {
+    let combatCount = 3;
+    if (talents.combatsp) combatCount++
+
+    for (let i = 0; i < combatCount; i++) {
         const embed: MessageEmbed = new MessageEmbed()
             .setColor(embedColor)
-            .setTitle(`${characterName}'s Talents`)
             .setThumbnail(character.images.icon)
 
         switch (i + 1) {
             case 1: {
                 embed
-                    .addField(
-                        talents.combat1.name,
+                    .setTitle(`${characterName}'s Talents | Normal Attack`)
+                    .setDescription(
+                        `**${talents.combat1.name}**\n` +
                         talents.combat1.info
                     )
                 break
@@ -64,9 +67,10 @@ export async function genshinCharacterTalents(interaction: ShinanoInteraction) {
 
             case 2: {
                 embed
-                    .setDescription(`*${talents.combat2.description}*`)
-                    .addField(
-                        `Elemental Skill: ${talents.combat2.name}`,
+                    .setTitle(`${characterName}'s Talents | Elemental Skill`)
+                    .setDescription(
+                        `*${talents.combat2.description}*\n\n` +
+                        `**Elemental Skill: ${talents.combat2.name}**\n` +
                         talents.combat2.info
                     )
                 break
@@ -74,39 +78,38 @@ export async function genshinCharacterTalents(interaction: ShinanoInteraction) {
             
             case 3: {
                 embed 
-                    .setDescription(`*${talents.combat3.description}*`)
-                    .addField(
-                        `Elemental Burst: ${talents.combat3.name}`,
+                    .setTitle(`${characterName}'s Talents | Elemental Burst`)
+                    .setDescription(
+                        `*${talents.combat3.description}*\n\n` +
+                        `**Elemental Burst: ${talents.combat3.name}**\n` +
                         talents.combat3.info
                     )
                 break
             }
 
             case 4: {
-                if (talents.combatsp) {
-                    embed 
+                embed
+                    .setTitle(`${characterName}'s Talents | SP Skill`)
                     .addField(
                         `Alternate Sprint`,
                         talents.combatsp.info
                     )
-                }
                 break
             }
-
-
         }
         charTalentsEmbeds.push(embed)
     }
+    
 
     // Passive Talents
-    let count = 2;
-    if (talents.passive3) count++;
-    if (talents.passive4) count++;
+    let passiveCount = 2;
+    if (talents.passive3) passiveCount++;
+    if (talents.passive4) passiveCount++;
 
-    for (let i = 0; i < count; i++) {
+    for (let i = 0; i < passiveCount; i++) {
         const embed: MessageEmbed = new MessageEmbed()
             .setColor(embedColor)
-            .setTitle(`${characterName}'s Talents`)
+            .setTitle(`${characterName}'s Talents | Passive ${i + 1}`)
             .setThumbnail(character.images.icon)
             .addField(
                 `Passive: ${talents[`passive${i + 1}`].name}`,
