@@ -16,7 +16,7 @@ export async function genshinWeaponInfo(interaction: ShinanoInteraction, weapon:
             subValue = `${weapon.subvalue} ${weapon.substat}`
         }
     }
-
+    console.log(weapon)
 
     // Refinement Stats
     const refinementStats = []
@@ -54,10 +54,6 @@ export async function genshinWeaponInfo(interaction: ShinanoInteraction, weapon:
             {
                 name: 'Weapon Type:',
                 value: weapon.weapontype
-            },
-            {
-                name: 'Upgrade Material:',
-                value: weapon.weaponmaterialtype
             },
             {
                 name: 'Base Stats',
