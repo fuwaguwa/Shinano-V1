@@ -17,13 +17,13 @@ export async function genshinWeaponStats(interaction: ShinanoInteraction, weapon
     if (level < 1) level = 1
     if (level > 90) level = 90
 
-
+    
     let weaponSpecializedStat: string
     if (weapon.substat) {
         if (weapon.substat.toLowerCase() !== 'elemental mastery') {
-            weaponSpecializedStat = `${weapon.subvalue}% ${weapon.substat}`
+            weaponSpecializedStat = `${(weaponStats.specialized * 100).toFixed(2)}% ${weapon.substat}`
         } else {
-            weaponSpecializedStat = `${weapon.subvalue} ${weapon.substat}`
+            weaponSpecializedStat = `${weaponStats.specialized.toFixed(2)} ${weapon.substat}`
         }
     }
 
