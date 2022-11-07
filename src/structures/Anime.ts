@@ -48,7 +48,7 @@ export function animeInfo({anime, interaction, menu}) {
                 `**Episodes**: ${anime.episodes}\n` +
                 `**Duration**: ${anime.duration}\n` +
                 `**Start Date**: <t:${startDate}>\n` +
-                `**End Date**: <t:${endDate == 0 ? startDate : endDate}>\n`
+                `**End Date**: ${endDate == 0 ? 'Ongoing Anime' : `<t:${endDate}>`}\n`
             }
         )
     
