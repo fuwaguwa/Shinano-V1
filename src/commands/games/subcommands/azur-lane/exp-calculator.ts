@@ -17,6 +17,14 @@ export async function azurLaneExpCalculator(interaction: ShinanoInteraction, AL:
         return interaction.editReply({embeds: [overboard]})
     }
 
+
+    if (currentLevel > targetLevel) {
+        const overboard: MessageEmbed = new MessageEmbed()
+            .setColor('RED')
+            .setDescription('Current level cannot be bigger than target level!')
+        return interaction.editReply({embeds: [overboard]})
+    }
+
     const expNeeded: MessageEmbed = new MessageEmbed()
         .setTitle('Experience Calculator')
         .setColor('#2f3136')
