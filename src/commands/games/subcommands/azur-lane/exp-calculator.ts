@@ -2,7 +2,7 @@ import { MessageEmbed } from "discord.js";
 import { ShinanoInteraction } from "../../../../typings/Command";
 import fetch from 'node-fetch'
 
-export async function azurLaneExpCalculator(interaction: ShinanoInteraction, AL: any) {
+export async function azurLaneExpCalculator(interaction: ShinanoInteraction) {
     await interaction.deferReply()
 
     const currentLevel = interaction.options.getInteger('current-level')

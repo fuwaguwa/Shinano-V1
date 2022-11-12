@@ -1,8 +1,9 @@
+import { AzurAPI } from "@azurapi/azurapi";
 import { MessageEmbed, MessageActionRow, MessageSelectMenu, InteractionCollector, SelectMenuInteraction } from "discord.js";
 import { gearStats, gearFits } from "../../../../structures/AL";
 import { ShinanoInteraction } from "../../../../typings/Command";
 
-export async function azurLaneGear(interaction: ShinanoInteraction, AL: any) {
+export async function azurLaneGear(interaction: ShinanoInteraction, AL: AzurAPI) {
     await interaction.deferReply()
                 
     const gearName: string = interaction.options.getString('gear-name')

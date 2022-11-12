@@ -1,10 +1,11 @@
+import { AzurAPI } from "@azurapi/azurapi";
 import { MessageEmbed, MessageActionRow, MessageSelectMenu, InteractionCollector, SelectMenuInteraction, Message } from "discord.js";
-import { generateStatsTable } from "../../../../structures/AL";
+import { generateStatsTable, shipColor } from "../../../../structures/AL";
 import { ShinanoPaginator } from "../../../../structures/Pages";
 import { toTitleCase } from "../../../../structures/Utils";
 import { ShinanoInteraction } from "../../../../typings/Command";
 
-export async function azurLaneShip(interaction: ShinanoInteraction, AL: any) {
+export async function azurLaneShip(interaction: ShinanoInteraction, AL: AzurAPI) {
     // Getting information about the ship
     const shipName: string = interaction.options.getString('ship-name')
     const ship: any = await AL.ships.get(shipName)
@@ -16,16 +17,9 @@ export async function azurLaneShip(interaction: ShinanoInteraction, AL: any) {
     }
 
 
-    // Color Picking
-    let color: any
-    if (ship.rarity === 'Normal') color = '#b0b7b8';
-    if (ship.rarity === 'Rare') color = '#03dbfc';
-    if (ship.rarity === 'Elite') color = '#ec18f0';
-    if (ship.rarity === 'Super Rare' || ship.rarity === 'Priority') color = '#eff233';
-    if (ship.rarity === 'Ultra Rare' || ship.rarity === 'Decisive') color = '#2f3136';
-   
-
     // General Info
+    const color = shipColor(ship)
+
     await interaction.deferReply()
     const info: MessageEmbed = new MessageEmbed()
         .setTitle(`${ship.names.en} | ${ship.names.code}`)

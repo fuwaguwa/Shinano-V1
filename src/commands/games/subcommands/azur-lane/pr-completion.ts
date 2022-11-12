@@ -1,8 +1,9 @@
 import { MessageEmbed } from "discord.js";
 import { ShinanoInteraction } from "../../../../typings/Command";
 import fetch from 'node-fetch';
+import { AzurAPI } from "@azurapi/azurapi";
 
-export async function azurLanePRCompletion(interaction: ShinanoInteraction, AL: any) {
+export async function azurLanePRCompletion(interaction: ShinanoInteraction, AL: AzurAPI) {
     /*
         Helpful comments stop here, I don't know what I did but it sure as hell did work out perfectly fine 💀
     */

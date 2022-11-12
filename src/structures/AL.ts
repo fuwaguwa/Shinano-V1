@@ -345,3 +345,16 @@ export async function generateStatsTable(shipStats) {
 
     return statsImage
 }
+
+
+// Color Picking
+export function shipColor(ship: any) {
+    let color: any
+    if (ship.rarity === 'Normal') color = '#b0b7b8';
+    if (ship.rarity === 'Rare') color = '#03dbfc';
+    if (ship.rarity === 'Elite') color = '#ec18f0';
+    if (ship.rarity === 'Super Rare' || ship.rarity === 'Priority') color = '#eff233';
+    if (ship.rarity === 'Ultra Rare' || ship.rarity === 'Decisive') color = '#2f3136';
+
+    return color
+}

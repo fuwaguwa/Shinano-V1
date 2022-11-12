@@ -1,9 +1,10 @@
+import { AzurAPI } from "@azurapi/azurapi";
 import { MessageEmbed, MessageActionRow, MessageSelectMenu, InteractionCollector, SelectMenuInteraction, Message } from "discord.js";
 import { chapterInfo } from "../../../../structures/AL";
 import { ShinanoPaginator } from "../../../../structures/Pages";
 import { ShinanoInteraction } from "../../../../typings/Command";
 
-export async function azurLaneChapter(interaction: ShinanoInteraction, AL: any) {
+export async function azurLaneChapter(interaction: ShinanoInteraction, AL: AzurAPI) {
     await interaction.deferReply()
     const chapterNumber: string = interaction.options.getString('chapter-number')
     const chapter = AL.chapters.filter((chapter) => {

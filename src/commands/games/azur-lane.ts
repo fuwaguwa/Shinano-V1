@@ -162,7 +162,7 @@ export default new Command({
 
 
             case 'exp': {
-                await azurLaneExpCalculator(interaction, AL)
+                await azurLaneExpCalculator(interaction)
                 break
             }
 
