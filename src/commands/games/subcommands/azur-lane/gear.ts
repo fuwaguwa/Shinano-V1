@@ -24,15 +24,9 @@ export async function azurLaneGear(interaction: ShinanoInteraction, AL: AzurAPI)
     // Gears
     const infoEmbeds: MessageEmbed[] = []
     const statsEmbeds: MessageEmbed[] = []
-    const equippableEmbeds: MessageEmbed[] = []
-
-
-    // Skipping the 0th index for gears with 1+ tiers
-    let startingIndex;
-    gear.tiers.length != 1 ? startingIndex = 1 : startingIndex = 0;                
-
+    const equippableEmbeds: MessageEmbed[] = []          
     
-    for (let i = startingIndex; i < gear.tiers.length; i++) {
+    for (let i = 0; i < gear.tiers.length; i++) {
         // Color Picking
         let color: any;
         if (gear.tiers[i].rarity === 'Normal') color = '#b0b7b8';
@@ -40,11 +34,6 @@ export async function azurLaneGear(interaction: ShinanoInteraction, AL: AzurAPI)
         if (gear.tiers[i].rarity === 'Elite') color = '#ec18f0';
         if (gear.tiers[i].rarity === 'Super Rare') color = '#eff233';
         if (gear.tiers[i].rarity === 'Ultra Rare') color = 'BLACK';
-
-
-        // Changing array index according for gears with 1+ tiers
-        let arrayIndex;
-        gear.tiers.length != 1 ? arrayIndex = i-1 : arrayIndex = i
 
 
         // General Info
@@ -62,7 +51,7 @@ export async function azurLaneGear(interaction: ShinanoInteraction, AL: AzurAPI)
         )
 
         if (gear.misc.notes.length > 0) {
-            infoEmbeds[arrayIndex]
+            infoEmbeds[i]
                 .addField('Notes:', gear.misc.notes)
         }
         
@@ -75,7 +64,7 @@ export async function azurLaneGear(interaction: ShinanoInteraction, AL: AzurAPI)
                 .setTitle(`${gear.names['wiki'] ? gear.names['wiki'] : gear.names.en} | ${gear.tiers[i].rarity}`)
         )
 
-        gearStats(gear.tiers[i].stats, statsEmbeds[arrayIndex])
+        gearStats(gear.tiers[i].stats, statsEmbeds[i])
 
 
         // Equippables
