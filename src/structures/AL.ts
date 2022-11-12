@@ -6,7 +6,7 @@ import { Canvas } from "canvas"
 import { client } from ".."
 
 // Stats Formatting
-export function gearStats(gearStats, embed) {
+export function gearStats(gearStats, embed: MessageEmbed) {
     for (let stat in gearStats) {
         let name: string 
         let st = gearStats[stat].formatted // Stats of {name}
@@ -14,6 +14,7 @@ export function gearStats(gearStats, embed) {
         if (!st) continue;
 
         switch (stat.toLowerCase()) {
+            case 'rof': continue
             case 'antiair':
                 name = 'Anti-Air:'
                 break
@@ -21,16 +22,16 @@ export function gearStats(gearStats, embed) {
                 name = 'Volley Time:'
                 break
             case 'rateoffire':
-                name = 'Rate of Fire:'
+                name = 'Fire Rate:'
                 break
             case 'opsdamageboost':
-                name = 'OPS Damage Boost'
+                name = 'OPS Damage Boost:'
                 break
             case 'ammotype':
                 name = 'Ammo Type:'
                 break
             case 'planehealth': 
-                name = 'Plane\'s Health:'
+                name = 'Health:'
                 break
             case 'dodgelimit':
                 name = 'Dodge Limit:'
@@ -39,7 +40,7 @@ export function gearStats(gearStats, embed) {
                 name = 'Crash Damage:'
                 break
             case 'nooftorpedoes':
-                name = 'Number of Torpedoes:'
+                name = 'Torpedoes:'
                 break
             case 'aaguns': {
                 let guns: string[] = []
@@ -70,7 +71,7 @@ export function gearStats(gearStats, embed) {
                 break
             }
         } 
-        embed.addField(name, st)
+        embed.addField(name, st, true)
     }    
 }
 
