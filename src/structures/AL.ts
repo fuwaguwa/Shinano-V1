@@ -70,7 +70,6 @@ export function gearStats(gearStats, embed) {
                 break
             }
         } 
-        console.log(st)
         embed.addField(name, st)
     }    
 }

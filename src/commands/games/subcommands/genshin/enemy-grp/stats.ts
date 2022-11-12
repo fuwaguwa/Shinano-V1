@@ -10,7 +10,6 @@ export async function genshinEnemyStats(interaction: ShinanoInteraction, enemy: 
     if (level > 100) level = 100
 
     const enemyStats = enemy.stats(level)
-    console.log(enemyStats)
 
 
     // Displaying Info
