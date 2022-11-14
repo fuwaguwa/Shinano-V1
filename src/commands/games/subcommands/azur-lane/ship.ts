@@ -11,7 +11,7 @@ export async function azurLaneShip(interaction: ShinanoInteraction, AL: AzurAPI)
     const ship: any = await AL.ships.get(shipName)
     if (!ship) {
         const shipNotFound: MessageEmbed = new MessageEmbed()
-            .setDescription('Ship not found!')
+            .setDescription('❌ | Ship not found!')
             .setColor('RED')
         return interaction.reply({embeds:[shipNotFound], ephemeral: true})
     }
