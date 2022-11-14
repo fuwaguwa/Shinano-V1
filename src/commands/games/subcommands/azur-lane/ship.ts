@@ -206,7 +206,7 @@ export async function azurLaneShip(interaction: ShinanoInteraction, AL: AzurAPI)
         `Total Tech Points: **${ship.fleetTech.techPoints.total}**`
 
         statsBonus = 
-        `Unlocking The Ship: ${ship.fleetTech.statsBonus.collection.bonus} **${collection}** for ${toTitleCase(ship.fleetTech.statsBonus.collection.applicable.join(', '))}s\n` +
+        `Unlocking The Ship: ${ship.fleetTech.statsBonus.collection.bonus} **${collection}** for ${toTitleCase(ship.fleetTech.statsBonus.collection.applicable.join(', '))}s\n\n` +
         `Reaching Level 120: ${ship.fleetTech.statsBonus.maxLevel.bonus} **${maxLevel}** for ${toTitleCase(ship.fleetTech.statsBonus.maxLevel.applicable.join(', '))}s`
     }
 
