@@ -5,23 +5,18 @@ import fetch from 'node-fetch'
 export async function azurLaneExpCalculator(interaction: ShinanoInteraction) {
     await interaction.deferReply()
 
-    const currentLevel = interaction.options.getInteger('current-level')
-    const targetLevel = interaction.options.getInteger('target-level')
+    let currentLevel = interaction.options.getInteger('current-level')
+    let targetLevel = interaction.options.getInteger('target-level')
     const rarity = interaction.options.getString('rarity')
     
-
-    if (currentLevel > 125 || targetLevel > 125) {
-        const overboard: MessageEmbed = new MessageEmbed()
-            .setColor('RED')
-            .setDescription('Level cannot go pass 125!')
-        return interaction.editReply({embeds: [overboard]})
-    }
+    if (currentLevel > 125) currentLevel = 125
+    if (targetLevel > 125) targetLevel = 125
 
 
     if (currentLevel > targetLevel) {
         const overboard: MessageEmbed = new MessageEmbed()
             .setColor('RED')
-            .setDescription('Current level cannot be bigger than target level!')
+            .setDescription('❌ | Current level cannot be bigger than target level!')
         return interaction.editReply({embeds: [overboard]})
     }
 
