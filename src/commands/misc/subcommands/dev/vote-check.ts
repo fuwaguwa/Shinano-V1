@@ -30,7 +30,7 @@ export async function devVoteCheck(interaction: ShinanoInteraction) {
     // Top.gg Database
     let topggVoteStatus: boolean = false
 
-    const response = await fetch(`https://top.gg/api/bots/1002193298229829682/check?user=${user.id}`, {
+    const response = await fetch(`https://top.gg/api/bots/1002193298229829682/check?userId=${user.id}`, {
         method: "GET",
         headers: {
             "Authorization": process.env.topggApiKey
