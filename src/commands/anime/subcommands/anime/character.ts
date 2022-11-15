@@ -65,6 +65,7 @@ export async function animeCharacter(interaction: ShinanoInteraction) {
         let VAs: string[] = []
         if (character && character.voices) {
             character.voices.forEach(va => {
+                if (va.language !== 'Japanese' && va.language !== 'English') return;
                 VAs.push(`[${va.person.name}](${va.person.url})`)
             })    
         }
