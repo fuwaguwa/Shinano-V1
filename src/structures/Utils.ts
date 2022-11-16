@@ -1,6 +1,8 @@
-import { Guild, VoiceChannel } from "discord.js";
+import { Guild, MessageAttachment, TextChannel, VoiceChannel } from "discord.js";
 import fetch from 'node-fetch'
 import { client } from '..'
+import t2c from 'table2canvas'
+import { Canvas } from "canvas";
 
 export function isImage(url) {
     return(url.match(/^http[^\?]*.(jpg|jpeg|png)(\?(.*))?$/gmi) != null);
@@ -68,4 +70,44 @@ export async function updateServerCount() {
     const channel = (await guild.channels.fetch('1017460364658610306')) as VoiceChannel
 
     channel.setName(`Server Count: ${client.guilds.cache.size}`)
+}
+
+
+export async function createTable(options: {
+    columns: string[],
+    dataSrc: any[],
+    columnSize?: number,
+    firstColumnSize?: number,
+}) {
+    // Structure
+    const tableColumns: any[] = []
+    for (let i = 0; i < options.columns.length; i++) {
+        let column = {title: options.columns[i], dataIndex: options.columns[i], textAlign: 'center', textColor: 'rgba(255, 255, 255, 1)', titleColor: 'rgba(255, 255, 255, 1)', titleFontSize: '29px', textFontSize: '29px'}
+
+        if (i == 1 && options.firstColumnSize) {
+            column = Object.assign({width: options.firstColumnSize}, column)
+        } else if (options.columnSize) {
+            column = Object.assign({width: options.columnSize}, column)
+        }
+
+        tableColumns.push(column)
+    }
+
+
+    const table = new t2c({
+        canvas: new Canvas(4, 4),
+        columns: tableColumns,
+        dataSource: options.dataSrc,
+        bgColor: '#2f3136'
+    });
+
+
+    // Uploading the image + returning the link
+    const guild: Guild = await client.guilds.fetch('1002188088942022807')
+    const channel = await guild.channels.fetch('1022191350835331203')
+
+    const statsMessage = await (channel as TextChannel).send({files: [new MessageAttachment(table.canvas.toBuffer(), 'image.png')]})
+    const statsImage = statsMessage.attachments.first().url
+
+    return statsImage
 }

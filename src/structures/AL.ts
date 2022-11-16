@@ -1,9 +1,5 @@
-import { Guild, MessageAttachment, MessageEmbed } from "discord.js"
-import { toTitleCase } from "./Utils"
-import { TextChannel } from "discord.js"
-import t2c from 'table2canvas'
-import { Canvas } from "canvas"
-import { client } from ".."
+import { MessageEmbed } from "discord.js"
+import { createTable, toTitleCase } from "./Utils"
 
 // Stats Formatting
 export function gearStats(gearStats, embed: MessageEmbed) {
@@ -191,30 +187,24 @@ export function chapterInfo(chapterInfo, chapterMode) {
 
 // Stats Table 
 export async function generateStatsTable(shipStats) {
-    // Fetching Channel
-    const guild: Guild = await client.guilds.fetch('1002188088942022807')
-    const channel = await guild.channels.fetch('1022191350835331203')
-
-
     // Structure
-    const columns: any = [
-        {title: 'LVL', dataIndex: 'LVL', textAlign: 'center', textColor: 'rgba(255, 255, 255, 1)', titleColor: 'rgba(255, 255, 255, 1)', titleFontSize: '29px', textFontSize: '29px'},
-        {title: 'HP', dataIndex: 'HP', textAlign: 'center', textColor: 'rgba(255, 255, 255, 1)', titleColor: 'rgba(255, 255, 255, 1)', titleFontSize: '29px', textFontSize: '29px'},
-        {title: 'FP', dataIndex: 'FP', textAlign: 'center', textColor: 'rgba(255, 255, 255, 1)', titleColor: 'rgba(255, 255, 255, 1)', titleFontSize: '29px', textFontSize: '29px'},
-        {title: 'TRP', dataIndex: 'TRP', textAlign: 'center', textColor: 'rgba(255, 255, 255, 1)', titleColor: 'rgba(255, 255, 255, 1)', titleFontSize: '29px', textFontSize: '29px'},
-        {title: 'AVI', dataIndex: 'AVI', textAlign: 'center', textColor: 'rgba(255, 255, 255, 1)', titleColor: 'rgba(255, 255, 255, 1)', titleFontSize: '29px', textFontSize: '29px'},
-        {title: 'AA', dataIndex: 'AA', textAlign: 'center', textColor: 'rgba(255, 255, 255, 1)', titleColor: 'rgba(255, 255, 255, 1)', titleFontSize: '29px', textFontSize: '29px'},
-        {title: 'RLD', dataIndex: 'RLD', textAlign: 'center', textColor: 'rgba(255, 255, 255, 1)', titleColor: 'rgba(255, 255, 255, 1)', titleFontSize: '29px', textFontSize: '29px'},
-        {title: 'EVA', dataIndex: 'EVA', textAlign: 'center', textColor: 'rgba(255, 255, 255, 1)', titleColor: 'rgba(255, 255, 255, 1)', titleFontSize: '29px', textFontSize: '29px'},
-        {title: 'SPD', dataIndex: 'SPD', textAlign: 'center', textColor: 'rgba(255, 255, 255, 1)', titleColor: 'rgba(255, 255, 255, 1)', titleFontSize: '29px', textFontSize: '29px'},
-        {title: 'ACC', dataIndex: 'ACC', textAlign: 'center', textColor: 'rgba(255, 255, 255, 1)', titleColor: 'rgba(255, 255, 255, 1)', titleFontSize: '29px', textFontSize: '29px'},
-        {title: 'LCK', dataIndex: 'LCK', textAlign: 'center', textColor: 'rgba(255, 255, 255, 1)', titleColor: 'rgba(255, 255, 255, 1)', titleFontSize: '29px', textFontSize: '29px'},
-        {title: 'ASW', dataIndex: 'ASW', textAlign: 'center', textColor: 'rgba(255, 255, 255, 1)', titleColor: 'rgba(255, 255, 255, 1)', titleFontSize: '29px', textFontSize: '29px'},
-        {title: 'OIL', dataIndex: 'OIL', textAlign: 'center', textColor: 'rgba(255, 255, 255, 1)', titleColor: 'rgba(255, 255, 255, 1)', titleFontSize: '29px', textFontSize: '29px'},
+    const columns: string[] = [
+        'LVL',
+        'HP',
+        'FP',
+        'TRP',
+        'AVI',
+        'AA',
+        'RLD',
+        'EVA',
+        'SPD',
+        'ACC',
+        'LCK',
+        'ASW',
+        'OIL'
     ]
 
-
-    // Stats Table Data
+    // Stats
     const dataSrc = [
         {
             LVL: '1',
@@ -329,21 +319,7 @@ export async function generateStatsTable(shipStats) {
             }
         )
     }
-
-    // Generating the table
-    const table = new t2c({
-        canvas: new Canvas(4, 4),
-        columns: columns,
-        dataSource: dataSrc,
-        bgColor: '#2f3136'
-    });
-
-
-    // Uploading the image + returning the link
-    const statsMessage = await (channel as TextChannel).send({files: [new MessageAttachment(table.canvas.toBuffer(), 'image.png')]})
-    const statsImage = statsMessage.attachments.first().url
-
-    return statsImage
+    return await createTable({columns, dataSrc})
 }
 
 
