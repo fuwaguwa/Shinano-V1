@@ -330,8 +330,8 @@ export async function generateStatsTable(shipStats) {
         )
     }
 
-     // Generating the table
-     const table = new t2c({
+    // Generating the table
+    const table = new t2c({
         canvas: new Canvas(4, 4),
         columns: columns,
         dataSource: dataSrc,
