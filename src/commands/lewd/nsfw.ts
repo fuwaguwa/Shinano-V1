@@ -144,7 +144,7 @@ export default new Command({
                 {
                     type: 'SUB_COMMAND',
                     name: 'kemonomimi',
-                    description: 'Girls possessing animal features (foxgirls, catgirls, etc) and succubus.'
+                    description: 'Foxgirls, catgirls, bunny girls, succubus and more!'
                 },
                 {
                     type: 'SUB_COMMAND',
