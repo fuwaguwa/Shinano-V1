@@ -50,7 +50,7 @@ export class Shinano extends Client {
         
         (async () => {
             // Azur Lane News
-            await startTweetListener()
+            if (!process.env.guildId) await startTweetListener()
 
             
             // Heartbeat

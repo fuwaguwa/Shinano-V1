@@ -8,6 +8,7 @@ config()
 
 async function listenForever(streamFactory, dataConsumer) {
     try {
+        console.log("Connected to Twitter stream!")
         for await (const { data } of streamFactory()) {
             dataConsumer(data);
         }
@@ -61,6 +62,4 @@ export async function startTweetListener() {
         () => stream,
         postTweet,
     )
-
-    console.log("Connected to Twitter stream!")
 }
