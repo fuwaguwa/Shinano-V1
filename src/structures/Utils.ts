@@ -3,6 +3,8 @@ import fetch from 'node-fetch'
 import { client } from '..'
 import t2c from 'table2canvas'
 import { Canvas } from "canvas";
+import { config } from "dotenv";
+config();
 
 export function isImage(url) {
     return(url.match(/^http[^\?]*.(jpg|jpeg|png)(\?(.*))?$/gmi) != null);
@@ -110,4 +112,13 @@ export async function createTable(options: {
     const statsImage = statsMessage.attachments.first().url
 
     return statsImage
+}
+
+export function sleep(ms: number) {
+    let start = new Date().getTime();
+    for (let i = 0; i < 1e7; i++) {
+        if ((new Date().getTime() - start) > ms) {
+            break
+        }
+    }
 }

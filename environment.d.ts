@@ -11,6 +11,11 @@ declare global {
             malClientId: string;
             discordServicesApiKey: string;
             topggApiKey: string;
+            twitterApiKey: string;
+            twitterApiKeySecret: string;
+            twitterBearerToken: string;
+            twitterAccessToken: string;
+            twitterAccessTokenSecret: string;
         }
     }
 }

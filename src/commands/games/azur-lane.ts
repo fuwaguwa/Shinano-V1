@@ -6,6 +6,7 @@ import { azurLaneChapter } from "./subcommands/azur-lane/chapter";
 import { azurLaneGear } from "./subcommands/azur-lane/gear";
 import { azurLaneExpCalculator } from "./subcommands/azur-lane/exp-calculator";
 import { azurLanePRCompletion } from "./subcommands/azur-lane/pr-completion";
+import { azurLaneNews } from "./subcommands/azur-lane/news";
 config()
 
 const AL = new AzurAPI();
@@ -70,6 +71,26 @@ export default new Command({
                     name: 'gear-name',
                     description: 'Gear Name'
                 },
+            ]
+        },
+        {
+            type: 'SUB_COMMAND',
+            name: 'news',
+            description: "Send the latest tweets/news about the game for both EN and JP server from the official accounts!",
+            options: [
+                {
+                    type: 'CHANNEL',
+                    required: false,
+                    channelTypes: ['GUILD_TEXT'],
+                    name: 'channel',
+                    description: 'The channel for the bot to send tweets into.'
+                },
+                {
+                    type: 'BOOLEAN',
+                    required: false,
+                    name: 'stop',
+                    description: 'Set to true if you want the bot to stop posting news!'
+                }
             ]
         },
         {
@@ -170,7 +191,13 @@ export default new Command({
             case 'pr-completion': {
                 await azurLanePRCompletion(interaction, AL)
                 break
-            }       
+            }   
+            
+            
+            case 'news': {
+                await azurLaneNews(interaction)
+                break
+            }
         }
     }
 })

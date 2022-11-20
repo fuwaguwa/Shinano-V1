@@ -160,6 +160,8 @@ export async function shinanoHelpSFW(interaction: ShinanoInteraction) {
             <:curve:1021036738161950800>Get info about an Azur Lane chapter
             **gear**
             <:curve:1021036738161950800>Get info about an Azur Lane gear
+            **news**
+            <:curve:1021036738161950800>Send the latest tweets/news about the game for both EN and JP server from the official accounts!
             **exp**
             <:curve:1021036738161950800>Calculate the EXP needed to get your ship to the desired level
             **pr-completion**
