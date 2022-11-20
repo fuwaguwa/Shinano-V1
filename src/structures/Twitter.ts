@@ -38,7 +38,7 @@ async function postTweet(tweet) {
 
             await (channel as TextChannel).send({
                 content:
-                `__New Tweet For ${server}:__\n` +
+                `__Shikikans, there's a new message from ${server} HQ!__\n` +
                 link
             })
         } catch (error) {
