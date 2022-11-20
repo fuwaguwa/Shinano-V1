@@ -3,23 +3,23 @@ import News from '../../../../schemas/ALNews'
 import { MessageEmbed } from "discord.js";
 
 export async function azurLaneNews(interaction: ShinanoInteraction) {
-    // Owner Check
-    if (interaction.user.id !== '836215956346634270') {
-        const uhoh: MessageEmbed = new MessageEmbed()
+    // Permission Check
+    await interaction.deferReply()
+    const guildUserPerms = (await interaction.guild.members.fetch(interaction.user)).permissions
+    if (!guildUserPerms.has('ADMINISTRATOR') && !guildUserPerms.has('MANAGE_WEBHOOKS')) {
+        const noPerm: MessageEmbed = new MessageEmbed()
             .setColor('RED')
-            .setDescription(
-                '❌ | This command is still in the testing phase, please go to [Shinano\'s Server](https://discord.gg/NFkMxFeEWr) for the latest update!'
-            )
-        return interaction.editReply({embeds: [uhoh]})
+            .setDescription('❌ | You need `Manage Webhooks` permission to use this command!')
+        return interaction.editReply({embeds: [noPerm]})
     }
 
+    
     // Main
-    await interaction.deferReply()
     const channel = interaction.options.getChannel('channel') || interaction.channel
     const turnedOff = interaction.options.getBoolean('stop')
 
 
-    // Removing
+    // Check for removal
     const dbChannel = await News.findOne({guildId: interaction.guild.id})
     if (turnedOff) {
         if (!dbChannel) {
@@ -41,7 +41,7 @@ export async function azurLaneNews(interaction: ShinanoInteraction) {
     }
 
     
-    // Setting Up
+    // Check for adding
     dbChannel
         ? await News.findOneAndUpdate({guildId: interaction.guild.id}, {channelId: channel.id})
         : await News.create({guildId: interaction.guild.id, channelId: channel.id})
