@@ -56,4 +56,6 @@ export async function startTweetListener() {
         () => stream,
         postTweet,
     )
+
+    console.log("Connected to Twitter stream!")
 }
