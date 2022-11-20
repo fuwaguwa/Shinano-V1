@@ -26,19 +26,24 @@ async function postTweet(tweet) {
     for await (const doc of News.find()) {
         if (iterations == 40) sleep(1000);
         
-        const guild = await client.guilds.fetch(doc.guildId)
-        const channel = await guild.channels.fetch(doc.channelId)
+        try {
+            const guild = await client.guilds.fetch(doc.guildId)
+            const channel = await guild.channels.fetch(doc.channelId)
 
-        const link: string = `https://twitter.com/${tweet.author_id}/status/${tweet.conversation_id}`
-        let server: string
+            const link: string = `https://twitter.com/${tweet.author_id}/status/${tweet.conversation_id}`
+            let server: string
 
-        link.includes("993682160744738816") ? server = 'EN' : server = 'JP'
+            link.includes("993682160744738816") ? server = 'EN' : server = 'JP'
 
-        await (channel as TextChannel).send({
-            content:
-            `__New Tweet For ${server}:__\n` +
-            link
-        })
+            await (channel as TextChannel).send({
+                content:
+                `__New Tweet For ${server}:__\n` +
+                link
+            })
+        } catch (error) {
+            console.warn(error)
+            continue
+        }
     }
 }
 
