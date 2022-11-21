@@ -49,22 +49,18 @@ export class Shinano extends Client {
         
         
         (async () => {
-            // Azur Lane News
-            if (!process.env.guildId) await startTweetListener()
-
-            
             // Heartbeat
             const guild = await this.guilds.fetch('1002188088942022807')
             const channel = await guild.channels.fetch('1027973574801227776')
-
-
+            
+            
             const startEmbed: MessageEmbed = new MessageEmbed()
-                .setColor('GREEN')
-                .setDescription(`Shinano has been started!`)
-                .setTimestamp()
+            .setColor('GREEN')
+            .setDescription(`Shinano has been started!`)
+            .setTimestamp()
             await (channel as TextChannel).send({embeds: [startEmbed]});
-
-
+            
+            
             let uptime = 300000
             setInterval(async () => {
                 let totalSeconds = (uptime / 1000);
@@ -75,16 +71,22 @@ export class Shinano extends Client {
                 
                 let minutes = Math.floor(totalSeconds / 60);
                 let seconds = Math.floor(totalSeconds % 60);
-
+                
                 const heartbeatEmbed: MessageEmbed = new MessageEmbed()
                     .setColor('GREY')
                     .setDescription(`Shinano has been running for \`${hours} hours, ${minutes} minutes, ${seconds} seconds\``)
                     .setTimestamp()
                 await (channel as TextChannel).send({embeds: [heartbeatEmbed]})
-
+                
                 uptime += 300000
-            }, 300000)
+            }, 1000)
+
+
+            // Azur Lane News
+            await startTweetListener()
         })();
+
+        
     }   
 
     
