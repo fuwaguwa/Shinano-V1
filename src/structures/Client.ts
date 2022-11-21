@@ -79,7 +79,7 @@ export class Shinano extends Client {
                 await (channel as TextChannel).send({embeds: [heartbeatEmbed]})
                 
                 uptime += 300000
-            }, 1000)
+            }, 300000)
 
 
             // Azur Lane News
