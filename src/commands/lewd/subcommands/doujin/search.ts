@@ -14,8 +14,8 @@ export async function doujinSearch(interaction: ShinanoInteraction) {
     const blacklist = '-lolicon -scat -guro -insect -shotacon -amputee -vomit'
     const response = await fetch(`${process.env.nhentaiIP}/api/galleries/search?query=${name} ${blacklist}&sort=${sorting}`, {method: "GET"})
     const searchResults = await response.json()
-
-    if (searchResults.result.length == 0) {
+    
+    if (searchResults.error || searchResults.result.length == 0) {
         const noResult: MessageEmbed = new MessageEmbed()
             .setColor('RED')
             .setDescription('❌ | No Result!')
