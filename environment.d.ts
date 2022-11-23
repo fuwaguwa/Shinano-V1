@@ -16,6 +16,7 @@ declare global {
             twitterBearerToken: string;
             twitterAccessToken: string;
             twitterAccessTokenSecret: string;
+            nhentaiIP: string;
         }
     }
 }
