@@ -39,6 +39,10 @@ export async function shinanoHelpNSFW(interaction: ShinanoInteraction) {
             {
                 name: "Private Collection (High-Quality):",
                 value: "`elf`, `fanbox`, `genshin`, `kemonomimi`, `misc`, `shipgirls`, `undies`, `vtubers`, `yuri`"
+            },
+            {
+                name: "Doujin",
+                value: "`code`"
             }
         )
     await interaction.reply({embeds:[nsfwEmbed], components: [navigation]})
