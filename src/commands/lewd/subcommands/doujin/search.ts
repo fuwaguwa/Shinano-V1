@@ -86,7 +86,14 @@ export async function doujinSearch(interaction: ShinanoInteraction) {
         }
 
         await doujinCode(interaction, i.values[0])
-        collector.stop()
+        collector.stop('Processed')
+    })
+
+    collector.on('end', async (collected, reason) => {
+        if (reason !== 'Processed') {
+            (resultNavi.components[0] as MessageSelectMenu).setDisabled(true)
+            await interaction.editReply({components: [resultNavi]})
+        }
     })
     
     
