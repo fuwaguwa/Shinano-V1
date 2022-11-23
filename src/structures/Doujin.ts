@@ -3,7 +3,7 @@ import { ShinanoInteraction } from "../typings/Command"
 import { ShinanoPaginator } from "./Pages"
 import { toTitleCase } from "./Utils"
 
-function fileType(type: string) {
+function getFileType(type: string) {
     switch (type) {
         case 'j': return 'jpg'
         case 'p': return 'png'
@@ -11,8 +11,8 @@ function fileType(type: string) {
     }
 }
 
-function pageLink(doujin, pageNumber) {
-    const type = fileType(doujin.images.pages[pageNumber].t)
+function getPageLink(doujin, pageNumber) {
+    const type = getFileType(doujin.images.pages[pageNumber].t)
     return `https://i.nhentai.net/galleries/${doujin.media_id}/${pageNumber + 1}.${type}`
 }
 
@@ -23,17 +23,13 @@ function genDoujinPage(doujin, title) {
             new MessageEmbed()
                 .setColor('#2f3136')
                 .setDescription(`**[${title} | ${doujin.id}](https://nhentai.net/g/${doujin.id}/${i})**`)
-                .setImage(pageLink(doujin, i))
+                .setImage(getPageLink(doujin, i))
         )   
     }
     return doujinPages
 }
 
-export async function displayDoujin(interaction: ShinanoInteraction, doujin) {
-    // Processing
-    const doujinTitle = doujin.title.pretty || doujin.title.english || doujin.title.japanese
-    const doujinThumbnail = pageLink(doujin, 0)
-
+export function getDoujinTags(doujin) {
     const doujinTags: string[] = []
     const doujinArtists: string[] = []
     const doujinParodies: string[] = []
@@ -41,6 +37,7 @@ export async function displayDoujin(interaction: ShinanoInteraction, doujin) {
     const doujinLang: string[] = []
     const doujinCategories: string[] = []
     const doujinGroups: string[] = []
+
 
     doujin.tags.forEach(tag => {
         let tagName = toTitleCase(tag.name)
@@ -55,8 +52,54 @@ export async function displayDoujin(interaction: ShinanoInteraction, doujin) {
         }
     })
 
+    return {
+        tags: doujinTags,
+        artists: doujinArtists,
+        parodies: doujinParodies,
+        characters: doujinChars,
+        languages: doujinLang,
+        categories: doujinCategories,
+        groups: doujinGroups
+    }
+}
+
+export function genDoujinEmbed(doujin, tagInfo) {
+    const doujinTitle = doujin.title.pretty || doujin.title.english || doujin.title.japanese
+    const doujinThumbnail = getPageLink(doujin, 0)
+
+
+    const mainInfo: MessageEmbed = new MessageEmbed()
+        .setTitle(`${doujinTitle} | ${doujin.id}`)
+        .setThumbnail(doujinThumbnail)
+        .setColor('#2f3136')
+        .setDescription(
+            `**Tags:**\n` +
+            tagInfo.tags.join(", ")
+        )
+        .setURL(`https://nhentai.net/g/${doujin.id}`)
+    if (tagInfo.characters.length != 0) mainInfo.addField('Characters:', tagInfo.characters.join(', '), false)
+    if (tagInfo.parodies.length != 0) mainInfo.addField('Parodies:', tagInfo.parodies.join(', '), false)
+    if (tagInfo.languages.length != 0) mainInfo.addField('Languages:', tagInfo.languages.join(', '), false)
+    if (tagInfo.categories.length != 0) mainInfo.addField('Categories:', tagInfo.categories.join(', '), false)
+    if (tagInfo.artists.length != 0) mainInfo.addField('Artists:', tagInfo.artists.join(', '), false)
+    if (tagInfo.groups.length != 0) mainInfo.addField('Groups:', tagInfo.groups.join(', '), false)
+    mainInfo.addFields(
+        {name: 'Pages:', value: `${doujin.num_pages}`, inline: true},
+        {name: 'Favorites:', value: `${doujin.num_favorites}`, inline: true},
+        {name: 'Upload Date:', value: `<t:${doujin.upload_date}:D>`, inline: true}
+    )
+
+    return mainInfo
+}
+
+export async function displayDoujin(interaction: ShinanoInteraction, doujin) {
+    // Processing
+    const doujinTitle = doujin.title.pretty || doujin.title.english || doujin.title.japanese
+    const tagInfo = getDoujinTags(doujin)
+
+
     // Filter
-    const filter = doujinTags.find(tag => {
+    const filter = tagInfo.tags.find(tag => {
         return tag.includes('Lolicon') || 
         tag.includes('Guro') ||
         tag.includes('Scat') ||
@@ -77,29 +120,10 @@ export async function displayDoujin(interaction: ShinanoInteraction, doujin) {
 
 
     // Components
+    const mainInfo: MessageEmbed = genDoujinEmbed(doujin, tagInfo)
     let doujinPages: MessageEmbed[]
     if (doujin.num_pages <= 100) doujinPages = genDoujinPage(doujin, doujinTitle)
     
-    const mainInfo: MessageEmbed = new MessageEmbed()
-        .setTitle(`${doujinTitle} | ${doujin.id}`)
-        .setThumbnail(doujinThumbnail)
-        .setColor('#2f3136')
-        .setDescription(
-            `**Tags:**\n` +
-            doujinTags.join(", ")
-        )
-    if (doujinChars.length != 0) mainInfo.addField('Characters:', doujinChars.join(', '), false)
-    if (doujinParodies.length != 0) mainInfo.addField('Parodies:', doujinParodies.join(', '), false)
-    if (doujinLang.length != 0) mainInfo.addField('Languages:', doujinLang.join(', '), false)
-    if (doujinCategories.length != 0) mainInfo.addField('Categories:', doujinCategories.join(', '), false)
-    if (doujinArtists.length != 0) mainInfo.addField('Artists:', doujinArtists.join(', '), false)
-    if (doujinGroups.length != 0) mainInfo.addField('Groups:', doujinGroups.join(', '), false)
-    mainInfo.addFields(
-        {name: 'Pages:', value: `${doujin.num_pages}`, inline: true},
-        {name: 'Favorites:', value: `${doujin.num_favorites}`, inline: true},
-        {name: 'Upload Date:', value: `<t:${doujin.upload_date}:D>`, inline: true}
-    )
-
     
     const navigation: MessageActionRow = new MessageActionRow()
         .addComponents(
@@ -174,6 +198,8 @@ export async function displayDoujin(interaction: ShinanoInteraction, doujin) {
                 }
             }
         }
+
+        collector.resetTimer()
     })
 
     collector.on('end', async (collected, reason) => {

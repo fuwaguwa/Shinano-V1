@@ -4,9 +4,9 @@ import { MessageEmbed } from "discord.js";
 import { displayDoujin } from "../../../../structures/Doujin";
 
 
-export async function doujinCode(interaction: ShinanoInteraction) {
+export async function doujinCode(interaction: ShinanoInteraction, nuclearLaunchCode?) {
     // Fetching Data
-    const code = interaction.options.getInteger('doujin-code')
+    const code = nuclearLaunchCode || interaction.options.getInteger('doujin-code')
     const response = await fetch(`${process.env.nhentaiIP}/api/gallery/${code}`, {method: "GET"})
     const doujin = await response.json()
     
