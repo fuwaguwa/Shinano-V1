@@ -122,7 +122,7 @@ export async function displayDoujin(interaction: ShinanoInteraction, doujin) {
     // Components
     const mainInfo: MessageEmbed = genDoujinEmbed(doujin, tagInfo)
     let doujinPages: MessageEmbed[]
-    if (doujin.num_pages <= 100) doujinPages = genDoujinPage(doujin, doujinTitle)
+    if (doujin.num_pages <= 150) doujinPages = genDoujinPage(doujin, doujinTitle)
     
     
     const navigation: MessageActionRow = new MessageActionRow()
@@ -191,7 +191,7 @@ export async function displayDoujin(interaction: ShinanoInteraction, doujin) {
                         const notAvailable: MessageEmbed = new MessageEmbed()
                             .setColor('RED')
                             .setDescription(
-                                'Unfortunately, we only support doujins that are under 100 pages long. Instead, you can read this doujin ' +
+                                'Unfortunately, we only support doujins that are under 150 pages long. Instead, you can read this doujin ' +
                                 `[here](https://nhentai.net/g/${doujin.id})`
                             )
                         await interaction.editReply({embeds: [notAvailable], components: [navigation]})
