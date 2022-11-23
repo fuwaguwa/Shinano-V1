@@ -150,7 +150,7 @@ export default new Command({
                 {name:'Difficulty',value:`${trivia[0]['difficulty'].toUpperCase()}`, inline: true},
                 {name:'Category', value:`${trivia[0]['category'].toUpperCase()}`, inline:true}
             )
-            .setFooter({text:'You have 15s to pick an answer!', iconURL:`${interaction.user.displayAvatarURL({dynamic:true})}`})
+            .setFooter({text:'You have 15s to pick an answer!'})
         
         const message = await interaction.editReply({embeds:[question], components:[row]})
         const collector: InteractionCollector<ButtonInteraction> = await (message as Message).createMessageComponentCollector({
@@ -221,7 +221,7 @@ export default new Command({
                 }
 
                 question.setColor('RED')
-                question.setFooter({text:'Timed out!', iconURL:`${interaction.user.displayAvatarURL({dynamic:true})}`})
+                question.setFooter({text:'Timed out!'})
                 await interaction.editReply({components:[row], embeds:[question], content: `Timed out! The answer was \`${trivia[0]['correctAnswer']}\`.`})
             }
         })
