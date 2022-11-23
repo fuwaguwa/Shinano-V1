@@ -125,8 +125,7 @@ export async function genshinWeaponInfo(interaction: ShinanoInteraction, weapon:
     
     // Collector
     const message = await interaction.editReply({embeds: [weaponInfo], components: [navigation]})
-    const collector: InteractionCollector<SelectMenuInteraction> = await (message as Message).createMessageComponentCollector({
-        componentType: 'SELECT_MENU',
+    const collector = await (message as Message).createMessageComponentCollector({
         time: 120000
     })
 
@@ -139,31 +138,33 @@ export async function genshinWeaponInfo(interaction: ShinanoInteraction, weapon:
         }
 
 
-        await i.deferUpdate()
+        if (i['values']) {
+            await i.deferUpdate()
         
-        const selectMenu = navigation.components[0] as MessageSelectMenu
-        switch (i.values[0]) {
-            case 'info': {
-                selectMenu.options[0].default = true
-                selectMenu.options[1].default = false
+            const selectMenu = navigation.components[0] as MessageSelectMenu
+            switch (i['values'][0]) {
+                case 'info': {
+                    selectMenu.options[0].default = true
+                    selectMenu.options[1].default = false
 
-                await interaction.editReply({embeds: [weaponInfo], components: [navigation]})
-                break
-            }
+                    await interaction.editReply({embeds: [weaponInfo], components: [navigation]})
+                    break
+                }
 
-            
-            case 'costs': {
-                selectMenu.options[0].default = false
-                selectMenu.options[1].default = true
+                
+                case 'costs': {
+                    selectMenu.options[0].default = false
+                    selectMenu.options[1].default = true
 
-                ShinanoPaginator({
-                    interaction: interaction,
-                    interactorOnly: true,
-                    timeout: 120000,
-                    pages: ascensionsCostsEmbeds,
-                    menu: navigation
-                })
-                break
+                    ShinanoPaginator({
+                        interaction: interaction,
+                        interactorOnly: true,
+                        timeout: 120000,
+                        pages: ascensionsCostsEmbeds,
+                        menu: navigation
+                    })
+                    break
+                }
             }
         }
     })

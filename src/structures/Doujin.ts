@@ -113,7 +113,7 @@ export async function displayDoujin(interaction: ShinanoInteraction, doujin) {
         const blacklisted: MessageEmbed = new MessageEmbed()
             .setColor('RED')
             .setDescription(
-                `❌ | Shinano found that the doujin contains a blacklisted tag (${filter.toLowerCase()}) and will not be displaying it here!\n`
+                `❌ | Shinano found that the doujin contains a blacklisted tag (\`${filter.toLowerCase()}\`) and will not be displaying it here!\n`
             )
         return interaction.editReply({embeds: [blacklisted]})
     }
@@ -150,9 +150,8 @@ export async function displayDoujin(interaction: ShinanoInteraction, doujin) {
     
     // Collector
     const message = await interaction.editReply({embeds: [mainInfo], components: [navigation]})
-    const collector: InteractionCollector<SelectMenuInteraction> = await (message as Message).createMessageComponentCollector({
-        componentType: 'SELECT_MENU',
-        time: 120000
+    const collector = await (message as Message).createMessageComponentCollector({
+        time: 150000
     })
 
     collector.on('collect', async (i) => {
@@ -163,38 +162,40 @@ export async function displayDoujin(interaction: ShinanoInteraction, doujin) {
             })
         }
 
-        await i.deferUpdate()
 
         const menu = navigation.components[0] as MessageSelectMenu
-        switch (i.values[0]) {
-            case 'info': {
-                menu.options[0].default = true
-                menu.options[1].default = false
-
-                await interaction.editReply({embeds: [mainInfo], components: [navigation]})
-                break
-            }
-
-            case 'read': {
-                menu.options[0].default = false
-                menu.options[1].default = true
-
-                if (doujinPages) {
-                    ShinanoPaginator({
-                        interaction: interaction,
-                        interactorOnly: true,
-                        pages: doujinPages,
-                        menu: navigation,
-                        timeout: 120000 
-                    })
-                } else {
-                    const notAvailable: MessageEmbed = new MessageEmbed()
-                        .setColor('RED')
-                        .setDescription(
-                            'Unfortunately, we only support doujins that are under 100 pages long. Instead, you can read this doujin ' +
-                            `[here](https://nhentai.net/g/${doujin.id})`
-                        )
-                    await interaction.editReply({embeds: [notAvailable], components: [navigation]})
+        if (i['values']) {
+            await i.deferUpdate()
+            switch (i['values'][0]) {
+                case 'info': {
+                    menu.options[0].default = true
+                    menu.options[1].default = false
+    
+                    await interaction.editReply({embeds: [mainInfo], components: [navigation]})
+                    break
+                }
+    
+                case 'read': {
+                    menu.options[0].default = false
+                    menu.options[1].default = true
+    
+                    if (doujinPages) {
+                        ShinanoPaginator({
+                            interaction: interaction,
+                            interactorOnly: true,
+                            pages: doujinPages,
+                            menu: navigation,
+                            timeout: 150000 
+                        })
+                    } else {
+                        const notAvailable: MessageEmbed = new MessageEmbed()
+                            .setColor('RED')
+                            .setDescription(
+                                'Unfortunately, we only support doujins that are under 100 pages long. Instead, you can read this doujin ' +
+                                `[here](https://nhentai.net/g/${doujin.id})`
+                            )
+                        await interaction.editReply({embeds: [notAvailable], components: [navigation]})
+                    }
                 }
             }
         }

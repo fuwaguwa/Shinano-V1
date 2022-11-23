@@ -325,8 +325,7 @@ export async function azurLaneShip(interaction: ShinanoInteraction, AL: AzurAPI)
 
     // Collector 
     const message = await interaction.editReply({embeds:[info], components: [category]})
-    const collector: InteractionCollector<SelectMenuInteraction> = await (message as Message).createMessageComponentCollector({
-        componentType: 'SELECT_MENU',
+    const collector = await (message as Message).createMessageComponentCollector({
         time: 120000,
     })
 
@@ -343,115 +342,117 @@ export async function azurLaneShip(interaction: ShinanoInteraction, AL: AzurAPI)
             
 
             // Handling selection
-            await i.deferUpdate()
-            switch (i.values[0]) {
-                case 'info': {
-                    for (let i = 0; i < (category.components[0] as MessageSelectMenu).options.length; i++) {
-                        i == 0
-                            ? (category.components[0] as MessageSelectMenu).options[i].default = true
-                            : (category.components[0] as MessageSelectMenu).options[i].default = false
-                    }
+            if (i['values']) {
+                await i.deferUpdate()
+                switch (i['values'][0]) {
+                    case 'info': {
+                        for (let i = 0; i < (category.components[0] as MessageSelectMenu).options.length; i++) {
+                            i == 0
+                                ? (category.components[0] as MessageSelectMenu).options[i].default = true
+                                : (category.components[0] as MessageSelectMenu).options[i].default = false
+                        }
 
-                    await i.editReply({
-                        embeds: [info],
-                        components:[category]
-                    })
-                    break
-                }
-
-
-                case 'tech': {
-                    for (let i = 0; i < (category.components[0] as MessageSelectMenu).options.length; i++) {
-                        i == 1
-                            ? (category.components[0] as MessageSelectMenu).options[i].default = true
-                            : (category.components[0] as MessageSelectMenu).options[i].default = false
-                    }
-
-                    await i.editReply({
-                        embeds: [tech],
-                        components:[category]
-                    })
-                    break
-                }
-                
-
-                case 'stats': {
-                    for (let i = 0; i < (category.components[0] as MessageSelectMenu).options.length; i++) {
-                        i == 2
-                            ? (category.components[0] as MessageSelectMenu).options[i].default = true
-                            : (category.components[0] as MessageSelectMenu).options[i].default = false
-                    }
-
-                    await i.editReply({
-                        embeds: [stats],
-                        components: [category]
-                    })
-                    break
-                }
-
-
-                case 'skills': {
-                    for (let i = 0; i < (category.components[0] as MessageSelectMenu).options.length; i++) {
-                        i == 3
-                            ? (category.components[0] as MessageSelectMenu).options[i].default = true
-                            : (category.components[0] as MessageSelectMenu).options[i].default = false
-                    }
-
-                    await i.editReply({
-                        embeds: [skills],
-                        components:[category]
-                    })
-                    break
-                }
-
-
-                case 'skins': {
-                    for (let i = 0; i < (category.components[0] as MessageSelectMenu).options.length; i++) {
-                        i == 4
-                            ? (category.components[0] as MessageSelectMenu).options[i].default = true
-                            : (category.components[0] as MessageSelectMenu).options[i].default = false
-                    }
-
-                    if (skinEmbeds.length === 1) {
                         await i.editReply({
-                            embeds: [skinEmbeds[0]],
+                            embeds: [info],
+                            components:[category]
+                        })
+                        break
+                    }
+
+
+                    case 'tech': {
+                        for (let i = 0; i < (category.components[0] as MessageSelectMenu).options.length; i++) {
+                            i == 1
+                                ? (category.components[0] as MessageSelectMenu).options[i].default = true
+                                : (category.components[0] as MessageSelectMenu).options[i].default = false
+                        }
+
+                        await i.editReply({
+                            embeds: [tech],
+                            components:[category]
+                        })
+                        break
+                    }
+                    
+
+                    case 'stats': {
+                        for (let i = 0; i < (category.components[0] as MessageSelectMenu).options.length; i++) {
+                            i == 2
+                                ? (category.components[0] as MessageSelectMenu).options[i].default = true
+                                : (category.components[0] as MessageSelectMenu).options[i].default = false
+                        }
+
+                        await i.editReply({
+                            embeds: [stats],
                             components: [category]
                         })
-                    } else {
-                        ShinanoPaginator({
-                            interaction: interaction,
-                            pages: skinEmbeds,
-                            interactorOnly: true,
-                            timeout: 120000,
-                            menu: category,
-                        })
-                    }
-                    break
-                }
-
-
-                case 'gallery': {
-                    for (let i = 0; i < (category.components[0] as MessageSelectMenu).options.length; i++) {
-                        i == 5
-                            ? (category.components[0] as MessageSelectMenu).options[i].default = true
-                            : (category.components[0] as MessageSelectMenu).options[i].default = false
+                        break
                     }
 
-                    if (galleryEmbeds.length === 1) {
+
+                    case 'skills': {
+                        for (let i = 0; i < (category.components[0] as MessageSelectMenu).options.length; i++) {
+                            i == 3
+                                ? (category.components[0] as MessageSelectMenu).options[i].default = true
+                                : (category.components[0] as MessageSelectMenu).options[i].default = false
+                        }
+
                         await i.editReply({
-                            embeds: [galleryEmbeds[0]],
-                            components: [category]
+                            embeds: [skills],
+                            components:[category]
                         })
-                    } else {
-                        ShinanoPaginator({
-                            interaction: interaction,
-                            pages: galleryEmbeds,
-                            interactorOnly: true,
-                            timeout: 120000,
-                            menu: category,
-                        })
+                        break
                     }
-                    break
+
+
+                    case 'skins': {
+                        for (let i = 0; i < (category.components[0] as MessageSelectMenu).options.length; i++) {
+                            i == 4
+                                ? (category.components[0] as MessageSelectMenu).options[i].default = true
+                                : (category.components[0] as MessageSelectMenu).options[i].default = false
+                        }
+
+                        if (skinEmbeds.length === 1) {
+                            await i.editReply({
+                                embeds: [skinEmbeds[0]],
+                                components: [category]
+                            })
+                        } else {
+                            ShinanoPaginator({
+                                interaction: interaction,
+                                pages: skinEmbeds,
+                                interactorOnly: true,
+                                timeout: 120000,
+                                menu: category,
+                            })
+                        }
+                        break
+                    }
+
+
+                    case 'gallery': {
+                        for (let i = 0; i < (category.components[0] as MessageSelectMenu).options.length; i++) {
+                            i == 5
+                                ? (category.components[0] as MessageSelectMenu).options[i].default = true
+                                : (category.components[0] as MessageSelectMenu).options[i].default = false
+                        }
+
+                        if (galleryEmbeds.length === 1) {
+                            await i.editReply({
+                                embeds: [galleryEmbeds[0]],
+                                components: [category]
+                            })
+                        } else {
+                            ShinanoPaginator({
+                                interaction: interaction,
+                                pages: galleryEmbeds,
+                                interactorOnly: true,
+                                timeout: 120000,
+                                menu: category,
+                            })
+                        }
+                        break
+                    }
                 }
             }
         }

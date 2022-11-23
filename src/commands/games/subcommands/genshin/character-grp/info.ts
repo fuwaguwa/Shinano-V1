@@ -268,8 +268,7 @@ export async function genshinCharacterInfo(interaction: ShinanoInteraction, char
 
     // Collector
     const message = await interaction.editReply({embeds: [infoEmbed], components: [navigation]})
-    const collector: InteractionCollector<SelectMenuInteraction> = await (message as Message).createMessageComponentCollector({
-        componentType: 'SELECT_MENU',
+    const collector = await (message as Message).createMessageComponentCollector({
         time: 120000
     })    
 
@@ -282,77 +281,79 @@ export async function genshinCharacterInfo(interaction: ShinanoInteraction, char
         }
         
 
-        await i.deferUpdate()
-        const selectMenu = navigation.components[0] as MessageSelectMenu
-
-        switch (i.values[0]) {
-            case 'info': {
-                for (let i = 0; i < selectMenu.options.length; i++) {
-                    i == 0
-                        ? selectMenu.options[i].default = true
-                        : selectMenu.options[i].default = false
+        if (i['values']) {
+            await i.deferUpdate()
+            const selectMenu = navigation.components[0] as MessageSelectMenu
+    
+            switch (i['values'][0]) {
+                case 'info': {
+                    for (let i = 0; i < selectMenu.options.length; i++) {
+                        i == 0
+                            ? selectMenu.options[i].default = true
+                            : selectMenu.options[i].default = false
+                    }
+    
+                    await interaction.editReply({embeds: [infoEmbed], components: [navigation]})
+                    break
                 }
-
-                await interaction.editReply({embeds: [infoEmbed], components: [navigation]})
-                break
-            }
-
-
-            case 'constellations': {
-                for (let i = 0; i < selectMenu.options.length; i++) {
-                    i == 1
-                        ? selectMenu.options[i].default = true
-                        : selectMenu.options[i].default = false
+    
+    
+                case 'constellations': {
+                    for (let i = 0; i < selectMenu.options.length; i++) {
+                        i == 1
+                            ? selectMenu.options[i].default = true
+                            : selectMenu.options[i].default = false
+                    }
+                    
+                    if (MC) {
+                        ShinanoPaginator({
+                            interaction: interaction,
+                            interactorOnly: true,
+                            pages: travelerConsPages,
+                            timeout: 120000,
+                            menu: navigation
+                        })
+                    } else {
+                        await interaction.editReply({embeds: [consEmbed], components: [navigation]})
+                    }
+                    break
                 }
-                
-                if (MC) {
+    
+    
+                case 'costs': {
+                    for (let i = 0; i < selectMenu.options.length; i++) {
+                        i == 2
+                            ? selectMenu.options[i].default = true
+                            : selectMenu.options[i].default = false
+                    }
+                    
                     ShinanoPaginator({
                         interaction: interaction,
                         interactorOnly: true,
-                        pages: travelerConsPages,
+                        pages: ascensionsCostsEmbeds,
                         timeout: 120000,
                         menu: navigation
                     })
-                } else {
-                    await interaction.editReply({embeds: [consEmbed], components: [navigation]})
+                    break
                 }
-                break
-            }
-
-
-            case 'costs': {
-                for (let i = 0; i < selectMenu.options.length; i++) {
-                    i == 2
-                        ? selectMenu.options[i].default = true
-                        : selectMenu.options[i].default = false
+    
+    
+                case 'gallery': {
+                    for (let i = 0; i < selectMenu.options.length; i++) {
+                        i == 3
+                            ? selectMenu.options[i].default = true
+                            : selectMenu.options[i].default = false
+                    }
+    
+                    ShinanoPaginator({
+                        interaction: interaction,
+                        interactorOnly: true,
+                        pages: galleryImagesEmbed,
+                        timeout: 120000,
+                        menu: navigation
+                    })
+                    break
                 }
-                
-                ShinanoPaginator({
-                    interaction: interaction,
-                    interactorOnly: true,
-                    pages: ascensionsCostsEmbeds,
-                    timeout: 120000,
-                    menu: navigation
-                })
-                break
-            }
-
-
-            case 'gallery': {
-                for (let i = 0; i < selectMenu.options.length; i++) {
-                    i == 3
-                        ? selectMenu.options[i].default = true
-                        : selectMenu.options[i].default = false
-                }
-
-                ShinanoPaginator({
-                    interaction: interaction,
-                    interactorOnly: true,
-                    pages: galleryImagesEmbed,
-                    timeout: 120000,
-                    menu: navigation
-                })
-                break
             }
         }
 
