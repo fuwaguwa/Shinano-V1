@@ -61,7 +61,9 @@ export async function displayDoujin(interaction: ShinanoInteraction, doujin) {
         tag.includes('Guro') ||
         tag.includes('Scat') ||
         tag.includes('Insect') || 
-        tag.includes('Shotacon')
+        tag.includes('Shotacon') ||
+        tag.includes('Amputee') ||
+        tag.includes('Vomit')
     })
 
     if (filter) {
