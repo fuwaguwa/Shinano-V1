@@ -83,7 +83,7 @@ export class Shinano extends Client {
 
 
             // Azur Lane News
-            await startTweetListener()
+            if (!process.env.guildId) await startTweetListener()
         })();
 
         
