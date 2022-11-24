@@ -29,8 +29,8 @@ export default new Command({
                 {
                     type: 'STRING',
                     required: true,
-                    name: 'doujin-name',
-                    description: 'The doujin\'s name.'
+                    name: 'search-query',
+                    description: 'Search query (title, artists, groups, tags, etc).'
                 },
                 {
                     type: 'STRING',
