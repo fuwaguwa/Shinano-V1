@@ -21,7 +21,7 @@ export default new Command({
         {
             type: 'SUB_COMMAND',
             name: 'ship',
-            description: 'Get information about an Azur Lane ship!',
+            description: 'Get information about an Azur Lane ship via AzurAPI!',
             options: [
                 {
                     type: 'STRING',
@@ -34,7 +34,7 @@ export default new Command({
         {
             type: 'SUB_COMMAND',
             name: 'chapter',
-            description: 'Get information about an Azur Lane chapter!',
+            description: 'Get information about an Azur Lane chapter via AzurAPI!',
             options: [
                 {
                     type: 'STRING',
@@ -63,7 +63,7 @@ export default new Command({
         {
             type: 'SUB_COMMAND',
             name: 'gear',
-            description: 'Get information about an Azur Lane gear!',
+            description: 'Get information about an Azur Lane gear via AzurAPI!',
             options: [
                 {
                     type: 'STRING',
