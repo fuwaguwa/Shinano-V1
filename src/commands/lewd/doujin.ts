@@ -1,5 +1,6 @@
 import { Command } from "../../structures/Command";
 import { doujinCode } from "./subcommands/doujin/code";
+import { doujinRandom } from "./subcommands/doujin/random";
 import { doujinSearch } from "./subcommands/doujin/search";
 
 export default new Command({
@@ -44,6 +45,11 @@ export default new Command({
                     ]
                 }
             ]
+        },
+        {
+            type: 'SUB_COMMAND',
+            name: 'random',
+            description: 'Get a random doujin.'
         }
     ],
     run: async({interaction}) => {
@@ -56,6 +62,11 @@ export default new Command({
 
             case 'search': {
                 await doujinSearch(interaction)
+                break
+            }
+
+            case 'random': {
+                await doujinRandom(interaction)
                 break
             }
         }
