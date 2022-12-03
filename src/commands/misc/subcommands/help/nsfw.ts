@@ -42,7 +42,7 @@ export async function shinanoHelpNSFW(interaction: ShinanoInteraction) {
             },
             {
                 name: "Doujin",
-                value: "`code`"
+                value: "`code`, `search`, `random`"
             }
         )
     await interaction.reply({embeds:[nsfwEmbed], components: [navigation]})
