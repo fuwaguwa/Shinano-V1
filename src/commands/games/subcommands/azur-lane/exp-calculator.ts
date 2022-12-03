@@ -41,7 +41,7 @@ export async function azurLaneExpCalculator(interaction: ShinanoInteraction) {
 
 
     // EXP Calculation
-    const response = await fetch('https://AmagiAPI.fuwafuwa08.repl.co/azur-lane/ship-stats', {
+    const response = await fetch('https://AmagerAPI.fuwafuwa08.repl.co/azur-lane/ship-stats', {
         method: "GET",
         headers: {
             "Authorization": process.env.amagiApiKey

@@ -4,7 +4,7 @@ import fetch from 'node-fetch'
 
 export async function nsfwBomb(interaction: ShinanoInteraction) {
     const category = interaction.options.getString('category') || 'random'
-    const response = await fetch(`https://AmagiAPI.fuwafuwa08.repl.co/nsfw/bomb?category=${category}`, {
+    const response = await fetch(`https://AmagerAPI.fuwafuwa08.repl.co/nsfw/bomb?category=${category}`, {
         method: "GET",
         headers: {
             "Authorization": process.env.amagiApiKey
