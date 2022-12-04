@@ -7,12 +7,13 @@ import { azurLaneGear } from "./subcommands/azur-lane/gear";
 import { azurLaneExpCalculator } from "./subcommands/azur-lane/exp-calculator";
 import { azurLanePRCompletion } from "./subcommands/azur-lane/pr-completion";
 import { azurLaneNews } from "./subcommands/azur-lane/news";
+import { azurLaneFarm } from "./subcommands/azur-lane/farm"
 config()
+
 
 const AL = new AzurAPI();
 
 
- 
 export default new Command({
     name: 'azur-lane',
     description: 'Get information related to Azur Lane!',
@@ -71,6 +72,71 @@ export default new Command({
                     name: 'gear-name',
                     description: 'Gear Name'
                 },
+            ]
+        },
+        {
+            type: 'SUB_COMMAND',
+            name: 'farm',
+            description: 'See how long it would take a ship to get to a certain level at a stage.',
+            options: [
+                {
+                    type: 'STRING',
+                    required: true,
+                    name: 'ship-name',
+                    description: 'The ship\'s name.'
+                },
+                {
+                    type: 'INTEGER',
+                    required: true,
+                    name: 'current-level',
+                    description: 'Current level of the ship (Max 125)'
+                },
+                {
+                    type: 'INTEGER',
+                    required: true,
+                    name: 'target-level',
+                    description: 'The level your want to get the ship to (Max 125)'
+                },
+                {
+                    type: 'STRING',
+                    required: true,
+                    name: 'chapter',
+                    description: 'The chapter you want to farm at.',
+                    choices: [
+                        {name:'Chapter 1: Tora! Tora! Tora!', value: '1'},
+                        {name:'Chapter 2: Battle of the Coral Sea', value: '2'},
+                        {name:'Chapter 3: Midway Showdown', value: '3'},
+                        {name:'Chapter 4: Solomon\'s Nightmare Pt.1', value: '4'},
+                        {name:'Chapter 5: Solomon\'s Nightmare Pt.2', value: '5'},
+                        {name:'Chapter 6: Solomon\'s Nightmare Pt.3', value: '6'},
+                        {name:'Chapter 7: Night of Chaos', value: '7'},
+                        {name:'Chapter 8: Battle Komandorski', value: '8'},
+                        {name:'Chapter 9: Battle of Kula Gulf', value: '9'},
+                        {name:'Chapter 10: Battle of Kolombangara', value: '10'},
+                        {name:'Chapter 11: Empress Augusta Bay', value: '11'},
+                        {name:'Chapter 12: Mariana\'s Turmoil Pt.1', value: '12'},
+                        {name:'Chapter 13: Mariana\'s Turmoil Pt.2', value: '13'},
+                        {name:'Chapter 14: Surigao Night Combat', value: '14'},
+                    ]
+                },
+                {
+                    type: 'STRING',
+                    required: true,
+                    name: 'stage',
+                    description: 'The stage you want to farm at',
+                    choices: [
+                        {name: '1', value: '1'},
+                        {name: '2', value: '2'},
+                        {name: '3', value: '3'},
+                        {name: '4', value: '4'},
+                    ]
+                },
+                {
+                    type: 'BOOLEAN',
+                    required: false,
+                    name: 'flagship',
+                    description: 'Is the ship at the flagship position or not.'
+                }
             ]
         },
         {
@@ -197,6 +263,10 @@ export default new Command({
             case 'news': {
                 await azurLaneNews(interaction)
                 break
+            }
+
+            case 'farm': {
+                await azurLaneFarm(interaction, AL)
             }
         }
     }

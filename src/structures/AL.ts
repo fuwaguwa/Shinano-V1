@@ -1,5 +1,18 @@
 import { MessageEmbed } from "discord.js"
 import { createTable, toTitleCase } from "./Utils"
+import fetch from 'node-fetch'
+
+// Exp Table
+export async function getALEXPTable() {
+    const response = await fetch('https://AmagerAPI.fuwafuwa08.repl.co/azur-lane/ship-stats', {
+        method: "GET",
+        headers: {
+            "Authorization": process.env.amagiApiKey
+        }
+    })
+    const data = (await response.json()).body
+    return data
+}
 
 // Stats Formatting
 export function gearStats(gearStats, embed: MessageEmbed) {

@@ -1,6 +1,6 @@
 import { MessageEmbed } from "discord.js";
 import { ShinanoInteraction } from "../../../../typings/Command";
-import fetch from 'node-fetch'
+import { getALEXPTable } from "../../../../structures/AL";
 
 export async function azurLaneExpCalculator(interaction: ShinanoInteraction) {
     await interaction.deferReply()
@@ -41,13 +41,7 @@ export async function azurLaneExpCalculator(interaction: ShinanoInteraction) {
 
 
     // EXP Calculation
-    const response = await fetch('https://AmagerAPI.fuwafuwa08.repl.co/azur-lane/ship-stats', {
-        method: "GET",
-        headers: {
-            "Authorization": process.env.amagiApiKey
-        }
-    })
-    const data = (await response.json()).body
+    const data = await getALEXPTable()
 
 
 
