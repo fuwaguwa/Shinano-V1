@@ -67,11 +67,11 @@ export async function azurLaneFarm(interaction: ShinanoInteraction, AL: any) {
 
     // Stage EXP Stats
     let avgExpIncomeMob = (stage.baseXP.smallFleet + stage.baseXP.mediumFleet + stage.baseXP.largeFleet) / 3 
-    avgExpIncomeMob = Math.floor(avgExpIncomeMob * expMultiplier + avgExpIncomeMob)
+    avgExpIncomeMob = Math.round(avgExpIncomeMob * expMultiplier + avgExpIncomeMob)
     const bossExp = stage.baseXP.bossFleet + stage.baseXP.bossFleet * expMultiplier
 
-    const avgExpFromClearingMobs = Math.floor(avgExpIncomeMob * stage.requiredBattles)
-    const avgExpFromClearingAll = Math.floor(avgExpFromClearingMobs + bossExp)
+    const avgExpFromClearingMobs = Math.round(avgExpIncomeMob * stage.requiredBattles)
+    const avgExpFromClearingAll = Math.round(avgExpFromClearingMobs + bossExp)
 
     const mvpExpMob = avgExpFromClearingMobs * 2
     const mvpExpAll = avgExpFromClearingAll * 2
