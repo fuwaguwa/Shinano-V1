@@ -77,7 +77,7 @@ export default new Command({
         {
             type: 'SUB_COMMAND',
             name: 'farm',
-            description: 'See how long it would take a ship to get to a certain level at a stage.',
+            description: 'See the requirements for a ship to reach the target level at a certain stage.',
             options: [
                 {
                     type: 'STRING',
