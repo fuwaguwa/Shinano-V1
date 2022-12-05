@@ -80,11 +80,6 @@ export default new Command({
                 },
                 {
                     type: 'SUB_COMMAND',
-                    name: 'ass',
-                    description: 'Big Booty.'
-                },
-                {
-                    type: 'SUB_COMMAND',
                     name: 'head',
                     description: 'Girls "playing the trumpet"'
                 },
