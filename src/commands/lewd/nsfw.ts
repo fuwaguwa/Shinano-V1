@@ -113,26 +113,6 @@ export default new Command({
                 },
                 {
                     type: 'SUB_COMMAND',
-                    name: 'minge',
-                    description: 'Down there.'
-                },
-                {
-                    type: 'SUB_COMMAND',
-                    name: 'succubus',
-                    description: 'Demons girls that will suck you dry.'
-                },
-                {
-                    type: 'SUB_COMMAND',
-                    name: 'thighs',
-                    description: 'The undeniably best part of the leg.'
-                },
-                {
-                    type: 'SUB_COMMAND',
-                    name: 'yuri',
-                    description: 'Girls on girls'
-                },
-                {
-                    type: 'SUB_COMMAND',
                     name: 'genshin',
                     description: 'Genshin Girls'
                 },

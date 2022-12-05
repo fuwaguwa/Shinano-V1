@@ -34,7 +34,7 @@ export async function shinanoHelpNSFW(interaction: ShinanoInteraction) {
             },
             {
                 name: 'Hentai Commands:',
-                value: "`ass`, `a-level (anal)`, `bomb`, `breasts`, `feet`, `gif`, `head (blowjob)`, `nekomimi`, `minge (pussy)`, `random`, `succubus`, `thighs`"
+                value: "`a-level (anal)`, `bomb`, `breasts`, `feet`, `gif`, `head (blowjob)`, `nekomimi`, `random`"
             },
             {
                 name: "Private Collection (High-Quality):",
