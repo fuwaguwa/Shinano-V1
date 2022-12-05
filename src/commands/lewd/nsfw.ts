@@ -309,7 +309,7 @@ export default new Command({
                         if (tag === 'breasts') tag = 'boobs'
                         if (tag === 'a-level') tag = 'anal'
 
-                        const response = await fetch(`https://AmagiAPI.fuwafuwa08.repl.co/nsfw/public/${tag}`, {
+                        const response = await fetch(`https://amagi-api.vercel.app/nsfw/public/${tag}`, {
                             method: "GET",
                             headers: {
                                 "Authorization": process.env.amagiApiKey
@@ -334,7 +334,7 @@ export default new Command({
                 if (tag === 'a-level') tag = 'anal'
 
 
-                const response = await fetch(`https://AmagiAPI.fuwafuwa08.repl.co/nsfw/porn/${tag}`, {
+                const response = await fetch(`https://amagi-api.vercel.app/nsfw/porn/${tag}`, {
                     method: "GET",
                     headers: {
                         "Authorization": process.env.amagiApiKey

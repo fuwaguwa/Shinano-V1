@@ -6,7 +6,7 @@ export async function nsfwGif(interaction: ShinanoInteraction, lewdEmbed: Messag
     const gifTag: string = interaction.options.getString('gif-category')
     
     if (!gifTag) {
-        const response = await fetch(`https://AmagiAPI.fuwafuwa08.repl.co/nsfw/public/gif`, {
+        const response = await fetch(`https://amagi-api.vercel.app/nsfw/public/gif`, {
             method: "GET",
             headers: {
                 "Authorization": process.env.amagiApiKey
@@ -16,7 +16,7 @@ export async function nsfwGif(interaction: ShinanoInteraction, lewdEmbed: Messag
         lewdEmbed.setImage(waifu.link)
         await interaction.editReply({embeds:[lewdEmbed]})
     } else {
-        const response = await fetch(`https://AmagiAPI.fuwafuwa08.repl.co/nsfw/private/${gifTag}?type=gif`, {
+        const response = await fetch(`https://amagi-api.vercel.app/nsfw/private/${gifTag}?type=gif`, {
             method: "GET",
             headers: {
                 "Authorization": process.env.amagiApiKey
