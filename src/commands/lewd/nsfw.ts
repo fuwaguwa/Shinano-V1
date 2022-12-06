@@ -70,8 +70,33 @@ export default new Command({
                 },
                 {
                     type: 'SUB_COMMAND',
-                    name: 'a-level',
+                    name: 'anal',
                     description: 'There\'s more than one hole'
+                },
+                {
+                    type: 'SUB_COMMAND',
+                    name: 'ass',
+                    description: 'Big  booty.',
+                },
+                {
+                    type: 'SUB_COMMAND',
+                    name: 'thighs',
+                    description: 'The best part of the leg.'
+                },
+                {
+                    type: 'SUB_COMMAND',
+                    name: 'paizuri',
+                    description: 'Squished between thiccness.'
+                },
+                {
+                    type: 'SUB_COMMAND',
+                    name: 'solo',
+                    description: 'Single Player Mode.'
+                },
+                {
+                    type: 'SUB_COMMAND',
+                    name: 'white-stuff',
+                    description: 'Baby gravy.'
                 },
                 {
                     type: 'SUB_COMMAND',
@@ -80,7 +105,7 @@ export default new Command({
                 },
                 {
                     type: 'SUB_COMMAND',
-                    name: 'head',
+                    name: 'blowjob',
                     description: 'Girls "playing the trumpet"'
                 },
                 {
@@ -182,7 +207,12 @@ export default new Command({
                     type: 'SUB_COMMAND',
                     name: 'misc',
                     description: 'Categories that are not mentioned here!'
-                }
+                },
+                {
+                    type: 'SUB_COMMAND',
+                    name: 'minge',
+                    description: '😺🐈'
+                },
             ]
         },
         {
@@ -197,12 +227,17 @@ export default new Command({
                 },
                 {
                     type: 'SUB_COMMAND',
-                    name: 'a-level',
+                    name: 'white-stuff',
+                    description: 'Baby gravy.'
+                },
+                {
+                    type: 'SUB_COMMAND',
+                    name: 'anal',
                     description: 'There\'s more than one hole'
                 },
                 {
                     type: 'SUB_COMMAND',
-                    name: 'head',
+                    name: 'blowjob',
                     description: 'Girls eating up meat sticks.'
                 },
                 {
@@ -280,11 +315,10 @@ export default new Command({
                         let tag = interaction.options.getSubcommand()
 
                         if (tag === 'minge') tag = 'pussy'
-                        if (tag === 'head') tag = 'blowjob'
                         if (tag === 'breasts') tag = 'boobs'
-                        if (tag === 'a-level') tag = 'anal'
+                        if (tag === 'white-stuff') tag = 'cum'
 
-                        const response = await fetch(`https://amagi-api.vercel.app/nsfw/public/${tag}`, {
+                        const response = await fetch(`https://AmagiAPI.fuwafuwa08.repl.co/nsfw/public/${tag}`, {
                             method: "GET",
                             headers: {
                                 "Authorization": process.env.amagiApiKey
@@ -304,12 +338,12 @@ export default new Command({
                 let tag = interaction.options.getSubcommand()
 
                 if (tag === 'minge') tag = 'pussy'
-                if (tag === 'head') tag = 'blowjob'
                 if (tag === 'breasts') tag = 'boobs'
-                if (tag === 'a-level') tag = 'anal'
+                if (tag === 'white-stuff') tag = 'cum'
 
 
-                const response = await fetch(`https://amagi-api.vercel.app/nsfw/porn/${tag}`, {
+
+                const response = await fetch(`https://AmagiAPI.fuwafuwa08.repl.co/nsfw/porn/${tag}`, {
                     method: "GET",
                     headers: {
                         "Authorization": process.env.amagiApiKey
