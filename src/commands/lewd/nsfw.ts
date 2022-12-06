@@ -314,7 +314,7 @@ export default new Command({
                     default: {
                         let tag = interaction.options.getSubcommand()
 
-                        if (tag === 'minge') tag = 'pussy'
+                        if (tag === 'cunny') tag = 'pussy'
                         if (tag === 'breasts') tag = 'boobs'
                         if (tag === 'nut') tag = 'cum'
 
@@ -337,7 +337,7 @@ export default new Command({
             } else if (interaction.options.getSubcommandGroup() === 'irl') {
                 let tag = interaction.options.getSubcommand()
 
-                if (tag === 'minge') tag = 'pussy'
+                if (tag === 'cunny') tag = 'pussy'
                 if (tag === 'breasts') tag = 'boobs'
                 if (tag === 'nut') tag = 'cum'
 
