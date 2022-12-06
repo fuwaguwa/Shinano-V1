@@ -95,7 +95,7 @@ export default new Command({
                 },
                 {
                     type: 'SUB_COMMAND',
-                    name: 'white-stuff',
+                    name: 'nut',
                     description: 'Baby gravy.'
                 },
                 {
@@ -210,7 +210,7 @@ export default new Command({
                 },
                 {
                     type: 'SUB_COMMAND',
-                    name: 'minge',
+                    name: 'cunny',
                     description: '😺🐈'
                 },
             ]
@@ -227,8 +227,8 @@ export default new Command({
                 },
                 {
                     type: 'SUB_COMMAND',
-                    name: 'white-stuff',
-                    description: 'Baby gravy.'
+                    name: 'nut',
+                    description: 'Meat stick\'s special sauce.'
                 },
                 {
                     type: 'SUB_COMMAND',
@@ -247,7 +247,7 @@ export default new Command({
                 },
                 {
                     type: 'SUB_COMMAND',
-                    name: 'minge',
+                    name: 'cunny',
                     description: 'Down there.'
                 },
                 {
@@ -316,7 +316,7 @@ export default new Command({
 
                         if (tag === 'minge') tag = 'pussy'
                         if (tag === 'breasts') tag = 'boobs'
-                        if (tag === 'white-stuff') tag = 'cum'
+                        if (tag === 'nut') tag = 'cum'
 
                         const response = await fetch(`https://AmagiAPI.fuwafuwa08.repl.co/nsfw/public/${tag}`, {
                             method: "GET",
@@ -339,7 +339,7 @@ export default new Command({
 
                 if (tag === 'minge') tag = 'pussy'
                 if (tag === 'breasts') tag = 'boobs'
-                if (tag === 'white-stuff') tag = 'cum'
+                if (tag === 'nut') tag = 'cum'
 
 
 
