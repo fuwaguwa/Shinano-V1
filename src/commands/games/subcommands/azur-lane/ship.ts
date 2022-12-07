@@ -73,7 +73,7 @@ export async function azurLaneShip(interaction: ShinanoInteraction, AL: AzurAPI)
             .addFields(
                 {name: 'Construction:', value: ship.construction.constructionTime === 'Drop Only' ? 'Cannot Be Constructed' : ship.construction.constructionTime },
                 {name: 'Appears In:', value: aprIn},
-                {name: 'Obtainable From:', value: `${ship.obtainedFrom.obtainedFrom ? ship.obtainedFrom.obtainedFrom : `Maps`}`}
+                {name: 'Obtainable From:', value: `${ship.obtainedFrom.obtainedFrom ? ship.obtainedFrom.obtainedFrom : `Other Sources (Maps/Banner)`}`}
             )
     } else {
         // PR/DR Ships
