@@ -1,18 +1,15 @@
 import { AzurAPI } from "@azurapi/azurapi";
 import { MessageEmbed, MessageActionRow, MessageSelectMenu, InteractionCollector, SelectMenuInteraction } from "discord.js";
-import { gearStats, gearFits } from "../../../../structures/AL";
+import { gearStats, gearFits, gearSearch } from "../../../../structures/AL";
 import { ShinanoInteraction } from "../../../../typings/Command";
 
 export async function azurLaneGear(interaction: ShinanoInteraction, AL: AzurAPI) {
     await interaction.deferReply()
                 
-    const gearName: string = interaction.options.getString('gear-name')
-    const gearFiltered = AL.equipments.filter((gear) => {
-        if (gear.names['wiki'] && gear.names['wiki'].toLowerCase() === gearName.toLowerCase()) return gear;
-        if (gear.names.en.toLowerCase() === gearName.toLowerCase()) return gear;
-    })
+    const gearName: string = interaction.options.getString('gear-name').toLowerCase()
+    const gearFiltered = await gearSearch(gearName, AL)
 
-    if (gearFiltered.length === 0 || !gearFiltered) {
+    if (gearFiltered.length === 0) {
         const noResult: MessageEmbed = new MessageEmbed()
             .setColor('RED')
             .setDescription('Gear not found! Make sure you entered the gear\'s full name or spelt the gear\'s name properly!')

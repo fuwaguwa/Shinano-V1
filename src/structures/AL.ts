@@ -1,6 +1,8 @@
 import { MessageEmbed } from "discord.js"
 import { createTable, toTitleCase } from "./Utils"
 import fetch from 'node-fetch'
+import FuzzySearch from 'fuzzy-search'
+import { AzurAPI } from "@azurapi/azurapi"
 
 // Exp Table
 export async function getALEXPTable() {
@@ -346,4 +348,24 @@ export function shipColor(ship: any) {
     if (ship.rarity === 'Ultra Rare' || ship.rarity === 'Decisive') color = '#2f3136';
 
     return color
+}
+
+
+// Gear Search
+export async function gearSearch(gearName: string, AL: AzurAPI) {
+    const allGears = []
+    AL.equipments.forEach((gear) => allGears.push(gear))
+
+    const searcher = new FuzzySearch(allGears, 
+        [
+            'names.en',
+            'names.wiki'
+        ],
+        {
+            caseSensitive: false
+        }
+    )
+
+    const result = searcher.search(gearName)
+    return result
 }

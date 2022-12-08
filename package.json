@@ -25,6 +25,7 @@
         "discord.js": "^13.7.0",
         "dotenv": "^10.0.0",
         "formidable": "^2.0.1",
+        "fuzzy-search": "^3.2.1",
         "genshin-db": "^4.3.2",
         "glob": "^7.2.3",
         "mongoose": "^6.3.4",
