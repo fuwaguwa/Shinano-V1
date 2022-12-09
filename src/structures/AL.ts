@@ -1,8 +1,8 @@
 import { MessageEmbed } from "discord.js"
 import { createTable, toTitleCase } from "./Utils"
 import fetch from 'node-fetch'
-import FuzzySearch from 'fuzzy-search'
 import { AzurAPI } from "@azurapi/azurapi"
+import Fuse from 'fuse.js'
 
 // Exp Table
 export async function getALEXPTable() {
@@ -356,15 +356,9 @@ export async function gearSearch(gearName: string, AL: AzurAPI) {
     const allGears = []
     AL.equipments.forEach((gear) => allGears.push(gear))
 
-    const searcher = new FuzzySearch(allGears, 
-        [
-            'names.en',
-            'names.wiki'
-        ],
-        {
-            caseSensitive: false
-        }
-    )
+    const searcher = new Fuse(allGears, {
+        keys: ['names.en','names.wiki'],
+    })
 
     const result = searcher.search(gearName)
     return result

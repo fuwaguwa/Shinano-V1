@@ -15,7 +15,7 @@ export async function azurLaneGear(interaction: ShinanoInteraction, AL: AzurAPI)
             .setDescription('Gear not found! Make sure you entered the gear\'s full name or spelt the gear\'s name properly!')
         return interaction.editReply({embeds:[noResult]})
     }
-    const gear: any = gearFiltered[0]
+    const gear: any = gearFiltered[0].item
 
 
     // Gears
