@@ -139,12 +139,12 @@ export default new Command({
                 {
                     type: 'SUB_COMMAND',
                     name: 'undies',
-                    description: 'Undies & Sport Clothes.'
+                    description: 'Undies, sportwears and swimsuits.'
                 },
                 {
                     type: 'SUB_COMMAND',
                     name: 'kemonomimi',
-                    description: 'Foxgirls, catgirls, bunny girls, succubus and more!'
+                    description: 'Fox girls, catgirls, bunny girls, succubus and more!'
                 },
                 {
                     type: 'SUB_COMMAND',
@@ -154,17 +154,17 @@ export default new Command({
                 {
                     type: 'SUB_COMMAND',
                     name: 'vtubers',
-                    description: 'Lewd VTubers Pics!'
+                    description: 'Lewd VTubers!'
                 },
                 {
                     type: 'SUB_COMMAND',
                     name: 'shipgirls',
-                    description: 'Azur Lane Shipgirls!'
+                    description: 'Shipgirls from Azur Lane!'
                 },
                 {
                     type: 'SUB_COMMAND',
                     name: 'elf',
-                    description: 'For people who are affectionate with pointy-eared girls.'
+                    description: 'Thicc and pointy-eared.'
                 },
                 {
                     type: 'SUB_COMMAND',
@@ -201,7 +201,7 @@ export default new Command({
                 {
                     type: 'SUB_COMMAND',
                     name: 'breasts',
-                    description: 'Girls with big jugs!'
+                    description: 'Girls with huge jugs!'
                 },
                 {
                     type: 'SUB_COMMAND',
