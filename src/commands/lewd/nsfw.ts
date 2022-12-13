@@ -136,7 +136,7 @@ export default new Command({
                 {
                     type: 'SUB_COMMAND',
                     name: 'undies',
-                    description: 'Undies, sportwears and swimsuits.'
+                    description: 'Undies, sportwears, swimsuits and bodysuits.'
                 },
                 {
                     type: 'SUB_COMMAND',
