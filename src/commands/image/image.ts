@@ -1,5 +1,5 @@
 import { Command } from "../../structures/Command";
-import { MessageAttachment } from "discord.js";
+import { MessageAttachment, MessageEmbed } from "discord.js";
 import Canvacord from "canvacord"
 import Canvas from "canvas"
 import { config } from 'dotenv'
@@ -103,6 +103,30 @@ export default new Command({
                 }
             ],
         },
+        {
+            type: 'SUB_COMMAND',
+            name: 'namecard',
+            description: 'Generate a Genshin namecard.',
+            options: [
+                {
+                    type: 'STRING',
+                    required: true,
+                    name: 'birthday',
+                    description: 'The birthday to display on the namecard'
+                },
+                {
+                    type: 'USER',
+                    name: 'user',
+                    description: 'User to generate a namecard for.'
+                },
+                {
+                    type: 'STRING',
+                    name: 'signature',
+                    description: 'The signature of the namecard.'
+                },
+            ],
+           
+        }
     ],
     run: async({interaction}) => {
         const target = interaction.options.getUser('user') || interaction.user
@@ -193,6 +217,26 @@ export default new Command({
             case 'poop': {
                 image = await CVC.Canvas.shit(avatar)
                 break
+            }
+
+            case 'namecard': {
+                const user = interaction.options.getUser('user') || interaction.user
+                
+                const avatar = user.displayAvatarURL({dynamic: false, format: 'png'})
+                const birthday = interaction.options.getString('birthday')
+                let description = interaction.options.getString('signature')
+        
+                let query = `avatar=${avatar}&birthday=${birthday}&username=${user.username}`
+                if (description) {
+                    description = description.split(' ').join('%20')
+                    query = query + `&description=${description}`
+                }
+                
+                const url = `https://some-random-api.ml/canvas/misc/namecard?${query}`
+                const embed: MessageEmbed = new MessageEmbed()
+                    .setColor('#2f3136')
+                    .setImage(url)
+                return interaction.editReply({embeds: [embed]})
             }
         }
         
