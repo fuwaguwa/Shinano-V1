@@ -13,6 +13,8 @@ export async function shinanoHelpSFW(interaction: ShinanoInteraction) {
         
         **8ball**
         <:curve:1021036738161950800>Ask the mighty 8ball
+        **anime-quote**
+        <:curve:1021036738161950800>Send you an edgy, funny, motivational or straight up random anime quote.
         **blackjack**
         <:curve:1021036738161950800>Play some blackjack with the bot
         **define**
@@ -22,15 +24,15 @@ export async function shinanoHelpSFW(interaction: ShinanoInteraction) {
         **pick**
         <:curve:1021036738161950800>Let Shinano make decision for you!
         **match**
-        <:curve:1021036738161950800>Checks two person love percentage
-        **roll**
-        <:curve:1021036738161950800>Roll a dice`
+        <:curve:1021036738161950800>Checks two person love percentage`
     )
     const funCommand2: MessageEmbed = new MessageEmbed()
         .setColor('#2f3136')
         .setDescription(`
             /<command>
             
+            **roll**
+            <:curve:1021036738161950800>Roll a dice
             **rps**
             <:curve:1021036738161950800>Play rock paper scissor against the bot!
             **ttt**
@@ -52,28 +54,44 @@ export async function shinanoHelpSFW(interaction: ShinanoInteraction) {
             <:curve:1021036738161950800>Bronya's certificate
             **cat**
             <:curve:1021036738161950800>Generate a picture of a cat
+            **comment**
+            <:curve:1021036738161950800>Generate a fake YouTube comment!
             **dog**
             <:curve:1021036738161950800>Generate a picture of a dog
             **fox**
             <:curve:1021036738161950800>Send an image of a fox!
             **gay**
-            <:curve:1021036738161950800>Taste the rainbow
-            **jail**
-            <:curve:1021036738161950800>Go to horny jail!
-            **nekomimi**
-            <:curve:1021036738161950800>Generate a (SFW) picture of a catgirl!`
+            <:curve:1021036738161950800>Taste the rainbow.
+            **horny-card**
+            <:curve:1021036738161950800>Give someone the horny card.`
         )
     const imageCommand2: MessageEmbed = new MessageEmbed()
         .setColor('#2f3136')
         .setDescription(`
             /<command>
 
-            **rip**
-            <:curve:1021036738161950800>*dies*
-            **shit**
-            <:curve:1021036738161950800>Put a bounty on someone
+            **jail**
+            <:curve:1021036738161950800>Go to horny jail!
+            **namecard**
+            <:curve:1021036738161950800>Generate a Genshin namecard!
+            **nekomimi**
+            <:curve:1021036738161950800>Generate a (SFW) picture of a catgirl!
             **sigma**
-            <:curve:1021036738161950800>Sigma Grindset`
+            <:curve:1021036738161950800>Sigma Grindset
+            **simp-card**
+            <:curve:1021036738161950800>Give someone this card for simping too much!
+            **triggered**
+            <:curve:1021036738161950800>Triggered.
+            **tweet**
+            <:curve:1021036738161950800>Generate a fake tweet.`
+        )
+    const imageCommand3: MessageEmbed = new MessageEmbed()
+        .setColor('#2f3136')
+        .setDescription(`
+            /<command>
+            
+            **wasted**
+            <:curve:1021036738161950800>Wasted!`
         )
 
     
