@@ -32,14 +32,14 @@ export default new Command({
             return interaction.editReply({embeds: [noResult]})
         }
 
-
         // Outputting Definition
         const wordInfo = definition.list[0]
         const definitionEmbed: MessageEmbed = new MessageEmbed()
             .setColor('#2f3136')
             .setTitle(`"${wordInfo.word}"`)
-            .addField('Definition', wordInfo.definition)
+            .setDescription(wordInfo.definition)
             .setFooter({text: `Defintion by ${wordInfo.author} | ${wordInfo.thumbs_up} 👍 /  ${wordInfo.thumbs_down} 👎`})
+        if (word.toLowerCase() === 'shinano') definitionEmbed.setImage('https://cdn.donmai.us/sample/c0/37/__shinano_azur_lane_drawn_by_waa_okami__sample-c037f94c2287a60578bef71acf163865.jpg')
         await interaction.editReply({embeds: [definitionEmbed]})
     }
 })
