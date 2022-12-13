@@ -54,18 +54,6 @@ export default new Command({
         },
         {
             type: 'SUB_COMMAND',
-            name: 'rip',
-            description: 'F in the chat.',
-            options: [
-                {
-                    type: 'USER',
-                    name: 'user',
-                    description:'RIP <user>.',
-                }
-            ],
-        },
-        {
-            type: 'SUB_COMMAND',
             name: 'sigma',
             description: 'Sigma Grindset.',
             options: [
@@ -79,29 +67,51 @@ export default new Command({
         },
         {
             type: 'SUB_COMMAND',
-            name: 'slap',
-            description: ' Batman slapping.',
+            name: 'wasted',
+            description: 'Wasted.',
             options: [
                 {
                     type: 'USER',
-                    required: true,
                     name: 'user',
-                    description:'User to slap.',
+                    description:'Wasted user.',
                 }
-            ],
+            ]
         },
         {
             type: 'SUB_COMMAND',
-            name: 'poop',
-            description: 'Ew, I stepped in poop.',
+            name: 'triggered',
+            description: 'Triggered.',
             options: [
                 {
                     type: 'USER',
-                    required: true,
                     name: 'user',
-                    description:'User.',
+                    description:'Triggered user.',
                 }
-            ],
+            ]
+        },
+        {
+            type: 'SUB_COMMAND',
+            name: 'horny-card',
+            description: 'Grant someone the horny card',
+            options: [
+                {
+                    type: 'USER',
+                    name: 'user',
+                    description:'User that will get the card.',
+                }
+            ]
+        },
+        {
+            type: 'SUB_COMMAND',
+            name: 'simp-card',
+            description: 'Give someone the simp card. Shame on them',
+            options: [
+                {
+                    type: 'USER',
+                    name: 'user',
+                    description:'User that will get the card.',
+                }
+            ]
         },
         {
             type: 'SUB_COMMAND',
@@ -117,7 +127,7 @@ export default new Command({
                 {
                     type: 'USER',
                     name: 'user',
-                    description: 'User to generate a namecard for.'
+                    description: 'The user on the namecard.'
                 },
                 {
                     type: 'STRING',
@@ -126,6 +136,72 @@ export default new Command({
                 },
             ],
            
+        },
+        {
+            type: 'SUB_COMMAND',
+            name: 'comment',
+            description: 'Generate a fake picture of a YouTube comment.',
+            options: [
+                {
+                    type: 'STRING',
+                    required: true,
+                    name: 'content',
+                    description: 'The content of the comment.'
+                },
+                {
+                    type: 'STRING',
+                    name: 'user',
+                    description: 'The author of the comment.'
+                }
+            ]
+        },
+        {
+            type: 'SUB_COMMAND',
+            name: 'tweet',
+            description: 'Generate a fake tweet.',
+            options: [
+                {
+                    type: 'STRING',
+                    required: true,
+                    name: 'display-name',
+                    description: 'Display name of the tweet.'
+                },
+                {
+                    type: 'STRING',
+                    required: true,
+                    name: 'content',
+                    description: 'Content of the tweet.'
+                },
+                {
+                    type: 'USER',
+                    name: 'user',
+                    description: 'The author of the tweet.'
+                },
+                {
+                    type: 'INTEGER',
+                    name: 'replies',
+                    description: 'The number of replies.'
+                },
+                {
+                    type: 'INTEGER',
+                    name: 'retweets',
+                    description: 'The number of retweets.'
+                },
+                {
+                    type: 'INTEGER',
+                    name: 'likes',
+                    description: 'The number of likes.'
+                },
+                {
+                    type: 'STRING',
+                    name: 'theme',
+                    description: 'Theme of the tweet.',
+                    choices: [
+                        {name: 'Dark Mode', value: 'dark'},
+                        {name: 'Light Mode', value: 'light'}
+                    ]
+                }
+            ]
         }
     ],
     run: async({interaction}) => {
@@ -134,14 +210,24 @@ export default new Command({
 
         await interaction.deferReply()
         let image: Buffer
+        let link: string
 
         switch (interaction.options.getSubcommand()) {
             default: {
-                image = await CVC.Canvas[interaction.options.getSubcommand()](avatar)
+                link = 
+                `https://some-random-api.ml/canvas/overlay/${interaction.options.getSubcommand()}?avatar=${avatar}`
+                break
             }
 
-            case 'gay': {
-                image = await CVC.Canvas.rainbow(avatar);
+            case 'horny-card': {
+                link = 
+                `https://some-random-api.ml/canvas/misc/horny?avatar=${avatar}`
+                break
+            }
+
+            case 'simp-card': {
+                link = 
+                `https://some-random-api.ml/canvas/misc/simpcard?avatar=${avatar}`
                 break
             }
 
@@ -207,40 +293,63 @@ export default new Command({
                 break
             }
 
-            case 'slap': {
-                const iuserimg = interaction.user.displayAvatarURL({size: 512, format: "png"})
-                image = await CVC.Canvas.slap(iuserimg, avatar)
-                break
-            }
-
-
-            case 'poop': {
-                image = await CVC.Canvas.shit(avatar)
-                break
-            }
-
             case 'namecard': {
-                const user = interaction.options.getUser('user') || interaction.user
-                
-                const avatar = user.displayAvatarURL({dynamic: false, format: 'png'})
+                const avatar = target.displayAvatarURL({dynamic: false, format: 'png'})
                 const birthday = interaction.options.getString('birthday')
+                const username = target.username.split(' ').join('%20')
                 let description = interaction.options.getString('signature')
         
-                let query = `avatar=${avatar}&birthday=${birthday}&username=${user.username}`
+                let query = `avatar=${avatar}&birthday=${birthday}&username=${username}`
                 if (description) {
                     description = description.split(' ').join('%20')
-                    query = query + `&description=${description}`
+                    query +=`&description=${description}`
                 }
                 
-                const url = `https://some-random-api.ml/canvas/misc/namecard?${query}`
-                const embed: MessageEmbed = new MessageEmbed()
-                    .setColor('#2f3136')
-                    .setImage(url)
-                return interaction.editReply({embeds: [embed]})
+                link = `https://some-random-api.ml/canvas/misc/namecard?${query}`
+                break
+            }
+
+            case 'comment': {
+                const content = (interaction.options.getString('content')).split(' ').join('%20')
+                const username = target.username.split(' ').join('%20')
+                const query = `avatar=${avatar}&username=${username}&comment=${content}`
+
+
+                link = 
+                `https://some-random-api.ml/canvas/misc/youtube-comment?${query}`
+                break
+            }
+
+            case 'tweet': {
+                const displayName = (interaction.options.getString('display-name')).split(' ').join('%20')
+                const username = target.username.toLowerCase().split(' ').join('%20')
+                const content = (interaction.options.getString('content')).split(' ').join('%20')
+                const replies = interaction.options.getInteger('replies')
+                const retweets = interaction.options.getInteger('retweets')
+                const likes = interaction.options.getInteger('likes')
+                const theme = interaction.options.getString('theme')
+
+                let query = 
+                `avatar=${avatar}&content=${content}&username=${username}&displayname=${displayName}&comment=${content}`
+                if (replies) query += `&replies=${replies}`
+                if (retweets) query += `&retweets=${retweets}`
+                if (likes) query += `&likes=${likes}`
+                if (theme) query += `&theme=${theme}`
+
+                link = `https://some-random-api.ml/canvas/misc/tweet?${query}`
+                break
             }
         }
         
-        let attachment = new MessageAttachment(image, 'image.gif')
-        await interaction.editReply({files:[attachment]})
+
+        if (image) {
+            let attachment = new MessageAttachment(image, 'image.gif')
+            await interaction.editReply({files:[attachment]})
+        } else {
+            const embed: MessageEmbed = new MessageEmbed()
+                .setColor('#2f3136')
+                .setImage(link)
+            await interaction.editReply({embeds: [embed]})
+        }
     }
 })
