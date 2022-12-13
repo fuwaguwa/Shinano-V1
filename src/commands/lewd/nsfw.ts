@@ -40,7 +40,6 @@ export default new Command({
                                 {name: 'Kemonomimi', value: 'kemonomimi'},
                                 {name: 'Misc', value: 'misc'},
                                 {name: 'Uniform', value: 'uniform'},
-                                {name: 'VTubers', value: 'vtubers'},
                             ]
                         }
                     ]
@@ -63,7 +62,6 @@ export default new Command({
                                 {name: 'Kemonomimi', value: 'kemonomimi'},
                                 {name: 'Misc', value: 'misc'},
                                 {name: 'Uniform', value: 'uniform'},
-                                {name: 'VTubers', value: 'vtubers'},
                             ]
                         }
                     ]
@@ -126,7 +124,6 @@ export default new Command({
                                 {name: 'Kemonomimi', value: 'kemonomimi'},
                                 {name: 'Misc', value: 'misc'},
                                 {name: 'Uniform', value: 'uniform'},
-                                {name: 'VTubers', value: 'vtubers'},
                             ]
                         }
                     ]
@@ -150,11 +147,6 @@ export default new Command({
                     type: 'SUB_COMMAND',
                     name: 'uniform',
                     description: 'Maid, Office Lady, JK, you name it!'
-                },
-                {
-                    type: 'SUB_COMMAND',
-                    name: 'vtubers',
-                    description: 'Lewd VTubers!'
                 },
                 {
                     type: 'SUB_COMMAND',
@@ -183,7 +175,6 @@ export default new Command({
                                 {name: 'Kemonomimi', value: 'kemonomimi'},
                                 {name: 'Misc', value: 'misc'},
                                 {name: 'Uniform', value: 'uniform'},
-                                {name: 'VTubers', value: 'vtubers'},
                             ]
                         }
                     ]
@@ -294,7 +285,7 @@ export default new Command({
 
 
                     case 'elf': case 'genshin': case 'kemonomimi': case 'misc': case 'shipgirls': case 'undies': case 'uniform':
-                    case 'vtubers': case 'yuri': {
+                    case 'yuri': {
                         await nsfwPrivateCollection(interaction, lewdEmbed, interaction.options.getSubcommand())
                         break
                     }
