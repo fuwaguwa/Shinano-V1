@@ -7,25 +7,25 @@ export async function shinanoHelpSFW(interaction: ShinanoInteraction) {
     // Setup 
     // Fun Embeds
     const funCommand1: MessageEmbed = new MessageEmbed()
-    .setColor('#2f3136')
-    .setDescription(`
-        /<command>
-        
-        **8ball**
-        <:curve:1021036738161950800>Ask the mighty 8ball
-        **anime-quote**
-        <:curve:1021036738161950800>Send you an edgy, funny, motivational or straight up random anime quote.
-        **blackjack**
-        <:curve:1021036738161950800>Play some blackjack with the bot
-        **define**
-        <:curve:1021036738161950800>Get a word's definition from Urban Dictionary
-        **dadjoke**
-        <:curve:1021036738161950800>Guranteed funny dadjoke
-        **pick**
-        <:curve:1021036738161950800>Let Shinano make decision for you!
-        **match**
-        <:curve:1021036738161950800>Checks two person love percentage`
-    )
+        .setColor('#2f3136')
+        .setDescription(`
+            /<command>
+            
+            **8ball**
+            <:curve:1021036738161950800>Ask the mighty 8ball
+            **anime-quote**
+            <:curve:1021036738161950800>Send you an edgy, funny, motivational or straight up random anime quote.
+            **blackjack**
+            <:curve:1021036738161950800>Play some blackjack with the bot
+            **define**
+            <:curve:1021036738161950800>Get a word's definition from Urban Dictionary
+            **dadjoke**
+            <:curve:1021036738161950800>Guranteed funny dadjoke
+            **pick**
+            <:curve:1021036738161950800>Let Shinano make decision for you!
+            **match**
+            <:curve:1021036738161950800>Checks two person love percentage`
+        )
     const funCommand2: MessageEmbed = new MessageEmbed()
         .setColor('#2f3136')
         .setDescription(`
