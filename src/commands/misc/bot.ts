@@ -2,7 +2,6 @@ import { Command } from "../../structures/Command";
 import { botInfo } from "./subcommands/bot/info";
 import { botStats } from "./subcommands/bot/stats";
 import { botSupport } from "./subcommands/bot/support";
-import { botUptime } from "./subcommands/bot/uptime";
 import { botVote } from "./subcommands/bot/vote";
 import { botPing } from "./subcommands/bot/ping";
 
@@ -20,11 +19,6 @@ export default new Command({
             type: 'SUB_COMMAND',
             name: 'stats',
             description: 'Display bot\'s stats.',
-        },
-        {
-            type:'SUB_COMMAND',
-            name: 'uptime',
-            description: 'Show the bot\'s uptime.',
         },
         {
             type: 'SUB_COMMAND',
@@ -58,12 +52,6 @@ export default new Command({
 
             case 'support': {
                 await botSupport(interaction)
-                break
-            }
-
-
-            case 'uptime': {
-                await botUptime(interaction)
                 break
             }
 
