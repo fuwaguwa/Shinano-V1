@@ -4,6 +4,9 @@ import { client } from "..";
 import { sleep } from "./Utils";
 import News from '../schemas/ALNews'
 import { config } from "dotenv";
+import { lastTweetId } from '../../lastTweet.json'
+import path from "path";
+import fs from 'fs'
 config()
 
 async function listenForever(streamFactory, dataConsumer) {
@@ -23,6 +26,12 @@ async function listenForever(streamFactory, dataConsumer) {
 
 
 async function postTweet(tweet) {
+    if (`${tweet.conversation_id}` === lastTweetId) return
+
+    fs.writeFileSync(path.join(__dirname, "..", "..", "lastTweet.json"), JSON.stringify({
+        "lastTweetId": `${tweet.conversation_id}`
+    }, null, "\t"))
+
     const iterations: number = 0;
     for await (const doc of News.find()) {
         if (iterations == 40) sleep(1000);
