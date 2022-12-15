@@ -62,8 +62,8 @@ export async function shinanoHelpSFW(interaction: ShinanoInteraction) {
             <:curve:1021036738161950800>Send an image of a fox!
             **gay**
             <:curve:1021036738161950800>Taste the rainbow.
-            **horny-card**
-            <:curve:1021036738161950800>Give someone the horny card.`
+            **horni-card**
+            <:curve:1021036738161950800>Give someone the horni card.`
         )
     const imageCommand2: MessageEmbed = new MessageEmbed()
         .setColor('#2f3136')
@@ -71,7 +71,7 @@ export async function shinanoHelpSFW(interaction: ShinanoInteraction) {
             /<command>
 
             **jail**
-            <:curve:1021036738161950800>Go to horny jail!
+            <:curve:1021036738161950800>Go to horni jail!
             **namecard**
             <:curve:1021036738161950800>Generate a Genshin namecard!
             **nekomimi**

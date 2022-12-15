@@ -68,13 +68,13 @@ export default new Command({
                 },
                 {
                     type: 'SUB_COMMAND',
-                    name: 'anal',
-                    description: 'There\'s more than one hole'
+                    name: 'a-level',
+                    description: 'There\'s more than one hole.'
                 },
                 {
                     type: 'SUB_COMMAND',
                     name: 'ass',
-                    description: 'Big  booty.',
+                    description: 'Big booty.',
                 },
                 {
                     type: 'SUB_COMMAND',
@@ -103,7 +103,7 @@ export default new Command({
                 },
                 {
                     type: 'SUB_COMMAND',
-                    name: 'blowjob',
+                    name: 'oral',
                     description: 'Girls "playing the trumpet"'
                 },
                 {
@@ -219,17 +219,17 @@ export default new Command({
                 {
                     type: 'SUB_COMMAND',
                     name: 'nut',
-                    description: 'Meat stick\'s special sauce.'
+                    description: 'Special sauce from the meat.'
                 },
                 {
                     type: 'SUB_COMMAND',
-                    name: 'anal',
+                    name: 'a-level',
                     description: 'There\'s more than one hole'
                 },
                 {
                     type: 'SUB_COMMAND',
-                    name: 'blowjob',
-                    description: 'Girls eating up meat sticks.'
+                    name: 'oral',
+                    description: 'The SUCC.'
                 },
                 {
                     type: 'SUB_COMMAND',
@@ -308,6 +308,9 @@ export default new Command({
                         if (tag === 'cunny') tag = 'pussy'
                         if (tag === 'breasts') tag = 'boobs'
                         if (tag === 'nut') tag = 'cum'
+                        if (tag === 'oral') tag = 'blowjob'
+                        if (tag === 'a-level') tag = 'anal'
+
 
                         const response = await fetch(`https://AmagiAPI.fuwafuwa08.repl.co/nsfw/public/${tag}`, {
                             method: "GET",
@@ -331,6 +334,9 @@ export default new Command({
                 if (tag === 'cunny') tag = 'pussy'
                 if (tag === 'breasts') tag = 'boobs'
                 if (tag === 'nut') tag = 'cum'
+                if (tag === 'oral') tag = 'blowjob'
+                if (tag === 'a-level') tag = 'anal'
+
 
 
 

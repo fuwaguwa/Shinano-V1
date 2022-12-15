@@ -91,8 +91,8 @@ export default new Command({
         },
         {
             type: 'SUB_COMMAND',
-            name: 'horny-card',
-            description: 'Grant someone the horny card',
+            name: 'horni-card',
+            description: 'Grant someone the horni card',
             options: [
                 {
                     type: 'USER',
@@ -219,9 +219,9 @@ export default new Command({
                 break
             }
 
-            case 'horny-card': {
+            case 'horni-card': {
                 link = 
-                `https://some-random-api.ml/canvas/misc/horny?avatar=${avatar}`
+                `https://some-random-api.ml/canvas/misc/horni?avatar=${avatar}`
                 break
             }
 
