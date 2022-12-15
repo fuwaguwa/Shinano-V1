@@ -182,6 +182,8 @@ export async function shinanoHelpSFW(interaction: ShinanoInteraction) {
             <:curve:1021036738161950800>Send the latest tweets/news about the game for both EN and JP server from the official accounts!
             **exp**
             <:curve:1021036738161950800>Calculate the EXP needed to get your ship to the desired level
+            **farm**
+            <:curve:1021036738161950800>Calculate the EXP needed for your ship to reach the desired level by farming at a certain stage!
             **pr-completion**
             <:curve:1021036738161950800>Calculate your PR completion!`
 
