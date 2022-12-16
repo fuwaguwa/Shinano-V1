@@ -1,5 +1,5 @@
 import { TextChannel } from "discord.js";
-import Twitter from "twitter-v2";
+import { ETwitterStreamEvent, TwitterApi } from 'twitter-api-v2'
 import { client } from "..";
 import { sleep } from "./Utils";
 import News from '../schemas/ALNews'
@@ -26,11 +26,11 @@ async function listenForever(streamFactory, dataConsumer) {
 
 
 async function postTweet(tweet) {
-    if (`${tweet.conversation_id}` === lastTweetId) return
-    if (!['993682160744738816', '864400939125415936'].includes(`${tweet.author_id}`)) return;
+    if (`${tweet.data.conversation_id}` === lastTweetId) return
+    if (!['993682160744738816', '864400939125415936'].includes(`${tweet.data.author_id}`)) return;
 
     fs.writeFileSync(path.join(__dirname, "..", "..", "lastTweet.json"), JSON.stringify({
-        "lastTweetId": `${tweet.conversation_id}`
+        "lastTweetId": `${tweet.data.conversation_id}`
     }, null, "\t"))
 
     const iterations: number = 0;
@@ -41,7 +41,7 @@ async function postTweet(tweet) {
             const guild = await client.guilds.fetch(doc.guildId)
             const channel = await guild.channels.fetch(doc.channelId)
 
-            const link: string = `https://twitter.com/${tweet.author_id}/status/${tweet.conversation_id}`
+            const link: string = `https://twitter.com/${tweet.data.author_id}/status/${tweet.data.conversation_id}`
             let server: string
 
             link.includes("993682160744738816") ? server = 'EN' : server = 'JP'
@@ -59,17 +59,20 @@ async function postTweet(tweet) {
 }
 
 export async function startTweetListener() {
-    const twitterClient = new Twitter({bearer_token: process.env.twitterBearerToken})
-    const endpointParams = {
-        'tweet.fields': [ 'author_id', 'conversation_id' ],
-        'expansions': [ 'author_id', 'referenced_tweets.id' ],
-        'media.fields': [ 'url' ]
-    }
+    const twitClient = new TwitterApi(process.env.twitterBearerToken)
+    const stream = await twitClient.v2.searchStream({
+        'tweet.fields': ['author_id', 'conversation_id'],
+        'expansions': ['author_id', 'referenced_tweets.id'],
+        'media.fields': ['url'],
+    })
 
-    const stream = twitterClient.stream('tweets/search/stream', endpointParams)
-    
-    await listenForever(
-        () => stream,
-        postTweet,
-    )
+    stream.autoReconnect = true
+
+    stream.on(ETwitterStreamEvent.ConnectionError, (err) => {console.log('Twitter: Connection Error', err)})
+    stream.on(ETwitterStreamEvent.ConnectionClosed, () => {console.log("Twitter: Connection Closed")})
+    stream.on(ETwitterStreamEvent.Reconnected, () => {console.log("Twitter: Reconnected to stream")})
+    stream.on(ETwitterStreamEvent.ReconnectAttempt, (tries) => {console.log(`Twitter: Reconnection Attempt#${tries}`)})
+    stream.on(ETwitterStreamEvent.ReconnectError, (err) => {console.log("Twitter: Reconnect Error", err)})
+
+    stream.on(ETwitterStreamEvent.Data, postTweet)
 }

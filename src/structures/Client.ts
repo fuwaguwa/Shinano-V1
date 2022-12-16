@@ -55,9 +55,9 @@ export class Shinano extends Client {
             
             
             const startEmbed: MessageEmbed = new MessageEmbed()
-            .setColor('GREEN')
-            .setDescription(`Shinano has been started!`)
-            .setTimestamp()
+                .setColor('GREEN')
+                .setDescription(`Shinano has been started!`)
+                .setTimestamp()
             await (channel as TextChannel).send({embeds: [startEmbed]});
             
             
@@ -84,6 +84,7 @@ export class Shinano extends Client {
 
             // Azur Lane News
             if (!process.env.guildId) await startTweetListener()
+            console.log("Connected to Twitter stream!")
         })();
 
         
