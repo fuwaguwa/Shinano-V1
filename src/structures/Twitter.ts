@@ -27,6 +27,7 @@ async function listenForever(streamFactory, dataConsumer) {
 
 async function postTweet(tweet) {
     if (`${tweet.conversation_id}` === lastTweetId) return
+    if (!['993682160744738816', '864400939125415936'].includes(`${tweet.author_id}`)) return;
 
     fs.writeFileSync(path.join(__dirname, "..", "..", "lastTweet.json"), JSON.stringify({
         "lastTweetId": `${tweet.conversation_id}`
