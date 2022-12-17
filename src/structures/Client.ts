@@ -83,8 +83,10 @@ export class Shinano extends Client {
 
 
             // Azur Lane News
-            if (!process.env.guildId) await startTweetListener()
-            console.log("Connected to Twitter stream!")
+            if (!process.env.guildId) {
+                await startTweetListener()
+                console.log("Connected to Twitter stream!")
+            }
         })();
 
         
