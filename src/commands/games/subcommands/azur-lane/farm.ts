@@ -134,6 +134,7 @@ export async function azurLaneFarm(interaction: ShinanoInteraction, AL: any) {
                 inline: true
             }
         )
+        .setFooter({text: 'Numbers are averages and may vary in-game'})
     await interaction.editReply({embeds: [infoEmbed]})
 
 }
