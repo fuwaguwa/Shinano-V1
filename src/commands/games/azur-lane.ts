@@ -141,26 +141,6 @@ export default new Command({
         },
         {
             type: 'SUB_COMMAND',
-            name: 'news',
-            description: "Send the latest tweets/news about the game for both EN and JP server from the official accounts!",
-            options: [
-                {
-                    type: 'CHANNEL',
-                    required: false,
-                    channelTypes: ['GUILD_TEXT'],
-                    name: 'channel',
-                    description: 'The channel for the bot to send tweets into.'
-                },
-                {
-                    type: 'BOOLEAN',
-                    required: false,
-                    name: 'stop',
-                    description: 'Set to true if you want the bot to stop posting news!'
-                }
-            ]
-        },
-        {
-            type: 'SUB_COMMAND',
             name: 'exp',
             description: 'Calculate the EXP needed for the ship to reach the target level.',
             options: [
@@ -226,47 +206,77 @@ export default new Command({
                 },
 
             ]
-        }
+        },
+        {
+            type: 'SUB_COMMAND_GROUP',
+            name: 'news',
+            description: 'Send the latest tweets/news about the game for both EN and JP server from the official accounts!',
+            options: [
+                {
+                    type: 'SUB_COMMAND',
+                    name: 'start',
+                    description: 'Send the latest news/tweets about the game for both EN and JP server from the official accounts!',
+                    options: [
+                        {
+                            type: 'CHANNEL',
+                            required: true,
+                            channelTypes: ['GUILD_TEXT'],
+                            name: 'channel',
+                            description: 'The channel for the bot to send tweets into.'
+                        }
+                    ]
+                },
+                {
+                    type: 'SUB_COMMAND',
+                    name: 'stop',
+                    description: 'Stop posting news/tweets into the server.'
+                }
+            ]
+        },
     ],
     run: async({interaction}) => {
-        switch (interaction.options.getSubcommand()) {
-            case 'ship': {
-                await azurLaneShip(interaction, AL)
-                break
+        if (interaction.options['_group']) {
+            switch (interaction.options.getSubcommandGroup()) {
+                case 'news': {
+                    await azurLaneNews(interaction)
+                    break
+                }
             }
-
-
-            case 'chapter': {
-                await azurLaneChapter(interaction, AL)
-                break
-            }
-
-
-            case 'gear': {
-                await azurLaneGear(interaction, AL)
-                break
-            }
-
-
-            case 'exp': {
-                await azurLaneExpCalculator(interaction)
-                break
-            }
-
-
-            case 'pr-completion': {
-                await azurLanePRCompletion(interaction, AL)
-                break
-            }   
-            
-            
-            case 'news': {
-                await azurLaneNews(interaction)
-                break
-            }
-
-            case 'farm': {
-                await azurLaneFarm(interaction, AL)
+        } else {
+            switch (interaction.options.getSubcommand()) {
+                case 'ship': {
+                    await azurLaneShip(interaction, AL)
+                    break
+                }
+    
+    
+                case 'chapter': {
+                    await azurLaneChapter(interaction, AL)
+                    break
+                }
+    
+    
+                case 'gear': {
+                    await azurLaneGear(interaction, AL)
+                    break
+                }
+    
+    
+                case 'exp': {
+                    await azurLaneExpCalculator(interaction)
+                    break
+                }
+    
+    
+                case 'pr-completion': {
+                    await azurLanePRCompletion(interaction, AL)
+                    break
+                }   
+    
+                case 'farm': {
+                    await azurLaneFarm(interaction, AL)
+                    break
+                }
             }
         }
     }
