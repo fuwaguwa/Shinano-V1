@@ -110,9 +110,9 @@ export async function azurLanePRCompletion(interaction: ShinanoInteraction, AL: 
             {
                 name: 'Ship Info:', 
                 value:
-                `Unused BPs: **${unusedBPs}**\n` +
                 `Dev Level: **${devLevel}**\n` +
-                `Fate Sim Level: **${fateSimLevel}**`
+                `Fate Sim Level: **${fateSimLevel}**\n` +
+                `Unused BPs: **${unusedBPs}**\n`
             },
 
             {
@@ -120,11 +120,11 @@ export async function azurLanePRCompletion(interaction: ShinanoInteraction, AL: 
                 value: 
                 `Total BPs: **${totalBPs}**\n`+
                 `BPs until Dev 30: **${BPsAwayFromDev30}**\n`+
-                `BPs until Fate Sim 5: **${BPsAwayFromFS5}**\n`+
+                `BPs until Fate Sim 5: **${BPsAwayFromFS5}**\n\n`+
                 `Final Dev Level: **${finalDevLevel}**\n` +
-                `Final Fate Sim Level: **${finalFSLevel}**\n` +
+                `Final Fate Sim Level: **${finalFSLevel}**\n\n` +
                 `PR Completion: **${PRcompletionPercentage.toFixed(2)}%**\n` +
-                `PR Completion (with Fate Sim): **${PRcompletionPercentageFS.toFixed(2)}%**`
+                `PR Completion (w/Fate Sim): **${PRcompletionPercentageFS.toFixed(2)}%**`
             }
         )
         .setFooter({text: 'Fate Sim is included regardless even if the ship does not have Fate Sim in game.'})
