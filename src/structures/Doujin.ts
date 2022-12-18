@@ -106,7 +106,8 @@ export async function displayDoujin(interaction: ShinanoInteraction, doujin) {
         tag.includes('Insect') || 
         tag.includes('Shotacon') ||
         tag.includes('Amputee') ||
-        tag.includes('Vomit')
+        tag.includes('Vomit') ||
+        tag.includes('Vore')
     })
 
     if (filter) {

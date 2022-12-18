@@ -11,7 +11,7 @@ export async function doujinSearch(interaction: ShinanoInteraction) {
     // Fetching & Filtering
     const name: string = interaction.options.getString('search-query')
     const sorting: string = interaction.options.getString('sorting') || 'popular'
-    const blacklist = '-lolicon -scat -guro -insect -shotacon -amputee -vomit'
+    const blacklist = '-lolicon -scat -guro -insect -shotacon -amputee -vomit -vore'
     const response = await fetch(`${process.env.nhentaiIP}/api/galleries/search?query=${name} ${blacklist}&sort=${sorting}`, {method: "GET"})
     const searchResults = await response.json()
     

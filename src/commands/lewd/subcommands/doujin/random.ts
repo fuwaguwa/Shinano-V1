@@ -23,7 +23,8 @@ export async function doujinRandom(interaction: ShinanoInteraction) {
         tag.includes('Insect') || 
         tag.includes('Shotacon') ||
         tag.includes('Amputee') ||
-        tag.includes('Vomit')
+        tag.includes('Vomit') ||
+        tag.includes('Vore')
     })
 
 
