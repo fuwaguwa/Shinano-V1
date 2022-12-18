@@ -79,6 +79,8 @@ export class Shinano extends Client {
                 await (channel as TextChannel).send({embeds: [heartbeatEmbed]})
                 
                 uptime += 300000
+
+                await fetch(`https://AmagiAPI.fuwafuwa08.repl.co/nsfw/private/kemonomimi`, {method: "GET", headers: {"Authorization": process.env.amagiApiKey}})
             }, 300000)
 
 
