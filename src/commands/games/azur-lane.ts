@@ -219,7 +219,6 @@ export default new Command({
                     options: [
                         {
                             type: 'CHANNEL',
-                            required: true,
                             channelTypes: ['GUILD_TEXT'],
                             name: 'channel',
                             description: 'The channel for the bot to send tweets into.'
