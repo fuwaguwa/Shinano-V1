@@ -1,4 +1,5 @@
 import glob from "glob";
+import fetch from 'node-fetch';
 import mongoose from "mongoose";
 import { Event } from "./Event";
 import { config } from 'dotenv';
