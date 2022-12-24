@@ -298,6 +298,13 @@ export default new Command({
                 const birthday = interaction.options.getString('birthday')
                 const username = target.username.split(' ').join('%20')
                 let description = interaction.options.getString('signature')
+
+                if (birthday.match(/^(0?[1-9]|[12][0-9]|3[01])\/(0?[1-9]|[1][0-2])$/i) == null) {
+                    const failed: MessageEmbed = new MessageEmbed()
+                        .setColor('RED')
+                        .setDescription('❌ | Birthday must be in `DD/MM` format!')
+                    return interaction.editReply({embeds: [failed]})
+                }
         
                 let query = `avatar=${avatar}&birthday=${birthday}&username=${username}`
                 if (description) {
