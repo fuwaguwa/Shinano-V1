@@ -17,20 +17,22 @@ export async function shinanoHelpSFW(interaction: ShinanoInteraction) {
             <:curve:1021036738161950800>Send you an edgy, funny, motivational or straight up random anime quote.
             **blackjack**
             <:curve:1021036738161950800>Play some blackjack with the bot
-            **define**
-            <:curve:1021036738161950800>Get a word's definition from Urban Dictionary
             **dadjoke**
             <:curve:1021036738161950800>Guranteed funny dadjoke
+            **define**
+            <:curve:1021036738161950800>Get a word's definition from Urban Dictionary
+            **joke**
+            <:curve:1021036738161950800>Tell you a joke, may not be funny.
             **pick**
-            <:curve:1021036738161950800>Let Shinano make decision for you!
-            **match**
-            <:curve:1021036738161950800>Checks two person love percentage`
+            <:curve:1021036738161950800>Let Shinano make decision for you!`
         )
     const funCommand2: MessageEmbed = new MessageEmbed()
         .setColor('#2f3136')
         .setDescription(`
             /<command>
             
+            **match**
+            <:curve:1021036738161950800>Checks two person love percentage
             **roll**
             <:curve:1021036738161950800>Roll a dice
             **rps**
