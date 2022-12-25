@@ -4,10 +4,9 @@ import { client } from "..";
 import { sleep } from "./Utils";
 import News from '../schemas/ALNews'
 import { config } from "dotenv";
-import { lastTweetId } from '../../lastTweet.json'
-import path from "path";
-import fs from 'fs'
 config()
+
+let lastTweetLink: string;
 
 async function listenForever(streamFactory, dataConsumer) {
     try {
@@ -25,14 +24,17 @@ async function listenForever(streamFactory, dataConsumer) {
 }
 
 
-async function postTweet(tweet) {
-    if (`${tweet.data.conversation_id}` === lastTweetId) return
+export async function postTweet(tweet) {
+    sleep(5000)
+
+    const link: string = `https://twitter.com/${tweet.data.author_id}/status/${tweet.data.conversation_id}`
+    let server: string = link.includes("993682160744738816") ? 'EN' : 'JP'
+
+    if (link === lastTweetLink) return;
     if (!['993682160744738816', '864400939125415936'].includes(`${tweet.data.author_id}`)) return;
-
-    fs.writeFileSync(path.join(__dirname, "..", "..", "lastTweet.json"), JSON.stringify({
-        "lastTweetId": `${tweet.data.conversation_id}`
-    }, null, "\t"))
-
+    
+    lastTweetLink = link;
+    
     const iterations: number = 0;
     for await (const doc of News.find()) {
         if (iterations == 40) sleep(1000);
@@ -41,13 +43,8 @@ async function postTweet(tweet) {
             const guild = await client.guilds.fetch(doc.guildId)
             const channel = await guild.channels.fetch(doc.channelId)
 
-            const link: string = `https://twitter.com/${tweet.data.author_id}/status/${tweet.data.conversation_id}`
-            let server: string
-
-            link.includes("993682160744738816") ? server = 'EN' : server = 'JP'
-
             await (channel as TextChannel).send({
-                content:
+                 content:
                 `__Shikikans, there's a new message from ${server} HQ!__\n` +
                 link
             })
