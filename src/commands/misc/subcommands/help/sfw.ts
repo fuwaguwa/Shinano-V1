@@ -40,7 +40,9 @@ export async function shinanoHelpSFW(interaction: ShinanoInteraction) {
             **ttt**
             <:curve:1021036738161950800>Play tictactoe against the bot or against someone!
             **trivia**
-            <:curve:1021036738161950800>Start a trivia question!`
+            <:curve:1021036738161950800>Start a trivia question!
+            **two-sentence-horror**
+            <:curve:1021036738161950800>A horror story in two sentence.`
         )
     
 
