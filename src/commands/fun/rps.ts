@@ -13,6 +13,7 @@ export default new Command({
     name: 'rps',
     description: 'Play a game of rock paper scissor against someone or the bot!',
     cooldown: 4500,
+    category: 'Fun',
     options: [
         {
             type: 'USER',

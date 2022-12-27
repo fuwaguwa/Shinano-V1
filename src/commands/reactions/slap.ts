@@ -6,6 +6,7 @@ export default new Command({
     name: 'slap',
     description: 'Slap someone.',
     cooldown: 4500,
+    category: 'Reactions',
     options: [
         {
             name: 'target',

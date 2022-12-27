@@ -6,6 +6,7 @@ export default new Command({
     name: 'kiss',
     description: 'Kiss someone.',
     cooldown: 4500,
+    category: 'Reactions',
     options: [
         {
             name: 'target',

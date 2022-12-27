@@ -6,6 +6,7 @@ export default new Command({
     name: 'fox',
     description: 'Generate an image of a fox!',
     cooldown: 4500,
+    category: 'Image',
     run: async({interaction}) => {
         await interaction.deferReply()
 

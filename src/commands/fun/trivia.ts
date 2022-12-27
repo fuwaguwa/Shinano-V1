@@ -5,6 +5,8 @@ import { ButtonInteraction, InteractionCollector, Message, MessageActionRow, Mes
 export default new Command({
     name: 'trivia',
     description: 'Trivia Questions!',
+    cooldown: 5000,
+    category: 'Fun',
     options: [
         {
             required: true,
@@ -38,7 +40,6 @@ export default new Command({
             ]
         }
     ],
-    cooldown: 5000,
     run: async({interaction}) => {
         const categoryChoice: string = interaction.options.getString('category')
         const difficultyChoice: string = interaction.options.getString('difficulty')

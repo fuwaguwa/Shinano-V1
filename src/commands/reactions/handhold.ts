@@ -6,6 +6,7 @@ export default new Command({
     name: 'handhold',
     description: 'Hold someone\'s hand.',
     cooldown: 4500,
+    category: 'Reactions',
     options: [
         {
             name: 'target',

@@ -6,6 +6,7 @@ export default new Command({
     name: 'poke',
     description: 'Poke someone.',
     cooldown: 4500,
+    category: 'Reactions',
     options: [
         {
             name: 'target',

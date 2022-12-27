@@ -1,18 +1,17 @@
 import { Command } from "../../structures/Command";
 import { MessageAttachment, MessageEmbed } from "discord.js";
-import Canvacord from "canvacord"
 import Canvas from "canvas"
 import { config } from 'dotenv'
 config()
 
 
-const CVC: any = Canvacord
 Canvas.registerFont(`Upright.otf`, {family: 'Upright'})
 
 
 export default new Command({
     name: 'image',
     description: 'Image Generation + Manipulation Command!',
+    category: 'Image',
     cooldown: 10000,
     options: [
         {

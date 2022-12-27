@@ -14,6 +14,16 @@ const promiseGlob = promisify(glob);
 
 export class Shinano extends Client {
     commands: Collection<string, CommandType> = new Collection();
+    catagorizedCommands = {
+        Anime: [],
+        Fun: [],
+        AzurLane: [],
+        GenshinImpact: [],
+        Miscellaneous: [],
+        Utilities: [],
+        Reactions: [],
+        Image: []
+    }
 
     constructor() {
         super({
@@ -119,6 +129,54 @@ export class Shinano extends Client {
             console.log("Registering Commands | Global");
         }
     }
+    
+    public async generateCommandList() {
+        let commandsEmbed = {}
+
+        for (const category in this.catagorizedCommands) {
+            let arr = [];
+            const embedArr: MessageEmbed[] = []
+
+            if (['Image', 'AzurLane', 'GenshinImpact', 'Anime'].includes(category)) {
+                this.catagorizedCommands[category].forEach(command => {
+                    if (!command.options) {
+                        arr.push(command)
+                    } else {
+                        command.options.forEach(option => {
+                            arr.push({
+                                name: option.name,
+                                description: option.description
+                            })
+                        })
+                    }
+                })
+            } else {arr = this.catagorizedCommands[category]}
+
+            for (let i = 0; i < arr.length; i += 7) {
+                const arrChunk = arr.slice(i, i + 7)
+
+                let text: string = `/<command>\n\n`;
+                if (category === 'AzurLane') text = `/azur-lane <command>\n\n`
+                if (category === 'GenshinImpact') text = `/genshin <command>\n\n`
+                if (category === 'Anime') text = `/anime <command>\n\n`
+                
+                for (let i = 0; i < arrChunk.length; i++) {
+                    const command = arrChunk[i]
+                    text += `**${command.name}**\n` + `<:curve:1021036738161950800>${command.description}\n`
+                }
+
+                embedArr.push(
+                    new MessageEmbed()
+                        .setColor('#2f3136')
+                        .setDescription(text)
+                )
+            }
+
+            commandsEmbed[category] = embedArr
+
+        }
+        return commandsEmbed
+    }
 
 
     private async registerModules() {
@@ -131,6 +189,10 @@ export class Shinano extends Client {
         commandFiles.forEach(async (filePath) => {
             const command: CommandType = await this.importFile(filePath);
             if (!command.name) return;
+
+            if (command.category) {
+                this.catagorizedCommands[command.category].push(command)
+            }
 
             this.commands.set(command.name, command);
             slashCommands.push(command);

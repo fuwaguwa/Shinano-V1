@@ -6,6 +6,7 @@ export default new Command({
     name: 'joke',
     description: 'Tell you a joke, may not be funny.',
     cooldown: 4500,
+    category: 'Fun',
     run: async({interaction}) => {
         await interaction.deferReply()
 

@@ -18,6 +18,7 @@ export default new Command({
     name: 'azur-lane',
     description: 'Get information related to Azur Lane!',
     cooldown: 5000,
+    category: 'AzurLane',
     options: [
         {
             type: 'SUB_COMMAND',
@@ -30,6 +31,19 @@ export default new Command({
                     name: 'ship-name',
                     description: 'Ship\'s Name'
                 }
+            ]
+        },
+        {
+            type: 'SUB_COMMAND',
+            name: 'gear',
+            description: 'Get information about an Azur Lane gear via AzurAPI!',
+            options: [
+                {
+                    type: 'STRING',
+                    required: true,
+                    name: 'gear-name',
+                    description: 'Gear Name'
+                },
             ]
         },
         {
@@ -59,19 +73,6 @@ export default new Command({
                         {name:'Chapter 14: Surigao Night Combat', value: '14'},
                     ]
                 }
-            ]
-        },
-        {
-            type: 'SUB_COMMAND',
-            name: 'gear',
-            description: 'Get information about an Azur Lane gear via AzurAPI!',
-            options: [
-                {
-                    type: 'STRING',
-                    required: true,
-                    name: 'gear-name',
-                    description: 'Gear Name'
-                },
             ]
         },
         {

@@ -9,6 +9,7 @@ export default new Command({
     name: 'bot',
     description: 'Information about the bot.',
     cooldown: 4500,
+    category: 'Miscellaneous',
     options: [
         {
             type: 'SUB_COMMAND',

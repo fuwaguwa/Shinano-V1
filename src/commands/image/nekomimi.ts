@@ -6,6 +6,7 @@ export default new Command({
     name: 'nekomimi',
     description: 'Generate a SFW catgirl pic.',
     cooldown: 4500,
+    category: 'Image',
     run: async({interaction}) => {
         await interaction.deferReply()
         const response = await fetch('https://waifu.pics/api/sfw/neko', {method: "GET"})

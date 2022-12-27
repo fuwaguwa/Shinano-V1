@@ -6,6 +6,7 @@ export default new Command({
     name: 'pat',
     description: 'Give someone headpats',
     cooldown: 4500,
+    category: 'Reactions',
     options: [
         {
             name: 'target',

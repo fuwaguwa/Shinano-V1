@@ -15,6 +15,7 @@ export default new Command({
             description: 'User.'
         }
     ],
+    category: 'Utilities',
     run: async({interaction}) => {
         const user: User = interaction.options.getUser('user') || interaction.user
         

@@ -5,6 +5,7 @@ export default new Command({
     name:'8ball',
     description:'Ask 8ball.',
     cooldown: 4500,
+    category: 'Fun',
     options: [
         {
             required: true,

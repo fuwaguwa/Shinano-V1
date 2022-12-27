@@ -12,6 +12,7 @@ export default new Command({
     defaultPermission: false,
     ownerOnly: true,
     cooldown: 5000,
+    category: 'Miscellaneous',
     options: [
         {
             type: 'SUB_COMMAND',

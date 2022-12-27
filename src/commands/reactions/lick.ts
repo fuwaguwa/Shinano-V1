@@ -6,6 +6,7 @@ export default new Command({
     name: 'lick',
     description: 'Lick someone...ew',
     cooldown: 4500,
+    category: 'Reactions',
     options: [
         {
             name: 'target',

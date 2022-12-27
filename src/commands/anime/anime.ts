@@ -3,12 +3,14 @@ import { config } from "dotenv";
 import { animeSearch } from "./subcommands/anime/search";
 import { animeCharacter } from "./subcommands/anime/character";
 import { animeRandom } from "./subcommands/anime/random";
+import { animeQuote } from "./subcommands/anime/quote";
 config();
 
 export default new Command({
     name: 'anime',
     description: 'Get information about animes and its characters!',
     cooldown: 4500,
+    category: 'Anime',
     options: [
         {
             type: 'SUB_COMMAND',
@@ -50,6 +52,11 @@ export default new Command({
         },
         {
             type: 'SUB_COMMAND',
+            name: 'quote',
+            description: 'Send you an edgy, funny, motivational or straight up random anime quote.'
+        },
+        {
+            type: 'SUB_COMMAND',
             name: 'random',
             description: 'Return a random anime.'
         }
@@ -71,6 +78,11 @@ export default new Command({
 
             case 'random': {
                 await animeRandom(interaction);
+                break
+            }
+
+            case 'quote': {
+                await animeQuote(interaction);
                 break
             }
         }

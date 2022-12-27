@@ -6,6 +6,7 @@ export default new Command({
     name: 'ttt',
     description: 'Play tic tac toe against a bot or an user!',
     cooldown: 4500,
+    category: 'Fun',
     options: [
         {
             required: false,

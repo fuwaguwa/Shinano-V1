@@ -6,6 +6,7 @@ export default new Command({
     name: 'cuddle',
     description: 'Cuddle with someone.',
     cooldown: 4500,
+    category: 'Reactions',
     options: [
         {
             name: 'target',

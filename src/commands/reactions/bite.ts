@@ -6,6 +6,7 @@ export default new Command({
     name: 'bite',
     description: 'Bite someone.',
     cooldown: 4500,
+    category: 'Reactions',
     options: [
         {
             name: 'target',

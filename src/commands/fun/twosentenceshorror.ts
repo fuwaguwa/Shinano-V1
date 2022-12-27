@@ -5,6 +5,7 @@ import { MessageEmbed } from 'discord.js'
 export default new Command({
     name: 'two-sentence-horror',
     description: 'A two sentences story. Could be horrifying, cringe or funny.',
+    category: 'Fun',
     cooldown: 5000,
     run: async({interaction}) => {
         await interaction.deferReply()

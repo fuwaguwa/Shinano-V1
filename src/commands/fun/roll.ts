@@ -4,6 +4,7 @@ export default new Command({
     name: 'roll',
     description: 'Roll a random number with the set range.',
     cooldown: 4500,
+    category: 'Fun',
     options: [
         {
             name: 'range',

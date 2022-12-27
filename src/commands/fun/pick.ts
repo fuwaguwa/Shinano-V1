@@ -5,6 +5,7 @@ export default new Command({
     name: 'pick',
     description: 'Let Shinano pick for you!',
     cooldown: 3000,
+    category: 'Fun',
     options: [
         {
             type: 'STRING',

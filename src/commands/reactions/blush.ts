@@ -5,6 +5,7 @@ import fetch from 'node-fetch'
 export default new Command({
     name: 'blush',
     description: 'Blush.',
+    category: 'Reactions',
     cooldown: 4500,
     run: async({interaction}) => {
         await interaction.deferReply()

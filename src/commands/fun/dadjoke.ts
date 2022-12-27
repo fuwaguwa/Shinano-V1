@@ -6,8 +6,9 @@ config();
 
 export default new Command({
     name: 'dadjoke',
-    cooldown: 4500,
     description: 'Make a dadjoke.',
+    cooldown: 4500,
+    category: 'Fun',
     run: async({interaction}) => {
         await interaction.deferReply()
         

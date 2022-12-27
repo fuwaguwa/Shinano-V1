@@ -1,5 +1,5 @@
 import { Command } from "../../structures/Command";
-import { Guild, GuildMember, MessageEmbed, User } from "discord.js";
+import { MessageEmbed, User } from "discord.js";
 
 export default new Command({
     name: 'avatar',
@@ -12,6 +12,7 @@ export default new Command({
             description: 'The user you want the avatar from.'
         }
     ],
+    category: 'Utilities',
     run: async({interaction}) => {
         const user: User = interaction.options.getUser('user') || interaction.user
         const avatarEmbed: MessageEmbed = new MessageEmbed()

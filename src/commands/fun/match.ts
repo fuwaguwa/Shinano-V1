@@ -5,6 +5,7 @@ export default new Command({
     name: 'match',
     description: 'Check 2 people\'s love meter.',
     cooldown: 4500,
+    category: 'Fun',
     options: [
         {
             name: 'user1',

@@ -1,4 +1,4 @@
-import { ChatInputApplicationCommandData, CommandInteraction, CommandInteractionOptionResolver, GuildMember, PermissionResolvable } from "discord.js";
+import { ChatInputApplicationCommandData, CommandInteraction, CommandInteractionOptionResolver, GuildMember, MessageEmbed, PermissionResolvable } from "discord.js";
 import { Shinano } from "../structures/Client";
 
 export interface ShinanoInteraction extends CommandInteraction {
@@ -12,6 +12,7 @@ interface RunOptions {
 }
 
 type RunFunction = (options: RunOptions) => any;
+export type CommandCategories = "Anime" | "Fun" | "AzurLane" | "GenshinImpact" | "Miscellaneous" | "Utilities" | "Reactions" | "Image"
 
 export type CommandType = {
     userPermissions?: PermissionResolvable[];
@@ -19,5 +20,6 @@ export type CommandType = {
     nsfw?: boolean;
     ownerOnly?: boolean;
     voteRequired?: boolean;
+    category?: CommandCategories
     run: RunFunction;
 } & ChatInputApplicationCommandData;

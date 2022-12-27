@@ -9,6 +9,7 @@ export default new Command({
     name: 'genshin',
     description: "Get information related to Genshin!",
     cooldown: 5000,
+    category: 'GenshinImpact',
     options: [
         {
             type: 'SUB_COMMAND',
@@ -39,7 +40,7 @@ export default new Command({
         {
             type: 'SUB_COMMAND_GROUP',
             name: 'character',
-            description: 'character',
+            description: 'Get information about a Genshin character.',
             options: [
                 {
                     type: 'SUB_COMMAND',
@@ -104,7 +105,7 @@ export default new Command({
         {
             type: 'SUB_COMMAND_GROUP',
             name: 'weapon',
-            description: 'weapon',
+            description: 'Get information about a Genshin weapon.',
             options: [
                 {
                     type: 'SUB_COMMAND',
@@ -168,7 +169,7 @@ export default new Command({
         {
             type: 'SUB_COMMAND_GROUP',
             name: 'enemy',
-            description: 'enemy',
+            description: 'Get information about a Genshin enemy.',
             options: [
                 {
                     type: 'SUB_COMMAND',

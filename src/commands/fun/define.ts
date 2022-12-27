@@ -4,8 +4,9 @@ import { MessageEmbed } from "discord.js"
 
 export default new Command({
     name: 'define',
-    cooldown: 4500,
     description: 'Get a word\'s definition from Urban Dictionary.',
+    cooldown: 4500,
+    category: 'Fun',
     options: [
         {   
             required: true,
