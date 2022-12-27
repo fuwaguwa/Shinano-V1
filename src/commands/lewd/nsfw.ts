@@ -16,7 +16,7 @@ export default new Command({
     defaultPermission: false,
     nsfw: true,
     voteRequired: true,
-    cooldown: 4000,
+    cooldown: 4500,
     options: [
         {   
             type: 'SUB_COMMAND_GROUP',
@@ -54,6 +54,7 @@ export default new Command({
                             name: 'category',
                             description: 'The category you want to be bombed with. Ignore this option for random category.',
                             choices: [
+                                {name: 'GIF', value: 'gif'},
                                 {name: 'Fanbox', value: 'fanbox'},
                                 {name: 'Shipgirls', value: 'shipgirls'},
                                 {name: 'Undies', value: 'undies'},
