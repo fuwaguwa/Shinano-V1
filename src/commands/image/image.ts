@@ -221,7 +221,7 @@ export default new Command({
 
             case 'horni-card': {
                 link = 
-                `https://some-random-api.ml/canvas/misc/horni?avatar=${avatar}`
+                `https://some-random-api.ml/canvas/misc/horny?avatar=${avatar}`
                 break
             }
 
