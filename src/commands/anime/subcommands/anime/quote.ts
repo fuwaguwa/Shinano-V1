@@ -3,8 +3,6 @@ import fetch from 'node-fetch'
 import { MessageEmbed } from "discord.js";
 
 export async function animeQuote(interaction: ShinanoInteraction) {
-    await interaction.deferReply()
-
     const response = await fetch('https://some-random-api.ml/animu/quote', {method: "GET"})
     const quote = await response.json()
 
