@@ -5,6 +5,7 @@ export default new Command({
     name: 'avatar',
     description: 'Get user\'s and guild\'s avatar',
     cooldown: 4500,
+    category: 'Utilities',
     options: [
         {
             type: 'USER',
@@ -12,7 +13,6 @@ export default new Command({
             description: 'The user you want the avatar from.'
         }
     ],
-    category: 'Utilities',
     run: async({interaction}) => {
         const user: User = interaction.options.getUser('user') || interaction.user
         const avatarEmbed: MessageEmbed = new MessageEmbed()

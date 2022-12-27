@@ -8,6 +8,7 @@ export default new Command({
     name: 'banner',
     description: 'Get an user\'s banner.',
     cooldown: 4500,
+    category: 'Utilities',
     options: [
         {
             type: 'USER',
@@ -15,7 +16,6 @@ export default new Command({
             description: 'User.'
         }
     ],
-    category: 'Utilities',
     run: async({interaction}) => {
         const user: User = interaction.options.getUser('user') || interaction.user
         

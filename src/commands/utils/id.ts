@@ -5,6 +5,7 @@ export default new Command({
     name: 'id',
     description:'Get your own ID or an user\'s ID.',
     cooldown: 4500,
+    category: 'Utilities',
     options: [
         {
             name: 'user',
@@ -12,7 +13,6 @@ export default new Command({
             type:'USER'
         }
     ],
-    category: 'Utilities',
     run: async({interaction}) => {
         const user : User = interaction.options.getUser('user') || interaction.user
         await interaction.reply({content: `${user.id}`})
