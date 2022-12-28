@@ -30,7 +30,7 @@ export async function nsfwGif(interaction: ShinanoInteraction, lewdEmbed: Messag
                 new MessageButton()
                     .setStyle('LINK')
                     .setEmoji('🔗')
-                    .setLabel('High-Res Link')
+                    .setLabel('Image Link')
                     .setURL(waifu.body.link)
             )
         await interaction.editReply({embeds: [lewdEmbed], components: [imageLink]})

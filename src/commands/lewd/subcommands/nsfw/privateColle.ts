@@ -14,7 +14,7 @@ export async function nsfwPrivateCollection(interaction: ShinanoInteraction, lew
                 new MessageButton()
                     .setStyle('LINK')
                     .setEmoji('🔗')
-                    .setLabel('High-Res Link')
+                    .setLabel('Image Link')
                     .setURL(image.link)
             )
 

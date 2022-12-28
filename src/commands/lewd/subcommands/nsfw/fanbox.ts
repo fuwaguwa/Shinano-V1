@@ -21,7 +21,7 @@ export async function nsfwPrivateFanbox(interaction: ShinanoInteraction, lewdEmb
             new MessageButton()
                 .setStyle('LINK')
                 .setEmoji('🔗')
-                .setLabel('High-Res Link')
+                .setLabel('Image Link')
                 .setURL(link)
         )
     return interaction.editReply({embeds: [lewdEmbed], components: [imageLink]})
