@@ -14,7 +14,7 @@ export default new Command({
             subreddit: 'TwoSentenceHorror',
             sort: 'hot',
             allowNSFW: false,
-            allowModePost: false,
+            allowModPost: false,
             allowCrossPost: false,
             allowVideo: false
         })
