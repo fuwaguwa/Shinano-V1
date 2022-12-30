@@ -9,7 +9,7 @@ export async function botInfo(interaction: ShinanoInteraction) {
             'The Multi-Purpose Azur Lane/Genshin Bot!\n' + 
             'Developed and Maintained by **Fuwafuwa#2272**\n' +
             'Contributor: **LaziestBoy#7543**\n\n' +
-            '**APIs**: [AzurAPI](https://github.com/AzurAPI/azurapi-js), [Nekobot](https://www.nekobot.xyz/), [RapidAPI](https://rapidapi.com/), The [Cat](https://thecatapi.com/)/[Dog](https://thecatapi.com/) API, [SauceNAO](https://saucenao.com/), [Some Random API](https://some-random-api.ml/), waifu.pics, nekos.fun, jikan.moe, [genshin-db](https://github.com/theBowja/genshin-db)\n\n' +
+            '**APIs**: [AzurAPI](https://github.com/AzurAPI/azurapi-js), [Nekobot](https://www.nekobot.xyz/), [RapidAPI](https://rapidapi.com/), The [Cat](https://thecatapi.com/)/[Dog](https://thecatapi.com/) API, [SauceNAO](https://saucenao.com/), [Some Random API](https://some-random-api.ml/), waifu.pics, nekos.fun, nekos.best, jikan.moe, [genshin-db](https://github.com/theBowja/genshin-db)\n\n' +
             'Liking the bot so far? Please **vote** and leave Shinano a **rating** on **top.gg**!'
         )
     
