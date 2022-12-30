@@ -9,14 +9,14 @@ export default new Command({
     category: 'Image',
     run: async({interaction}) => {
         await interaction.deferReply()
-        const response = await fetch('https://waifu.pics/api/sfw/neko', {method: "GET"})
+        const response = await fetch('https://nekos.best/api/v2/neko')
         const nekoPic = await response.json()
 
         const nekoEmbed: MessageEmbed = new MessageEmbed()
             .setColor('RANDOM')
             .setFooter({text:`Requested by ${interaction.user.tag}`, iconURL: interaction.user.displayAvatarURL({dynamic:true})})
             .setTimestamp()
-            .setImage(nekoPic.url as string)
+            .setImage(nekoPic.results[0].url)
 
         await interaction.editReply({embeds: [nekoEmbed]})
     }
