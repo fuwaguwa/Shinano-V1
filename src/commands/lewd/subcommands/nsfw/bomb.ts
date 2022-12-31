@@ -13,8 +13,7 @@ export async function nsfwBomb(interaction: ShinanoInteraction) {
     })
     const waifu = await response.json()
 
-
     return interaction.editReply({
-        content: waifu.links.join("\n")
+        content: waifu.links.map(item => item.link).join("\n")
     })
 }
