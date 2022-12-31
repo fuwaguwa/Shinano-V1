@@ -7,13 +7,9 @@ export async function nsfwPrivateFanbox(interaction: ShinanoInteraction, lewdEmb
     const tag = interaction.options.getString('fanbox-category') || tags[Math.floor(Math.random() * tags.length)]
 
     const data = await Collection.findOne({type: tag})
-
-    const response: string[] = []
-    data.links.forEach(submission => {
-        if (submission.link.endsWith('_FANBOX.jpg')) response.push(submission.link)
-    })
-
+    const response = data.links.filter((item) => {item.link.endsWith('_FANBOX.jpg')})
     const link = response[Math.floor(Math.random() * response.length)]
+    
     
     lewdEmbed.setImage(link)
     const imageLink = new MessageActionRow()
