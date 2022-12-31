@@ -6,6 +6,7 @@ export default new Command({
     name: 'waifu',
     description: 'Looking for waifus?',
     cooldown:  4500,
+    category: 'Image',
     run: async({interaction}) => {
         await interaction.deferReply()
 

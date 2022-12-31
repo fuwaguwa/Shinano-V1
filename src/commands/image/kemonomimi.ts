@@ -6,6 +6,7 @@ export default new Command({
     name: 'kemonomimi',
     description: 'Girls with animal features (SFW)',
     cooldown: 4500,
+    category: 'Image',
     run: async({interaction}) => {
         await interaction.deferReply()
 

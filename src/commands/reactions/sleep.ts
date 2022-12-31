@@ -6,6 +6,7 @@ export default new Command({
     name: 'sleep',
     description: 'Oyasumi...',
     cooldown: 4500,
+    category: 'Reactions',
     run: async({interaction}) => {
         await interaction.deferReply()
 

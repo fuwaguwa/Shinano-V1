@@ -6,6 +6,7 @@ export default new Command({
     name: 'yeet',
     description: 'Yeet someone!',
     cooldown: 4500,
+    category: 'Reactions',
     options: [
         {
             type: 'USER',

@@ -6,6 +6,7 @@ export default new Command({
     name: 'highfive',
     description: 'Highfive!',
     cooldown: 4500,
+    category: 'Reactions',
     options: [
         {
             type: 'USER',

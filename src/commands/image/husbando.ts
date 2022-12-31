@@ -6,6 +6,7 @@ export default new Command({
     name: 'husbando',
     description: 'Looking for husbandos?',
     cooldown: 4500,
+    category: 'Image',
     run: async({interaction}) => {
         await interaction.deferReply()
 

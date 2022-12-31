@@ -6,6 +6,7 @@ export default new Command({
     name: 'foxgirl',
     description: 'If you love me, you\'ll love them too (SFW)',
     cooldown: 4500,
+    category: 'Image',
     run: async({interaction}) => {
         await interaction.deferReply()
 

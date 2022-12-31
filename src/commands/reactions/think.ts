@@ -6,6 +6,7 @@ export default new Command({
     name: 'think',
     description: '🤔',
     cooldown: 4500,
+    category: 'Reactions',
     run: async({interaction}) => {
         await interaction.deferReply()
             
