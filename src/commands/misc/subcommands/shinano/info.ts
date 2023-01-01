@@ -2,6 +2,20 @@ import { MessageEmbed, MessageActionRow, MessageButton } from "discord.js";
 import { ShinanoInteraction } from "../../../../typings/Command";
 
 export async function shinanoInfo(interaction: ShinanoInteraction) {
+    const APIs = [
+        '[AzurAPI](https://github.com/AzurAPI/azurapi-js)',
+        '[RapidAPI](https://rapidapi.com/)',
+        'The [Cat](https://thecatapi.com/)/[Dog](https://thecatapi.com/) API',
+        '[SauceNAO](https://saucenao.com/)',
+        '[Some Random API](https://some-random-api.ml/)',
+        '[waifu.pics](https://waifu.pics)',
+        '[nekos.fun](https://nekos.fun)',
+        '[nekos.life](https://nekos.life)',
+        '[jikan.moe](https://jikan.moe)',
+        '[genshin-db](genshin-db](https://github.com/theBowja/genshin-db)'
+    ]
+
+
     const shinanoEmbed: MessageEmbed = new MessageEmbed()
         .setColor('#2f3136')
         .setTitle('Shinano')
@@ -9,7 +23,7 @@ export async function shinanoInfo(interaction: ShinanoInteraction) {
             'The Multi-Purpose Azur Lane/Genshin Bot!\n' + 
             'Developed and Maintained by **Fuwafuwa#2272**\n' +
             'Contributor: **LaziestBoy#7543**\n\n' +
-            '**APIs**: [AzurAPI](https://github.com/AzurAPI/azurapi-js), [Nekobot](https://www.nekobot.xyz/), [RapidAPI](https://rapidapi.com/), The [Cat](https://thecatapi.com/)/[Dog](https://thecatapi.com/) API, [SauceNAO](https://saucenao.com/), [Some Random API](https://some-random-api.ml/), waifu.pics, nekos.fun, nekos.best, jikan.moe, [genshin-db](https://github.com/theBowja/genshin-db)\n\n' +
+            `**APIs**: ${APIs.join(', ')}\n\n` +
             'Liking the bot so far? Please **vote** and leave Shinano a **rating** on **top.gg**!'
         )
     
