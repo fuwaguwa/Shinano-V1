@@ -2,7 +2,7 @@ import { MessageEmbed, MessageActionRow, MessageButton } from "discord.js";
 import { ShinanoInteraction } from "../../../../typings/Command";
 import fetch from 'node-fetch'
 
-export async function botVote(interaction: ShinanoInteraction) {
+export async function shinanoVote(interaction: ShinanoInteraction) {
     await interaction.deferReply()
 
     // Embed

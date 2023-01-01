@@ -1,7 +1,7 @@
 import { MessageActionRow, MessageSelectMenu, InteractionCollector, SelectMenuInteraction, Message } from "discord.js";
-import { client } from "../../../..";
-import { ShinanoPaginator } from "../../../../structures/Pages";
-import { ShinanoInteraction } from "../../../../typings/Command";
+import { client } from "../../../../..";
+import { ShinanoPaginator } from "../../../../../structures/Pages";
+import { ShinanoInteraction } from "../../../../../typings/Command";
 
 export async function shinanoHelpSFW(interaction: ShinanoInteraction) {
     await interaction.deferReply()

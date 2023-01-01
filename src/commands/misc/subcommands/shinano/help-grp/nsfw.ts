@@ -1,5 +1,5 @@
 import { TextChannel, MessageEmbed, MessageActionRow, MessageButton } from "discord.js";
-import { ShinanoInteraction } from "../../../../typings/Command";
+import { ShinanoInteraction } from "../../../../../typings/Command";
 
 export async function shinanoHelpNSFW(interaction: ShinanoInteraction) {
     // NSFW Check 

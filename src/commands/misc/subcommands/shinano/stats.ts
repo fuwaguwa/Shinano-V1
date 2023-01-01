@@ -5,7 +5,7 @@ import { config } from "dotenv";
 import fetch from 'node-fetch'
 config()
 
-export async function botStats(interaction: ShinanoInteraction) {
+export async function shinanoStats(interaction: ShinanoInteraction) {
     await interaction.deferReply()
     // Getting top.gg stats
     const response = await fetch('https://top.gg/api/bots/1002193298229829682', {

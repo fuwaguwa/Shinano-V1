@@ -1,7 +1,7 @@
 import { MessageEmbed, MessageActionRow, MessageButton } from "discord.js";
 import { ShinanoInteraction } from "../../../../typings/Command";
 
-export async function botInfo(interaction: ShinanoInteraction) {
+export async function shinanoInfo(interaction: ShinanoInteraction) {
     const shinanoEmbed: MessageEmbed = new MessageEmbed()
         .setColor('#2f3136')
         .setTitle('Shinano')
