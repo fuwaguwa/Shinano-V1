@@ -1,9 +1,9 @@
 import { Command } from "../../structures/Command";
-import { shinanoInfo } from "./subcommands/Shinano/info";
-import { shinanoStats } from "./subcommands/Shinano/stats";
-import { shinanoSupport } from "./subcommands/Shinano/support";
-import { shinanoVote } from "./subcommands/Shinano/vote";
-import { shinanoPing } from "./subcommands/Shinano/ping";
+import { shinanoInfo } from "./subcommands/shinano/info";
+import { shinanoStats } from "./subcommands/shinano/stats";
+import { shinanoSupport } from "./subcommands/shinano/support";
+import { shinanoVote } from "./subcommands/shinano/vote";
+import { shinanoPing } from "./subcommands/shinano/ping";
 import { shinanoPat } from "./subcommands/shinano/pat";
 import { shinanoHelpSFW } from "./subcommands/shinano/help-grp/sfw";
 import { shinanoHelpNSFW } from "./subcommands/shinano/help-grp/nsfw";
