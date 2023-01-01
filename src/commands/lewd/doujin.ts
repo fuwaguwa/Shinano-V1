@@ -8,6 +8,7 @@ export default new Command({
     description: 'Search up an doujin on the most popular doujin site.',
     nsfw: true,
     cooldown: 5000,
+    category: 'NSFW',
     options: [
         {
             type: 'SUB_COMMAND',

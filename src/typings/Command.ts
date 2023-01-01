@@ -12,7 +12,7 @@ interface RunOptions {
 }
 
 type RunFunction = (options: RunOptions) => any;
-export type CommandCategories = "Anime" | "Fun" | "AzurLane" | "GenshinImpact" | "Miscellaneous" | "Utilities" | "Reactions" | "Image"
+export type CommandCategories = "Anime" | "Fun" | "AzurLane" | "GenshinImpact" | "Miscellaneous" | "Utilities" | "Reactions" | "Image" | "NSFW"
 
 export type CommandType = {
     userPermissions?: PermissionResolvable[];
@@ -20,6 +20,6 @@ export type CommandType = {
     nsfw?: boolean;
     ownerOnly?: boolean;
     voteRequired?: boolean;
-    category?: CommandCategories
+    category: CommandCategories
     run: RunFunction;
 } & ChatInputApplicationCommandData;

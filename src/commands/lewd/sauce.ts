@@ -14,6 +14,7 @@ export default new Command({
     description: 'Get the sauce for an image.',
     nsfw: true,
     cooldown: 5000,
+    category: 'NSFW',
     options: [
         {
             type: 'SUB_COMMAND',

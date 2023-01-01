@@ -17,6 +17,7 @@ export default new Command({
     nsfw: true,
     voteRequired: true,
     cooldown: 4500,
+    category: 'NSFW',
     options: [
         {   
             type: 'SUB_COMMAND_GROUP',

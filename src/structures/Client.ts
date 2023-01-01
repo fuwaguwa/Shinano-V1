@@ -190,7 +190,7 @@ export class Shinano extends Client {
             const command: CommandType = await this.importFile(filePath);
             if (!command.name) return;
 
-            if (command.category) this.catagorizedCommands[command.category].push(command)
+            if (command.category !== "NSFW") this.catagorizedCommands[command.category].push(command)
 
             this.commands.set(command.name, command);
             slashCommands.push(command);
