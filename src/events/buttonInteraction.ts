@@ -1,6 +1,6 @@
 import { MessageEmbed, MessageActionRow, MessageButton } from "discord.js";
 import { Event } from "../structures/Event";
-import Votes from '../schemas/Votes'
+import User from '../schemas/User'
 
 
 export default new Event('interactionCreate', async (interaction) => {
@@ -31,7 +31,7 @@ export default new Event('interactionCreate', async (interaction) => {
 
         
         case 'VOTE-CHECK': {
-            const userVotes = await Votes.findOne({userId: interaction.user.id})
+            const user = await User.findOne({userId: interaction.user.id})
 
             const voteLink: MessageActionRow = new MessageActionRow()
                 .addComponents(
@@ -42,19 +42,19 @@ export default new Event('interactionCreate', async (interaction) => {
                         .setURL('https://top.gg/bot/1002193298229829682/vote'),
                 )
     
-            if (!userVotes) {
+            if (!user.lastVoteTimestamp) {
                 // Haven't vote at all
                 const noVotes: MessageEmbed = new MessageEmbed()
                     .setColor('RED')
                     .setDescription('You have not voted for Shinano! Please vote using the button below!')
                     .setTimestamp()
                 return interaction.reply({embeds: [noVotes], components: [voteLink], ephemeral: true})
-            } else if (Math.floor(Date.now() / 1000) - userVotes.voteTimestamp > 43200) {
+            } else if (Math.floor(Date.now() / 1000) - user.lastVoteTimestamp > 43200) {
                 // 12 hours has passed
                 const votable: MessageEmbed = new MessageEmbed()
                     .setColor('GREEN')
                     .setDescription(
-                        `Your last vote was <t:${userVotes.voteTimestamp}:R>, you can now vote again using the button below!`
+                        `Your last vote was <t:${user.lastVoteTimestamp}:R>, you can now vote again using the button below!`
                     )
                     .setTimestamp()
                 return interaction.reply({embeds: [votable], components: [voteLink], ephemeral: true})
@@ -63,7 +63,7 @@ export default new Event('interactionCreate', async (interaction) => {
                 const unvotable: MessageEmbed = new MessageEmbed()
                     .setColor('RED')
                     .setDescription(
-                        `Your last vote was <t:${userVotes.voteTimestamp}:R>, you can vote again <t:${userVotes.voteTimestamp + 43200}:R>`
+                        `Your last vote was <t:${user.lastVoteTimestamp}:R>, you can vote again <t:${user.lastVoteTimestamp + 43200}:R>`
                     )
                     .setTimestamp()
                 return interaction.reply({embeds: [unvotable], ephemeral: true})

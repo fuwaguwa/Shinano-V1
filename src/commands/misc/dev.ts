@@ -4,7 +4,7 @@ import { devLeave } from "./subcommands/dev/leave";
 import { devUsage } from "./subcommands/dev/usage";
 import { devBlacklist } from "./subcommands/dev/blacklist";
 import { devVoteCheck } from "./subcommands/dev/vote-check";
-import { devGuildInfo } from "./subcommands/dev/guildInfo";
+import { devInspect } from "./subcommands/dev/inspect";
 
 export default new Command({
     name: 'dev',
@@ -59,15 +59,34 @@ export default new Command({
             ]
         },
         {
-            type: 'SUB_COMMAND',
-            name: 'guild-info',
-            description: 'Get info about a guild.',
+            type: 'SUB_COMMAND_GROUP',
+            name: 'inspect',
+            description: 'inspection',
             options: [
                 {
-                    type: 'STRING',
-                    required: true,
-                    name: 'guild-id',
-                    description: 'Guild ID.'
+                    type: 'SUB_COMMAND',
+                    name: 'user',
+                    description: 'Get information about an user.',
+                    options: [
+                        {
+                            type: 'USER',
+                            name: 'user',
+                            description: 'The user you want to inspect.'
+                        }
+                    ]
+                },
+                {
+                    type: 'SUB_COMMAND',
+                    name: 'guild',
+                    description: 'Get information about a guild.',
+                    options: [
+                        {
+                            type: 'INTEGER',
+                            required: true,
+                            name: 'guild-id',
+                            description: 'The guild\'s ID.'
+                        }
+                    ]
                 }
             ]
         },
@@ -87,12 +106,6 @@ export default new Command({
                             name: 'user',
                             description: 'User\'s to blacklist.'
                         },
-                        {
-                            type: 'STRING',
-                            required: true,
-                            name: 'reason',
-                            description: 'Reason for blacklist.'
-                        }
                     ]
                 },
                 {
@@ -148,11 +161,6 @@ export default new Command({
                 await devVoteCheck(interaction)
                 break
             }
-
-            case 'guild-info': {
-                await devGuildInfo(interaction)
-                break
-            }
         }
         
 
@@ -161,6 +169,11 @@ export default new Command({
             switch (interaction.options.getSubcommandGroup()) {
                 case 'blacklist': {
                     await devBlacklist(interaction)
+                    break
+                }
+
+                case 'inspect': {
+                    await devInspect(interaction)
                     break
                 }
             }

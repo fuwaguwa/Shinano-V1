@@ -1,6 +1,6 @@
 import { ShinanoInteraction } from "../../../../typings/Command";
 import fetch from 'node-fetch'
-import Votes from '../../../../schemas/Votes'
+import User from '../../../../schemas/User'
 import { config } from "dotenv";
 import { ButtonInteraction, InteractionCollector, Message, MessageActionRow, MessageButton, MessageEmbed } from "discord.js";
 config();
@@ -12,13 +12,13 @@ export async function devVoteCheck(interaction: ShinanoInteraction) {
     let voteTimestamp: number | string;
     let voteStatus: boolean | string = false;
 
-    const voteUser = await Votes.findOne({userId: user.id})
+    const voteUser = await User.findOne({userId: user.id})
 
-    if (voteUser) {
+    if (voteUser.lastVoteTimestamp) {
         const currentTime = Math.floor(Date.now() / 1000)
-        voteTimestamp = voteUser.voteTimestamp
+        voteTimestamp = voteUser.lastVoteTimestamp
 
-        if (currentTime - voteUser.voteTimestamp >= 43200)  voteStatus = true
+        if (currentTime - voteUser.lastVoteTimestamp >= 43200)  voteStatus = true
         
     } else {
         voteStatus = "N/A"
@@ -92,12 +92,13 @@ export async function devVoteCheck(interaction: ShinanoInteraction) {
         }
 
         if (!voteUser) {
-            await Votes.create({
+            await User.create({
                 userId: user.id,
-                voteTimestamp: Math.floor(Date.now() / 1000)
+                commandsExecuted: 0,
+                lastVoteTimestamp: Math.floor(Date.now() / 1000)
             })
         } else {
-            await voteUser.updateOne({voteTimestamp: Math.floor(Date.now() / 1000)})
+            await voteUser.updateOne({lastVoteTimestamp: Math.floor(Date.now() / 1000)})
         }
 
 

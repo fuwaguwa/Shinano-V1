@@ -2,10 +2,9 @@ import { CommandInteractionOptionResolver, Collection, MessageEmbed, TextChannel
 import { client } from "..";
 import { Event } from "../structures/Event";
 import { ShinanoInteraction } from "../typings/Command";
-import Blacklist from '../schemas/Blacklist'
+import User from '../schemas/User'
 import { config } from 'dotenv'
 import ms from 'ms'
-import Votes from '../schemas/Votes'
 config();
 
 const Cooldown: Collection<string, number> = new Collection()
@@ -36,16 +35,22 @@ export default new Event("interactionCreate", async (interaction) => {
         }
 
         
+        // Finding User
+        let user = await User.findOne({userId: interaction.user.id})
+        if (!user) {
+            user = await User.create({
+                userId: interaction.user.id,
+                commandsExecuted: 0
+            })
+        }
+
+
         // Blacklist
-        const blacklist = await Blacklist.findOne({userId: interaction.user.id})
-        if (blacklist) {
+        if (user.blacklisted == true) {
             const blacklisted = new MessageEmbed()
                 .setColor('RED')
                 .setTitle('You have been blacklisted!')
-                .addFields(
-                    {name: 'Reason', value: blacklist['reason']},
-                    {name: 'Blacklisted By:', value: `<@${blacklist['blacklistedBy']}>`}
-                )
+                .setDescription('Please contact us at the [support server](https://discord.gg/NFkMxFeEWr) for more information about your blacklist.')
             return interaction.reply({embeds: [blacklisted]})
         }
 
@@ -83,8 +88,7 @@ export default new Event("interactionCreate", async (interaction) => {
                             )
                         
                     // Checking if user has voted
-                    const userVotes = await Votes.findOne({userId: interaction.user.id})
-                    if (!userVotes) {
+                    if (!user.lastVoteTimestamp) {
                         // Have not voted before
                         voteEmbed
                             .setDescription(
@@ -96,7 +100,7 @@ export default new Event("interactionCreate", async (interaction) => {
                         return interaction.deferred 
                             ? interaction.editReply({embeds: [voteEmbed], components: [voteLink]}) 
                             : interaction.reply({embeds: [voteEmbed], components: [voteLink]})
-                    } else if (Math.floor(Date.now() / 1000) - userVotes.voteTimestamp > 43200) {
+                    } else if (Math.floor(Date.now() / 1000) - user.lastVoteTimestamp > 43200) {
                         // Voted before but 12 hours has passed
                         voteEmbed
                             .setDescription(
@@ -128,6 +132,10 @@ export default new Event("interactionCreate", async (interaction) => {
             client,
             interaction: interaction as ShinanoInteraction
         });
+
+        
+        // Command Count
+        await User.updateOne({userId: interaction.user.id}, {commandExecuted: user.commandsExecuted + 1})
 
 
         // Apply Cooldown

@@ -1,8 +1,8 @@
 import { Guild, MessageEmbed } from "discord.js";
-import { client } from "../../../..";
-import { ShinanoInteraction } from "../../../../typings/Command";
+import { ShinanoInteraction } from "../../../../../typings/Command";
+import { client } from '../../../../..'
 
-export async function devGuildInfo(interaction: ShinanoInteraction) {
+export async function devInspectGuild(interaction: ShinanoInteraction) {
     const guild: Guild = await client.guilds.fetch(interaction.options.getString('guild-id'))
 
     if (!guild) {
