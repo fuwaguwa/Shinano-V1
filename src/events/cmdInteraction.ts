@@ -126,18 +126,19 @@ export default new Event("interactionCreate", async (interaction) => {
             }
         }
 
+        
         // Command Run
         command.run({
             args: interaction.options as CommandInteractionOptionResolver,
             client,
             interaction: interaction as ShinanoInteraction
         });
+        
+
+        // Command Count
+        await user.updateOne({commandsExecuted: user.commandsExecuted + 1})
 
         
-        // Command Count
-        await User.updateOne({userId: interaction.user.id}, {commandExecuted: user.commandsExecuted + 1})
-
-
         // Apply Cooldown
         Cooldown.set(`${command.name}${interaction.user.id}`, Date.now() + command.cooldown)
         setTimeout(() => {
