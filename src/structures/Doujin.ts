@@ -1,4 +1,4 @@
-import { InteractionCollector, Message, MessageActionRow, MessageEmbed, MessageSelectMenu, SelectMenuInteraction } from "discord.js"
+import {  Message, MessageActionRow, MessageEmbed, MessageSelectMenu } from "discord.js"
 import { ShinanoInteraction } from "../typings/Command"
 import { ShinanoPaginator } from "./Pages"
 import { toTitleCase } from "./Utils"
