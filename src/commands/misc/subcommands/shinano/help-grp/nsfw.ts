@@ -45,5 +45,6 @@ export async function shinanoHelpNSFW(interaction: ShinanoInteraction) {
                 value: "`code`, `search`, `random`"
             }
         )
+        .setFooter({text: 'All characters displayed are 18 years old and above.'})
     await interaction.reply({embeds:[nsfwEmbed], components: [navigation]})
 }
