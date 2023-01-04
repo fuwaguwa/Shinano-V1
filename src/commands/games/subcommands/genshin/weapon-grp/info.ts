@@ -129,6 +129,8 @@ export async function genshinWeaponInfo(interaction: ShinanoInteraction, weapon:
         time: 120000
     })
 
+    let costPage: any = 0
+
     collector.on('collect', async (i) => {
         if (!i.customId.endsWith(i.user.id)) {
             return i.reply({
@@ -156,10 +158,11 @@ export async function genshinWeaponInfo(interaction: ShinanoInteraction, weapon:
                     selectMenu.options[0].default = false
                     selectMenu.options[1].default = true
 
-                    await ShinanoPaginator({
+                    costPage = await ShinanoPaginator({
                         interaction: interaction,
                         interactorOnly: true,
                         timeout: 120000,
+                        page: costPage,
                         pages: ascensionsCostsEmbeds,
                         menu: navigation
                     })

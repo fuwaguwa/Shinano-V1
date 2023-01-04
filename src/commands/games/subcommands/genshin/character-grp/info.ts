@@ -270,7 +270,10 @@ export async function genshinCharacterInfo(interaction: ShinanoInteraction, char
     const message = await interaction.editReply({embeds: [infoEmbed], components: [navigation]})
     const collector = await (message as Message).createMessageComponentCollector({
         time: 120000
-    })    
+    })  
+    
+    let costPage: any = 0
+    let galleryPage: any = 0
 
     collector.on('collect', async (i) => {
         if (!i.customId.endsWith(i.user.id)) {
@@ -327,10 +330,11 @@ export async function genshinCharacterInfo(interaction: ShinanoInteraction, char
                             : selectMenu.options[i].default = false
                     }
                     
-                    await ShinanoPaginator({
+                    costPage = await ShinanoPaginator({
                         interaction: interaction,
                         interactorOnly: true,
                         pages: ascensionsCostsEmbeds,
+                        page: costPage,
                         timeout: 120000,
                         menu: navigation
                     })
@@ -345,10 +349,11 @@ export async function genshinCharacterInfo(interaction: ShinanoInteraction, char
                             : selectMenu.options[i].default = false
                     }
     
-                    await ShinanoPaginator({
+                    galleryPage = await ShinanoPaginator({
                         interaction: interaction,
                         interactorOnly: true,
                         pages: galleryImagesEmbed,
+                        page: galleryPage,
                         timeout: 120000,
                         menu: navigation
                     })
