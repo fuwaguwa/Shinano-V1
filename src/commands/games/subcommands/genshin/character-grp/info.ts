@@ -306,7 +306,7 @@ export async function genshinCharacterInfo(interaction: ShinanoInteraction, char
                     }
                     
                     if (MC) {
-                        ShinanoPaginator({
+                        await ShinanoPaginator({
                             interaction: interaction,
                             interactorOnly: true,
                             pages: travelerConsPages,
@@ -327,7 +327,7 @@ export async function genshinCharacterInfo(interaction: ShinanoInteraction, char
                             : selectMenu.options[i].default = false
                     }
                     
-                    ShinanoPaginator({
+                    await ShinanoPaginator({
                         interaction: interaction,
                         interactorOnly: true,
                         pages: ascensionsCostsEmbeds,
@@ -345,7 +345,7 @@ export async function genshinCharacterInfo(interaction: ShinanoInteraction, char
                             : selectMenu.options[i].default = false
                     }
     
-                    ShinanoPaginator({
+                    await ShinanoPaginator({
                         interaction: interaction,
                         interactorOnly: true,
                         pages: galleryImagesEmbed,

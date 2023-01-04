@@ -156,7 +156,7 @@ export async function genshinWeaponInfo(interaction: ShinanoInteraction, weapon:
                     selectMenu.options[0].default = false
                     selectMenu.options[1].default = true
 
-                    ShinanoPaginator({
+                    await ShinanoPaginator({
                         interaction: interaction,
                         interactorOnly: true,
                         timeout: 120000,

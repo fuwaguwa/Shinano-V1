@@ -328,6 +328,7 @@ export async function azurLaneShip(interaction: ShinanoInteraction, AL: AzurAPI)
     const collector = await (message as Message).createMessageComponentCollector({
         time: 120000,
     })
+    let skinPage: any = 0
 
     collector.on('collect', async (i) => {
         const customID = i.customId.split('-')[0]
@@ -418,10 +419,11 @@ export async function azurLaneShip(interaction: ShinanoInteraction, AL: AzurAPI)
                                 components: [category]
                             })
                         } else {
-                            ShinanoPaginator({
+                            skinPage = await ShinanoPaginator({
                                 interaction: interaction,
                                 pages: skinEmbeds,
                                 interactorOnly: true,
+                                page: skinPage,
                                 timeout: 120000,
                                 menu: category,
                             })
@@ -443,7 +445,7 @@ export async function azurLaneShip(interaction: ShinanoInteraction, AL: AzurAPI)
                                 components: [category]
                             })
                         } else {
-                            ShinanoPaginator({
+                            await ShinanoPaginator({
                                 interaction: interaction,
                                 pages: galleryEmbeds,
                                 interactorOnly: true,

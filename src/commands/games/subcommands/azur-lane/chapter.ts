@@ -17,7 +17,7 @@ export async function azurLaneChapter(interaction: ShinanoInteraction, AL: AzurA
     // Normal
     const normalLevels: MessageEmbed[] = chapterInfo(info, 'normal')
     if (!info[1].hard) {
-        return ShinanoPaginator({
+        return await ShinanoPaginator({
             interaction: interaction,
             interactorOnly: true,
             pages: normalLevels,
@@ -59,7 +59,7 @@ export async function azurLaneChapter(interaction: ShinanoInteraction, AL: AzurA
         components: [navigation]
     })
 
-    ShinanoPaginator({
+    await ShinanoPaginator({
         interaction: interaction,
         interactorOnly: true,
         pages: normalLevels,
@@ -90,7 +90,7 @@ export async function azurLaneChapter(interaction: ShinanoInteraction, AL: AzurA
                 (navigation.components[0] as MessageSelectMenu).options[0].default = true;
                 (navigation.components[0] as MessageSelectMenu).options[1].default = false;
 
-                ShinanoPaginator({
+                await ShinanoPaginator({
                     interaction: interaction,
                     menu: navigation,
                     interactorOnly: true,
@@ -105,7 +105,7 @@ export async function azurLaneChapter(interaction: ShinanoInteraction, AL: AzurA
                 (navigation.components[0] as MessageSelectMenu).options[0].default = false;
                 (navigation.components[0] as MessageSelectMenu).options[1].default = true;
 
-                ShinanoPaginator({
+                await ShinanoPaginator({
                     interaction: interaction,
                     menu: navigation,
                     interactorOnly: true,

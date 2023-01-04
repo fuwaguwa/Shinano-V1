@@ -60,7 +60,7 @@ export async function doujinSearch(interaction: ShinanoInteraction) {
         time: 60000
     })
     
-    ShinanoPaginator({
+    await ShinanoPaginator({
         interaction: interaction,
         interactorOnly: true,
         menu: resultNavi,

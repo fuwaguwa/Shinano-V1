@@ -180,7 +180,7 @@ export async function genshinCharacterTalents(interaction: ShinanoInteraction) {
         time: 120000
     })
 
-    ShinanoPaginator({
+    await ShinanoPaginator({
         interaction: interaction,
         interactorOnly: true,
         pages: charTalentsEmbeds,
@@ -205,7 +205,7 @@ export async function genshinCharacterTalents(interaction: ShinanoInteraction) {
                 selectMenu.options[0].default = true
                 selectMenu.options[1].default = false 
                 
-                ShinanoPaginator({
+                await ShinanoPaginator({
                     interaction: interaction,
                     interactorOnly: true,
                     pages: charTalentsEmbeds,
@@ -220,7 +220,7 @@ export async function genshinCharacterTalents(interaction: ShinanoInteraction) {
                 selectMenu.options[0].default = false
                 selectMenu.options[1].default = true 
                 
-                ShinanoPaginator({
+                await ShinanoPaginator({
                     interaction: interaction,
                     interactorOnly: true,
                     pages: talentsCostsEmbeds,

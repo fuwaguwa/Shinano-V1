@@ -82,7 +82,7 @@ export async function shinanoHelpSFW(interaction: ShinanoInteraction) {
         components: [navigation]
     })
 
-    ShinanoPaginator({
+    await ShinanoPaginator({
         interaction: interaction,
         menu: navigation,
         pages: allCommands['Fun'],
@@ -112,7 +112,7 @@ export async function shinanoHelpSFW(interaction: ShinanoInteraction) {
             select.options[j].value === i.values[0] ? select.options[j].default = true : select.options[j].default = false
         }
 
-        ShinanoPaginator({
+        await ShinanoPaginator({
             interaction: interaction,
             timeout: 30000,
             menu: navigation,

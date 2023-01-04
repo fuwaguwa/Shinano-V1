@@ -1,7 +1,7 @@
 import { MessageEmbed } from "discord.js";
 import { ShinanoPaginator } from "./Pages";
 
-export function animeInfo({anime, interaction, menu}) {
+export async function animeInfo({anime, interaction, menu}) {
     // Genres/Studios
     let genres: string[] = []; anime.genres.forEach(genre => genres.push(genre.name))
     let studios: string[] = []; anime.studios.forEach(studio => studios.push(`[${studio.name}](${studio.url})`))
@@ -54,7 +54,7 @@ export function animeInfo({anime, interaction, menu}) {
     
     // Paging
     if (menu) {
-        ShinanoPaginator({
+        await ShinanoPaginator({
             interaction: interaction,
             interactorOnly: true,
             timeout: 120000,
@@ -62,7 +62,7 @@ export function animeInfo({anime, interaction, menu}) {
             pages: [synopsisEmbed, generalInfoEmbed]
         })
     } else {
-        ShinanoPaginator({
+        await ShinanoPaginator({
             interaction: interaction,
             interactorOnly: true,
             timeout: 120000,

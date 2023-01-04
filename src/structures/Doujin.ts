@@ -155,6 +155,8 @@ export async function displayDoujin(interaction: ShinanoInteraction, doujin) {
         time: 150000
     })
 
+    let page: any = 0
+
     collector.on('collect', async (i) => {
         if (!i.customId.endsWith(`${i.user.id}`)) {
             return i.reply({
@@ -181,10 +183,11 @@ export async function displayDoujin(interaction: ShinanoInteraction, doujin) {
                     menu.options[1].default = true
     
                     if (doujinPages) {
-                        ShinanoPaginator({
+                        page = await ShinanoPaginator({
                             interaction: interaction,
                             interactorOnly: true,
                             pages: doujinPages,
+                            page: page,
                             menu: navigation,
                             timeout: 150000 
                         })
