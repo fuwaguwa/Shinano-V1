@@ -7,18 +7,18 @@ export async function nsfwPrivateFanbox(interaction: ShinanoInteraction, lewdEmb
     const tag = interaction.options.getString('fanbox-category') || tags[Math.floor(Math.random() * tags.length)]
 
     const data = await Collection.findOne({type: tag})
-    const response = data.links.filter((item) => {item.link.endsWith('_FANBOX.jpg')})
-    const link = response[Math.floor(Math.random() * response.length)]
+    const response = data.links.filter(item => item.link.includes('_FANBOX'))
+    const item = response[Math.floor(Math.random() * response.length)]
     
-    
-    lewdEmbed.setImage(link)
+
+    lewdEmbed.setImage(item.link)
     const imageLink = new MessageActionRow()
         .addComponents(
             new MessageButton()
                 .setStyle('LINK')
                 .setEmoji('🔗')
                 .setLabel('Image Link')
-                .setURL(link)
+                .setURL(item.link)
         )
     return interaction.editReply({embeds: [lewdEmbed], components: [imageLink]})
 }
