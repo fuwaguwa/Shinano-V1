@@ -7,6 +7,9 @@ const nsfw = new mongoose.Schema({
         unique: true
     },
     links: [],
+    size: {
+        type: Number
+    }
 })
 
 export = mongoose.model('nsfw', nsfw)

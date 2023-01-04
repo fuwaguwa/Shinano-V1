@@ -27,7 +27,7 @@ export async function azurLaneNewsSet(interaction: ShinanoInteraction) {
     // Main
     const dbChannel = await News.findOne({guildId: interaction.guild.id})
     dbChannel
-        ? await News.findOneAndUpdate({guildId: interaction.guild.id}, {channelId: channel.id})
+        ? await dbChannel.updateOne({channelId: channel.id})
         : await News.create({guildId: interaction.guild.id, channelId: channel.id})
     const done: MessageEmbed = new MessageEmbed()
         .setColor('GREEN')
