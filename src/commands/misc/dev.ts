@@ -81,7 +81,7 @@ export default new Command({
                     description: 'Get information about a guild.',
                     options: [
                         {
-                            type: 'INTEGER',
+                            type: 'STRING',
                             required: true,
                             name: 'guild-id',
                             description: 'The guild\'s ID.'
