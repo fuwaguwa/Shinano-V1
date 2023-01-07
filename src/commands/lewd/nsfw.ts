@@ -170,7 +170,7 @@ export default new Command({
                             name: 'video-category',
                             description: 'The category you want videos from. Ignore this option for random category.',
                             choices: [
-                                {name: 'Shipgirls', value: 'shipgirls'},
+                                {name: '⭐ Shipgirls', value: 'shipgirls'},
                                 {name: 'Undies', value: 'undies'},
                                 {name: 'Elf', value: 'elf'},
                                 {name: 'Genshin', value: 'genshin'},
