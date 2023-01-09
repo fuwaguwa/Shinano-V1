@@ -1,8 +1,8 @@
 import { ShinanoInteraction } from "../../../../typings/Command";
 import genshin from 'genshin-db'
 import { MessageEmbed } from "discord.js";
-import { toTitleCase } from "../../../../structures/Utils";
-import { rarityColor } from "../../../../structures/Genshin";
+import { toTitleCase } from "../../../../lib/Utils";
+import { rarityColor } from "../../../../lib/Genshin";
 
 export async function genshinMaterial(interaction: ShinanoInteraction) {
     // Fetching info

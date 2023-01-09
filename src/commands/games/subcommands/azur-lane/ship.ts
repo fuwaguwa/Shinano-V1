@@ -1,8 +1,8 @@
 import { AzurAPI } from "@azurapi/azurapi";
 import { MessageEmbed, MessageActionRow, MessageSelectMenu, InteractionCollector, SelectMenuInteraction, Message } from "discord.js";
-import { generateStatsTable, shipColor } from "../../../../structures/AL";
-import { ShinanoPaginator } from "../../../../structures/Pages";
-import { toTitleCase } from "../../../../structures/Utils";
+import { generateStatsTable, shipColor } from "../../../../lib/AL";
+import { ShinanoPaginator } from "../../../../lib/Pages";
+import { toTitleCase } from "../../../../lib/Utils";
 import { ShinanoInteraction } from "../../../../typings/Command";
 
 export async function azurLaneShip(interaction: ShinanoInteraction, AL: AzurAPI) {

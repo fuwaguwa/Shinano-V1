@@ -2,7 +2,7 @@ import { Guild, MessageEmbed, TextChannel } from "discord.js";
 import { client } from "..";
 import { Event } from "../structures/Event";
 import { config } from "dotenv";
-import { updateServerCount } from "../structures/Utils";
+import { updateServerCount } from "../lib/Utils";
 config();
 
 export default new Event(('guildDelete'), async (guild) => {

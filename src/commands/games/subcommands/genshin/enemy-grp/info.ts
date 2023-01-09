@@ -1,7 +1,7 @@
 import { ShinanoInteraction } from "../../../../../typings/Command";
 import genshin from 'genshin-db'
 import { MessageEmbed } from "discord.js";
-import { toTitleCase } from "../../../../../structures/Utils";
+import { toTitleCase } from "../../../../../lib/Utils";
 
 export async function genshinEnemyInfo(interaction: ShinanoInteraction, enemy: genshin.Enemy) {
     // Getting drops

@@ -1,6 +1,6 @@
 import { MessageEmbed } from "discord.js";
 import { ShinanoInteraction } from "../../../../typings/Command";
-import { getALEXPTable } from "../../../../structures/AL";
+import { getALEXPTable } from "../../../../lib/AL";
 
 export async function azurLaneExpCalculator(interaction: ShinanoInteraction) {
     await interaction.deferReply()

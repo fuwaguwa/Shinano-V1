@@ -1,7 +1,7 @@
 import { AzurAPI } from "@azurapi/azurapi";
 import { MessageEmbed, MessageActionRow, MessageSelectMenu, InteractionCollector, SelectMenuInteraction, Message } from "discord.js";
-import { chapterInfo } from "../../../../structures/AL";
-import { ShinanoPaginator } from "../../../../structures/Pages";
+import { chapterInfo } from "../../../../lib/AL";
+import { ShinanoPaginator } from "../../../../lib/Pages";
 import { ShinanoInteraction } from "../../../../typings/Command";
 
 export async function azurLaneChapter(interaction: ShinanoInteraction, AL: AzurAPI) {

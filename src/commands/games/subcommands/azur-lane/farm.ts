@@ -1,5 +1,5 @@
 import { MessageEmbed } from "discord.js";
-import { getALEXPTable, shipColor } from "../../../../structures/AL";
+import { getALEXPTable, shipColor } from "../../../../lib/AL";
 import { ShinanoInteraction } from "../../../../typings/Command";
 
 export async function azurLaneFarm(interaction: ShinanoInteraction, AL: any) {

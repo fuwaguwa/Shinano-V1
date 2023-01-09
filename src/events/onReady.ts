@@ -1,7 +1,7 @@
 import { Event } from "../structures/Event";
 import { client } from "..";
 import { config } from "dotenv";
-import { updateServerCount } from "../structures/Utils";
+import { updateServerCount } from "../lib/Utils";
 config();
 
 export default new Event("ready", async () => {

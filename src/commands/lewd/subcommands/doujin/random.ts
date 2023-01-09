@@ -1,7 +1,7 @@
 import { ShinanoInteraction } from "../../../../typings/Command";
 import fetch from 'node-fetch'
 import { config } from "dotenv";
-import { displayDoujin, getDoujinTags } from "../../../../structures/Doujin";
+import { displayDoujin, getDoujinTags } from "../../../../lib/Doujin";
 config()
 
 export async function doujinRandom(interaction: ShinanoInteraction) {

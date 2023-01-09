@@ -1,5 +1,5 @@
 import { MessageEmbed, MessageActionRow, MessageSelectMenu, InteractionCollector, SelectMenuInteraction, Message } from "discord.js"
-import { animeInfo } from "../../../../structures/Anime"
+import { animeInfo } from "../../../../lib/Anime"
 import { ShinanoInteraction } from "../../../../typings/Command"
 import fetch from 'node-fetch'
 

@@ -1,7 +1,7 @@
 import { Command } from "../../structures/Command";
 import { SauceNao } from 'saucenao.js'
 import { MessageEmbed, MessageButton, MessageActionRow } from "discord.js";
-import { isImageAndGif } from '../../structures/Utils'
+import { isImageAndGif } from '../../lib/Utils'
 import { config } from 'dotenv'
 import fetch from 'node-fetch'
 config();

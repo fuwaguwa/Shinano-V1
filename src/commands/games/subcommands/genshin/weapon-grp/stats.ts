@@ -1,8 +1,8 @@
 import { ShinanoInteraction } from "../../../../../typings/Command";
 import genshin from 'genshin-db'
-import { rarityColor } from "../../../../../structures/Genshin";
+import { rarityColor } from "../../../../../lib/Genshin";
 import { MessageEmbed } from "discord.js";
-import { strFormat } from "../../../../../structures/Utils";
+import { strFormat } from "../../../../../lib/Utils";
 
 export async function genshinWeaponStats(interaction: ShinanoInteraction, weapon: genshin.Weapon) {
     // Processing Data

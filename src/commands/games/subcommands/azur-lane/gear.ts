@@ -1,6 +1,6 @@
 import { AzurAPI } from "@azurapi/azurapi";
 import { MessageEmbed, MessageActionRow, MessageSelectMenu, InteractionCollector, SelectMenuInteraction } from "discord.js";
-import { gearStats, gearFits, gearSearch } from "../../../../structures/AL";
+import { gearStats, gearFits, gearSearch } from "../../../../lib/AL";
 import { ShinanoInteraction } from "../../../../typings/Command";
 
 export async function azurLaneGear(interaction: ShinanoInteraction, AL: AzurAPI) {

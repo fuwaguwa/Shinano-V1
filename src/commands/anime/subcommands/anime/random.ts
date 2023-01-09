@@ -1,4 +1,4 @@
-import { animeInfo } from "../../../../structures/Anime";
+import { animeInfo } from "../../../../lib/Anime";
 import { ShinanoInteraction } from "../../../../typings/Command";
 import fetch from 'node-fetch'
 

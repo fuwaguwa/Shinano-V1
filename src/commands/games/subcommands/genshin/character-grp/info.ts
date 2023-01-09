@@ -1,8 +1,8 @@
 import { ShinanoInteraction } from "../../../../../typings/Command";
 import genshin from 'genshin-db'
 import { InteractionCollector, Message, MessageActionRow, MessageEmbed, MessageSelectMenu, SelectMenuInteraction } from "discord.js";
-import { color, icon, stars } from "../../../../../structures/Genshin";
-import { ShinanoPaginator } from "../../../../../structures/Pages";
+import { color, icon, stars } from "../../../../../lib/Genshin";
+import { ShinanoPaginator } from "../../../../../lib/Pages";
 
 function queryConstellations(characterName: string, character: genshin.Character, embedColor: any) {
     const characterCons = genshin.constellations(characterName)

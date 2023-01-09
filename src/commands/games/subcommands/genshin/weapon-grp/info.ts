@@ -1,9 +1,9 @@
 import { ShinanoInteraction } from "../../../../../typings/Command";
 import genshin from 'genshin-db';
 import { InteractionCollector, Message, MessageActionRow, MessageEmbed, MessageSelectMenu, SelectMenuInteraction } from "discord.js";
-import { rarityColor, stars } from "../../../../../structures/Genshin";
-import { strFormat } from "../../../../../structures/Utils";
-import { ShinanoPaginator } from "../../../../../structures/Pages";
+import { rarityColor, stars } from "../../../../../lib/Genshin";
+import { strFormat } from "../../../../../lib/Utils";
+import { ShinanoPaginator } from "../../../../../lib/Pages";
 
 export async function genshinWeaponInfo(interaction: ShinanoInteraction, weapon: genshin.Weapon) {
     // Filtering data

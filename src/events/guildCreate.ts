@@ -1,7 +1,7 @@
 import { Event } from "../structures/Event";
 import { Guild, MessageActionRow, MessageButton, MessageEmbed, TextChannel } from "discord.js";
 import { client } from "..";
-import { updateServerCount } from "../structures/Utils";
+import { updateServerCount } from "../lib/Utils";
 import { config } from "dotenv";
 config();
 

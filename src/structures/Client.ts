@@ -7,7 +7,7 @@ import { promisify } from "util";
 import { CommandType } from "../typings/Command";
 import { RegisterCommandsOptions } from "../typings/CommandRegistration";
 import { ApplicationCommandDataResolvable, Client, ClientEvents, Collection, MessageEmbed, TextChannel } from "discord.js";
-import { startTweetListener } from "./Twitter";
+import { startTweetListener } from "../lib/Twitter";
 config();
 
 const promiseGlob = promisify(glob);

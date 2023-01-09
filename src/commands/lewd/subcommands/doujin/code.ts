@@ -1,7 +1,7 @@
 import { ShinanoInteraction } from "../../../../typings/Command";
 import fetch from 'node-fetch'
 import { MessageEmbed } from "discord.js";
-import { displayDoujin } from "../../../../structures/Doujin";
+import { displayDoujin } from "../../../../lib/Doujin";
 
 
 export async function doujinCode(interaction: ShinanoInteraction, nuclearLaunchCode?) {

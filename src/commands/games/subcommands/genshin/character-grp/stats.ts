@@ -1,6 +1,6 @@
 import { ShinanoInteraction } from "../../../../../typings/Command";
 import genshin from 'genshin-db'
-import { color } from "../../../../../structures/Genshin";
+import { color } from "../../../../../lib/Genshin";
 import { MessageEmbed } from "discord.js";
 
 export async function genshinCharacterStats(interaction: ShinanoInteraction, character: genshin.Character) {

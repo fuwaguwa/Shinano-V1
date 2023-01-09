@@ -1,9 +1,9 @@
 import { ShinanoInteraction } from "../../../../../typings/Command";
 import genshin from 'genshin-db'
 import { InteractionCollector, Message, MessageActionRow, MessageEmbed, MessageSelectMenu, SelectMenuInteraction } from "discord.js";
-import { color } from "../../../../../structures/Genshin";
-import { toTitleCase } from "../../../../../structures/Utils";
-import { ShinanoPaginator } from "../../../../../structures/Pages";
+import { color } from "../../../../../lib/Genshin";
+import { toTitleCase } from "../../../../../lib/Utils";
+import { ShinanoPaginator } from "../../../../../lib/Pages";
 
 export async function genshinCharacterTalents(interaction: ShinanoInteraction) {
     // Reordering 

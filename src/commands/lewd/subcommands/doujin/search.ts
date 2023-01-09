@@ -2,8 +2,8 @@ import { ShinanoInteraction } from "../../../../typings/Command";
 import { config } from "dotenv";
 import fetch from 'node-fetch'
 import { Collector, InteractionCollector, Message, MessageActionRow, MessageEmbed, MessageSelectMenu, SelectMenuInteraction } from "discord.js";
-import { ShinanoPaginator } from "../../../../structures/Pages";
-import { genDoujinEmbed, getDoujinTags } from "../../../../structures/Doujin";
+import { ShinanoPaginator } from "../../../../lib/Pages";
+import { genDoujinEmbed, getDoujinTags } from "../../../../lib/Doujin";
 import { doujinCode } from "./code";
 config();
 
