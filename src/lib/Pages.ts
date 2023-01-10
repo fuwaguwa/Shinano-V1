@@ -9,7 +9,7 @@ export async function ShinanoPaginator(options: {
     interactorOnly: boolean,
     menu?: MessageActionRow,
     timeout: number,
-}) {
+}): Promise<number> {
     return new Promise(async (resolve, reject) => {
         let pageCount: number = options.page || 0
         let menuId: string;
