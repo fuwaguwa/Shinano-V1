@@ -1,36 +1,37 @@
-import { Command } from '../../structures/Command'
-import fetch from 'node-fetch'
-import { MessageEmbed } from 'discord.js'
+import { Command } from "../../structures/Command";
+import fetch from "node-fetch";
+import { MessageEmbed } from "discord.js";
 
 export default new Command({
-    name: 'highfive',
-    description: 'Highfive!',
-    cooldown: 4500,
-    category: 'Reactions',
-    options: [
-        {
-            type: 'USER',
-            name: 'target',
-            description: 'The person you want to highfive!'
-        }
-    ],
-    run: async({interaction}) => {
-        await interaction.deferReply()
+	name: "highfive",
+	description: "Highfive!",
+	cooldown: 4500,
+	category: "Reactions",
+	options: [
+		{
+			type: "USER",
+			name: "target",
+			description: "The person you want to highfive!",
+		},
+	],
+	run: async ({ interaction }) => {
+		await interaction.deferReply();
 
-        const target = interaction.options.getUser('target')
-        
-        const response = await fetch('https://nekos.best/api/v2/highfive')
-        const highfive = await response.json()
+		const target = interaction.options.getUser("target");
 
-        const highfiveEmbed: MessageEmbed = new MessageEmbed()
-            .setColor('RANDOM')
-            .setDescription(`${
-                target
-                    ? `${interaction.user} highfived ${target}!`
-                    : `You highfived with yourself...`
-            }`)
-            .setImage(highfive.results[0].url)
+		const response = await fetch("https://nekos.best/api/v2/highfive");
+		const highfive = await response.json();
 
-        await interaction.editReply({embeds: [highfiveEmbed]})
-    }
-})
+		const highfiveEmbed: MessageEmbed = new MessageEmbed()
+			.setColor("RANDOM")
+			.setDescription(
+				`${target
+					? `${interaction.user} highfived ${target}!`
+					: `You highfived with yourself...`
+				}`
+			)
+			.setImage(highfive.results[0].url);
+
+		await interaction.editReply({ embeds: [highfiveEmbed] });
+	},
+});

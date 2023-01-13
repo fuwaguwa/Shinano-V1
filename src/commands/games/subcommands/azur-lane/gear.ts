@@ -1,302 +1,384 @@
 import { AzurAPI } from "@azurapi/azurapi";
-import { MessageEmbed, MessageActionRow, MessageSelectMenu, InteractionCollector, SelectMenuInteraction } from "discord.js";
+import {
+	MessageEmbed,
+	MessageActionRow,
+	MessageSelectMenu,
+	InteractionCollector,
+	SelectMenuInteraction,
+} from "discord.js";
 import { gearStats, gearFits, gearSearch } from "../../../../lib/AL";
 import { ShinanoInteraction } from "../../../../typings/Command";
 
-export async function azurLaneGear(interaction: ShinanoInteraction, AL: AzurAPI) {
-    await interaction.deferReply()
-                
-    const gearName: string = interaction.options.getString('gear-name').toLowerCase()
-    const gearFiltered = await gearSearch(gearName, AL)
+export async function azurLaneGear(
+	interaction: ShinanoInteraction,
+	AL: AzurAPI
+) {
+	await interaction.deferReply();
 
-    if (gearFiltered.length === 0) {
-        const noResult: MessageEmbed = new MessageEmbed()
-            .setColor('RED')
-            .setDescription('Gear not found! Make sure you entered the gear\'s full name or spelt the gear\'s name properly!')
-        return interaction.editReply({embeds:[noResult]})
-    }
-    const gear: any = gearFiltered[0].item
+	const gearName: string = interaction.options
+		.getString("gear-name")
+		.toLowerCase();
+	const gearFiltered = await gearSearch(gearName, AL);
 
+	if (gearFiltered.length === 0)
+	{
+		const noResult: MessageEmbed = new MessageEmbed()
+			.setColor("RED")
+			.setDescription(
+				"Gear not found! Make sure you entered the gear's full name or spelt the gear's name properly!"
+			);
+		return interaction.editReply({ embeds: [noResult] });
+	}
+	const gear: any = gearFiltered[0].item;
 
-    // Gears
-    const infoEmbeds: MessageEmbed[] = []
-    const statsEmbeds: MessageEmbed[] = []
-    const equippableEmbeds: MessageEmbed[] = []          
-    
-    for (let i = 0; i < gear.tiers.length; i++) {
-        // Color Picking
-        let color: any;
-        if (gear.tiers[i].rarity === 'Normal') color = '#b0b7b8';
-        if (gear.tiers[i].rarity === 'Rare') color = '#03dbfc';
-        if (gear.tiers[i].rarity === 'Elite') color = '#ec18f0';
-        if (gear.tiers[i].rarity === 'Super Rare') color = '#eff233';
-        if (gear.tiers[i].rarity === 'Ultra Rare') color = 'BLACK';
+	// Gears
+	const infoEmbeds: MessageEmbed[] = [];
+	const statsEmbeds: MessageEmbed[] = [];
+	const equippableEmbeds: MessageEmbed[] = [];
 
+	for (let i = 0; i < gear.tiers.length; i++)
+	{
+		// Color Picking
+		let color: any;
+		if (gear.tiers[i].rarity === "Normal") color = "#b0b7b8";
+		if (gear.tiers[i].rarity === "Rare") color = "#03dbfc";
+		if (gear.tiers[i].rarity === "Elite") color = "#ec18f0";
+		if (gear.tiers[i].rarity === "Super Rare") color = "#eff233";
+		if (gear.tiers[i].rarity === "Ultra Rare") color = "BLACK";
 
-        // General Info
-        infoEmbeds.push(
-            new MessageEmbed()
-                .setTitle(`${gear.names['wiki'] ? gear.names['wiki'] : gear.names.en} | ${gear.tiers[i].rarity}`)
-                .setDescription(`Stars: ${gear.tiers[i].stars.stars}`)
-                .setColor(color)
-                .setThumbnail(gear.image)
-                .addFields(
-                    {name: 'Nationality:', value: gear.nationality},
-                    {name: 'Gear Type:', value: `${gear.category} | ${gear.type.name}`},
-                    {name: 'Obtain From:', value: gear.misc.obtainedFrom},
-                )
-        )
+		// General Info
+		infoEmbeds.push(
+			new MessageEmbed()
+				.setTitle(
+					`${gear.names["wiki"] ? gear.names["wiki"] : gear.names.en} | ${gear.tiers[i].rarity
+					}`
+				)
+				.setDescription(`Stars: ${gear.tiers[i].stars.stars}`)
+				.setColor(color)
+				.setThumbnail(gear.image)
+				.addFields(
+					{ name: "Nationality:", value: gear.nationality },
+					{ name: "Gear Type:", value: `${gear.category} | ${gear.type.name}` },
+					{ name: "Obtain From:", value: gear.misc.obtainedFrom }
+				)
+		);
 
-        if (gear.misc.notes.length > 0) {
-            infoEmbeds[i]
-                .addField('Notes:', gear.misc.notes)
-        }
-        
+		if (gear.misc.notes.length > 0)
+		{
+			infoEmbeds[i].addField("Notes:", gear.misc.notes);
+		}
 
-        // Stats
-        statsEmbeds.push(
-            new MessageEmbed()
-                .setColor(color)
-                .setThumbnail(gear.image)
-                .setTitle(`${gear.names['wiki'] ? gear.names['wiki'] : gear.names.en} | ${gear.tiers[i].rarity}`)
-        )
+		// Stats
+		statsEmbeds.push(
+			new MessageEmbed()
+				.setColor(color)
+				.setThumbnail(gear.image)
+				.setTitle(
+					`${gear.names["wiki"] ? gear.names["wiki"] : gear.names.en} | ${gear.tiers[i].rarity
+					}`
+				)
+		);
 
-        gearStats(gear.tiers[i].stats, statsEmbeds[i])
+		gearStats(gear.tiers[i].stats, statsEmbeds[i]);
 
+		// Equippables
+		equippableEmbeds.push(
+			new MessageEmbed()
+				.setColor(color)
+				.setThumbnail(gear.image)
+				.setTitle(`${gear.names["wiki"] ? gear.names["wiki"] : gear.names.en}`)
+				.addField("Equippable By:", gearFits(gear.fits).join("\n"))
+		);
+	}
 
-        // Equippables
-        equippableEmbeds.push(
-            new MessageEmbed()
-                .setColor(color)
-                .setThumbnail(gear.image)
-                .setTitle(`${gear.names['wiki'] ? gear.names['wiki'] : gear.names.en}`)
-                .addField('Equippable By:', gearFits(gear.fits).join('\n'))
-        )
-    }
+	// Selection Menu
+	const navigationTiers = new MessageActionRow().addComponents(
+		new MessageSelectMenu()
+			.setCustomId(`TIERS-${interaction.user.id}`)
+			.setMinValues(1)
+			.setMaxValues(1)
+			.setDisabled(false)
+			.addOptions(
+				{
+					label: "Tier 1",
+					emoji: "1️⃣",
+					value: "T1",
+					default: true,
+				},
+				{
+					label: "Tier 2",
+					value: "T2",
+					emoji: "2️⃣",
+					default: false,
+				},
+				{
+					label: "Tier 3",
+					value: "T3",
+					emoji: "3️⃣",
+					default: false,
+				}
+			)
+	);
+	const navigationOptions = new MessageActionRow().addComponents(
+		new MessageSelectMenu()
+			.setCustomId(`op-${interaction.user.id}`)
+			.setMinValues(1)
+			.setMaxValues(1)
+			.setDisabled(false)
+			.addOptions(
+				{
+					label: "Info",
+					value: "info",
+					emoji: "🔎",
+					default: true,
+				},
+				{
+					label: "Stats",
+					value: "stats",
+					emoji: "📝",
+					default: false,
+				},
+				{
+					label: "Fits",
+					value: "fits",
+					emoji: "🚢",
+					default: false,
+				}
+			)
+	);
 
+	// Collector
+	let message;
+	if (gear.tiers.length > 1)
+	{
+		message = await interaction.editReply({
+			embeds: [infoEmbeds[0]],
+			components: [navigationTiers, navigationOptions],
+		});
+	} else
+	{
+		message = await interaction.editReply({
+			embeds: [infoEmbeds[0]],
+			components: [navigationOptions],
+		});
+	}
 
-    // Selection Menu
-    const navigationTiers = new MessageActionRow()
-        .addComponents(
-            new MessageSelectMenu()
-            .setCustomId(`TIERS-${interaction.user.id}`)
-            .setMinValues(1)
-            .setMaxValues(1)
-            .setDisabled(false)
-            .addOptions(
-                {
-                    label: 'Tier 1',
-                    emoji: '1️⃣',
-                    value: 'T1',
-                    default: true
-                },
-                {
-                    label: 'Tier 2',
-                    value: 'T2',
-                    emoji: '2️⃣',
-                    default: false
-                },
-                {
-                    label: 'Tier 3',
-                    value: 'T3',
-                    emoji: '3️⃣',
-                    default: false
-                },
-            )    
-        )
-    const navigationOptions = new MessageActionRow()
-        .addComponents(
-            new MessageSelectMenu()
-            .setCustomId(`op-${interaction.user.id}`)
-            .setMinValues(1)
-            .setMaxValues(1)
-            .setDisabled(false)
-            .addOptions(
-                {
-                    label: 'Info',
-                    value: 'info',
-                    emoji: '🔎',
-                    default: true
-                },
-                {
-                    label: 'Stats',
-                    value: 'stats',
-                    emoji: '📝',
-                    default: false
-                },
-                {
-                    label: 'Fits',
-                    value: 'fits',
-                    emoji: '🚢',
-                    default: false
-                }
-            )    
-        )
+	const collector: InteractionCollector<SelectMenuInteraction> =
+		message.createMessageComponentCollector({
+			componentType: "SELECT_MENU",
+			time: 120000,
+		});
 
-        
-    // Collector
-    let message;
-    if (gear.tiers.length > 1) {
-        message = await interaction.editReply({
-            embeds: [infoEmbeds[0]],
-            components: [navigationTiers, navigationOptions]
-        })
-    } else {
-        message = await interaction.editReply({
-            embeds: [infoEmbeds[0]],
-            components: [navigationOptions]
-        })
-    }
+	let tierCount: number = 0;
+	collector.on("collect", async (i) => {
+		const customId = i.customId.split("-")[0];
 
+		if (!i.customId.endsWith(i.user.id))
+		{
+			return i.reply({
+				content: "This menu is not for you!",
+				ephemeral: true,
+			});
+		}
 
-    const collector: InteractionCollector<SelectMenuInteraction> = message.createMessageComponentCollector({
-        componentType: 'SELECT_MENU',
-        time: 120000
-    })
+		await i.deferUpdate();
+		if (customId === "TIERS")
+		{
+			switch (i.values[0])
+			{
+				case "T1": {
+					tierCount = 0;
 
-    let tierCount: number  = 0
-    collector.on('collect', async (i) => {
-        const customId = i.customId.split('-')[0]
-        
-        if (!i.customId.endsWith(i.user.id)) {
-            return i.reply({
-                content: 'This menu is not for you!',
-                ephemeral: true
-            })
-        }
+					// Resetting the selection
+					for (let i = 0; i < 3; i++)
+					{
+						if (i !== 0)
+						{
+							(navigationTiers.components[0] as MessageSelectMenu).options[
+								i
+							].default = false;
+							(navigationOptions.components[0] as MessageSelectMenu).options[
+								i
+							].default = false;
+						} else
+						{
+							(navigationTiers.components[0] as MessageSelectMenu).options[
+								i
+							].default = true;
+							(navigationOptions.components[0] as MessageSelectMenu).options[
+								i
+							].default = false;
+						}
+					}
+					(
+						navigationOptions.components[0] as MessageSelectMenu
+					).options[0].default = true;
 
-        await i.deferUpdate()
-        if (customId === 'TIERS') {
-            switch (i.values[0]) {
-                case 'T1': {
-                    tierCount = 0
+					await i.editReply({
+						embeds: [infoEmbeds[0]],
+						components: [navigationTiers, navigationOptions],
+					});
 
-                    // Resetting the selection
-                    for (let i = 0; i < 3; i++) {
-                        if (i !== 0) {
-                            (navigationTiers.components[0] as MessageSelectMenu).options[i].default = false;
-                            (navigationOptions.components[0] as MessageSelectMenu).options[i].default = false; 
-                        } else {
-                            (navigationTiers.components[0] as MessageSelectMenu).options[i].default = true;
-                            (navigationOptions.components[0] as MessageSelectMenu).options[i].default = false;    
-                        }
-                    }
-                    (navigationOptions.components[0] as MessageSelectMenu).options[0].default = true
+					break;
+				}
 
-                    await i.editReply({
-                        embeds: [infoEmbeds[0]],
-                        components: [navigationTiers, navigationOptions]
-                    })
+				case "T2": {
+					tierCount = 1;
 
-                    break
-                }
+					for (let i = 0; i < 3; i++)
+					{
+						if (i !== 1)
+						{
+							(navigationTiers.components[0] as MessageSelectMenu).options[
+								i
+							].default = false;
+							(navigationOptions.components[0] as MessageSelectMenu).options[
+								i
+							].default = false;
+						} else
+						{
+							(navigationTiers.components[0] as MessageSelectMenu).options[
+								i
+							].default = true;
+							(navigationOptions.components[0] as MessageSelectMenu).options[
+								i
+							].default = false;
+						}
+					}
+					(
+						navigationOptions.components[0] as MessageSelectMenu
+					).options[0].default = true;
 
+					await i.editReply({
+						embeds: [infoEmbeds[1]],
+						components: [navigationTiers, navigationOptions],
+					});
 
-                case 'T2': {
-                    tierCount = 1
+					break;
+				}
 
-                    for (let i = 0; i < 3; i++) {
-                        if (i !== 1) {
-                            (navigationTiers.components[0] as MessageSelectMenu).options[i].default = false;
-                            (navigationOptions.components[0] as MessageSelectMenu).options[i].default = false;    
-                        } else {
-                            (navigationTiers.components[0] as MessageSelectMenu).options[i].default = true;
-                            (navigationOptions.components[0] as MessageSelectMenu).options[i].default = false;    
-                        }
-                    }
-                    (navigationOptions.components[0] as MessageSelectMenu).options[0].default = true
+				case "T3": {
+					tierCount = 2;
 
-                    await i.editReply({
-                        embeds: [infoEmbeds[1]],
-                        components: [navigationTiers, navigationOptions]
-                    })
+					for (let i = 0; i < 3; i++)
+					{
+						if (i !== 2)
+						{
+							(navigationTiers.components[0] as MessageSelectMenu).options[
+								i
+							].default = false;
+							(navigationOptions.components[0] as MessageSelectMenu).options[
+								i
+							].default = false;
+						} else
+						{
+							(navigationTiers.components[0] as MessageSelectMenu).options[
+								i
+							].default = true;
+							(navigationOptions.components[0] as MessageSelectMenu).options[
+								i
+							].default = false;
+						}
+					}
+					(
+						navigationOptions.components[0] as MessageSelectMenu
+					).options[0].default = true;
 
-                    break
-                }
+					await i.editReply({
+						embeds: [infoEmbeds[2]],
+						components: [navigationTiers, navigationOptions],
+					});
 
+					break;
+				}
+			}
+		} else
+		{
+			switch (i.values[0])
+			{
+				case "info": {
+					for (let i = 0; i < 3; i++)
+					{
+						i == 0
+							? ((navigationOptions.components[0] as MessageSelectMenu).options[
+								i
+							].default = true)
+							: ((navigationOptions.components[0] as MessageSelectMenu).options[
+								i
+							].default = false);
+					}
 
-                case 'T3': {
-                    tierCount = 2
+					await i.editReply({
+						embeds: [infoEmbeds[tierCount]],
+						components:
+							gear.tiers.length > 1
+								? [navigationTiers, navigationOptions]
+								: [navigationOptions],
+					});
 
-                    for (let i = 0; i < 3; i++) {
-                        if (i !== 2) {
-                            (navigationTiers.components[0] as MessageSelectMenu).options[i].default = false;
-                            (navigationOptions.components[0] as MessageSelectMenu).options[i].default = false;    
-                        } else {
-                            (navigationTiers.components[0] as MessageSelectMenu).options[i].default = true;
-                            (navigationOptions.components[0] as MessageSelectMenu).options[i].default = false;
-                        }
-                    }
-                    (navigationOptions.components[0] as MessageSelectMenu).options[0].default = true;
+					break;
+				}
 
-                    await i.editReply({
-                        embeds: [infoEmbeds[2]],
-                        components: [navigationTiers, navigationOptions]
-                    })
+				case "stats": {
+					for (let i = 0; i < 3; i++)
+					{
+						i == 1
+							? ((navigationOptions.components[0] as MessageSelectMenu).options[
+								i
+							].default = true)
+							: ((navigationOptions.components[0] as MessageSelectMenu).options[
+								i
+							].default = false);
+					}
 
-                    break
-                }
-            }
-        } else {
-            switch (i.values[0]) {
-                case 'info': {
-                    for (let i = 0; i < 3; i++) {
-                        i == 0
-                            ? (navigationOptions.components[0] as MessageSelectMenu).options[i].default = true
-                            : (navigationOptions.components[0] as MessageSelectMenu).options[i].default = false
-                    }
+					await i.editReply({
+						embeds: [statsEmbeds[tierCount]],
+						components:
+							gear.tiers.length > 1
+								? [navigationTiers, navigationOptions]
+								: [navigationOptions],
+					});
 
-                    await i.editReply({
-                        embeds: [infoEmbeds[tierCount]],
-                        components: gear.tiers.length > 1 ? [navigationTiers, navigationOptions] : [navigationOptions]
-                    })
+					break;
+				}
 
-                    break
-                }
+				case "fits": {
+					for (let i = 0; i < 3; i++)
+					{
+						i == 2
+							? ((navigationOptions.components[0] as MessageSelectMenu).options[
+								i
+							].default = true)
+							: ((navigationOptions.components[0] as MessageSelectMenu).options[
+								i
+							].default = false);
+					}
 
+					await i.editReply({
+						embeds: [equippableEmbeds[tierCount]],
+						components:
+							gear.tiers.length > 1
+								? [navigationTiers, navigationOptions]
+								: [navigationOptions],
+					});
 
-                case 'stats': {
-                    for (let i = 0; i < 3; i++) {
-                        i == 1
-                            ? (navigationOptions.components[0] as MessageSelectMenu).options[i].default = true
-                            : (navigationOptions.components[0] as MessageSelectMenu).options[i].default = false
-                    }
+					break;
+				}
+			}
+		}
 
-                    await i.editReply({
-                        embeds: [statsEmbeds[tierCount]],
-                        components: gear.tiers.length > 1 ? [navigationTiers, navigationOptions] : [navigationOptions]
-                    })
+		collector.resetTimer();
+	});
 
-                    break
-                }
+	collector.on("end", async (collected, reason) => {
+		(navigationTiers.components[0] as MessageSelectMenu).setDisabled(true);
+		(navigationOptions.components[0] as MessageSelectMenu).setDisabled(true);
 
-                
-                case 'fits': {
-                    for (let i = 0; i < 3; i++) {
-                        i == 2
-                            ? (navigationOptions.components[0] as MessageSelectMenu).options[i].default = true
-                            : (navigationOptions.components[0] as MessageSelectMenu).options[i].default = false
-                    }
-
-                    await i.editReply({
-                        embeds: [equippableEmbeds[tierCount]],
-                        components: gear.tiers.length > 1 ? [navigationTiers, navigationOptions] : [navigationOptions]
-                    })
-
-                    break
-                }
-            } 
-        }
-
-        collector.resetTimer()
-    })
-
-    collector.on('end', async (collected, reason) => {
-        (navigationTiers.components[0] as MessageSelectMenu).setDisabled(true);
-        (navigationOptions.components[0] as MessageSelectMenu).setDisabled(true);
-
-        await interaction.editReply({
-            components: gear.tiers.length > 1 ? [navigationTiers, navigationOptions] : [navigationOptions]
-        })
-    })
+		await interaction.editReply({
+			components:
+				gear.tiers.length > 1
+					? [navigationTiers, navigationOptions]
+					: [navigationOptions],
+		});
+	});
 }

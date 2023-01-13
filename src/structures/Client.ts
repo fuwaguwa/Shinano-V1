@@ -1,219 +1,237 @@
 import glob from "glob";
-import fetch from 'node-fetch';
+import fetch from "node-fetch";
 import mongoose from "mongoose";
 import { Event } from "./Event";
-import { config } from 'dotenv';
+import { config } from "dotenv";
 import { promisify } from "util";
 import { CommandType } from "../typings/Command";
 import { RegisterCommandsOptions } from "../typings/CommandRegistration";
-import { ApplicationCommandDataResolvable, Client, ClientEvents, Collection, MessageEmbed, TextChannel } from "discord.js";
+import {
+	ApplicationCommandDataResolvable,
+	Client,
+	ClientEvents,
+	Collection,
+	MessageEmbed,
+	TextChannel,
+} from "discord.js";
 import { startTweetListener } from "../lib/Twitter";
 config();
 
 const promiseGlob = promisify(glob);
 
 export class Shinano extends Client {
-    commands: Collection<string, CommandType> = new Collection();
-    catagorizedCommands = {
-        Anime: [],
-        Fun: [],
-        AzurLane: [],
-        GenshinImpact: [],
-        Miscellaneous: [],
-        Utilities: [],
-        Reactions: [],
-        Image: []
-    }
+	commands: Collection<string, CommandType> = new Collection();
+	catagorizedCommands = {
+		Anime: [],
+		Fun: [],
+		AzurLane: [],
+		GenshinImpact: [],
+		Miscellaneous: [],
+		Utilities: [],
+		Reactions: [],
+		Image: [],
+	};
 
-    constructor() {
-        super({
-            intents: 513,  
-        })  
-    }
+	constructor() {
+		super({
+			intents: 513,
+		});
+	}
 
+	start() {
+		this.registerModules();
+		this.connectToDatabase();
+		this.login(process.env.botToken);
 
-    start() {
-        this.registerModules();
-        this.connectToDatabase();
-        this.login(process.env.botToken);
+		// Error Catcher
+		process.on("unhandledRejection", async (err) => {
+			console.error("Unhandled Promise Rejection:\n", err);
+		});
 
+		process.on("uncaughtException", async (err) => {
+			console.error("Uncaught Promise Exception:\n", err);
+		});
 
-        // Error Catcher
-        process.on("unhandledRejection", async (err) => {
-            console.error("Unhandled Promise Rejection:\n", err);
-        })
+		process.on("uncaughtExceptionMonitor", async (err) => {
+			console.error("Uncaught Promise Exception (Monitor):\n", err);
+		});
 
-        process.on("uncaughtException", async (err) => {
-            console.error("Uncaught Promise Exception:\n", err);
-        })
+		process.on("multipleResolves", async (type, promise, reason) => {
+			if (
+				reason.toLocaleString() ===
+				"Error: Cannot perform IP discovery - socket closed"
+			)
+				return;
+			if (reason.toLocaleString() === "AbortError: The operation was aborted")
+				return;
 
-        process.on("uncaughtExceptionMonitor", async (err) => {
-            console.error("Uncaught Promise Exception (Monitor):\n", err);
-        })
+			console.error("Multiple Resolves:\n", type, promise, reason);
+		});
 
-        process.on("multipleResolves", async (type, promise, reason) => {
-            if (reason.toLocaleString() === "Error: Cannot perform IP discovery - socket closed") return;
-            if (reason.toLocaleString() === "AbortError: The operation was aborted") return;
-            
-            console.error("Multiple Resolves:\n", type, promise, reason);
-        });
-        
-        
-        (async () => {
-            // Heartbeat
-            const guild = await this.guilds.fetch('1002188088942022807')
-            const channel = await guild.channels.fetch('1027973574801227776')
-            
-            
-            const startEmbed: MessageEmbed = new MessageEmbed()
-                .setColor('GREEN')
-                .setDescription(`Shinano has been started!`)
-                .setTimestamp()
-            await (channel as TextChannel).send({embeds: [startEmbed]});
-            
-            
-            let uptime = 300000
-            setInterval(async () => {
-                let totalSeconds = (uptime / 1000);
-                totalSeconds %= 86400
+		(async () => {
+			// Heartbeat
+			const guild = await this.guilds.fetch("1002188088942022807");
+			const channel = await guild.channels.fetch("1027973574801227776");
 
-                let hours = Math.floor(totalSeconds / 3600);
-                totalSeconds %= 3600;
-                
-                let minutes = Math.floor(totalSeconds / 60);
-                let seconds = Math.floor(totalSeconds % 60);
-                
-                const heartbeatEmbed: MessageEmbed = new MessageEmbed()
-                    .setColor('GREY')
-                    .setDescription(`Shinano has been running for \`${hours} hours, ${minutes} minutes, ${seconds} seconds\``)
-                    .setTimestamp()
-                await (channel as TextChannel).send({embeds: [heartbeatEmbed]})
-                
-                uptime += 300000
+			const startEmbed: MessageEmbed = new MessageEmbed()
+				.setColor("GREEN")
+				.setDescription(`Shinano has been started!`)
+				.setTimestamp();
+			await (channel as TextChannel).send({ embeds: [startEmbed] });
 
-                await fetch(`https://AmagiAPI.fuwafuwa08.repl.co/nsfw/private/kemonomimi`, {method: "GET", headers: {"Authorization": process.env.amagiApiKey}})
-            }, 300000)
+			let uptime = 300000;
+			setInterval(async () => {
+				let totalSeconds = uptime / 1000;
+				totalSeconds %= 86400;
 
+				let hours = Math.floor(totalSeconds / 3600);
+				totalSeconds %= 3600;
 
-            // Azur Lane News
-            if (!process.env.guildId) {
-                await startTweetListener()
-                console.log("Connected to Twitter stream!")
-            }
-        })();
+				let minutes = Math.floor(totalSeconds / 60);
+				let seconds = Math.floor(totalSeconds % 60);
 
-        
-    }   
+				const heartbeatEmbed: MessageEmbed = new MessageEmbed()
+					.setColor("GREY")
+					.setDescription(
+						`Shinano has been running for \`${hours} hours, ${minutes} minutes, ${seconds} seconds\``
+					)
+					.setTimestamp();
+				await (channel as TextChannel).send({ embeds: [heartbeatEmbed] });
 
-    
-    private connectToDatabase() {
-        mongoose.connect(process.env.mongoDB).then(() => {
-            console.log('Connected to database!')
-        }).catch((err) => {
-            console.log(err)
-        })
-    }
+				uptime += 300000;
 
+				await fetch(
+					`https://AmagiAPI.fuwafuwa08.repl.co/nsfw/private/kemonomimi`,
+					{ method: "GET", headers: { Authorization: process.env.amagiApiKey } }
+				);
+			}, 300000);
 
-    private async importFile(filePath: string) {
-        return (await import(filePath))?.default;
-    }
+			// Azur Lane News
+			if (!process.env.guildId)
+			{
+				await startTweetListener();
+				console.log("Connected to Twitter stream!");
+			}
+		})();
+	}
 
+	private connectToDatabase() {
+		mongoose
+			.connect(process.env.mongoDB)
+			.then(() => {
+				console.log("Connected to database!");
+			})
+			.catch((err) => {
+				console.log(err);
+			});
+	}
 
-    private async registerCommands({commands, guildId}: RegisterCommandsOptions) {
-        if (guildId) {
-            this.guilds.cache.get(guildId)?.commands.set(commands);
-            console.log(`Registering Commands | Guild: ${guildId}`);
-        } else {
-            this.application?.commands.set(commands);
-            console.log("Registering Commands | Global");
-        }
-    }
-    
-    public async generateCommandList() {
-        let commandsEmbed = {}
+	private async importFile(filePath: string) {
+		return (await import(filePath))?.default;
+	}
 
-        for (const category in this.catagorizedCommands) {
-            let arr = [];
-            const embedArr: MessageEmbed[] = []
+	private async registerCommands({
+		commands,
+		guildId,
+	}: RegisterCommandsOptions) {
+		if (guildId)
+		{
+			this.guilds.cache.get(guildId)?.commands.set(commands);
+			console.log(`Registering Commands | Guild: ${guildId}`);
+		} else
+		{
+			this.application?.commands.set(commands);
+			console.log("Registering Commands | Global");
+		}
+	}
 
-            if (['Image', 'AzurLane', 'GenshinImpact', 'Anime'].includes(category)) {
-                this.catagorizedCommands[category].forEach(command => {
-                    if (!command.options) {
-                        arr.push(command)
-                    } else {
-                        command.options.forEach(option => {
-                            arr.push({
-                                name: option.name,
-                                description: option.description
-                            })
-                        })
-                    }
-                })
-            } else {arr = this.catagorizedCommands[category]}
+	public async generateCommandList() {
+		let commandsEmbed = {};
 
-            for (let i = 0; i < arr.length; i += 7) {
-                const arrChunk = arr.slice(i, i + 7)
+		for (const category in this.catagorizedCommands)
+		{
+			let arr = [];
+			const embedArr: MessageEmbed[] = [];
 
-                let text: string = `/<command>\n\n`;
-                if (category === 'AzurLane') text = `/azur-lane <command>\n\n`
-                if (category === 'GenshinImpact') text = `/genshin <command>\n\n`
-                if (category === 'Anime') text = `/anime <command>\n\n`
-                
-                for (let i = 0; i < arrChunk.length; i++) {
-                    const command = arrChunk[i]
-                    text += `**${command.name}**\n` + `<:curve:1021036738161950800>${command.description}\n`
-                }
+			if (["Image", "AzurLane", "GenshinImpact", "Anime"].includes(category))
+			{
+				this.catagorizedCommands[category].forEach((command) => {
+					if (!command.options)
+					{
+						arr.push(command);
+					} else
+					{
+						command.options.forEach((option) => {
+							arr.push({
+								name: option.name,
+								description: option.description,
+							});
+						});
+					}
+				});
+			} else
+			{
+				arr = this.catagorizedCommands[category];
+			}
 
-                embedArr.push(
-                    new MessageEmbed()
-                        .setColor('#2f3136')
-                        .setDescription(text)
-                )
-            }
+			for (let i = 0; i < arr.length; i += 7)
+			{
+				const arrChunk = arr.slice(i, i + 7);
 
-            commandsEmbed[category] = embedArr
+				let text: string = `/<command>\n\n`;
+				if (category === "AzurLane") text = `/azur-lane <command>\n\n`;
+				if (category === "GenshinImpact") text = `/genshin <command>\n\n`;
+				if (category === "Anime") text = `/anime <command>\n\n`;
 
-        }
-        return commandsEmbed
-    }
+				for (let i = 0; i < arrChunk.length; i++)
+				{
+					const command = arrChunk[i];
+					text +=
+						`**${command.name}**\n` +
+						`<:curve:1021036738161950800>${command.description}\n`;
+				}
 
+				embedArr.push(
+					new MessageEmbed().setColor("#2f3136").setDescription(text)
+				);
+			}
 
-    private async registerModules() {
-        // Registering Slash Commands
-        const slashCommands: ApplicationCommandDataResolvable[] = [];
-        const commandFiles = await promiseGlob(
-            `${__dirname}/../commands/*/*{.ts,.js}`
-        )
+			commandsEmbed[category] = embedArr;
+		}
+		return commandsEmbed;
+	}
 
-        commandFiles.forEach(async (filePath) => {
-            const command: CommandType = await this.importFile(filePath);
-            if (!command.name) return;
+	private async registerModules() {
+		// Registering Slash Commands
+		const slashCommands: ApplicationCommandDataResolvable[] = [];
+		const commandFiles = await promiseGlob(
+			`${__dirname}/../commands/*/*{.ts,.js}`
+		);
 
-            if (command.category !== "NSFW") this.catagorizedCommands[command.category].push(command)
+		commandFiles.forEach(async (filePath) => {
+			const command: CommandType = await this.importFile(filePath);
+			if (!command.name) return;
 
-            this.commands.set(command.name, command);
-            slashCommands.push(command);
-        })
+			if (command.category !== "NSFW")
+				this.catagorizedCommands[command.category].push(command);
 
-        this.on("ready", () => {
-            this.registerCommands({
-                commands: slashCommands,
-                guildId: process.env.guildId
-            })
-        })
+			this.commands.set(command.name, command);
+			slashCommands.push(command);
+		});
 
+		this.on("ready", () => {
+			this.registerCommands({
+				commands: slashCommands,
+				guildId: process.env.guildId,
+			});
+		});
 
-        // Initiating Event Listeners
-        const eventFiles = await promiseGlob(
-            `${__dirname}/../events/*{.ts,.js}`
-        )
+		// Initiating Event Listeners
+		const eventFiles = await promiseGlob(`${__dirname}/../events/*{.ts,.js}`);
 
-        eventFiles.forEach(async (filePath) => {
-            const event: Event<keyof ClientEvents> = await this.importFile(
-                filePath
-            )
-            this.on(event.event, event.run);
-        })
-    }
+		eventFiles.forEach(async (filePath) => {
+			const event: Event<keyof ClientEvents> = await this.importFile(filePath);
+			this.on(event.event, event.run);
+		});
+	}
 }
