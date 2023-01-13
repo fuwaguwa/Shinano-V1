@@ -148,7 +148,7 @@ export default new Command({
                     description: 'The content of the comment.'
                 },
                 {
-                    type: 'STRING',
+                    type: 'USER',
                     name: 'user',
                     description: 'The author of the comment.'
                 }
