@@ -18,8 +18,7 @@ export async function genshinArtifact(interaction: ShinanoInteraction) {
 		.toLowerCase();
 	const artifact: genshin.Artifact = genshin.artifacts(name);
 
-	if (!artifact)
-	{
+	if (!artifact) {
 		const noResult: MessageEmbed = new MessageEmbed()
 			.setColor("RED")
 			.setDescription("❌ | No artifact set found!");
@@ -46,8 +45,7 @@ export async function genshinArtifact(interaction: ShinanoInteraction) {
 		infoEmbed.setDescription(`[Wiki Link](${artifact.url.fandom})`);
 
 	// 1 Piece
-	if (artifact["1pc"])
-	{
+	if (artifact["1pc"]) {
 		infoEmbed
 			.setThumbnail(artifact.images.circlet)
 			.setDescription(`*${artifact.circlet.description}*`)
@@ -61,8 +59,7 @@ export async function genshinArtifact(interaction: ShinanoInteraction) {
 	if (artifact["4pc"]) infoEmbed.addField("4-pieces Effect:", artifact["4pc"]);
 
 	// Other artifacts part
-	for (let i = 0; i < artifactParts.length; i++)
-	{
+	for (let i = 0; i < artifactParts.length; i++) {
 		const part = artifactParts[i];
 		artifactPartsInfo = Object.assign(
 			{
@@ -136,8 +133,7 @@ export async function genshinArtifact(interaction: ShinanoInteraction) {
 	});
 
 	collector.on("collect", async (i) => {
-		if (!i.customId.endsWith(i.user.id))
-		{
+		if (!i.customId.endsWith(i.user.id)) {
 			return i.reply({
 				content: "This menu is not for you!",
 				ephemeral: true,
@@ -146,11 +142,9 @@ export async function genshinArtifact(interaction: ShinanoInteraction) {
 
 		const selectMenu = navigation.components[0] as MessageSelectMenu;
 		await i.deferUpdate();
-		switch (i.values[0])
-		{
+		switch (i.values[0]) {
 			case "info": {
-				for (let i = 0; i < selectMenu.options.length; i++)
-				{
+				for (let i = 0; i < selectMenu.options.length; i++) {
 					i == 0
 						? (selectMenu.options[i].default = true)
 						: (selectMenu.options[i].default = false);
@@ -169,8 +163,7 @@ export async function genshinArtifact(interaction: ShinanoInteraction) {
 				);
 				const defaultVal = selectMenu.options.indexOf(defaultOption[0]);
 
-				for (let i = 0; i < selectMenu.options.length; i++)
-				{
+				for (let i = 0; i < selectMenu.options.length; i++) {
 					i === defaultVal
 						? (selectMenu.options[i].default = true)
 						: (selectMenu.options[i].default = false);

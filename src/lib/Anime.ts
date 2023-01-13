@@ -39,9 +39,11 @@ export async function animeInfo({ anime, interaction, menu }) {
 				value:
 					`**Rating**: ${anime.rating}\n` +
 					`**Genres**: ${genres.join(", ")}\n` +
-					`**JP Title**: ${anime.title_japanese ? anime.title_japanese : "None"
+					`**JP Title**: ${
+						anime.title_japanese ? anime.title_japanese : "None"
 					}\n` +
-					`**Trailer**: ${anime.trailer.url ? `[Trailer Link](${anime.trailer.url})` : "None"
+					`**Trailer**: ${
+						anime.trailer.url ? `[Trailer Link](${anime.trailer.url})` : "None"
 					}\n` +
 					`**Studio**: ${studios.join(", ")}\n`,
 			},
@@ -52,14 +54,14 @@ export async function animeInfo({ anime, interaction, menu }) {
 					`**Episodes**: ${anime.episodes}\n` +
 					`**Duration**: ${anime.duration}\n` +
 					`**Start Date**: <t:${startDate}>\n` +
-					`**End Date**: ${endDate == 0 ? "Ongoing Anime" : `<t:${endDate}>`
+					`**End Date**: ${
+						endDate == 0 ? "Ongoing Anime" : `<t:${endDate}>`
 					}\n`,
 			}
 		);
 
 	// Paging
-	if (menu)
-	{
+	if (menu) {
 		await ShinanoPaginator({
 			interaction: interaction,
 			interactorOnly: true,
@@ -67,8 +69,7 @@ export async function animeInfo({ anime, interaction, menu }) {
 			menu: menu,
 			pages: [synopsisEmbed, generalInfoEmbed],
 		});
-	} else
-	{
+	} else {
 		await ShinanoPaginator({
 			interaction: interaction,
 			interactorOnly: true,
@@ -84,24 +85,25 @@ export function characterInfo({ character, VAs }) {
 	const characterEmbed: MessageEmbed = new MessageEmbed()
 		.setColor("RANDOM")
 		.setTitle(
-			`${character.name} | ${character.name_kanji ? character.name_kanji : "No Kanji Name"
+			`${character.name} | ${
+				character.name_kanji ? character.name_kanji : "No Kanji Name"
 			}`
 		)
 		.setThumbnail(character.images.jpg.image_url)
 		.setDescription(character.about ? character.about : "No Biography Found");
 
 	// Validating Character Information
-	if (character.anime.length != 0)
-	{
+	if (character.anime.length != 0) {
 		characterEmbed.addFields(
 			{
 				name: "Extra Info:",
 				value:
 					`**Anime**: [${character.anime[0].anime.title}](${character.anime[0].anime.url})\n` +
 					`**Voice Actors**: ${VAs.length != 0 ? VAs.join("; ") : "None"}\n` +
-					`**Nicknames**: ${character.nicknames.length != 0
-						? character.nicknames.join(", ")
-						: "None"
+					`**Nicknames**: ${
+						character.nicknames.length != 0
+							? character.nicknames.join(", ")
+							: "None"
 					}`,
 			},
 			{
@@ -111,12 +113,11 @@ export function characterInfo({ character, VAs }) {
 					`**Favorites**: ${character.favorites}`,
 			}
 		);
-	} else
-	{
+	} else {
 		characterEmbed.addField(
 			"MyAnimeList Info",
 			`**ID**: [${character.mal_id}](${character.url})\n` +
-			`**Favorites**: ${character.favorites}`
+				`**Favorites**: ${character.favorites}`
 		);
 	}
 	return characterEmbed;

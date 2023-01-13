@@ -273,12 +273,9 @@ export default new Command({
 				text: `Requested by ${interaction.user.tag}`,
 				iconURL: interaction.user.displayAvatarURL({ dynamic: true }),
 			});
-		if (interaction.options["_group"])
-		{
-			if (interaction.options.getSubcommandGroup() === "anime")
-			{
-				switch (interaction.options.getSubcommand())
-				{
+		if (interaction.options["_group"]) {
+			if (interaction.options.getSubcommandGroup() === "anime") {
+				switch (interaction.options.getSubcommand()) {
 					case "random": {
 						await nsfwRandom(interaction, lewdEmbed);
 						break;
@@ -345,8 +342,7 @@ export default new Command({
 						break;
 					}
 				}
-			} else if (interaction.options.getSubcommandGroup() === "irl")
-			{
+			} else if (interaction.options.getSubcommandGroup() === "irl") {
 				let tag = interaction.options.getSubcommand();
 
 				if (tag === "cunny") tag = "pussy";

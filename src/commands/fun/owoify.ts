@@ -19,8 +19,7 @@ export default new Command({
 		await interaction.deferReply();
 
 		const text: string = interaction.options.getString("text");
-		if (text.length > 200)
-		{
+		if (text.length > 200) {
 			const invalid: MessageEmbed = new MessageEmbed()
 				.setColor("RED")
 				.setDescription("❌ | The text limit is 200 characters!");

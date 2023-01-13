@@ -3,8 +3,7 @@ import { client } from "../../../..";
 import { ShinanoInteraction } from "../../../../typings/Command";
 
 export async function devLeave(interaction: ShinanoInteraction) {
-	try
-	{
+	try {
 		const guild = await client.guilds.fetch(
 			interaction.options.getString("guild-id")
 		);
@@ -14,8 +13,7 @@ export async function devLeave(interaction: ShinanoInteraction) {
 			.setColor("GREEN")
 			.setDescription(`Shinano has left \`${guild.name}\``);
 		await interaction.editReply({ embeds: [left] });
-	} catch (err)
-	{
+	} catch (err) {
 		const fail: MessageEmbed = new MessageEmbed()
 			.setColor("RED")
 			.setDescription("An error has occured!");

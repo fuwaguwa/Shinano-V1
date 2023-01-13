@@ -12,8 +12,7 @@ export async function azurLaneNewsSet(interaction: ShinanoInteraction) {
 	if (
 		!guildUserPerms.has("ADMINISTRATOR") &&
 		!guildUserPerms.has("MANAGE_WEBHOOKS")
-	)
-	{
+	) {
 		const noPerm: MessageEmbed = new MessageEmbed()
 			.setColor("RED")
 			.setDescription(
@@ -28,8 +27,7 @@ export async function azurLaneNewsSet(interaction: ShinanoInteraction) {
 		!interaction.guild.me
 			.permissionsIn(channel as TextChannel)
 			.has("SEND_MESSAGES")
-	)
-	{
+	) {
 		const noPerm: MessageEmbed = new MessageEmbed()
 			.setColor("RED")
 			.setDescription(
@@ -43,9 +41,9 @@ export async function azurLaneNewsSet(interaction: ShinanoInteraction) {
 	dbChannel
 		? await dbChannel.updateOne({ channelId: channel.id })
 		: await News.create({
-			guildId: interaction.guild.id,
-			channelId: channel.id,
-		});
+				guildId: interaction.guild.id,
+				channelId: channel.id,
+		  });
 	const done: MessageEmbed = new MessageEmbed()
 		.setColor("GREEN")
 		.setDescription(

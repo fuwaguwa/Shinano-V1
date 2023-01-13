@@ -19,8 +19,7 @@ export async function azurLaneShip(
 	// Getting information about the ship
 	const shipName: string = interaction.options.getString("ship-name");
 	const ship: any = await AL.ships.get(shipName);
-	if (!ship)
-	{
+	if (!ship) {
 		const shipNotFound: MessageEmbed = new MessageEmbed()
 			.setDescription("❌ | Ship not found!")
 			.setColor("RED");
@@ -34,7 +33,8 @@ export async function azurLaneShip(
 	const info: MessageEmbed = new MessageEmbed()
 		.setTitle(`${ship.names.en} | ${ship.names.code}`)
 		.setDescription(
-			`[Wiki Link](${ship.wikiUrl})\nDrawn by ${ship.misc.artist.name
+			`[Wiki Link](${ship.wikiUrl})\nDrawn by ${
+				ship.misc.artist.name
 			}\nVoiced by ${ship.misc.voice.name ? ship.misc.voice.name : "Unknown"}`
 		)
 		.setThumbnail(ship.thumbnail)
@@ -50,8 +50,7 @@ export async function azurLaneShip(
 		);
 
 	// PR Checking
-	if (ship.rarity !== "Decisive" && ship.rarity !== "Priority")
-	{
+	if (ship.rarity !== "Decisive" && ship.rarity !== "Priority") {
 		const pools: string[] = [];
 		if (ship.construction.availableIn.exchange) pools.push("Exchange");
 		if (ship.construction.availableIn.light) pools.push("Light Ship Pool");
@@ -66,15 +65,11 @@ export async function azurLaneShip(
 
 		// Map Pool
 		const maps: string[] = [];
-		if (ship.obtainedFrom.fromMaps.length > 0)
-		{
-			for (let i = 0; i < ship.obtainedFrom.fromMaps.length; i++)
-			{
-				if (ship.obtainedFrom.fromMaps[i].name)
-				{
+		if (ship.obtainedFrom.fromMaps.length > 0) {
+			for (let i = 0; i < ship.obtainedFrom.fromMaps.length; i++) {
+				if (ship.obtainedFrom.fromMaps[i].name) {
 					maps.push(ship.obtainedFrom.fromMaps[i].name);
-				} else
-				{
+				} else {
 					maps.push(ship.obtainedFrom.fromMaps[i]);
 				}
 			}
@@ -96,14 +91,14 @@ export async function azurLaneShip(
 			{ name: "Appears In:", value: aprIn },
 			{
 				name: "Obtainable From:",
-				value: `${ship.obtainedFrom.obtainedFrom
+				value: `${
+					ship.obtainedFrom.obtainedFrom
 						? ship.obtainedFrom.obtainedFrom
 						: `Other Sources (Maps/Banner)`
-					}`,
+				}`,
 			}
 		);
-	} else
-	{
+	} else {
 		// PR/DR Ships
 		info.addField("Obtain From:", "Shipyard");
 	}
@@ -112,19 +107,16 @@ export async function azurLaneShip(
 	let name: string;
 	let limitBreak: string;
 
-	if (!ship.limitBreaks && !ship.devLevels)
-	{
+	if (!ship.limitBreaks && !ship.devLevels) {
 		name = "Limit Breaks:";
 		limitBreak = "Ship cannot be limit broken.";
-	} else if (ship.limitBreaks && !ship.devLevels)
-	{
+	} else if (ship.limitBreaks && !ship.devLevels) {
 		name = "Limit Breaks:";
 		limitBreak =
 			`**First**: ${ship.limitBreaks[0].join("/")}\n` +
 			`**Second**: ${ship.limitBreaks[1].join("/")}\n` +
 			`**Third**: ${ship.limitBreaks[2].join("/")}\n`;
-	} else
-	{
+	} else {
 		name = "Dev Levels:";
 		limitBreak =
 			`**Dev 5**: ${ship.devLevels[0].buffs.join("/")}\n` +
@@ -139,15 +131,12 @@ export async function azurLaneShip(
 	let scrapValue: string[] = [];
 	let enhanceValue: string[] = [];
 
-	if (ship.rarity === "Priority" || ship.rarity === "Decisive")
-	{
-		for (let value in ship.scrapValue)
-		{
+	if (ship.rarity === "Priority" || ship.rarity === "Decisive") {
+		for (let value in ship.scrapValue) {
 			scrapValue.push(`${toTitleCase(value)}: ${ship.scrapValue[value]}`);
 		}
 
-		for (let value in ship.enhanceValue)
-		{
+		for (let value in ship.enhanceValue) {
 			enhanceValue.push(`${toTitleCase(value)}: ${ship.enhanceValue[value]}`);
 		}
 	}
@@ -169,8 +158,7 @@ export async function azurLaneShip(
 			}
 		);
 
-	if (scrapValue.length != 0)
-	{
+	if (scrapValue.length != 0) {
 		stats.addFields(
 			{ name: "Scrap Value: ", value: scrapValue.join("\n") },
 			{ name: "Enhance Value:", value: enhanceValue.join("\n") }
@@ -196,17 +184,14 @@ export async function azurLaneShip(
 	let techPts: string;
 	let statsBonus: string;
 
-	if (!ship.fleetTech.statsBonus.collection || !ship.fleetTech.techPoints)
-	{
+	if (!ship.fleetTech.statsBonus.collection || !ship.fleetTech.techPoints) {
 		techPts = "N/A";
 		statsBonus = "N/A";
-	} else
-	{
+	} else {
 		let collection = ship.fleetTech.statsBonus.collection.stat;
 		let maxLevel = ship.fleetTech.statsBonus.maxLevel.stat;
 
-		switch (collection.toLowerCase())
-		{
+		switch (collection.toLowerCase()) {
 			case "antisubmarinewarfare": {
 				collection = "ASW";
 				break;
@@ -218,8 +203,7 @@ export async function azurLaneShip(
 			}
 		}
 
-		switch (maxLevel.toLowerCase())
-		{
+		switch (maxLevel.toLowerCase()) {
 			case "antisubmarinewarfare": {
 				maxLevel = "ASW";
 				break;
@@ -238,11 +222,13 @@ export async function azurLaneShip(
 			`Total Tech Points: **${ship.fleetTech.techPoints.total}**`;
 
 		statsBonus =
-			`Unlocking The Ship: ${ship.fleetTech.statsBonus.collection.bonus
+			`Unlocking The Ship: ${
+				ship.fleetTech.statsBonus.collection.bonus
 			} **${collection}** for ${toTitleCase(
 				ship.fleetTech.statsBonus.collection.applicable.join(", ")
 			)}s\n\n` +
-			`Reaching Level 120: ${ship.fleetTech.statsBonus.maxLevel.bonus
+			`Reaching Level 120: ${
+				ship.fleetTech.statsBonus.maxLevel.bonus
 			} **${maxLevel}** for ${toTitleCase(
 				ship.fleetTech.statsBonus.maxLevel.applicable.join(", ")
 			)}s`;
@@ -262,22 +248,20 @@ export async function azurLaneShip(
 	let description: string;
 
 	ship.skins.forEach((skin) => {
-		if (skin.info.obtainedFrom === "Skin Shop")
-		{
+		if (skin.info.obtainedFrom === "Skin Shop") {
 			description =
 				`**Skin Name**: ${skin.name}\n` +
 				`**Obtain From**: Skin Shop\n` +
 				`**Cost**: ${skin.info.cost} <:GEAMS:1002198674539036672>\n` +
 				`**Live2D?** ${skin.info.live2dModel == false ? "No" : "Yes"}\n` +
-				`**Limited or Permanent**: ${!skin.info.enLimited
-					? `${skin.info.enClient} on EN.`
-					: skin.info.enLimited
+				`**Limited or Permanent**: ${
+					!skin.info.enLimited
+						? `${skin.info.enClient} on EN.`
+						: skin.info.enLimited
 				}`;
-		} else if (skin.info.obtainedFrom === "Default")
-		{
+		} else if (skin.info.obtainedFrom === "Default") {
 			description = `**Skin Name**: ${skin.name}`;
-		} else
-		{
+		} else {
 			description =
 				`**Skin Name**: ${skin.name}\n ` +
 				`**Obtain From**: ${skin.info.obtainedFrom}\n`;
@@ -337,11 +321,9 @@ export async function azurLaneShip(
 
 	// Gallery
 	const galleryEmbeds: MessageEmbed[] = [];
-	if (ship.gallery.length != 0)
-	{
+	if (ship.gallery.length != 0) {
 		// Generating Embeds
-		if (ship.gallery.length != 0)
-		{
+		if (ship.gallery.length != 0) {
 			ship.gallery.forEach((image) => {
 				galleryEmbeds.push(
 					new MessageEmbed()
@@ -376,11 +358,9 @@ export async function azurLaneShip(
 
 	collector.on("collect", async (i) => {
 		const customID = i.customId.split("-")[0];
-		if (customID === shipName)
-		{
+		if (customID === shipName) {
 			// Verifying interaction
-			if (!i.customId.endsWith(`${i.user.id}`))
-			{
+			if (!i.customId.endsWith(`${i.user.id}`)) {
 				return i.reply({
 					content: "This menu is not for you!",
 					ephemeral: true,
@@ -388,25 +368,22 @@ export async function azurLaneShip(
 			}
 
 			// Handling selection
-			if (i["values"])
-			{
+			if (i["values"]) {
 				await i.deferUpdate();
-				switch (i["values"][0])
-				{
+				switch (i["values"][0]) {
 					case "info": {
 						for (
 							let i = 0;
 							i < (category.components[0] as MessageSelectMenu).options.length;
 							i++
-						)
-						{
+						) {
 							i == 0
 								? ((category.components[0] as MessageSelectMenu).options[
-									i
-								].default = true)
+										i
+								  ].default = true)
 								: ((category.components[0] as MessageSelectMenu).options[
-									i
-								].default = false);
+										i
+								  ].default = false);
 						}
 
 						await i.editReply({
@@ -421,15 +398,14 @@ export async function azurLaneShip(
 							let i = 0;
 							i < (category.components[0] as MessageSelectMenu).options.length;
 							i++
-						)
-						{
+						) {
 							i == 1
 								? ((category.components[0] as MessageSelectMenu).options[
-									i
-								].default = true)
+										i
+								  ].default = true)
 								: ((category.components[0] as MessageSelectMenu).options[
-									i
-								].default = false);
+										i
+								  ].default = false);
 						}
 
 						await i.editReply({
@@ -444,15 +420,14 @@ export async function azurLaneShip(
 							let i = 0;
 							i < (category.components[0] as MessageSelectMenu).options.length;
 							i++
-						)
-						{
+						) {
 							i == 2
 								? ((category.components[0] as MessageSelectMenu).options[
-									i
-								].default = true)
+										i
+								  ].default = true)
 								: ((category.components[0] as MessageSelectMenu).options[
-									i
-								].default = false);
+										i
+								  ].default = false);
 						}
 
 						await i.editReply({
@@ -467,15 +442,14 @@ export async function azurLaneShip(
 							let i = 0;
 							i < (category.components[0] as MessageSelectMenu).options.length;
 							i++
-						)
-						{
+						) {
 							i == 3
 								? ((category.components[0] as MessageSelectMenu).options[
-									i
-								].default = true)
+										i
+								  ].default = true)
 								: ((category.components[0] as MessageSelectMenu).options[
-									i
-								].default = false);
+										i
+								  ].default = false);
 						}
 
 						await i.editReply({
@@ -490,25 +464,22 @@ export async function azurLaneShip(
 							let i = 0;
 							i < (category.components[0] as MessageSelectMenu).options.length;
 							i++
-						)
-						{
+						) {
 							i == 4
 								? ((category.components[0] as MessageSelectMenu).options[
-									i
-								].default = true)
+										i
+								  ].default = true)
 								: ((category.components[0] as MessageSelectMenu).options[
-									i
-								].default = false);
+										i
+								  ].default = false);
 						}
 
-						if (skinEmbeds.length === 1)
-						{
+						if (skinEmbeds.length === 1) {
 							await i.editReply({
 								embeds: [skinEmbeds[0]],
 								components: [category],
 							});
-						} else
-						{
+						} else {
 							skinPage = await ShinanoPaginator({
 								interaction: interaction,
 								pages: skinEmbeds,
@@ -526,25 +497,22 @@ export async function azurLaneShip(
 							let i = 0;
 							i < (category.components[0] as MessageSelectMenu).options.length;
 							i++
-						)
-						{
+						) {
 							i == 5
 								? ((category.components[0] as MessageSelectMenu).options[
-									i
-								].default = true)
+										i
+								  ].default = true)
 								: ((category.components[0] as MessageSelectMenu).options[
-									i
-								].default = false);
+										i
+								  ].default = false);
 						}
 
-						if (galleryEmbeds.length === 1)
-						{
+						if (galleryEmbeds.length === 1) {
 							await i.editReply({
 								embeds: [galleryEmbeds[0]],
 								components: [category],
 							});
-						} else
-						{
+						} else {
 							galleryPage = await ShinanoPaginator({
 								interaction: interaction,
 								pages: galleryEmbeds,

@@ -22,8 +22,7 @@ export async function animeCharacter(interaction: ShinanoInteraction) {
 
 	// Filtering
 	const charResponse = (await response.json()).data;
-	if (charResponse.length == 0)
-	{
+	if (charResponse.length == 0) {
 		const noResult: MessageEmbed = new MessageEmbed()
 			.setColor("RED")
 			.setDescription("No result can be found!");
@@ -42,8 +41,9 @@ export async function animeCharacter(interaction: ShinanoInteraction) {
 
 	charResponse.forEach((result) => {
 		(resultNavigation.components[0] as MessageSelectMenu).addOptions({
-			label: `${result.name} | ${result.name_kanji ? result.name_kanji : "No Kanji Name"
-				}`,
+			label: `${result.name} | ${
+				result.name_kanji ? result.name_kanji : "No Kanji Name"
+			}`,
 			value: `${result.mal_id}`,
 		});
 	});
@@ -60,8 +60,7 @@ export async function animeCharacter(interaction: ShinanoInteraction) {
 	});
 
 	resultCollector.on("collect", async (i) => {
-		if (!i.customId.endsWith(i.user.id))
-		{
+		if (!i.customId.endsWith(i.user.id)) {
 			return i.reply({
 				content: "This menu is not for you!",
 				ephemeral: true,
@@ -79,8 +78,7 @@ export async function animeCharacter(interaction: ShinanoInteraction) {
 
 		// Sorting VAs
 		let VAs: string[] = [];
-		if (character && character.voices)
-		{
+		if (character && character.voices) {
 			character.voices.forEach((va) => {
 				if (va.language !== "Japanese" && va.language !== "English") return;
 				VAs.push(`[${va.person.name}](${va.person.url})`);
@@ -92,10 +90,9 @@ export async function animeCharacter(interaction: ShinanoInteraction) {
 
 		// Setting Default Buttons
 		const menu = resultNavigation.components[0] as MessageSelectMenu;
-		for (let n = 0; n < menu.options.length; n++)
-		{
+		for (let n = 0; n < menu.options.length; n++) {
 			(resultNavigation.components[0] as MessageSelectMenu).options[n].value ===
-				i.values[0]
+			i.values[0]
 				? (menu.options[n].default = true)
 				: (menu.options[n].default = false);
 		}

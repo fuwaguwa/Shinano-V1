@@ -107,8 +107,7 @@ export class Shinano extends Client {
 			}, 300000);
 
 			// Azur Lane News
-			if (!process.env.guildId)
-			{
+			if (!process.env.guildId) {
 				await startTweetListener();
 				console.log("Connected to Twitter stream!");
 			}
@@ -134,12 +133,10 @@ export class Shinano extends Client {
 		commands,
 		guildId,
 	}: RegisterCommandsOptions) {
-		if (guildId)
-		{
+		if (guildId) {
 			this.guilds.cache.get(guildId)?.commands.set(commands);
 			console.log(`Registering Commands | Guild: ${guildId}`);
-		} else
-		{
+		} else {
 			this.application?.commands.set(commands);
 			console.log("Registering Commands | Global");
 		}
@@ -148,19 +145,15 @@ export class Shinano extends Client {
 	public async generateCommandList() {
 		let commandsEmbed = {};
 
-		for (const category in this.catagorizedCommands)
-		{
+		for (const category in this.catagorizedCommands) {
 			let arr = [];
 			const embedArr: MessageEmbed[] = [];
 
-			if (["Image", "AzurLane", "GenshinImpact", "Anime"].includes(category))
-			{
+			if (["Image", "AzurLane", "GenshinImpact", "Anime"].includes(category)) {
 				this.catagorizedCommands[category].forEach((command) => {
-					if (!command.options)
-					{
+					if (!command.options) {
 						arr.push(command);
-					} else
-					{
+					} else {
 						command.options.forEach((option) => {
 							arr.push({
 								name: option.name,
@@ -169,13 +162,11 @@ export class Shinano extends Client {
 						});
 					}
 				});
-			} else
-			{
+			} else {
 				arr = this.catagorizedCommands[category];
 			}
 
-			for (let i = 0; i < arr.length; i += 7)
-			{
+			for (let i = 0; i < arr.length; i += 7) {
 				const arrChunk = arr.slice(i, i + 7);
 
 				let text: string = `/<command>\n\n`;
@@ -183,8 +174,7 @@ export class Shinano extends Client {
 				if (category === "GenshinImpact") text = `/genshin <command>\n\n`;
 				if (category === "Anime") text = `/anime <command>\n\n`;
 
-				for (let i = 0; i < arrChunk.length; i++)
-				{
+				for (let i = 0; i < arrChunk.length; i++) {
 					const command = arrChunk[i];
 					text +=
 						`**${command.name}**\n` +

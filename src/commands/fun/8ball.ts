@@ -42,7 +42,7 @@ export default new Command({
 			.setColor("#2f3136")
 			.setDescription(
 				`> **${interaction.options.getString("question")}**\n` +
-				responses[Math.floor(Math.random() * responses.length)]
+					responses[Math.floor(Math.random() * responses.length)]
 			);
 		await interaction.reply({ embeds: [response] });
 	},

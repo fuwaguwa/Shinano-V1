@@ -27,8 +27,7 @@ export async function doujinSearch(interaction: ShinanoInteraction) {
 	);
 	const searchResults = await response.json();
 
-	if (searchResults.error || searchResults.result.length == 0)
-	{
+	if (searchResults.error || searchResults.result.length == 0) {
 		const noResult: MessageEmbed = new MessageEmbed()
 			.setColor("RED")
 			.setDescription("❌ | No Result!");
@@ -49,8 +48,7 @@ export async function doujinSearch(interaction: ShinanoInteraction) {
 			.setPlaceholder(`Doujin Search Results (${count})`)
 	);
 
-	for (let i = 0; i < count; i++)
-	{
+	for (let i = 0; i < count; i++) {
 		const result = searchResults.result[i];
 		const tagsInfo = getDoujinTags(result);
 
@@ -83,8 +81,7 @@ export async function doujinSearch(interaction: ShinanoInteraction) {
 	});
 
 	collector.on("collect", async (i) => {
-		if (!i.customId.endsWith(i.user.id))
-		{
+		if (!i.customId.endsWith(i.user.id)) {
 			return i.reply({
 				content: "This menu is not for you!",
 				ephemeral: true,
@@ -94,10 +91,9 @@ export async function doujinSearch(interaction: ShinanoInteraction) {
 		await i.deferUpdate();
 
 		const menu = resultNavi.components[0] as MessageSelectMenu;
-		for (let n = 0; n < menu.options.length; n++)
-		{
+		for (let n = 0; n < menu.options.length; n++) {
 			(resultNavi.components[0] as MessageSelectMenu).options[n].value ===
-				i.values[0]
+			i.values[0]
 				? (menu.options[n].default = true)
 				: (menu.options[n].default = false);
 		}
@@ -107,8 +103,7 @@ export async function doujinSearch(interaction: ShinanoInteraction) {
 	});
 
 	collector.on("end", async (collected, reason) => {
-		if (reason !== "Processed")
-		{
+		if (reason !== "Processed") {
 			(resultNavi.components[0] as MessageSelectMenu).setDisabled(true);
 			await interaction.editReply({ components: [resultNavi] });
 		}

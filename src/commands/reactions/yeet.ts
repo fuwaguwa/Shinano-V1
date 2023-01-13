@@ -25,9 +25,10 @@ export default new Command({
 		const yeetEmbed: MessageEmbed = new MessageEmbed()
 			.setColor("RANDOM")
 			.setDescription(
-				`${target
-					? `${interaction.user} yeeted ${target}!`
-					: `You yeeted yourself...`
+				`${
+					target
+						? `${interaction.user} yeeted ${target}!`
+						: `You yeeted yourself...`
 				}`
 			)
 			.setImage(yeet.results[0].url);

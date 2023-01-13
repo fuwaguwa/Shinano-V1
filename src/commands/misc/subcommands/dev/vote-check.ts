@@ -21,14 +21,12 @@ export async function devVoteCheck(interaction: ShinanoInteraction) {
 
 	const voteUser = await User.findOne({ userId: user.id });
 
-	if (voteUser.lastVoteTimestamp)
-	{
+	if (voteUser.lastVoteTimestamp) {
 		const currentTime = Math.floor(Date.now() / 1000);
 		voteTimestamp = voteUser.lastVoteTimestamp;
 
 		if (currentTime - voteUser.lastVoteTimestamp >= 43200) voteStatus = true;
-	} else
-	{
+	} else {
 		voteStatus = "N/A";
 		voteTimestamp = "N/A";
 	}
@@ -61,9 +59,10 @@ export async function devVoteCheck(interaction: ShinanoInteraction) {
 				name: "Shinano Database:",
 				value:
 					`Votable: ${voteStatus}\n` +
-					`Last Voted: ${typeof voteTimestamp != "string"
-						? `<t:${voteTimestamp}:R> | <t:${voteTimestamp}>`
-						: `N/A`
+					`Last Voted: ${
+						typeof voteTimestamp != "string"
+							? `<t:${voteTimestamp}:R> | <t:${voteTimestamp}>`
+							: `N/A`
 					}`,
 			}
 		);
@@ -91,23 +90,20 @@ export async function devVoteCheck(interaction: ShinanoInteraction) {
 	});
 
 	collector.on("collect", async (i) => {
-		if (i.user.id !== "836215956346634270")
-		{
+		if (i.user.id !== "836215956346634270") {
 			return i.reply({
 				content: "This button is not for you!",
 				ephemeral: true,
 			});
 		}
 
-		if (!voteUser)
-		{
+		if (!voteUser) {
 			await User.create({
 				userId: user.id,
 				commandsExecuted: 0,
 				lastVoteTimestamp: Math.floor(Date.now() / 1000),
 			});
-		} else
-		{
+		} else {
 			await voteUser.updateOne({
 				lastVoteTimestamp: Math.floor(Date.now() / 1000),
 			});

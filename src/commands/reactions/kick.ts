@@ -25,9 +25,10 @@ export default new Command({
 		const kickEmbed: MessageEmbed = new MessageEmbed()
 			.setColor("RANDOM")
 			.setDescription(
-				`${target
-					? `${interaction.user} kicked ${target}!`
-					: `You kicked yourself...`
+				`${
+					target
+						? `${interaction.user} kicked ${target}!`
+						: `You kicked yourself...`
 				}`
 			)
 			.setImage(kick.results[0].url);

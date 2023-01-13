@@ -21,15 +21,13 @@ export async function getALEXPTable() {
 
 // Stats Formatting
 export function gearStats(gearStats, embed: MessageEmbed) {
-	for (let stat in gearStats)
-	{
+	for (let stat in gearStats) {
 		let name: string;
 		let st = gearStats[stat].formatted; // Stats of {name}
 
 		if (!st) continue;
 
-		switch (stat.toLowerCase())
-		{
+		switch (stat.toLowerCase()) {
 			case "rof":
 				continue;
 			case "antiair":
@@ -95,13 +93,10 @@ export function gearStats(gearStats, embed: MessageEmbed) {
 // Gear Equippable
 export function gearFits(fits) {
 	const fitted: string[] = [];
-	for (let ship in fits)
-	{
-		if (fits[ship])
-		{
+	for (let ship in fits) {
+		if (fits[ship]) {
 			const slot = toTitleCase(fits[ship]);
-			switch (ship.toLowerCase())
-			{
+			switch (ship.toLowerCase()) {
 				case "destroyer":
 					fitted.push(`Destroyer: ${slot}`);
 					break;
@@ -156,8 +151,7 @@ export function chapterInfo(chapterInfo, chapterMode) {
 	const levels: MessageEmbed[] = [];
 	const title = `Chapter ${chapterInfo.id}: ${chapterInfo.names.en}`;
 
-	for (let i = 1; i - 1 < 4; i++)
-	{
+	for (let i = 1; i - 1 < 4; i++) {
 		const blueprints: string[] = [];
 
 		chapterInfo[i][chapterMode].blueprintDrops.forEach((blueprint) => {
@@ -171,7 +165,7 @@ export function chapterInfo(chapterInfo, chapterMode) {
 				.setTitle(`${title} | ${chapterInfo[i][chapterMode].code}`)
 				.setDescription(
 					`**${chapterInfo[i][chapterMode].title}**\n` +
-					`*${chapterInfo[i][chapterMode].introduction}*`
+						`*${chapterInfo[i][chapterMode].introduction}*`
 				)
 				.addFields(
 					{
@@ -183,25 +177,30 @@ export function chapterInfo(chapterInfo, chapterMode) {
 					{
 						name: "Airspace Control:",
 						value:
-							`Actual: ${chapterInfo[i][chapterMode].airspaceControl.actual
-								? chapterInfo[i][chapterMode].airspaceControl.actual
-								: "N/A"
+							`Actual: ${
+								chapterInfo[i][chapterMode].airspaceControl.actual
+									? chapterInfo[i][chapterMode].airspaceControl.actual
+									: "N/A"
 							}\n` +
-							`Denial: ${chapterInfo[i][chapterMode].airspaceControl.denial
-								? chapterInfo[i][chapterMode].airspaceControl.denial
-								: "N/A"
+							`Denial: ${
+								chapterInfo[i][chapterMode].airspaceControl.denial
+									? chapterInfo[i][chapterMode].airspaceControl.denial
+									: "N/A"
 							}\n` +
-							`Parity: ${chapterInfo[i][chapterMode].airspaceControl.parity
-								? chapterInfo[i][chapterMode].airspaceControl.parity
-								: "N/A"
+							`Parity: ${
+								chapterInfo[i][chapterMode].airspaceControl.parity
+									? chapterInfo[i][chapterMode].airspaceControl.parity
+									: "N/A"
 							}\n` +
-							`Superiority: ${chapterInfo[i][chapterMode].airspaceControl.superiority
-								? chapterInfo[i][chapterMode].airspaceControl.superiority
-								: "N/A"
+							`Superiority: ${
+								chapterInfo[i][chapterMode].airspaceControl.superiority
+									? chapterInfo[i][chapterMode].airspaceControl.superiority
+									: "N/A"
 							}\n` +
-							`Supremacy: ${chapterInfo[i][chapterMode].airspaceControl.supremacy
-								? chapterInfo[i][chapterMode].airspaceControl.supremacy
-								: "N/A"
+							`Supremacy: ${
+								chapterInfo[i][chapterMode].airspaceControl.supremacy
+									? chapterInfo[i][chapterMode].airspaceControl.supremacy
+									: "N/A"
 							}`,
 						inline: false,
 					},
@@ -334,8 +333,7 @@ export async function generateStatsTable(shipStats) {
 	];
 
 	// Retrofit Stats
-	if (shipStats.level100Retrofit)
-	{
+	if (shipStats.level100Retrofit) {
 		dataSrc.push(
 			{
 				LVL: "100 (Retro)",

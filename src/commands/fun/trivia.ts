@@ -55,8 +55,7 @@ export default new Command({
 
 		// Picking Category
 		let category = categoryChoice;
-		if (categoryChoice === "random")
-		{
+		if (categoryChoice === "random") {
 			const all_category = [
 				"arts_and_literature",
 				"film_and_tv",
@@ -74,8 +73,7 @@ export default new Command({
 
 		// Picking Difficulty
 		let difficulty = difficultyChoice;
-		if (difficultyChoice === "random")
-		{
+		if (difficultyChoice === "random") {
 			const all_diff = ["easy", "medium", "hard"];
 			difficulty = all_diff[Math.floor(Math.random() * all_diff.length)];
 		}
@@ -102,8 +100,7 @@ export default new Command({
 			answers[1].length > 60 ||
 			answers[2].length > 60 ||
 			answers[3].length > 60
-		)
-		{
+		) {
 			response = await fetch(
 				`https://the-trivia-api.com/api/questions?categories=${category}&limit=1&difficulty=${difficulty}`,
 				{ method: "GET" }
@@ -121,8 +118,7 @@ export default new Command({
 
 		// Generating 4 different number from the range of 1-4
 		const randchoice = [];
-		while (randchoice.length < 4)
-		{
+		while (randchoice.length < 4) {
 			const r = Math.floor(Math.random() * 4);
 			if (randchoice.indexOf(r) === -1) randchoice.push(r);
 		}
@@ -191,8 +187,7 @@ export default new Command({
 			const answer = i.customId.split("-")[0];
 
 			// Filtering Response
-			if (!i.customId.endsWith(i.user.id))
-			{
+			if (!i.customId.endsWith(i.user.id)) {
 				return i.reply({
 					content: "This button is not for you!",
 					ephemeral: true,
@@ -201,18 +196,16 @@ export default new Command({
 
 			// Making the correct answer green, wrong one red and all of them to secondary
 			await i.deferUpdate();
-			if (answer === trivia[0]["correctAnswer"])
-			{
-				for (let i = 0; i < 4; i++)
-				{
+			if (answer === trivia[0]["correctAnswer"]) {
+				for (let i = 0; i < 4; i++) {
 					(row.components[i] as MessageButton).customId.split("-")[0] ===
-						trivia[0]["correctAnswer"]
+					trivia[0]["correctAnswer"]
 						? (row.components[i] as MessageButton)
-							.setStyle("SUCCESS")
-							.setDisabled(true)
+								.setStyle("SUCCESS")
+								.setDisabled(true)
 						: (row.components[i] as MessageButton)
-							.setStyle("SECONDARY")
-							.setDisabled(true);
+								.setStyle("SECONDARY")
+								.setDisabled(true);
 				}
 				question.setColor("GREEN");
 
@@ -222,27 +215,24 @@ export default new Command({
 					embeds: [question],
 					content: "You're correct!",
 				});
-			} else
-			{
-				for (let i = 0; i < 4; i++)
-				{
-					switch (true)
-					{
+			} else {
+				for (let i = 0; i < 4; i++) {
+					switch (true) {
 						case (row.components[i] as MessageButton).customId.split("-")[0] ===
 							trivia[0]["correctAnswer"]: {
-								(row.components[i] as MessageButton)
-									.setStyle("SUCCESS")
-									.setDisabled(true);
-								break;
-							}
+							(row.components[i] as MessageButton)
+								.setStyle("SUCCESS")
+								.setDisabled(true);
+							break;
+						}
 
 						case (row.components[i] as MessageButton).customId.split("-")[0] ===
 							answer: {
-								(row.components[i] as MessageButton)
-									.setStyle("DANGER")
-									.setDisabled(true);
-								break;
-							}
+							(row.components[i] as MessageButton)
+								.setStyle("DANGER")
+								.setDisabled(true);
+							break;
+						}
 
 						default: {
 							(row.components[i] as MessageButton)
@@ -266,12 +256,10 @@ export default new Command({
 
 		collector.on("end", async (collected, reason) => {
 			// Timed Out
-			if (reason && reason !== "End")
-			{
-				for (let i = 0; i < 4; i++)
-				{
+			if (reason && reason !== "End") {
+				for (let i = 0; i < 4; i++) {
 					(row.components[i] as MessageButton).customId.split("-")[0] ===
-						trivia[0]["correctAnswer"]
+					trivia[0]["correctAnswer"]
 						? (row.components[i] as MessageButton).setStyle("SUCCESS")
 						: (row.components[i] as MessageButton).setStyle("SECONDARY");
 					(row.components[i] as MessageButton).setDisabled(true);

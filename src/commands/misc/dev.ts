@@ -139,8 +139,7 @@ export default new Command({
 	],
 	run: async ({ interaction }) => {
 		await interaction.deferReply();
-		switch (interaction.options.getSubcommand())
-		{
+		switch (interaction.options.getSubcommand()) {
 			case "eval": {
 				await devEval(interaction);
 				break;
@@ -163,10 +162,8 @@ export default new Command({
 		}
 
 		const options = interaction.options;
-		if (options["_group"])
-		{
-			switch (interaction.options.getSubcommandGroup())
-			{
+		if (options["_group"]) {
+			switch (interaction.options.getSubcommandGroup()) {
 				case "blacklist": {
 					await devBlacklist(interaction);
 					break;

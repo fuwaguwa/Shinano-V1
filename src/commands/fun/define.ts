@@ -28,8 +28,7 @@ export default new Command({
 		const definition = await response.json();
 
 		// No Result
-		if (definition.list.length == 0)
-		{
+		if (definition.list.length == 0) {
 			const noResult: MessageEmbed = new MessageEmbed()
 				.setColor("RED")
 				.setDescription(

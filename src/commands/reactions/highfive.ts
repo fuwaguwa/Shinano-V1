@@ -25,9 +25,10 @@ export default new Command({
 		const highfiveEmbed: MessageEmbed = new MessageEmbed()
 			.setColor("RANDOM")
 			.setDescription(
-				`${target
-					? `${interaction.user} highfived ${target}!`
-					: `You highfived with yourself...`
+				`${
+					target
+						? `${interaction.user} highfived ${target}!`
+						: `You highfived with yourself...`
 				}`
 			)
 			.setImage(highfive.results[0].url);

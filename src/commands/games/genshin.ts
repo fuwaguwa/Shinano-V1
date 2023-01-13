@@ -211,10 +211,8 @@ export default new Command({
 	],
 	run: async ({ interaction }) => {
 		await interaction.deferReply();
-		if (interaction.options["_group"])
-		{
-			switch (interaction.options.getSubcommandGroup())
-			{
+		if (interaction.options["_group"]) {
+			switch (interaction.options.getSubcommandGroup()) {
 				case "character": {
 					await genshinCharacter(interaction);
 					break;
@@ -230,10 +228,8 @@ export default new Command({
 					break;
 				}
 			}
-		} else
-		{
-			switch (interaction.options.getSubcommand())
-			{
+		} else {
+			switch (interaction.options.getSubcommand()) {
 				case "material": {
 					await genshinMaterial(interaction);
 					break;

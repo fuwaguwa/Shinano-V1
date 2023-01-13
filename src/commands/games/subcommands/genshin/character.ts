@@ -10,8 +10,7 @@ export async function genshinCharacter(interaction: ShinanoInteraction) {
 	const character = genshin.characters(name);
 
 	// Processing data
-	switch (interaction.options.getSubcommand())
-	{
+	switch (interaction.options.getSubcommand()) {
 		case "info": {
 			await genshinCharacterInfo(interaction, character);
 			break;

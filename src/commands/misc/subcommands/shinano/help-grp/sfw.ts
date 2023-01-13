@@ -103,8 +103,7 @@ export async function shinanoHelpSFW(interaction: ShinanoInteraction) {
 	});
 
 	collector.on("collect", async (i) => {
-		if (!i.customId.endsWith(i.user.id))
-		{
+		if (!i.customId.endsWith(i.user.id)) {
 			return i.reply({
 				content: "This menu is not for you!",
 				ephemeral: true,
@@ -114,8 +113,7 @@ export async function shinanoHelpSFW(interaction: ShinanoInteraction) {
 		const select = navigation.components[0] as MessageSelectMenu;
 		await i.deferUpdate();
 
-		for (let j = 0; j < select.options.length; j++)
-		{
+		for (let j = 0; j < select.options.length; j++) {
 			select.options[j].value === i.values[0]
 				? (select.options[j].default = true)
 				: (select.options[j].default = false);

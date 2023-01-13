@@ -25,9 +25,10 @@ export default new Command({
 		const embed: MessageEmbed = new MessageEmbed()
 			.setColor("RANDOM")
 			.setDescription(
-				`${target
-					? `${interaction.user} hugged ${target}!`
-					: `You hugged yourself...lonely..`
+				`${
+					target
+						? `${interaction.user} hugged ${target}!`
+						: `You hugged yourself...lonely..`
 				}`
 			)
 			.setImage(rep.url);

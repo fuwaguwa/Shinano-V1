@@ -35,11 +35,9 @@ export async function azurLanePRCompletion(
 	);
 	const data = (await response.json()).body;
 
-	if (!interaction.options.getString("fate-sim-level"))
-	{
+	if (!interaction.options.getString("fate-sim-level")) {
 		fateSimLevel = 0;
-	} else
-	{
+	} else {
 		fateSimLevel = parseInt(
 			interaction.options.getString("fate-sim-level"),
 			10
@@ -49,16 +47,14 @@ export async function azurLanePRCompletion(
 
 	// Validating Ship
 	const ship: any = await AL.ships.get(shipName);
-	if (!ship)
-	{
+	if (!ship) {
 		const shipNotFound: MessageEmbed = new MessageEmbed()
 			.setDescription("Ship not found!")
 			.setColor("RED");
 		return interaction.reply({ embeds: [shipNotFound], ephemeral: true });
 	}
 
-	if (ship.rarity !== "Priority" && ship.rarity !== "Decisive")
-	{
+	if (ship.rarity !== "Priority" && ship.rarity !== "Decisive") {
 		const shipNotPR: MessageEmbed = new MessageEmbed()
 			.setColor("RED")
 			.setDescription("The ship is not a PR ship!");
@@ -66,15 +62,13 @@ export async function azurLanePRCompletion(
 	}
 
 	// Assigning PR/DR table
-	if (ship.rarity === "Priority")
-	{
+	if (ship.rarity === "Priority") {
 		color = "GOLD";
 		prTable = data.PR;
 		prFSTable = data["PR-FS"];
 		prFSTableTotal = data["PR-FS-TOTAL"];
 		totalPRBPs = prTable[30] + prFSTable[5];
-	} else
-	{
+	} else {
 		color = "BLACK";
 		prTable = data.DR;
 		prFSTable = data["DR-FS"];
@@ -89,8 +83,7 @@ export async function azurLanePRCompletion(
 		fateSimLevel < 0 ||
 		(unusedBPs > totalPRBPs && devLevel > 0) ||
 		devLevel > 30
-	)
-	{
+	) {
 		const impossible: MessageEmbed = new MessageEmbed()
 			.setDescription("Your inputted data is wrong, please check again")
 			.setColor("RED");
@@ -101,10 +94,8 @@ export async function azurLanePRCompletion(
 	await interaction.deferReply();
 	function closest(num: number, array: number[]) {
 		let curr = array[0];
-		for (let i = 0; i < array.length; i++)
-		{
-			if (Math.abs(num - array[i]) < Math.abs(num - curr))
-			{
+		for (let i = 0; i < array.length; i++) {
+			if (Math.abs(num - array[i]) < Math.abs(num - curr)) {
 				curr = array[i];
 			}
 		}

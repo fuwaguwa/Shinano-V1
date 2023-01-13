@@ -19,17 +19,14 @@ export async function genshinCharacterTalents(interaction: ShinanoInteraction) {
 	);
 	let character: genshin.Character;
 
-	if (characterName.toLowerCase().includes("traveler"))
-	{
+	if (characterName.toLowerCase().includes("traveler")) {
 		if (characterName.split(" ")[0] !== "Traveler")
 			characterName = toTitleCase(`Traveler (${characterName.split(" ")[0]})`);
 		character = genshin.characters("Aether");
-	} else
-	{
+	} else {
 		character = genshin.characters(characterName);
 
-		if (!character)
-		{
+		if (!character) {
 			const noResult: MessageEmbed = new MessageEmbed()
 				.setColor("RED")
 				.setDescription("❌ | No character found!");
@@ -39,11 +36,9 @@ export async function genshinCharacterTalents(interaction: ShinanoInteraction) {
 
 	// MC Checking
 	let embedColor;
-	if (characterName === "Aether" || characterName === "Lumine")
-	{
+	if (characterName === "Aether" || characterName === "Lumine") {
 		embedColor = color(characterName.split(" ")[0]);
-	} else
-	{
+	} else {
 		embedColor = color(character);
 	}
 
@@ -51,8 +46,7 @@ export async function genshinCharacterTalents(interaction: ShinanoInteraction) {
 	const talents = genshin.talents(characterName);
 	const charTalentsEmbeds: MessageEmbed[] = [];
 
-	if (!talents)
-	{
+	if (!talents) {
 		const noResult: MessageEmbed = new MessageEmbed()
 			.setColor("RED")
 			.setDescription("❌ | No character found!");
@@ -63,14 +57,12 @@ export async function genshinCharacterTalents(interaction: ShinanoInteraction) {
 	let combatCount = 3;
 	if (talents.combatsp) combatCount++;
 
-	for (let i = 0; i < combatCount; i++)
-	{
+	for (let i = 0; i < combatCount; i++) {
 		const embed: MessageEmbed = new MessageEmbed()
 			.setColor(embedColor)
 			.setThumbnail(character.images.icon);
 
-		switch (i + 1)
-		{
+		switch (i + 1) {
 			case 1: {
 				embed
 					.setTitle(`${characterName}'s Talents | Normal Attack`)
@@ -85,8 +77,8 @@ export async function genshinCharacterTalents(interaction: ShinanoInteraction) {
 					.setTitle(`${characterName}'s Talents | Elemental Skill`)
 					.setDescription(
 						`*${talents.combat2.description}*\n\n` +
-						`**Elemental Skill: ${talents.combat2.name}**\n` +
-						talents.combat2.info
+							`**Elemental Skill: ${talents.combat2.name}**\n` +
+							talents.combat2.info
 					);
 				break;
 			}
@@ -96,8 +88,8 @@ export async function genshinCharacterTalents(interaction: ShinanoInteraction) {
 					.setTitle(`${characterName}'s Talents | Elemental Burst`)
 					.setDescription(
 						`*${talents.combat3.description}*\n\n` +
-						`**Elemental Burst: ${talents.combat3.name}**\n` +
-						talents.combat3.info
+							`**Elemental Burst: ${talents.combat3.name}**\n` +
+							talents.combat3.info
 					);
 				break;
 			}
@@ -117,8 +109,7 @@ export async function genshinCharacterTalents(interaction: ShinanoInteraction) {
 	if (talents.passive3) passiveCount++;
 	if (talents.passive4) passiveCount++;
 
-	for (let i = 0; i < passiveCount; i++)
-	{
+	for (let i = 0; i < passiveCount; i++) {
 		const embed: MessageEmbed = new MessageEmbed()
 			.setColor(embedColor)
 			.setTitle(`${characterName}'s Talents | Passive ${i + 1}`)
@@ -136,8 +127,7 @@ export async function genshinCharacterTalents(interaction: ShinanoInteraction) {
 	const costs = [];
 	const talentsCostsEmbeds: MessageEmbed[] = [];
 
-	for (let level in talentCosts)
-	{
+	for (let level in talentCosts) {
 		let matz = [];
 		talentCosts[level].forEach((item) => {
 			matz.push(`${item.count}x **${item.name}**`);
@@ -145,8 +135,7 @@ export async function genshinCharacterTalents(interaction: ShinanoInteraction) {
 		costs.push(matz.join("\n"));
 	}
 
-	for (let i = 0; i < costs.length; i++)
-	{
+	for (let i = 0; i < costs.length; i++) {
 		talentsCostsEmbeds.push(
 			new MessageEmbed()
 				.setColor(embedColor)
@@ -200,8 +189,7 @@ export async function genshinCharacterTalents(interaction: ShinanoInteraction) {
 	});
 
 	collector.on("collect", async (i) => {
-		if (!i.customId.endsWith(i.user.id))
-		{
+		if (!i.customId.endsWith(i.user.id)) {
 			return i.reply({
 				content: "This menu is not for you!",
 				ephemeral: true,
@@ -211,8 +199,7 @@ export async function genshinCharacterTalents(interaction: ShinanoInteraction) {
 		await i.deferUpdate();
 		const selectMenu = navigation.components[0] as MessageSelectMenu;
 
-		switch (i.values[0])
-		{
+		switch (i.values[0]) {
 			case "info": {
 				selectMenu.options[0].default = true;
 				selectMenu.options[1].default = false;

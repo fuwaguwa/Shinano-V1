@@ -15,8 +15,7 @@ export async function doujinCode(
 	});
 	const doujin = await response.json();
 
-	if (doujin.error)
-	{
+	if (doujin.error) {
 		const notFound: MessageEmbed = new MessageEmbed()
 			.setColor("RED")
 			.setDescription("❌ | Doujin not found!");

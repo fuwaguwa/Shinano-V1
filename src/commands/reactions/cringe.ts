@@ -25,9 +25,10 @@ export default new Command({
 		const embed: MessageEmbed = new MessageEmbed()
 			.setColor("RANDOM")
 			.setDescription(
-				`${target
-					? `${interaction.user} cringed at ${target}!`
-					: `${interaction.user} cringed!`
+				`${
+					target
+						? `${interaction.user} cringed at ${target}!`
+						: `${interaction.user} cringed!`
 				}`
 			)
 			.setImage(rep.url);

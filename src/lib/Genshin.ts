@@ -38,8 +38,7 @@ export function rarityColor(item: genshin.Weapon | genshin.Material | string) {
 	let itemRarity;
 	typeof item === "string" ? (itemRarity = item) : (itemRarity = item.rarity);
 
-	switch (itemRarity)
-	{
+	switch (itemRarity) {
 		case "1":
 			return "GREY";
 		case "2":

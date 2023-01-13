@@ -9,8 +9,7 @@ import { ShinanoPaginator } from "./Pages";
 import { toTitleCase } from "./Utils";
 
 function getFileType(type: string) {
-	switch (type)
-	{
+	switch (type) {
 		case "j":
 			return "jpg";
 		case "p":
@@ -22,14 +21,14 @@ function getFileType(type: string) {
 
 function getPageLink(doujin, pageNumber) {
 	const type = getFileType(doujin.images.pages[pageNumber].t);
-	return `https://i.nhentai.net/galleries/${doujin.media_id}/${pageNumber + 1
-		}.${type}`;
+	return `https://i.nhentai.net/galleries/${doujin.media_id}/${
+		pageNumber + 1
+	}.${type}`;
 }
 
 function genDoujinPage(doujin, title) {
 	const doujinPages: MessageEmbed[] = [];
-	for (let i = 0; i < doujin.num_pages; i++)
-	{
+	for (let i = 0; i < doujin.num_pages; i++) {
 		doujinPages.push(
 			new MessageEmbed()
 				.setColor("#2f3136")
@@ -53,8 +52,7 @@ export function getDoujinTags(doujin) {
 
 	doujin.tags.forEach((tag) => {
 		let tagName = toTitleCase(tag.name);
-		switch (tag.type)
-		{
+		switch (tag.type) {
 			case "tag":
 				doujinTags.push(tagName);
 				break;
@@ -142,8 +140,7 @@ export async function displayDoujin(interaction: ShinanoInteraction, doujin) {
 		);
 	});
 
-	if (filter)
-	{
+	if (filter) {
 		const blacklisted: MessageEmbed = new MessageEmbed()
 			.setColor("RED")
 			.setDescription(
@@ -190,8 +187,7 @@ export async function displayDoujin(interaction: ShinanoInteraction, doujin) {
 	let page: any = 0;
 
 	collector.on("collect", async (i) => {
-		if (!i.customId.endsWith(`${i.user.id}`))
-		{
+		if (!i.customId.endsWith(`${i.user.id}`)) {
 			return i.reply({
 				content: "This menu is not for you!",
 				ephemeral: true,
@@ -199,11 +195,9 @@ export async function displayDoujin(interaction: ShinanoInteraction, doujin) {
 		}
 
 		const menu = navigation.components[0] as MessageSelectMenu;
-		if (i["values"])
-		{
+		if (i["values"]) {
 			await i.deferUpdate();
-			switch (i["values"][0])
-			{
+			switch (i["values"][0]) {
 				case "info": {
 					menu.options[0].default = true;
 					menu.options[1].default = false;
@@ -219,8 +213,7 @@ export async function displayDoujin(interaction: ShinanoInteraction, doujin) {
 					menu.options[0].default = false;
 					menu.options[1].default = true;
 
-					if (doujinPages)
-					{
+					if (doujinPages) {
 						page = await ShinanoPaginator({
 							interaction: interaction,
 							interactorOnly: true,
@@ -229,13 +222,12 @@ export async function displayDoujin(interaction: ShinanoInteraction, doujin) {
 							menu: navigation,
 							timeout: 150000,
 						});
-					} else
-					{
+					} else {
 						const notAvailable: MessageEmbed = new MessageEmbed()
 							.setColor("RED")
 							.setDescription(
 								"Unfortunately, we only support doujins that are under 150 pages long. Instead, you can read this doujin " +
-								`[here](https://nhentai.net/g/${doujin.id})`
+									`[here](https://nhentai.net/g/${doujin.id})`
 							);
 						await interaction.editReply({
 							embeds: [notAvailable],

@@ -5,8 +5,7 @@ import User from "../schemas/User";
 export default new Event("interactionCreate", async (interaction) => {
 	if (!interaction.isButton()) return;
 
-	switch (interaction.customId)
-	{
+	switch (interaction.customId) {
 		case "NONSFW": {
 			const cantSee: MessageEmbed = new MessageEmbed()
 				.setColor("#2f3136")
@@ -40,8 +39,7 @@ export default new Event("interactionCreate", async (interaction) => {
 					.setURL("https://top.gg/bot/1002193298229829682/vote")
 			);
 
-			if (!user.lastVoteTimestamp)
-			{
+			if (!user.lastVoteTimestamp) {
 				// Haven't vote at all
 				const noVotes: MessageEmbed = new MessageEmbed()
 					.setColor("RED")
@@ -57,8 +55,7 @@ export default new Event("interactionCreate", async (interaction) => {
 			} else if (
 				Math.floor(Date.now() / 1000) - user.lastVoteTimestamp >
 				43200
-			)
-			{
+			) {
 				// 12 hours has passed
 				const votable: MessageEmbed = new MessageEmbed()
 					.setColor("GREEN")
@@ -71,13 +68,13 @@ export default new Event("interactionCreate", async (interaction) => {
 					components: [voteLink],
 					ephemeral: true,
 				});
-			} else
-			{
+			} else {
 				// 12 hours has not passed
 				const unvotable: MessageEmbed = new MessageEmbed()
 					.setColor("RED")
 					.setDescription(
-						`Your last vote was <t:${user.lastVoteTimestamp
+						`Your last vote was <t:${
+							user.lastVoteTimestamp
 						}:R>, you can vote again <t:${user.lastVoteTimestamp + 43200}:R>`
 					)
 					.setTimestamp();

@@ -20,8 +20,7 @@ export async function azurLaneGear(
 		.toLowerCase();
 	const gearFiltered = await gearSearch(gearName, AL);
 
-	if (gearFiltered.length === 0)
-	{
+	if (gearFiltered.length === 0) {
 		const noResult: MessageEmbed = new MessageEmbed()
 			.setColor("RED")
 			.setDescription(
@@ -36,8 +35,7 @@ export async function azurLaneGear(
 	const statsEmbeds: MessageEmbed[] = [];
 	const equippableEmbeds: MessageEmbed[] = [];
 
-	for (let i = 0; i < gear.tiers.length; i++)
-	{
+	for (let i = 0; i < gear.tiers.length; i++) {
 		// Color Picking
 		let color: any;
 		if (gear.tiers[i].rarity === "Normal") color = "#b0b7b8";
@@ -50,7 +48,8 @@ export async function azurLaneGear(
 		infoEmbeds.push(
 			new MessageEmbed()
 				.setTitle(
-					`${gear.names["wiki"] ? gear.names["wiki"] : gear.names.en} | ${gear.tiers[i].rarity
+					`${gear.names["wiki"] ? gear.names["wiki"] : gear.names.en} | ${
+						gear.tiers[i].rarity
 					}`
 				)
 				.setDescription(`Stars: ${gear.tiers[i].stars.stars}`)
@@ -63,8 +62,7 @@ export async function azurLaneGear(
 				)
 		);
 
-		if (gear.misc.notes.length > 0)
-		{
+		if (gear.misc.notes.length > 0) {
 			infoEmbeds[i].addField("Notes:", gear.misc.notes);
 		}
 
@@ -74,7 +72,8 @@ export async function azurLaneGear(
 				.setColor(color)
 				.setThumbnail(gear.image)
 				.setTitle(
-					`${gear.names["wiki"] ? gear.names["wiki"] : gear.names.en} | ${gear.tiers[i].rarity
+					`${gear.names["wiki"] ? gear.names["wiki"] : gear.names.en} | ${
+						gear.tiers[i].rarity
 					}`
 				)
 		);
@@ -149,14 +148,12 @@ export async function azurLaneGear(
 
 	// Collector
 	let message;
-	if (gear.tiers.length > 1)
-	{
+	if (gear.tiers.length > 1) {
 		message = await interaction.editReply({
 			embeds: [infoEmbeds[0]],
 			components: [navigationTiers, navigationOptions],
 		});
-	} else
-	{
+	} else {
 		message = await interaction.editReply({
 			embeds: [infoEmbeds[0]],
 			components: [navigationOptions],
@@ -173,8 +170,7 @@ export async function azurLaneGear(
 	collector.on("collect", async (i) => {
 		const customId = i.customId.split("-")[0];
 
-		if (!i.customId.endsWith(i.user.id))
-		{
+		if (!i.customId.endsWith(i.user.id)) {
 			return i.reply({
 				content: "This menu is not for you!",
 				ephemeral: true,
@@ -182,26 +178,21 @@ export async function azurLaneGear(
 		}
 
 		await i.deferUpdate();
-		if (customId === "TIERS")
-		{
-			switch (i.values[0])
-			{
+		if (customId === "TIERS") {
+			switch (i.values[0]) {
 				case "T1": {
 					tierCount = 0;
 
 					// Resetting the selection
-					for (let i = 0; i < 3; i++)
-					{
-						if (i !== 0)
-						{
+					for (let i = 0; i < 3; i++) {
+						if (i !== 0) {
 							(navigationTiers.components[0] as MessageSelectMenu).options[
 								i
 							].default = false;
 							(navigationOptions.components[0] as MessageSelectMenu).options[
 								i
 							].default = false;
-						} else
-						{
+						} else {
 							(navigationTiers.components[0] as MessageSelectMenu).options[
 								i
 							].default = true;
@@ -225,18 +216,15 @@ export async function azurLaneGear(
 				case "T2": {
 					tierCount = 1;
 
-					for (let i = 0; i < 3; i++)
-					{
-						if (i !== 1)
-						{
+					for (let i = 0; i < 3; i++) {
+						if (i !== 1) {
 							(navigationTiers.components[0] as MessageSelectMenu).options[
 								i
 							].default = false;
 							(navigationOptions.components[0] as MessageSelectMenu).options[
 								i
 							].default = false;
-						} else
-						{
+						} else {
 							(navigationTiers.components[0] as MessageSelectMenu).options[
 								i
 							].default = true;
@@ -260,18 +248,15 @@ export async function azurLaneGear(
 				case "T3": {
 					tierCount = 2;
 
-					for (let i = 0; i < 3; i++)
-					{
-						if (i !== 2)
-						{
+					for (let i = 0; i < 3; i++) {
+						if (i !== 2) {
 							(navigationTiers.components[0] as MessageSelectMenu).options[
 								i
 							].default = false;
 							(navigationOptions.components[0] as MessageSelectMenu).options[
 								i
 							].default = false;
-						} else
-						{
+						} else {
 							(navigationTiers.components[0] as MessageSelectMenu).options[
 								i
 							].default = true;
@@ -292,20 +277,17 @@ export async function azurLaneGear(
 					break;
 				}
 			}
-		} else
-		{
-			switch (i.values[0])
-			{
+		} else {
+			switch (i.values[0]) {
 				case "info": {
-					for (let i = 0; i < 3; i++)
-					{
+					for (let i = 0; i < 3; i++) {
 						i == 0
 							? ((navigationOptions.components[0] as MessageSelectMenu).options[
-								i
-							].default = true)
+									i
+							  ].default = true)
 							: ((navigationOptions.components[0] as MessageSelectMenu).options[
-								i
-							].default = false);
+									i
+							  ].default = false);
 					}
 
 					await i.editReply({
@@ -320,15 +302,14 @@ export async function azurLaneGear(
 				}
 
 				case "stats": {
-					for (let i = 0; i < 3; i++)
-					{
+					for (let i = 0; i < 3; i++) {
 						i == 1
 							? ((navigationOptions.components[0] as MessageSelectMenu).options[
-								i
-							].default = true)
+									i
+							  ].default = true)
 							: ((navigationOptions.components[0] as MessageSelectMenu).options[
-								i
-							].default = false);
+									i
+							  ].default = false);
 					}
 
 					await i.editReply({
@@ -343,15 +324,14 @@ export async function azurLaneGear(
 				}
 
 				case "fits": {
-					for (let i = 0; i < 3; i++)
-					{
+					for (let i = 0; i < 3; i++) {
 						i == 2
 							? ((navigationOptions.components[0] as MessageSelectMenu).options[
-								i
-							].default = true)
+									i
+							  ].default = true)
 							: ((navigationOptions.components[0] as MessageSelectMenu).options[
-								i
-							].default = false);
+									i
+							  ].default = false);
 					}
 
 					await i.editReply({

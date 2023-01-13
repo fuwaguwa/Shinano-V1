@@ -9,18 +9,15 @@ config();
 let lastTweetLink: string;
 
 async function listenForever(streamFactory, dataConsumer) {
-	try
-	{
+	try {
 		console.log("Connected to Twitter stream!");
-		for await (const { data } of streamFactory())
-		{
+		for await (const { data } of streamFactory()) {
 			dataConsumer(data);
 		}
 
 		console.log("Stream disconnected healthily. Reconnecting.");
 		listenForever(streamFactory, dataConsumer);
-	} catch (error)
-	{
+	} catch (error) {
 		console.warn("Stream disconnected with error. Retrying.", error);
 		listenForever(streamFactory, dataConsumer);
 	}
@@ -43,12 +40,10 @@ export async function postTweet(tweet) {
 	lastTweetLink = link;
 
 	const iterations: number = 0;
-	for await (const doc of News.find())
-	{
+	for await (const doc of News.find()) {
 		if (iterations == 40) sleep(1000);
 
-		try
-		{
+		try {
 			const guild = await client.guilds.fetch(doc.guildId);
 			const channel = await guild.channels.fetch(doc.channelId);
 
@@ -56,8 +51,7 @@ export async function postTweet(tweet) {
 				content:
 					`__Shikikans, there's a new message from ${server} HQ!__\n` + link,
 			});
-		} catch (error)
-		{
+		} catch (error) {
 			console.warn(error);
 			continue;
 		}

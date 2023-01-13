@@ -92,8 +92,7 @@ export async function createTable(options: {
 }) {
 	// Structure
 	const tableColumns: any[] = [];
-	for (let i = 0; i < options.columns.length; i++)
-	{
+	for (let i = 0; i < options.columns.length; i++) {
 		let column = {
 			title: options.columns[i],
 			dataIndex: options.columns[i],
@@ -104,11 +103,9 @@ export async function createTable(options: {
 			textFontSize: "29px",
 		};
 
-		if (i == 1 && options.firstColumnSize)
-		{
+		if (i == 1 && options.firstColumnSize) {
 			column = Object.assign({ width: options.firstColumnSize }, column);
-		} else if (options.columnSize)
-		{
+		} else if (options.columnSize) {
 			column = Object.assign({ width: options.columnSize }, column);
 		}
 
@@ -136,10 +133,8 @@ export async function createTable(options: {
 
 export function sleep(ms: number) {
 	let start = new Date().getTime();
-	for (let i = 0; i < 1e7; i++)
-	{
-		if (new Date().getTime() - start > ms)
-		{
+	for (let i = 0; i < 1e7; i++) {
+		if (new Date().getTime() - start > ms) {
 			break;
 		}
 	}

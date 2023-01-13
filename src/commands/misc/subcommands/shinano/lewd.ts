@@ -3,8 +3,7 @@ import { ShinanoInteraction } from "../../../../typings/Command";
 import { nsfwPrivateCollection } from "../../../lewd/subcommands/nsfw/privateColle";
 
 export async function shinanoLewd(interaction: ShinanoInteraction) {
-	if (!(interaction.channel as TextChannel).nsfw)
-	{
+	if (!(interaction.channel as TextChannel).nsfw) {
 		const nsfwCommand: MessageEmbed = new MessageEmbed()
 			.setColor("RED")
 			.setTitle("NSFW Command")

@@ -4,8 +4,7 @@ import { blacklistCheck } from "./blacklist-grp/check";
 import { blacklistRemove } from "./blacklist-grp/remove";
 
 export async function devBlacklist(interaction: ShinanoInteraction) {
-	switch (interaction.options.getSubcommand())
-	{
+	switch (interaction.options.getSubcommand()) {
 		case "add": {
 			await blacklistAdd(interaction);
 			break;

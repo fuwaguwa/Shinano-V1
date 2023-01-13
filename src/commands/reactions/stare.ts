@@ -25,9 +25,10 @@ export default new Command({
 		const stareEmbed: MessageEmbed = new MessageEmbed()
 			.setColor("RANDOM")
 			.setDescription(
-				`${target
-					? `${interaction.user} is staring at ${target}...`
-					: `You are staring at yourself...`
+				`${
+					target
+						? `${interaction.user} is staring at ${target}...`
+						: `You are staring at yourself...`
 				}`
 			)
 			.setImage(stare.results[0].url);

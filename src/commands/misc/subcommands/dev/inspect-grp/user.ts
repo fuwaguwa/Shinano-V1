@@ -11,9 +11,10 @@ export async function devInspectUser(interaction: ShinanoInteraction) {
 		.setTitle(`${user.username}'s Info`)
 		.setDescription(
 			`User ID: **${userDB.userId}**\n` +
-			`Blacklisted: **${userDB.blacklisted ? userDB.blacklisted : false
-			}**\n` +
-			`Commands Executed: **${userDB.commandsExecuted}**`
+				`Blacklisted: **${
+					userDB.blacklisted ? userDB.blacklisted : false
+				}**\n` +
+				`Commands Executed: **${userDB.commandsExecuted}**`
 		);
 	await interaction.editReply({ embeds: [infoEmbed] });
 }

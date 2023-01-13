@@ -58,40 +58,33 @@ export async function ShinanoPaginator(options: {
 		);
 
 		// Modifying button state based on pages
-		if (options.pages.length == 1)
-		{
-			for (let i = 0; i < navigation.components.length; i++)
-			{
+		if (options.pages.length == 1) {
+			for (let i = 0; i < navigation.components.length; i++) {
 				(navigation.components[i] as MessageButton)
 					.setStyle("SECONDARY")
 					.setDisabled(true);
 			}
-		} else if (options.pages.length == pageCount)
-		{
+		} else if (options.pages.length == pageCount) {
 			(navigation.components[3] as MessageButton)
 				.setStyle("SECONDARY")
 				.setDisabled(true);
 			(navigation.components[4] as MessageButton)
 				.setStyle("SECONDARY")
 				.setDisabled(true);
-		} else
-		{
-			for (let i = 0; i < navigation.components.length; i++)
-			{
+		} else {
+			for (let i = 0; i < navigation.components.length; i++) {
 				if (i == 2) continue;
 				(navigation.components[i] as MessageButton).setDisabled(false);
 			}
 		}
 
 		let message;
-		if (options.menu)
-		{
+		if (options.menu) {
 			message = await options.interaction.editReply({
 				embeds: [options.pages[pageCount]],
 				components: [options.menu, navigation],
 			});
-		} else
-		{
+		} else {
 			message = await options.interaction.editReply({
 				embeds: [options.pages[pageCount]],
 				components: [navigation],
@@ -108,17 +101,14 @@ export async function ShinanoPaginator(options: {
 			const customId = i.customId.split("-")[0];
 
 			// Reset page count on menu update
-			if (customId === menuId)
-			{
+			if (customId === menuId) {
 				resolve(pageCount);
 				pageCount = 0;
 				return collector.stop("interaction ended"); // Ending paginator for that menu option
 			}
 
-			if (options.interactorOnly)
-			{
-				if (i.customId.split("-")[1] !== i.user.id)
-				{
+			if (options.interactorOnly) {
+				if (i.customId.split("-")[1] !== i.user.id) {
 					return i.reply({
 						content: "This button is not for you!",
 						ephemeral: true,
@@ -126,8 +116,7 @@ export async function ShinanoPaginator(options: {
 				}
 			}
 
-			switch (customId)
-			{
+			switch (customId) {
 				case "BACK": {
 					pageCount = pageCount - 1;
 					break;
@@ -155,8 +144,7 @@ export async function ShinanoPaginator(options: {
 				`Page: ${pageCount + 1}/${options.pages.length}`
 			);
 
-			if (pageCount == 0)
-			{
+			if (pageCount == 0) {
 				// On the first page
 				(navigation.components[0] as MessageButton).setDisabled(true); // First Button
 				(navigation.components[1] as MessageButton).setDisabled(true); // Back Button
@@ -165,8 +153,7 @@ export async function ShinanoPaginator(options: {
 				(navigation.components[4] as MessageButton).setDisabled(false); // Last Button
 			}
 
-			if (pageCount != 0 && pageCount != options.pages.length - 1)
-			{
+			if (pageCount != 0 && pageCount != options.pages.length - 1) {
 				// On normal pages
 				(navigation.components[0] as MessageButton).setDisabled(false); // First Button
 				(navigation.components[1] as MessageButton).setDisabled(false); // Back Button
@@ -175,8 +162,7 @@ export async function ShinanoPaginator(options: {
 				(navigation.components[4] as MessageButton).setDisabled(false); // Last Button
 			}
 
-			if (pageCount == options.pages.length - 1)
-			{
+			if (pageCount == options.pages.length - 1) {
 				// On the last page
 				(navigation.components[0] as MessageButton).setDisabled(false); // First Button
 				(navigation.components[1] as MessageButton).setDisabled(false); // Back Button
@@ -185,14 +171,12 @@ export async function ShinanoPaginator(options: {
 				(navigation.components[4] as MessageButton).setDisabled(true); // Last Button
 			}
 
-			if (options.menu)
-			{
+			if (options.menu) {
 				await i.editReply({
 					embeds: [options.pages[pageCount]],
 					components: [options.menu, navigation],
 				});
-			} else
-			{
+			} else {
 				await i.editReply({
 					embeds: [options.pages[pageCount]],
 					components: [navigation],
@@ -206,11 +190,9 @@ export async function ShinanoPaginator(options: {
 		collector.on("end", async (collected, reason) => {
 			if (reason === "messageDelete" || reason === "interaction ended") return;
 
-			if (options.menu)
-			{
+			if (options.menu) {
 				options.menu.components[0].setDisabled(true);
-				for (let i = 0; i < navigation.components.length; i++)
-				{
+				for (let i = 0; i < navigation.components.length; i++) {
 					(navigation.components[i] as MessageButton)
 						.setStyle("SECONDARY")
 						.setDisabled(true);
@@ -219,10 +201,8 @@ export async function ShinanoPaginator(options: {
 				await options.interaction.editReply({
 					components: [options.menu, navigation],
 				});
-			} else
-			{
-				for (let i = 0; i < navigation.components.length; i++)
-				{
+			} else {
+				for (let i = 0; i < navigation.components.length; i++) {
 					(navigation.components[i] as MessageButton)
 						.setStyle("SECONDARY")
 						.setDisabled(true);

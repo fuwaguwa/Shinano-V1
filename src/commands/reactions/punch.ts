@@ -24,9 +24,10 @@ export default new Command({
 		const punchEmbed: MessageEmbed = new MessageEmbed()
 			.setColor("RANDOM")
 			.setDescription(
-				`${target
-					? `${interaction.user} punched ${target}!`
-					: `You punched yourself...`
+				`${
+					target
+						? `${interaction.user} punched ${target}!`
+						: `You punched yourself...`
 				}`
 			)
 			.setImage(punch.results[0].url);

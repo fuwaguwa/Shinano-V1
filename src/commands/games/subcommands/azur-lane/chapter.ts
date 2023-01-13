@@ -25,8 +25,7 @@ export async function azurLaneChapter(
 
 	// Normal
 	const normalLevels: MessageEmbed[] = chapterInfo(info, "normal");
-	if (!info[1].hard)
-	{
+	if (!info[1].hard) {
 		return await ShinanoPaginator({
 			interaction: interaction,
 			interactorOnly: true,
@@ -82,8 +81,7 @@ export async function azurLaneChapter(
 
 	collector.on("collect", async (i) => {
 		// Filtering Interaction
-		if (!i.customId.endsWith(i.user.id))
-		{
+		if (!i.customId.endsWith(i.user.id)) {
 			return i.reply({
 				content: "This menu is not for you!",
 				ephemeral: true,
@@ -91,8 +89,7 @@ export async function azurLaneChapter(
 		}
 
 		await i.deferUpdate();
-		switch (i.values[0])
-		{
+		switch (i.values[0]) {
 			case "normal": {
 				(navigation.components[0] as MessageSelectMenu).options[0].default =
 					true;

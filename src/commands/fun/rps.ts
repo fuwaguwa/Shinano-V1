@@ -10,8 +10,7 @@ import {
 import { Command } from "../../structures/Command";
 
 const choiceToEmoji = (choice) => {
-	switch (choice)
-	{
+	switch (choice) {
 		case "ROCK":
 			return "👊";
 		case "PAPER":
@@ -39,8 +38,7 @@ export default new Command({
 			user &&
 			user.id !== "977510446447874109" &&
 			user.id !== interaction.user.id
-		)
-		{
+		) {
 			await interaction.reply(`<@${user.id}>`);
 			// Verifying if the duel gonna happens
 
@@ -100,8 +98,7 @@ export default new Command({
 			acceptor.on("collect", async (i) => {
 				const customId = i.customId.split("-")[0];
 
-				if (!i.customId.endsWith(i.user.id))
-				{
+				if (!i.customId.endsWith(i.user.id)) {
 					return i.reply({
 						content: "This button is not for you!",
 						ephemeral: true,
@@ -110,8 +107,7 @@ export default new Command({
 
 				// Duel Choice
 				await i.deferUpdate();
-				switch (customId)
-				{
+				switch (customId) {
 					case "ACCEPT": {
 						const res: MessageEmbed = new MessageEmbed()
 							.setColor("#2f3136")
@@ -147,16 +143,14 @@ export default new Command({
 			});
 
 			acceptor.on("end", async (collected, reason) => {
-				if (reason !== "ACCEPTED" && reason !== "DECLINED")
-				{
+				if (reason !== "ACCEPTED" && reason !== "DECLINED") {
 					// Ending the duel if no response is heard from the opponent
 					const timeout: MessageEmbed = new MessageEmbed()
 						.setColor("RED")
 						.setDescription(`❌ \`${user.username}\` did not respond!`);
 
 					await interaction.editReply({ embeds: [timeout], components: [] });
-				} else if (reason === "ACCEPTED")
-				{
+				} else if (reason === "ACCEPTED") {
 					let challengerChoice: string;
 					let opponentChoice: string;
 
@@ -173,11 +167,9 @@ export default new Command({
 						const opponentId = i.customId.split("-")[2];
 
 						// Opponent Turn
-						if (!opponentChoice)
-						{
+						if (!opponentChoice) {
 							// Filtering Response
-							if (i.user.id !== opponentId)
-							{
+							if (i.user.id !== opponentId) {
 								return i.reply({
 									content: "This button is not for you!",
 									ephemeral: true,
@@ -204,8 +196,7 @@ export default new Command({
 						}
 
 						// Challenger Turn
-						if (i.user.id !== challengerId)
-						{
+						if (i.user.id !== challengerId) {
 							return i.reply({
 								content: "This button is not for you!",
 								ephemeral: true,
@@ -223,25 +214,21 @@ export default new Command({
 						const finalResult: MessageEmbed = new MessageEmbed().setColor(
 							"#2f3136"
 						);
-						if (challengerChoice === opponentChoice)
-						{
+						if (challengerChoice === opponentChoice) {
 							finalResult.setDescription(
 								`\`${interaction.user.username}\` vs \`${user.username}\`\n\n${user.username} picked ${emojiOpponentChoice}\n${interaction.user.username} picked ${emojiChallengerChoice}\nIt's a draw!`
 							);
-						} else
-						{
+						} else {
 							if (
 								(challengerChoice === "ROCK" && opponentChoice === "PAPER") ||
 								(challengerChoice === "PAPER" &&
 									opponentChoice === "SCISSOR") ||
 								(challengerChoice === "SCISSOR" && opponentChoice === "ROCK")
-							)
-							{
+							) {
 								finalResult.setDescription(
 									`\`${interaction.user.username}\` vs \`${user.username}\`\n\n${user.username} picked ${emojiOpponentChoice}\n${interaction.user.username} picked ${emojiChallengerChoice}\n${user.username} wins!`
 								);
-							} else
-							{
+							} else {
 								finalResult.setDescription(
 									`\`${interaction.user.username}\` vs \`${user.username}\`\n\n${user.username} picked ${emojiOpponentChoice}\n${interaction.user.username} picked ${emojiChallengerChoice}\n${interaction.user.username} wins!`
 								);
@@ -249,8 +236,7 @@ export default new Command({
 						}
 
 						// Disabling the button
-						for (let i = 0; i < 3; i++)
-						{
+						for (let i = 0; i < 3; i++) {
 							(choices.components[i] as MessageButton)
 								.setDisabled(true)
 								.setStyle("SECONDARY");
@@ -266,8 +252,7 @@ export default new Command({
 
 					duel.on("end", async (collected, reason) => {
 						// Duel offer has timed out
-						if (reason !== "Finished!")
-						{
+						if (reason !== "Finished!") {
 							await interaction.editReply({
 								content: `❌ | No interaction from user, duel ended!`,
 							});
@@ -275,8 +260,7 @@ export default new Command({
 					});
 				}
 			});
-		} else
-		{
+		} else {
 			await interaction.deferReply();
 			const allChoices = ["ROCK", "PAPER", "SCISSOR"];
 			const botChoice =
@@ -328,8 +312,7 @@ export default new Command({
 				const convertedBotChoice = choiceToEmoji(botChoice);
 
 				// Verifying Interaction
-				if (!i.customId.endsWith(i.user.id))
-				{
+				if (!i.customId.endsWith(i.user.id)) {
 					return i.reply({
 						content: "This button is not for you!",
 						ephemeral: true,
@@ -338,40 +321,33 @@ export default new Command({
 
 				// Response
 				await i.deferUpdate();
-				for (let i = 0; i < 3; i++)
-				{
+				for (let i = 0; i < 3; i++) {
 					(choices.components[i] as MessageButton).setDisabled(true);
 					if (
 						customId ===
 						(choices.components[i] as MessageButton).customId.split("-")[0]
-					)
-					{
+					) {
 						(choices.components[i] as MessageButton).setStyle("SUCCESS");
-					} else
-					{
+					} else {
 						(choices.components[i] as MessageButton).setStyle("SECONDARY");
 					}
 				}
 				const res: MessageEmbed = new MessageEmbed().setColor("#2f3136");
 
-				if (customId === botChoice)
-				{
+				if (customId === botChoice) {
 					res.setDescription(
 						`\`${interaction.user.username}\` vs \`Shinano\`\n\nI picked ${convertedBotChoice}\nYou picked ${emojiChallengerChoice}\nIt's a draw!`
 					);
-				} else
-				{
+				} else {
 					if (
 						(customId === "ROCK" && botChoice === "PAPER") ||
 						(customId === "PAPER" && botChoice === "SCISSOR") ||
 						(customId === "SCISSOR" && botChoice === "ROCK")
-					)
-					{
+					) {
 						res.setDescription(
 							`\`${interaction.user.username}\` vs \`Shinano\`\n\nI picked ${convertedBotChoice}\nYou picked ${emojiChallengerChoice}\nI won!`
 						);
-					} else
-					{
+					} else {
 						res.setDescription(
 							`\`${interaction.user.username}\` vs \`Shinano\`\n\nI picked ${convertedBotChoice}\nYou picked ${emojiChallengerChoice}\nYou won!`
 						);
@@ -386,10 +362,8 @@ export default new Command({
 			});
 
 			collector.on("end", async (collected, reason) => {
-				if (reason !== "picked")
-				{
-					for (let i = 0; i < 3; i++)
-					{
+				if (reason !== "picked") {
+					for (let i = 0; i < 3; i++) {
 						(choices.components[i] as MessageButton).setDisabled(true);
 						(choices.components[i] as MessageButton).setStyle("SECONDARY");
 					}

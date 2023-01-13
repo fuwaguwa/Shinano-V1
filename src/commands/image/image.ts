@@ -208,8 +208,7 @@ export default new Command({
 		let image: Buffer;
 		let link: string;
 
-		switch (interaction.options.getSubcommand())
-		{
+		switch (interaction.options.getSubcommand()) {
 			default: {
 				link = `https://some-random-api.ml/canvas/overlay/${interaction.options.getSubcommand()}?avatar=${avatar}`;
 				break;
@@ -235,8 +234,7 @@ export default new Command({
 				let applyText = (canvas, text) => {
 					const context = canvas.getContext("2d");
 					let fontSize = 120;
-					do
-					{
+					do {
 						context.font = `${(fontSize -= 5)}px upright`;
 					} while (context.measureText(text).width > 847);
 					return context.font;
@@ -276,8 +274,7 @@ export default new Command({
 				let applyText = (canvas, text) => {
 					const context = canvas.getContext("2d");
 					let fontSize = 130;
-					do
-					{
+					do {
 						context.font = `${(fontSize -= 5)}px upright`;
 					} while (context.measureText(text).width > 720);
 					return context.font;
@@ -316,8 +313,7 @@ export default new Command({
 				if (
 					birthday.match(/^(0?[1-9]|[12][0-9]|3[01])\/(0?[1-9]|[1][0-2])$/i) ==
 					null
-				)
-				{
+				) {
 					const failed: MessageEmbed = new MessageEmbed()
 						.setColor("RED")
 						.setDescription("❌ | Birthday must be in `DD/MM` format!");
@@ -325,8 +321,7 @@ export default new Command({
 				}
 
 				let query = `avatar=${avatar}&birthday=${birthday}&username=${username}`;
-				if (description)
-				{
+				if (description) {
 					description = description.split(" ").join("%20");
 					query += `&description=${description}`;
 				}
@@ -373,12 +368,10 @@ export default new Command({
 			}
 		}
 
-		if (image)
-		{
+		if (image) {
 			let attachment = new MessageAttachment(image, "image.gif");
 			await interaction.editReply({ files: [attachment] });
-		} else
-		{
+		} else {
 			const embed: MessageEmbed = new MessageEmbed()
 				.setColor("#2f3136")
 				.setImage(link);

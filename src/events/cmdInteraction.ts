@@ -29,14 +29,12 @@ export default new Event("interactionCreate", async (interaction) => {
 		});
 
 	// Cooldown
-	if (command.cooldown)
-	{
+	if (command.cooldown) {
 		// Cooldown Check
 		if (Cooldown.has(`${command.name}${owner}`))
 			Cooldown.delete(`${command.name}${owner}`);
 
-		if (Cooldown.has(`${command.name}${interaction.user.id}`))
-		{
+		if (Cooldown.has(`${command.name}${interaction.user.id}`)) {
 			const cms = Cooldown.get(`${command.name}${interaction.user.id}`);
 			const onChillOut = new MessageEmbed()
 				.setTitle("Slow Down!")
@@ -49,8 +47,7 @@ export default new Event("interactionCreate", async (interaction) => {
 
 		// Finding User
 		let user = await User.findOne({ userId: interaction.user.id });
-		if (!user)
-		{
+		if (!user) {
 			user = await User.create({
 				userId: interaction.user.id,
 				commandsExecuted: 0,
@@ -58,8 +55,7 @@ export default new Event("interactionCreate", async (interaction) => {
 		}
 
 		// Blacklist
-		if (user.blacklisted == true)
-		{
+		if (user.blacklisted == true) {
 			const blacklisted = new MessageEmbed()
 				.setColor("RED")
 				.setTitle("You have been blacklisted!")
@@ -70,10 +66,8 @@ export default new Event("interactionCreate", async (interaction) => {
 		}
 
 		// NSFW Check
-		if (command.nsfw)
-		{
-			if (!(interaction.channel as TextChannel).nsfw)
-			{
+		if (command.nsfw) {
+			if (!(interaction.channel as TextChannel).nsfw) {
 				const nsfwCommand: MessageEmbed = new MessageEmbed()
 					.setColor("RED")
 					.setTitle("NSFW Command")
@@ -84,13 +78,11 @@ export default new Event("interactionCreate", async (interaction) => {
 			}
 
 			// Vote Checking
-			if (command.voteRequired)
-			{
+			if (command.voteRequired) {
 				if (
 					interaction.user.id !== owner &&
 					interaction.guild.id !== "1020960562710052895"
-				)
-				{
+				) {
 					const voteEmbed: MessageEmbed = new MessageEmbed()
 						.setColor("RED")
 						.setTitle("Hold on...")
@@ -110,53 +102,49 @@ export default new Event("interactionCreate", async (interaction) => {
 						);
 
 					// Checking if user has voted
-					if (!user.lastVoteTimestamp)
-					{
+					if (!user.lastVoteTimestamp) {
 						// Have not voted before
 						voteEmbed.setDescription(
 							`To **use NSFW commands**, you'll have to **vote for Shinano on top.gg** using the button below!\n` +
-							`It only takes **a few seconds to vote**, after which you will have access to **premium quality NSFW commands until you are able vote again (12 hours!)**\n\n` +
-							`Run the \`/support\` command if you have any problem with voting!`
+								`It only takes **a few seconds to vote**, after which you will have access to **premium quality NSFW commands until you are able vote again (12 hours!)**\n\n` +
+								`Run the \`/support\` command if you have any problem with voting!`
 						);
 
 						return interaction.deferred
 							? interaction.editReply({
-								embeds: [voteEmbed],
-								components: [voteLink],
-							})
+									embeds: [voteEmbed],
+									components: [voteLink],
+							  })
 							: interaction.reply({
-								embeds: [voteEmbed],
-								components: [voteLink],
-							});
+									embeds: [voteEmbed],
+									components: [voteLink],
+							  });
 					} else if (
 						Math.floor(Date.now() / 1000) - user.lastVoteTimestamp >
 						43200
-					)
-					{
+					) {
 						// Voted before but 12 hours has passed
 						voteEmbed.setDescription(
 							`Your **12 hours** access to NSFW commands ran out!\n` +
-							`Please **vote again** if you want to continue using **Shinano's NSFW features**`
+								`Please **vote again** if you want to continue using **Shinano's NSFW features**`
 						);
 						return interaction.deferred
 							? interaction.editReply({
-								embeds: [voteEmbed],
-								components: [voteLink],
-							})
+									embeds: [voteEmbed],
+									components: [voteLink],
+							  })
 							: interaction.reply({
-								embeds: [voteEmbed],
-								components: [voteLink],
-							});
+									embeds: [voteEmbed],
+									components: [voteLink],
+							  });
 					}
 				}
 			}
 		}
 
 		// Owner Check
-		if (command.ownerOnly)
-		{
-			if (owner !== interaction.user.id)
-			{
+		if (command.ownerOnly) {
+			if (owner !== interaction.user.id) {
 				const notForYou: MessageEmbed = new MessageEmbed()
 					.setColor("RED")
 					.setDescription("This command is for owners only!");
@@ -199,8 +187,7 @@ export default new Event("interactionCreate", async (interaction) => {
 	if (options._group) fullCommand = fullCommand + " " + options._group;
 	if (options._subcommand)
 		fullCommand = fullCommand + " " + options._subcommand;
-	if (options._hoistedOptions.length > 0)
-	{
+	if (options._hoistedOptions.length > 0) {
 		options._hoistedOptions.forEach((option) => {
 			option.attachment
 				? (fullCommand = `${fullCommand} ${option.name}:${option.attachment.proxyURL}`)

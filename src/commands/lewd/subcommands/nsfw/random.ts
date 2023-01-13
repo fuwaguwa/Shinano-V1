@@ -17,8 +17,7 @@ export async function nsfwRandom(
 	);
 	const waifu = await response.json();
 
-	if (!(waifu.link as string).endsWith("mp4"))
-	{
+	if (!(waifu.link as string).endsWith("mp4")) {
 		lewdEmbed.setImage(waifu.link);
 		return interaction.editReply({ embeds: [lewdEmbed] });
 	}

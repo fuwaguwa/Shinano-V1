@@ -22,16 +22,15 @@ export async function genshinWeaponStats(
 	if (level > 90) level = 90;
 
 	let weaponSpecializedStat: string;
-	if (weapon.substat)
-	{
-		if (weapon.substat.toLowerCase() !== "elemental mastery")
-		{
-			weaponSpecializedStat = `${(weaponStats.specialized * 100).toFixed(2)}% ${weapon.substat
-				}`;
-		} else
-		{
-			weaponSpecializedStat = `${weaponStats.specialized.toFixed(2)} ${weapon.substat
-				}`;
+	if (weapon.substat) {
+		if (weapon.substat.toLowerCase() !== "elemental mastery") {
+			weaponSpecializedStat = `${(weaponStats.specialized * 100).toFixed(2)}% ${
+				weapon.substat
+			}`;
+		} else {
+			weaponSpecializedStat = `${weaponStats.specialized.toFixed(2)} ${
+				weapon.substat
+			}`;
 		}
 	}
 
@@ -52,14 +51,15 @@ export async function genshinWeaponStats(
 			{
 				name: "Weapon's Stats:",
 				value:
-					`ATK: **${weaponStats.attack ? `${weaponStats.attack.toFixed(2)} ATK` : "N/A"
+					`ATK: **${
+						weaponStats.attack ? `${weaponStats.attack.toFixed(2)} ATK` : "N/A"
 					}**\n` +
-					`Main Stat: **${weaponStats.specialized ? weaponSpecializedStat : "N/A"
+					`Main Stat: **${
+						weaponStats.specialized ? weaponSpecializedStat : "N/A"
 					}**\n`,
 			}
 		);
-	if (weapon.effect)
-	{
+	if (weapon.effect) {
 		const formattedRefinementStats: string[] = [];
 		weapon[`r${refinementLevel}`].forEach((stat) => {
 			formattedRefinementStats.push(`**${stat}**`);

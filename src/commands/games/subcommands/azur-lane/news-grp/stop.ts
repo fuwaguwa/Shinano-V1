@@ -6,8 +6,7 @@ export async function azurLaneNewsStop(interaction: ShinanoInteraction) {
 	await interaction.deferReply();
 
 	const dbChannel = await News.findOne({ guildId: interaction.guild.id });
-	if (!dbChannel)
-	{
+	if (!dbChannel) {
 		const none: MessageEmbed = new MessageEmbed()
 			.setColor("RED")
 			.setDescription(

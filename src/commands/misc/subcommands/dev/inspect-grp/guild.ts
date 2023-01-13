@@ -7,8 +7,7 @@ export async function devInspectGuild(interaction: ShinanoInteraction) {
 		interaction.options.getString("guild-id")
 	);
 
-	if (!guild)
-	{
+	if (!guild) {
 		const noResult: MessageEmbed = new MessageEmbed()
 			.setColor("RED")
 			.setDescription("❌ | No guild of that ID can be found!");
@@ -41,8 +40,9 @@ export async function devInspectGuild(interaction: ShinanoInteraction) {
 			},
 			{
 				name: "Member Count",
-				value: `**${guild.memberCount} Members** | **${guild.memberCount - botMembers.size
-					} Users** and **${botMembers.size}** Bots`,
+				value: `**${guild.memberCount} Members** | **${
+					guild.memberCount - botMembers.size
+				} Users** and **${botMembers.size}** Bots`,
 			}
 		)
 		.setColor("#548ed1")

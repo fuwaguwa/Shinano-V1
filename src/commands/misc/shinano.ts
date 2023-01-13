@@ -75,8 +75,7 @@ export default new Command({
 		},
 	],
 	run: async ({ interaction }) => {
-		switch (interaction.options.getSubcommand())
-		{
+		switch (interaction.options.getSubcommand()) {
 			case "info": {
 				await shinanoInfo(interaction);
 				break;

@@ -25,9 +25,10 @@ export default new Command({
 		const embed: MessageEmbed = new MessageEmbed()
 			.setColor("RANDOM")
 			.setDescription(
-				`${target
-					? `${interaction.user} poked ${target}!`
-					: `You poked yourself...`
+				`${
+					target
+						? `${interaction.user} poked ${target}!`
+						: `You poked yourself...`
 				}`
 			)
 			.setImage(rep.url);

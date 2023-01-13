@@ -19,39 +19,30 @@ export async function genshinWeaponInfo(
 	// Filtering data
 	// % Stats
 	let subValue: string;
-	if (weapon.substat)
-	{
-		if (weapon.substat.toLowerCase() !== "elemental mastery")
-		{
+	if (weapon.substat) {
+		if (weapon.substat.toLowerCase() !== "elemental mastery") {
 			subValue = `${weapon.subvalue}% ${weapon.substat}`;
-		} else
-		{
+		} else {
 			subValue = `${weapon.subvalue} ${weapon.substat}`;
 		}
 	}
 
 	// Refinement Stats
 	const refinementStats = [];
-	if (weapon.effect)
-	{
-		for (let i = 0; i < 5; i++)
-		{
-			if (i == 0)
-			{
+	if (weapon.effect) {
+		for (let i = 0; i < 5; i++) {
+			if (i == 0) {
 				weapon[`r${i + 1}`].forEach((stat) => {
 					refinementStats.push(stat);
 				});
-			} else
-			{
-				for (let k = 0; k < weapon.r1.length; k++)
-				{
+			} else {
+				for (let k = 0; k < weapon.r1.length; k++) {
 					refinementStats[k] += `/${weapon[`r${i + 1}`][k]}`;
 				}
 			}
 		}
 
-		for (let i = 0; i < refinementStats.length; i++)
-		{
+		for (let i = 0; i < refinementStats.length; i++) {
 			refinementStats[i] = `**${refinementStats[i]}**`;
 		}
 	}
@@ -62,7 +53,8 @@ export async function genshinWeaponInfo(
 		.setColor(embedColor)
 		.setTitle(weapon.name)
 		.setDescription(
-			`*${weapon.description}*\n\n${weapon.url ? `[Wiki Link](${weapon.url.fandom})` : ""
+			`*${weapon.description}*\n\n${
+				weapon.url ? `[Wiki Link](${weapon.url.fandom})` : ""
 			}`
 		)
 		.setThumbnail(weapon.images.icon)
@@ -82,8 +74,7 @@ export async function genshinWeaponInfo(
 					`${subValue ? `Base Substat: **${subValue}**\n` : ``}`,
 			}
 		);
-	if (weapon.effect)
-	{
+	if (weapon.effect) {
 		weaponInfo.addField(
 			`Effect: ${weapon.effectname}`,
 			strFormat(weapon.effect, refinementStats)
@@ -94,8 +85,7 @@ export async function genshinWeaponInfo(
 	const ascensionsCosts = [];
 	const ascensionsCostsEmbeds: MessageEmbed[] = [];
 
-	for (let ascensionLevel in weapon.costs)
-	{
+	for (let ascensionLevel in weapon.costs) {
 		let matz = [];
 		weapon.costs[ascensionLevel].forEach((material) => {
 			matz.push(`${material.count}x **${material.name}**`);
@@ -103,8 +93,7 @@ export async function genshinWeaponInfo(
 		ascensionsCosts.push(matz.join("\n"));
 	}
 
-	for (let i = 0; i < ascensionsCosts.length; i++)
-	{
+	for (let i = 0; i < ascensionsCosts.length; i++) {
 		ascensionsCostsEmbeds.push(
 			new MessageEmbed()
 				.setColor(embedColor)
@@ -149,21 +138,18 @@ export async function genshinWeaponInfo(
 	let costPage: any = 0;
 
 	collector.on("collect", async (i) => {
-		if (!i.customId.endsWith(i.user.id))
-		{
+		if (!i.customId.endsWith(i.user.id)) {
 			return i.reply({
 				content: "This menu is not for you!",
 				ephemeral: true,
 			});
 		}
 
-		if (i["values"])
-		{
+		if (i["values"]) {
 			await i.deferUpdate();
 
 			const selectMenu = navigation.components[0] as MessageSelectMenu;
-			switch (i["values"][0])
-			{
+			switch (i["values"][0]) {
 				case "info": {
 					selectMenu.options[0].default = true;
 					selectMenu.options[1].default = false;

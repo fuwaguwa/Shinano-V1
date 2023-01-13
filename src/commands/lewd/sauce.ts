@@ -58,8 +58,7 @@ export default new Command({
 			? (link = interaction.options.getString("link"))
 			: (link = interaction.options.getAttachment("image").proxyURL);
 
-		if (!isImageAndGif(link))
-		{
+		if (!isImageAndGif(link)) {
 			const failed: MessageEmbed = new MessageEmbed()
 				.setColor("RED")
 				.setDescription("Must be an image/gif!");
@@ -67,8 +66,7 @@ export default new Command({
 		}
 
 		const response = await fetch(link);
-		if (response.status !== 200)
-		{
+		if (response.status !== 200) {
 			const failed: MessageEmbed = new MessageEmbed()
 				.setColor("RED")
 				.setDescription("Invalid image/gif link/file.");
@@ -93,8 +91,7 @@ export default new Command({
 		};
 
 		sauce.find({ url: link }).then(async (sauce) => {
-			if (sauce.results.length == 0)
-			{
+			if (sauce.results.length == 0) {
 				const noResult: MessageEmbed = new MessageEmbed()
 					.setColor("RED")
 					.setDescription("❌ | No result was found...")
@@ -111,15 +108,13 @@ export default new Command({
 			if (
 				sauce.results[0].data.source &&
 				sauce.results[0].header.index_name.includes("H-Anime")
-			)
-			{
+			) {
 				result.addField("Sauce: ", sauce.results[0].data.source);
 				result.addField(
 					"Estimated Timestamp: ",
 					sauce.results[0].data.est_time
 				);
-			} else
-			{
+			} else {
 				if (sauce.results[0].data.member_name)
 					result.addField("Artist: ", sauce.results[0].data.member_name);
 				if (sauce.results[0].data.creator)
@@ -134,13 +129,11 @@ export default new Command({
 
 			// Extracting Links
 			const links: string[] = [];
-			for (let i = 0; i < 5; i++)
-			{
+			for (let i = 0; i < 5; i++) {
 				const source = sauce.results[i];
 
 				if (!source) return;
-				if (source.data.ext_urls)
-				{
+				if (source.data.ext_urls) {
 					links.push(`${source.data.ext_urls[0]}|${source.header.similarity}%`);
 				}
 			}
@@ -151,61 +144,52 @@ export default new Command({
 
 			// Filtering
 			let filteredLink = {};
-			for (let i = 0; i < links.length; i++)
-			{
-				switch (true)
-				{
+			for (let i = 0; i < links.length; i++) {
+				switch (true) {
 					case links[i].includes("pixiv.net"): {
-						if (!filteredLink["Pixiv"])
-						{
+						if (!filteredLink["Pixiv"]) {
 							filteredLink["Pixiv"] = links[i];
 						}
 						break;
 					}
 
 					case links[i].includes("danbooru.donmai.us"): {
-						if (!filteredLink["Danbooru"])
-						{
+						if (!filteredLink["Danbooru"]) {
 							filteredLink["Danbooru"] = links[i];
 						}
 						break;
 					}
 
 					case links[i].includes("gelbooru.com"): {
-						if (!filteredLink["Gelbooru"])
-						{
+						if (!filteredLink["Gelbooru"]) {
 							filteredLink["Gelbooru"] = links[i];
 						}
 						break;
 					}
 
 					case links[i].includes("konachan.com"): {
-						if (!filteredLink["Konachan"])
-						{
+						if (!filteredLink["Konachan"]) {
 							filteredLink["Konachan"] = links[i];
 						}
 						break;
 					}
 
 					case links[i].includes("yande.re"): {
-						if (!filteredLink["Yande.re"])
-						{
+						if (!filteredLink["Yande.re"]) {
 							filteredLink["Yande.re"] = links[i];
 						}
 						break;
 					}
 
 					case links[i].includes("fantia.jp"): {
-						if (!filteredLink["Fantia"])
-						{
+						if (!filteredLink["Fantia"]) {
 							filteredLink["Fantia"] = links[i];
 						}
 						break;
 					}
 
 					case links[i].includes("anidb.net"): {
-						if (!filteredLink["AniDB"])
-						{
+						if (!filteredLink["AniDB"]) {
 							filteredLink["AniDB"] = links[i];
 						}
 						break;
@@ -217,10 +201,8 @@ export default new Command({
 
 			// Linking
 			const sauceUrls: MessageActionRow = new MessageActionRow();
-			for (let link in filteredLink)
-			{
-				switch (link)
-				{
+			for (let link in filteredLink) {
+				switch (link) {
 					case "Pixiv": {
 						sauceUrls.addComponents(
 							new MessageButton()
@@ -306,8 +288,7 @@ export default new Command({
 			);
 			await interaction.editReply({ embeds: [wait] });
 
-			if (sauceUrls.components.length === 0)
-			{
+			if (sauceUrls.components.length === 0) {
 				result.setDescription(
 					`Similarity: ${sauce.results[0].header.similarity}%`
 				);

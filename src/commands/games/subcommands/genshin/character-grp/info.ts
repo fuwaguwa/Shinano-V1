@@ -18,10 +18,8 @@ function queryConstellations(
 ) {
 	const characterCons = genshin.constellations(characterName);
 	const consInfo = [];
-	for (let cons in characterCons)
-	{
-		if (cons !== "name" && cons !== "images" && cons !== "version")
-		{
+	for (let cons in characterCons) {
+		if (cons !== "name" && cons !== "images" && cons !== "version") {
 			consInfo.push({
 				name: cons.toUpperCase() + " | " + characterCons[cons].name,
 				description: characterCons[cons].effect,
@@ -41,12 +39,10 @@ function queryConstellations(
 
 function queryTravelerConstellations(character: genshin.Character) {
 	const travelerConsPages: MessageEmbed[] = [];
-	for (let i = 0; i < 4; i++)
-	{
+	for (let i = 0; i < 4; i++) {
 		let element: string;
 		let elementColor;
-		switch (i)
-		{
+		switch (i) {
 			case 0: {
 				(element = "Anemo"), (elementColor = color(element));
 				break;
@@ -77,15 +73,12 @@ function queryTravelerConstellations(character: genshin.Character) {
 
 function queryGallery(character: genshin.Character, embedColor: any) {
 	const galleryImages: MessageEmbed[] = [];
-	for (let image in character.images)
-	{
-		if (character.images[image])
-		{
+	for (let image in character.images) {
+		if (character.images[image]) {
 			const imageEmbed: MessageEmbed = new MessageEmbed()
 				.setColor(embedColor)
 				.setTitle(`${character.name}'s Gallery`);
-			switch (image)
-			{
+			switch (image) {
 				case "card": {
 					imageEmbed
 						.setDescription(`**Card**`)
@@ -144,8 +137,7 @@ export async function genshinCharacterInfo(
 	character: genshin.Character
 ) {
 	// Checking for character
-	if (!character)
-	{
+	if (!character) {
 		const noResult: MessageEmbed = new MessageEmbed()
 			.setColor("RED")
 			.setDescription("❌ | No character found!");
@@ -155,12 +147,10 @@ export async function genshinCharacterInfo(
 	// MC Checking
 	let MC: boolean = false;
 	let embedColor;
-	if (character.name === "Aether" || character.name === "Lumine")
-	{
+	if (character.name === "Aether" || character.name === "Lumine") {
 		MC = true;
 		embedColor = "GREY";
-	} else
-	{
+	} else {
 		embedColor = color(character);
 	}
 
@@ -169,7 +159,8 @@ export async function genshinCharacterInfo(
 		.setColor(embedColor)
 		.setTitle(`${character.name} | ${MC ? "Main Character" : character.title}`)
 		.setDescription(
-			`*${character.description}*\n\n${character.url ? `[Wiki Link](${character.url.fandom})` : ""
+			`*${character.description}*\n\n${
+				character.url ? `[Wiki Link](${character.url.fandom})` : ""
 			}`
 		)
 		.setThumbnail(character.images.icon)
@@ -219,8 +210,7 @@ export async function genshinCharacterInfo(
 	const ascensionsCosts = [];
 	const ascensionsCostsEmbeds: MessageEmbed[] = [];
 
-	for (let ascensionLevel in character.costs)
-	{
+	for (let ascensionLevel in character.costs) {
 		let matz = [];
 		character.costs[ascensionLevel].forEach((material) => {
 			matz.push(`${material.count}x **${material.name}**`);
@@ -228,8 +218,7 @@ export async function genshinCharacterInfo(
 		ascensionsCosts.push(matz.join("\n"));
 	}
 
-	for (let i = 0; i < ascensionsCosts.length; i++)
-	{
+	for (let i = 0; i < ascensionsCosts.length; i++) {
 		ascensionsCostsEmbeds.push(
 			new MessageEmbed()
 				.setColor(embedColor)
@@ -289,24 +278,20 @@ export async function genshinCharacterInfo(
 	let galleryPage: any = 0;
 
 	collector.on("collect", async (i) => {
-		if (!i.customId.endsWith(i.user.id))
-		{
+		if (!i.customId.endsWith(i.user.id)) {
 			return i.reply({
 				content: "This menu is not for you!",
 				ephemeral: true,
 			});
 		}
 
-		if (i["values"])
-		{
+		if (i["values"]) {
 			await i.deferUpdate();
 			const selectMenu = navigation.components[0] as MessageSelectMenu;
 
-			switch (i["values"][0])
-			{
+			switch (i["values"][0]) {
 				case "info": {
-					for (let i = 0; i < selectMenu.options.length; i++)
-					{
+					for (let i = 0; i < selectMenu.options.length; i++) {
 						i == 0
 							? (selectMenu.options[i].default = true)
 							: (selectMenu.options[i].default = false);
@@ -320,15 +305,13 @@ export async function genshinCharacterInfo(
 				}
 
 				case "constellations": {
-					for (let i = 0; i < selectMenu.options.length; i++)
-					{
+					for (let i = 0; i < selectMenu.options.length; i++) {
 						i == 1
 							? (selectMenu.options[i].default = true)
 							: (selectMenu.options[i].default = false);
 					}
 
-					if (MC)
-					{
+					if (MC) {
 						await ShinanoPaginator({
 							interaction: interaction,
 							interactorOnly: true,
@@ -336,8 +319,7 @@ export async function genshinCharacterInfo(
 							timeout: 120000,
 							menu: navigation,
 						});
-					} else
-					{
+					} else {
 						await interaction.editReply({
 							embeds: [consEmbed],
 							components: [navigation],
@@ -347,8 +329,7 @@ export async function genshinCharacterInfo(
 				}
 
 				case "costs": {
-					for (let i = 0; i < selectMenu.options.length; i++)
-					{
+					for (let i = 0; i < selectMenu.options.length; i++) {
 						i == 2
 							? (selectMenu.options[i].default = true)
 							: (selectMenu.options[i].default = false);
@@ -366,8 +347,7 @@ export async function genshinCharacterInfo(
 				}
 
 				case "gallery": {
-					for (let i = 0; i < selectMenu.options.length; i++)
-					{
+					for (let i = 0; i < selectMenu.options.length; i++) {
 						i == 3
 							? (selectMenu.options[i].default = true)
 							: (selectMenu.options[i].default = false);

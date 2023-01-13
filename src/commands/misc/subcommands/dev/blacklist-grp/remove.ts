@@ -6,17 +6,14 @@ export async function blacklistRemove(interaction: ShinanoInteraction) {
 	const user = await User.findOne({
 		userId: interaction.options.getUser("user").id,
 	});
-	if (!user)
-	{
+	if (!user) {
 		const noOne: MessageEmbed = new MessageEmbed()
 			.setColor("RED")
 			.setDescription("User is not blacklisted!");
 		return interaction.editReply({ embeds: [noOne] });
-	} else if (user.blacklisted == true)
-	{
+	} else if (user.blacklisted == true) {
 		await user.updateOne({ blacklisted: false });
-	} else
-	{
+	} else {
 		const noOne: MessageEmbed = new MessageEmbed()
 			.setColor("RED")
 			.setDescription("User is not blacklisted!");

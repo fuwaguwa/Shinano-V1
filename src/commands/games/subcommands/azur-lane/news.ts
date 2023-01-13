@@ -3,8 +3,7 @@ import { azurLaneNewsSet } from "./news-grp/set";
 import { azurLaneNewsStop } from "./news-grp/stop";
 
 export async function azurLaneNews(interaction: ShinanoInteraction) {
-	switch (interaction.options.getSubcommand())
-	{
+	switch (interaction.options.getSubcommand()) {
 		case "set": {
 			await azurLaneNewsSet(interaction);
 			break;

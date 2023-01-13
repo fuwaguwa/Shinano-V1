@@ -37,8 +37,7 @@ export default new Command({
 	],
 	run: async ({ interaction }) => {
 		const choices: string[] = [];
-		for (let i = 0; i < 5; i++)
-		{
+		for (let i = 0; i < 5; i++) {
 			if (interaction.options.getString(`choice-${i + 1}`))
 				choices.push(interaction.options.getString(`choice-${i + 1}`));
 		}
@@ -47,7 +46,7 @@ export default new Command({
 			.setColor("#2f3136")
 			.setDescription(
 				`> **${choices.join(", ")}**\n` +
-				`I pick...**${choices[Math.floor(Math.random() * choices.length)]}**!`
+					`I pick...**${choices[Math.floor(Math.random() * choices.length)]}**!`
 			);
 		await interaction.reply({ embeds: [pickEmbed] });
 	},

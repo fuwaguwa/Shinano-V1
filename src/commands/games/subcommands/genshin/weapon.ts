@@ -11,16 +11,14 @@ export async function genshinWeapon(interaction: ShinanoInteraction) {
 		.toLowerCase();
 	const weapon: genshin.Weapon = genshin.weapons(name);
 
-	if (!weapon)
-	{
+	if (!weapon) {
 		const noResult: MessageEmbed = new MessageEmbed()
 			.setColor("RED")
 			.setDescription("❌ | No weapon found!");
 		await interaction.editReply({ embeds: [noResult] });
 	}
 
-	switch (interaction.options.getSubcommand())
-	{
+	switch (interaction.options.getSubcommand()) {
 		case "info": {
 			await genshinWeaponInfo(interaction, weapon);
 			break;

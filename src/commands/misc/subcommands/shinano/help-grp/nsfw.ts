@@ -8,8 +8,7 @@ import { ShinanoInteraction } from "../../../../../typings/Command";
 
 export async function shinanoHelpNSFW(interaction: ShinanoInteraction) {
 	// NSFW Check
-	if (!(interaction.channel as TextChannel).nsfw)
-	{
+	if (!(interaction.channel as TextChannel).nsfw) {
 		const nsfwErrorEmbed = new MessageEmbed()
 			.setColor("RED")
 			.setTitle("NSFW Command")

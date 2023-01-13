@@ -11,8 +11,7 @@ export async function genshinMaterial(interaction: ShinanoInteraction) {
 		.toLowerCase();
 	const material: genshin.Material = genshin.materials(name);
 
-	if (!material)
-	{
+	if (!material) {
 		const noResult: MessageEmbed = new MessageEmbed()
 			.setColor("RED")
 			.setDescription("❌ | No material found!");
@@ -25,7 +24,8 @@ export async function genshinMaterial(interaction: ShinanoInteraction) {
 		.setTitle(material.name)
 		.setThumbnail(material.images.redirect)
 		.setDescription(
-			`*${material.description}*\n\n${material.url ? `[Wiki Link](${material.url.fandom})` : ""
+			`*${material.description}*\n\n${
+				material.url ? `[Wiki Link](${material.url.fandom})` : ""
 			}`
 		)
 		.addFields(
@@ -40,15 +40,13 @@ export async function genshinMaterial(interaction: ShinanoInteraction) {
 				value: material.materialtype,
 			}
 		);
-	if (!material.daysofweek)
-	{
+	if (!material.daysofweek) {
 		materialEmbed.addField("Material Source:", material.source.join("\n"));
-	} else
-	{
+	} else {
 		materialEmbed.addField(
 			"Material Source",
 			`${material.source.join("\n")}\n` +
-			`${material.dropdomain} (${material.daysofweek.join("/")})`
+				`${material.dropdomain} (${material.daysofweek.join("/")})`
 		);
 	}
 	await interaction.editReply({ embeds: [materialEmbed] });

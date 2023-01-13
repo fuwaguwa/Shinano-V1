@@ -20,10 +20,10 @@ export async function shinanoInfo(interaction: ShinanoInteraction) {
 		.setTitle("Shinano")
 		.setDescription(
 			"The Multi-Purpose Azur Lane/Genshin Bot!\n" +
-			"Developed and Maintained by **Fuwafuwa#2272**\n" +
-			"Contributor: **LaziestBoy#7543**\n\n" +
-			`**APIs**: ${APIs.join(", ")}\n\n` +
-			"Liking the bot so far? Please **vote** and leave Shinano a **rating** on **top.gg**!"
+				"Developed and Maintained by **Fuwafuwa#2272**\n" +
+				"Contributor: **LaziestBoy#7543**\n\n" +
+				`**APIs**: ${APIs.join(", ")}\n\n` +
+				"Liking the bot so far? Please **vote** and leave Shinano a **rating** on **top.gg**!"
 		);
 
 	const buttons1: MessageActionRow = new MessageActionRow().addComponents(

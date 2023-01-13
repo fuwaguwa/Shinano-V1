@@ -11,16 +11,14 @@ export async function genshinEnemy(interaction: ShinanoInteraction) {
 		.toLowerCase();
 	const enemy: genshin.Enemy = genshin.enemies(name);
 
-	if (!enemy)
-	{
+	if (!enemy) {
 		const noResult: MessageEmbed = new MessageEmbed()
 			.setColor("RED")
 			.setDescription("❌ | No enemy found!");
 		return interaction.editReply({ embeds: [noResult] });
 	}
 
-	switch (interaction.options.getSubcommand())
-	{
+	switch (interaction.options.getSubcommand()) {
 		case "info": {
 			await genshinEnemyInfo(interaction, enemy);
 			break;

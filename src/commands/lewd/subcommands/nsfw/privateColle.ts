@@ -10,8 +10,7 @@ export async function nsfwPrivateCollection(
 	const data = await Collection.findOne({ type: category });
 	const image = data.links[Math.floor(Math.random() * data.size)];
 
-	if (!(image.link as string).endsWith("mp4"))
-	{
+	if (!(image.link as string).endsWith("mp4")) {
 		lewdEmbed.setImage(image.link);
 
 		const imageLink = new MessageActionRow().addComponents(

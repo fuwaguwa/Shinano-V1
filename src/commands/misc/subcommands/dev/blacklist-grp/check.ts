@@ -6,8 +6,7 @@ export async function blacklistCheck(interaction: ShinanoInteraction) {
 	const user = await User.findOne({
 		userId: interaction.options.getUser("user").id,
 	});
-	if (user.blacklisted == true)
-	{
+	if (user.blacklisted == true) {
 		const blacklisted: MessageEmbed = new MessageEmbed()
 			.setColor("RED")
 			.setTitle("Uh oh, user is blacklisted!")
@@ -16,8 +15,7 @@ export async function blacklistCheck(interaction: ShinanoInteraction) {
 				value: `${interaction.options.getUser("user")}`,
 			});
 		await interaction.editReply({ embeds: [blacklisted] });
-	} else
-	{
+	} else {
 		const noOne: MessageEmbed = new MessageEmbed()
 			.setColor("RED")
 			.setDescription("User is not blacklisted!");

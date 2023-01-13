@@ -19,8 +19,7 @@ export async function azurLaneFarm(interaction: ShinanoInteraction, AL: any) {
 
 	if (cLevel > 125) cLevel = 125;
 	if (tLevel > 125) tLevel = 125;
-	if (cLevel == tLevel || tLevel < cLevel)
-	{
+	if (cLevel == tLevel || tLevel < cLevel) {
 		const invalid: MessageEmbed = new MessageEmbed()
 			.setColor("RED")
 			.setDescription("❌ | Invalid input for levels!");
@@ -28,8 +27,7 @@ export async function azurLaneFarm(interaction: ShinanoInteraction, AL: any) {
 	}
 
 	const ship = await AL.ships.get(shipName);
-	if (!ship)
-	{
+	if (!ship) {
 		const shipNotFound: MessageEmbed = new MessageEmbed()
 			.setDescription("❌ | Ship not found!")
 			.setColor("RED");
@@ -37,8 +35,7 @@ export async function azurLaneFarm(interaction: ShinanoInteraction, AL: any) {
 	}
 
 	if (!flagshipStatus) flagshipStatus = false;
-	if (flagshipStatus)
-	{
+	if (flagshipStatus) {
 		const flagshipHullType = [
 			"Battleship",
 			"Battlecruiser",

@@ -237,19 +237,15 @@ export default new Command({
 		},
 	],
 	run: async ({ interaction }) => {
-		if (interaction.options["_group"])
-		{
-			switch (interaction.options.getSubcommandGroup())
-			{
+		if (interaction.options["_group"]) {
+			switch (interaction.options.getSubcommandGroup()) {
 				case "news": {
 					await azurLaneNews(interaction);
 					break;
 				}
 			}
-		} else
-		{
-			switch (interaction.options.getSubcommand())
-			{
+		} else {
+			switch (interaction.options.getSubcommand()) {
 				case "ship": {
 					await azurLaneShip(interaction, AL);
 					break;

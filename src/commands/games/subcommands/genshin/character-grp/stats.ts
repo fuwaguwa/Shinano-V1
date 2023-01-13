@@ -20,11 +20,9 @@ export async function genshinCharacterStats(
 
 	// MC Checking
 	let embedColor;
-	if (character.name === "Aether" || character.name === "Lumine")
-	{
+	if (character.name === "Aether" || character.name === "Lumine") {
 		embedColor = "GREY";
-	} else
-	{
+	} else {
 		embedColor = color(character);
 	}
 
@@ -48,19 +46,23 @@ export async function genshinCharacterStats(
 			{
 				name: "Character's Stats:",
 				value:
-					`HP: **${characterStats.hp ? `${characterStats.hp.toFixed(2)} HP` : "N/A"
+					`HP: **${
+						characterStats.hp ? `${characterStats.hp.toFixed(2)} HP` : "N/A"
 					}**\n` +
-					`ATK: **${characterStats.attack
-						? `${characterStats.attack.toFixed(2)} ATK`
-						: "N/A"
+					`ATK: **${
+						characterStats.attack
+							? `${characterStats.attack.toFixed(2)} ATK`
+							: "N/A"
 					}**\n` +
-					`DEF: **${characterStats.defense
-						? `${characterStats.defense.toFixed(2)} DEF`
-						: "N/A"
+					`DEF: **${
+						characterStats.defense
+							? `${characterStats.defense.toFixed(2)} DEF`
+							: "N/A"
 					}**\n` +
-					`Ascension Stat: **${characterStats.specialized
-						? `${characterSpecializedStat} ${character.substat}`
-						: "N/A"
+					`Ascension Stat: **${
+						characterStats.specialized
+							? `${characterSpecializedStat} ${character.substat}`
+							: "N/A"
 					}**\n`,
 			}
 		);

@@ -31,8 +31,7 @@ export default new Command({
 		);
 
 		const received = await response.json();
-		if (!received.banner)
-		{
+		if (!received.banner) {
 			const failed: MessageEmbed = new MessageEmbed()
 				.setColor("RED")
 				.setDescription("User does not have a banner.");

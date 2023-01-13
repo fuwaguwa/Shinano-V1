@@ -64,8 +64,7 @@ export default new Command({
 	],
 	run: async ({ interaction }) => {
 		await interaction.deferReply();
-		switch (interaction.options.getSubcommand())
-		{
+		switch (interaction.options.getSubcommand()) {
 			case "search": {
 				await animeSearch(interaction);
 				break;

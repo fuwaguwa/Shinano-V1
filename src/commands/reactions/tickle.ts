@@ -25,9 +25,10 @@ export default new Command({
 		const tickleEmbed: MessageEmbed = new MessageEmbed()
 			.setColor("RANDOM")
 			.setDescription(
-				`${target
-					? `${interaction.user} tickled ${target}!`
-					: `You tickled yourself...`
+				`${
+					target
+						? `${interaction.user} tickled ${target}!`
+						: `You tickled yourself...`
 				}`
 			)
 			.setImage(tickle.results[0].url);

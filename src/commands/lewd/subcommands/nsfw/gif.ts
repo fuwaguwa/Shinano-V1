@@ -8,8 +8,7 @@ export async function nsfwGif(
 ) {
 	const gifTag: string = interaction.options.getString("gif-category");
 
-	if (!gifTag)
-	{
+	if (!gifTag) {
 		const response = await fetch(
 			`https://AmagiAPI.fuwafuwa08.repl.co/nsfw/public/gif`,
 			{
@@ -22,8 +21,7 @@ export async function nsfwGif(
 		const waifu = await response.json();
 		lewdEmbed.setImage(waifu.link);
 		await interaction.editReply({ embeds: [lewdEmbed] });
-	} else
-	{
+	} else {
 		const response = await fetch(
 			`https://AmagiAPI.fuwafuwa08.repl.co/nsfw/private/${gifTag}?type=gif`,
 			{

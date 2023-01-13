@@ -25,9 +25,10 @@ export default new Command({
 		const embed: MessageEmbed = new MessageEmbed()
 			.setColor("RANDOM")
 			.setDescription(
-				`${target
-					? `${interaction.user} held hands with ${target}!`
-					: `You held hands with yourself...`
+				`${
+					target
+						? `${interaction.user} held hands with ${target}!`
+						: `You held hands with yourself...`
 				}`
 			)
 			.setImage(rep.url);
