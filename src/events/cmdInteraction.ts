@@ -155,11 +155,37 @@ export default new Event("interactionCreate", async (interaction) => {
 		}
 
 		// Command Run
-		command.run({
-			args: interaction.options as CommandInteractionOptionResolver,
-			client,
-			interaction: interaction as ShinanoInteraction,
-		});
+		command
+			.run({
+				args: interaction.options as CommandInteractionOptionResolver,
+				client,
+				interaction: interaction as ShinanoInteraction,
+			})
+			.catch(async (err) => {
+				const errorEmbed: MessageEmbed = new MessageEmbed()
+					.setColor("RED")
+					.setDescription(`[${err.name}] ${err.message}`)
+					.setFooter({
+						text: "Please use the command again or contact support!",
+					});
+				const button: MessageActionRow = new MessageActionRow().addComponents(
+					new MessageButton()
+						.setStyle("LINK")
+						.setLabel("Support Server")
+						.setEmoji("⚙️")
+						.setURL("https://discord.gg/NFkMxFeEWr")
+				);
+
+				interaction.deferred
+					? await interaction.editReply({
+							embeds: [errorEmbed],
+							components: [button],
+					  })
+					: await interaction.reply({
+							embeds: [errorEmbed],
+							components: [button],
+					  });
+			});
 
 		// Command Count
 		await user.updateOne({ commandsExecuted: user.commandsExecuted + 1 });
