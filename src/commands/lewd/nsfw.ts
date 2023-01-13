@@ -1,7 +1,6 @@
 import { MessageActionRow, MessageButton, MessageEmbed } from "discord.js";
 import { Command } from "../../structures/Command";
 import fetch from "node-fetch";
-import { config } from "dotenv";
 import { nsfwRandom } from "./subcommands/nsfw/random";
 import { nsfwBomb } from "./subcommands/nsfw/bomb";
 import { nsfwPrivateCollection } from "./subcommands/nsfw/privateColle";
@@ -9,7 +8,6 @@ import { nsfwVideo } from "./subcommands/nsfw/video";
 import { nsfwPrivateFanbox } from "./subcommands/nsfw/fanbox";
 import { nsfwGif } from "./subcommands/nsfw/gif";
 import { nsfwFanboxBomb } from "./subcommands/nsfw/fanboxBomb";
-config();
 
 export default new Command({
 	name: "nsfw",

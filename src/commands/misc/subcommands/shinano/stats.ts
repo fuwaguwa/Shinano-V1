@@ -1,9 +1,7 @@
 import { MessageEmbed } from "discord.js";
 import { client } from "../../../..";
 import { ShinanoInteraction } from "../../../../typings/Command";
-import { config } from "dotenv";
 import fetch from "node-fetch";
-config();
 
 export async function shinanoStats(interaction: ShinanoInteraction) {
 	await interaction.deferReply();

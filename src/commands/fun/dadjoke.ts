@@ -1,8 +1,6 @@
 import { Command } from "../../structures/Command";
-import { config } from "dotenv";
 import fetch from "node-fetch";
 import { MessageEmbed } from "discord.js";
-config();
 
 export default new Command({
 	name: "dadjoke",

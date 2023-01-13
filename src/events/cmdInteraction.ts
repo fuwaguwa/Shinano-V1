@@ -10,9 +10,7 @@ import { client } from "..";
 import { Event } from "../structures/Event";
 import { ShinanoInteraction } from "../typings/Command";
 import User from "../schemas/User";
-import { config } from "dotenv";
 import ms from "ms";
-config();
 
 const Cooldown: Collection<string, number> = new Collection();
 const owner = "836215956346634270";

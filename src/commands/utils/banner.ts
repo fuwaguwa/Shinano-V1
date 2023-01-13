@@ -1,8 +1,6 @@
 import { MessageEmbed, User } from "discord.js";
 import { Command } from "../../structures/Command";
 import fetch from "node-fetch";
-import { config } from "dotenv";
-config();
 
 export default new Command({
 	name: "banner",

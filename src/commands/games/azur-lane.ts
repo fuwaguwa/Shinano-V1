@@ -1,6 +1,5 @@
 import { Command } from "../../structures/Command";
 import { AzurAPI } from "@azurapi/azurapi";
-import { config } from "dotenv";
 import { azurLaneShip } from "./subcommands/azur-lane/ship";
 import { azurLaneChapter } from "./subcommands/azur-lane/chapter";
 import { azurLaneGear } from "./subcommands/azur-lane/gear";
@@ -8,7 +7,6 @@ import { azurLaneExpCalculator } from "./subcommands/azur-lane/exp-calculator";
 import { azurLanePRCompletion } from "./subcommands/azur-lane/pr-completion";
 import { azurLaneNews } from "./subcommands/azur-lane/news";
 import { azurLaneFarm } from "./subcommands/azur-lane/farm";
-config();
 
 const AL = new AzurAPI();
 

@@ -1,10 +1,8 @@
 import { Command } from "../../structures/Command";
-import { config } from "dotenv";
 import { animeSearch } from "./subcommands/anime/search";
 import { animeCharacter } from "./subcommands/anime/character";
 import { animeRandom } from "./subcommands/anime/random";
 import { animeQuote } from "./subcommands/anime/quote";
-config();
 
 export default new Command({
 	name: "anime",

@@ -1,5 +1,4 @@
 import { ShinanoInteraction } from "../../../../typings/Command";
-import { config } from "dotenv";
 import fetch from "node-fetch";
 import {
 	Collector,
@@ -13,7 +12,6 @@ import {
 import { ShinanoPaginator } from "../../../../lib/Pages";
 import { genDoujinEmbed, getDoujinTags } from "../../../../lib/Doujin";
 import { doujinCode } from "./code";
-config();
 
 export async function doujinSearch(interaction: ShinanoInteraction) {
 	// Fetching & Filtering

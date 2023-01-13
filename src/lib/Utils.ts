@@ -8,8 +8,6 @@ import fetch from "node-fetch";
 import { client } from "..";
 import t2c from "table2canvas";
 import { Canvas } from "canvas";
-import { config } from "dotenv";
-config();
 
 export function isImage(url) {
 	return url.match(/^http[^\?]*.(jpg|jpeg|png)(\?(.*))?$/gim) != null;

@@ -1,7 +1,6 @@
 import { ShinanoInteraction } from "../../../../typings/Command";
 import fetch from "node-fetch";
 import User from "../../../../schemas/User";
-import { config } from "dotenv";
 import {
 	ButtonInteraction,
 	InteractionCollector,
@@ -10,7 +9,6 @@ import {
 	MessageButton,
 	MessageEmbed,
 } from "discord.js";
-config();
 
 export async function devVoteCheck(interaction: ShinanoInteraction) {
 	const user = interaction.options.getUser("user");

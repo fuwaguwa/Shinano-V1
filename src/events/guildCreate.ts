@@ -8,8 +8,6 @@ import {
 } from "discord.js";
 import { client } from "..";
 import { updateServerCount } from "../lib/Utils";
-import { config } from "dotenv";
-config();
 
 export default new Event("guildCreate", async (guild) => {
 	await guild

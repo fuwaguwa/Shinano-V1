@@ -1,8 +1,6 @@
 import { Command } from "../../structures/Command";
 import { MessageAttachment, MessageEmbed } from "discord.js";
 import Canvas from "canvas";
-import { config } from "dotenv";
-config();
 
 Canvas.registerFont(`Upright.otf`, { family: "Upright" });
 

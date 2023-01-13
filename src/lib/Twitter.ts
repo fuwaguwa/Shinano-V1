@@ -3,8 +3,6 @@ import { ETwitterStreamEvent, TwitterApi } from "twitter-api-v2";
 import { client } from "..";
 import { sleep } from "./Utils";
 import News from "../schemas/ALNews";
-import { config } from "dotenv";
-config();
 
 let lastTweetLink: string;
 

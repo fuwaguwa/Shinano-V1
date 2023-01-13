@@ -2,7 +2,6 @@ import glob from "glob";
 import fetch from "node-fetch";
 import mongoose from "mongoose";
 import { Event } from "./Event";
-import { config } from "dotenv";
 import { promisify } from "util";
 import { CommandType } from "../typings/Command";
 import { RegisterCommandsOptions } from "../typings/CommandRegistration";
@@ -15,7 +14,6 @@ import {
 	TextChannel,
 } from "discord.js";
 import { startTweetListener } from "../lib/Twitter";
-config();
 
 const promiseGlob = promisify(glob);
 
