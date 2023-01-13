@@ -1,4 +1,4 @@
-import { MessageEmbed } from "discord.js";
+import { MessageActionRow, MessageButton, MessageEmbed } from "discord.js";
 import { Command } from "../../structures/Command";
 import fetch from "node-fetch";
 import { config } from "dotenv";
@@ -8,6 +8,7 @@ import { nsfwPrivateCollection } from "./subcommands/nsfw/privateColle";
 import { nsfwVideo } from "./subcommands/nsfw/video";
 import { nsfwPrivateFanbox } from "./subcommands/nsfw/fanbox";
 import { nsfwGif } from "./subcommands/nsfw/gif";
+import { nsfwFanboxBomb } from "./subcommands/nsfw/fanboxBomb";
 config();
 
 export default new Command({
@@ -58,7 +59,28 @@ export default new Command({
 								"The category you want to be bombed with. Ignore this option for random category.",
 							choices: [
 								{ name: "GIF", value: "gif" },
-								{ name: "Fanbox", value: "fanbox" },
+								{ name: "Shipgirls", value: "shipgirls" },
+								{ name: "Undies", value: "undies" },
+								{ name: "Elf", value: "elf" },
+								{ name: "Genshin", value: "genshin" },
+								{ name: "Kemonomimi", value: "kemonomimi" },
+								{ name: "Misc", value: "misc" },
+								{ name: "Uniform", value: "uniform" },
+							],
+						},
+					],
+				},
+				{
+					type: "SUB_COMMAND",
+					name: "fanbox-bomb",
+					description: "Bombs you with XTRA lewdness!",
+					options: [
+						{
+							type: "STRING",
+							name: "category",
+							description:
+								"The category you want to be bombed with. Ignore this option for random category.",
+							choices: [
 								{ name: "Shipgirls", value: "shipgirls" },
 								{ name: "Undies", value: "undies" },
 								{ name: "Elf", value: "elf" },
@@ -265,7 +287,7 @@ export default new Command({
 			],
 		},
 	],
-	run: async ({ interaction }) => {
+	run: async ({ interaction, client }) => {
 		await interaction.deferReply();
 		let lewdEmbed: MessageEmbed = new MessageEmbed()
 			.setColor("RANDOM")
@@ -283,6 +305,39 @@ export default new Command({
 
 					case "bomb": {
 						await nsfwBomb(interaction);
+						break;
+					}
+
+					case "fanbox-bomb": {
+						if (interaction.user.id !== "836215956346634270") {
+							try {
+								const guild = await client.guilds.fetch(
+									process.env.guildId || "1020960562710052895"
+								);
+								await guild.members.fetch(interaction.user.id);
+							} catch (error) {
+								const exclusive: MessageEmbed = new MessageEmbed()
+									.setColor("RED")
+									.setTitle("Exclusive Command!")
+									.setDescription(
+										"You have used a command exclusive to the members of the Shrine of Shinano server, join the server to use the command anywhere!"
+									);
+								const button: MessageActionRow =
+									new MessageActionRow().addComponents(
+										new MessageButton()
+											.setStyle("LINK")
+											.setLabel("Join Server!")
+											.setEmoji("🔗")
+											.setURL("https://discord.gg/NFkMxFeEWr")
+									);
+								return interaction.editReply({
+									embeds: [exclusive],
+									components: [button],
+								});
+							}
+						}
+
+						await nsfwFanboxBomb(interaction);
 						break;
 					}
 
