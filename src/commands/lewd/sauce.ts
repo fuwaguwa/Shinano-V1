@@ -88,215 +88,244 @@ export default new Command({
 			AniDB: "<:anidb:1003211992410107924>",
 		};
 
-		sauce.find({ url: link }).then(async (sauce) => {
-			if (sauce.results.length == 0) {
-				const noResult: MessageEmbed = new MessageEmbed()
-					.setColor("RED")
-					.setDescription("❌ | No result was found...")
-					.setImage(
-						"https://cdn.discordapp.com/attachments/977409556638474250/999486337822507058/akairo-azur-lane.gif"
+		sauce
+			.find({ url: link })
+			.then(async (sauce) => {
+				if (sauce.results.length == 0) {
+					const noResult: MessageEmbed = new MessageEmbed()
+						.setColor("RED")
+						.setDescription("❌ | No result was found...")
+						.setImage(
+							"https://cdn.discordapp.com/attachments/977409556638474250/999486337822507058/akairo-azur-lane.gif"
+						);
+					return interaction.editReply({ embeds: [noResult] });
+				}
+
+				let result: MessageEmbed = new MessageEmbed()
+					.setColor("RANDOM")
+					.setTitle("Sauce...Found?")
+					.setThumbnail(sauce.results[0].header.thumbnail);
+				if (
+					sauce.results[0].data.source &&
+					sauce.results[0].header.index_name.includes("H-Anime")
+				) {
+					result.addField("Sauce: ", sauce.results[0].data.source);
+					result.addField(
+						"Estimated Timestamp: ",
+						sauce.results[0].data.est_time
 					);
-				return interaction.editReply({ embeds: [noResult] });
-			}
+				} else {
+					if (sauce.results[0].data.member_name)
+						result.addField("Artist: ", sauce.results[0].data.member_name);
+					if (sauce.results[0].data.creator)
+						result.addField("Artist: ", `${sauce.results[0].data.creator}`);
+					if (sauce.results[0].data.material)
+						result.addField("Material: ", sauce.results[0].data.material);
+					if (sauce.results[0].data.characters)
+						result.addField("Character: ", sauce.results[0].data.characters);
+					if (sauce.results[0].data.user_name)
+						result.addField("Artist: ", sauce.results[0].data.user_name);
+				}
 
-			let result: MessageEmbed = new MessageEmbed()
-				.setColor("RANDOM")
-				.setTitle("Sauce...Found?")
-				.setThumbnail(sauce.results[0].header.thumbnail);
-			if (
-				sauce.results[0].data.source &&
-				sauce.results[0].header.index_name.includes("H-Anime")
-			) {
-				result.addField("Sauce: ", sauce.results[0].data.source);
-				result.addField(
-					"Estimated Timestamp: ",
-					sauce.results[0].data.est_time
+				// Extracting Links
+				const links: string[] = [];
+				for (let i = 0; i < 5; i++) {
+					const source = sauce.results[i];
+
+					if (!source) return;
+					if (source.data.ext_urls) {
+						links.push(
+							`${source.data.ext_urls[0]}|${source.header.similarity}%`
+						);
+					}
+				}
+				wait.setDescription(
+					"✅ | Valid Link!\n✅ | Sauce Found!\n<a:lod:1021265223707000923> | Filtering..."
 				);
-			} else {
-				if (sauce.results[0].data.member_name)
-					result.addField("Artist: ", sauce.results[0].data.member_name);
-				if (sauce.results[0].data.creator)
-					result.addField("Artist: ", `${sauce.results[0].data.creator}`);
-				if (sauce.results[0].data.material)
-					result.addField("Material: ", sauce.results[0].data.material);
-				if (sauce.results[0].data.characters)
-					result.addField("Character: ", sauce.results[0].data.characters);
-				if (sauce.results[0].data.user_name)
-					result.addField("Artist: ", sauce.results[0].data.user_name);
-			}
+				await interaction.editReply({ embeds: [wait] });
 
-			// Extracting Links
-			const links: string[] = [];
-			for (let i = 0; i < 5; i++) {
-				const source = sauce.results[i];
-
-				if (!source) return;
-				if (source.data.ext_urls) {
-					links.push(`${source.data.ext_urls[0]}|${source.header.similarity}%`);
-				}
-			}
-			wait.setDescription(
-				"✅ | Valid Link!\n✅ | Sauce Found!\n<a:lod:1021265223707000923> | Filtering..."
-			);
-			await interaction.editReply({ embeds: [wait] });
-
-			// Filtering
-			let filteredLink = {};
-			for (let i = 0; i < links.length; i++) {
-				switch (true) {
-					case links[i].includes("pixiv.net"): {
-						if (!filteredLink["Pixiv"]) {
-							filteredLink["Pixiv"] = links[i];
+				// Filtering
+				let filteredLink = {};
+				for (let i = 0; i < links.length; i++) {
+					switch (true) {
+						case links[i].includes("pixiv.net"): {
+							if (!filteredLink["Pixiv"]) {
+								filteredLink["Pixiv"] = links[i];
+							}
+							break;
 						}
-						break;
-					}
 
-					case links[i].includes("danbooru.donmai.us"): {
-						if (!filteredLink["Danbooru"]) {
-							filteredLink["Danbooru"] = links[i];
+						case links[i].includes("danbooru.donmai.us"): {
+							if (!filteredLink["Danbooru"]) {
+								filteredLink["Danbooru"] = links[i];
+							}
+							break;
 						}
-						break;
-					}
 
-					case links[i].includes("gelbooru.com"): {
-						if (!filteredLink["Gelbooru"]) {
-							filteredLink["Gelbooru"] = links[i];
+						case links[i].includes("gelbooru.com"): {
+							if (!filteredLink["Gelbooru"]) {
+								filteredLink["Gelbooru"] = links[i];
+							}
+							break;
 						}
-						break;
-					}
 
-					case links[i].includes("konachan.com"): {
-						if (!filteredLink["Konachan"]) {
-							filteredLink["Konachan"] = links[i];
+						case links[i].includes("konachan.com"): {
+							if (!filteredLink["Konachan"]) {
+								filteredLink["Konachan"] = links[i];
+							}
+							break;
 						}
-						break;
-					}
 
-					case links[i].includes("yande.re"): {
-						if (!filteredLink["Yande.re"]) {
-							filteredLink["Yande.re"] = links[i];
+						case links[i].includes("yande.re"): {
+							if (!filteredLink["Yande.re"]) {
+								filteredLink["Yande.re"] = links[i];
+							}
+							break;
 						}
-						break;
-					}
 
-					case links[i].includes("fantia.jp"): {
-						if (!filteredLink["Fantia"]) {
-							filteredLink["Fantia"] = links[i];
+						case links[i].includes("fantia.jp"): {
+							if (!filteredLink["Fantia"]) {
+								filteredLink["Fantia"] = links[i];
+							}
+							break;
 						}
-						break;
-					}
 
-					case links[i].includes("anidb.net"): {
-						if (!filteredLink["AniDB"]) {
-							filteredLink["AniDB"] = links[i];
+						case links[i].includes("anidb.net"): {
+							if (!filteredLink["AniDB"]) {
+								filteredLink["AniDB"] = links[i];
+							}
+							break;
 						}
-						break;
 					}
 				}
-			}
-			if (Object.keys(filteredLink).length == 0)
-				return interaction.editReply({ embeds: [result] });
+				if (Object.keys(filteredLink).length == 0)
+					return interaction.editReply({ embeds: [result] });
 
-			// Linking
-			const sauceUrls: MessageActionRow = new MessageActionRow();
-			for (let link in filteredLink) {
-				switch (link) {
-					case "Pixiv": {
-						sauceUrls.addComponents(
-							new MessageButton()
-								.setLabel(`Pixiv (${filteredLink[link].split("|")[1]})`)
-								.setStyle("LINK")
-								.setEmoji(emojis["Pixiv"])
-								.setURL(filteredLink[link].split("|")[0])
-						);
-						break;
-					}
+				// Linking
+				const sauceUrls: MessageActionRow = new MessageActionRow();
+				for (let link in filteredLink) {
+					switch (link) {
+						case "Pixiv": {
+							sauceUrls.addComponents(
+								new MessageButton()
+									.setLabel(`Pixiv (${filteredLink[link].split("|")[1]})`)
+									.setStyle("LINK")
+									.setEmoji(emojis["Pixiv"])
+									.setURL(filteredLink[link].split("|")[0])
+							);
+							break;
+						}
 
-					case "Danbooru": {
-						sauceUrls.addComponents(
-							new MessageButton()
-								.setLabel(`Danbooru (${filteredLink[link].split("|")[1]})`)
-								.setStyle("LINK")
-								.setEmoji(emojis["Danbooru"])
-								.setURL(filteredLink[link].split("|")[0])
-						);
-						break;
-					}
+						case "Danbooru": {
+							sauceUrls.addComponents(
+								new MessageButton()
+									.setLabel(`Danbooru (${filteredLink[link].split("|")[1]})`)
+									.setStyle("LINK")
+									.setEmoji(emojis["Danbooru"])
+									.setURL(filteredLink[link].split("|")[0])
+							);
+							break;
+						}
 
-					case "Gelbooru": {
-						sauceUrls.addComponents(
-							new MessageButton()
-								.setLabel(`Gelbooru (${filteredLink[link].split("|")[1]})`)
-								.setStyle("LINK")
-								.setEmoji(emojis["Gelbooru"])
-								.setURL(filteredLink[link].split("|")[0])
-						);
-						break;
-					}
+						case "Gelbooru": {
+							sauceUrls.addComponents(
+								new MessageButton()
+									.setLabel(`Gelbooru (${filteredLink[link].split("|")[1]})`)
+									.setStyle("LINK")
+									.setEmoji(emojis["Gelbooru"])
+									.setURL(filteredLink[link].split("|")[0])
+							);
+							break;
+						}
 
-					case "Konachan": {
-						sauceUrls.addComponents(
-							new MessageButton()
-								.setLabel(`Konachan (${filteredLink[link].split("|")[1]})`)
-								.setStyle("LINK")
-								.setEmoji(emojis["Konachan"])
-								.setURL(filteredLink[link].split("|")[0])
-						);
-						break;
-					}
+						case "Konachan": {
+							sauceUrls.addComponents(
+								new MessageButton()
+									.setLabel(`Konachan (${filteredLink[link].split("|")[1]})`)
+									.setStyle("LINK")
+									.setEmoji(emojis["Konachan"])
+									.setURL(filteredLink[link].split("|")[0])
+							);
+							break;
+						}
 
-					case "Yande.re": {
-						sauceUrls.addComponents(
-							new MessageButton()
-								.setLabel(`Yande.re (${filteredLink[link].split("|")[1]})`)
-								.setStyle("LINK")
-								.setEmoji(emojis["Yande.re"])
-								.setURL(filteredLink[link].split("|")[0])
-						);
-						break;
-					}
+						case "Yande.re": {
+							sauceUrls.addComponents(
+								new MessageButton()
+									.setLabel(`Yande.re (${filteredLink[link].split("|")[1]})`)
+									.setStyle("LINK")
+									.setEmoji(emojis["Yande.re"])
+									.setURL(filteredLink[link].split("|")[0])
+							);
+							break;
+						}
 
-					case "Fantia": {
-						sauceUrls.addComponents(
-							new MessageButton()
-								.setLabel(`Fantia (${filteredLink[link].split("|")[1]})`)
-								.setStyle("LINK")
-								.setEmoji(emojis["Fantia"])
-								.setURL(filteredLink[link].split("|")[0])
-						);
-						break;
-					}
+						case "Fantia": {
+							sauceUrls.addComponents(
+								new MessageButton()
+									.setLabel(`Fantia (${filteredLink[link].split("|")[1]})`)
+									.setStyle("LINK")
+									.setEmoji(emojis["Fantia"])
+									.setURL(filteredLink[link].split("|")[0])
+							);
+							break;
+						}
 
-					case "AniDB": {
-						sauceUrls.addComponents(
-							new MessageButton()
-								.setLabel(`AniDB (${filteredLink[link].split("|")[1]})`)
-								.setStyle("LINK")
-								.setEmoji(emojis["AniDB"])
-								.setURL(filteredLink[link].split("|")[0])
-						);
-						break;
+						case "AniDB": {
+							sauceUrls.addComponents(
+								new MessageButton()
+									.setLabel(`AniDB (${filteredLink[link].split("|")[1]})`)
+									.setStyle("LINK")
+									.setEmoji(emojis["AniDB"])
+									.setURL(filteredLink[link].split("|")[0])
+							);
+							break;
+						}
 					}
 				}
-			}
 
-			// Finishing Up
-			wait.setDescription(
-				"✅ | Valid Link!\n✅ | Sauce Found!\n✅ | Filtered!"
-			);
-			await interaction.editReply({ embeds: [wait] });
-
-			if (sauceUrls.components.length === 0) {
-				result.setDescription(
-					`Similarity: ${sauce.results[0].header.similarity}%`
+				// Finishing Up
+				wait.setDescription(
+					"✅ | Valid Link!\n✅ | Sauce Found!\n✅ | Filtered!"
 				);
-				return interaction.editReply({ embeds: [result] });
-			}
-			result.setFooter({ text: "Similarity is displayed below." });
-			return interaction.editReply({
-				embeds: [result],
-				components: [sauceUrls],
+				await interaction.editReply({ embeds: [wait] });
+
+				if (sauceUrls.components.length === 0) {
+					result.setDescription(
+						`Similarity: ${sauce.results[0].header.similarity}%`
+					);
+					return interaction.editReply({ embeds: [result] });
+				}
+				result.setFooter({ text: "Similarity is displayed below." });
+				return interaction.editReply({
+					embeds: [result],
+					components: [sauceUrls],
+				});
+			})
+			.catch(async (err) => {
+				const errorEmbed: MessageEmbed = new MessageEmbed()
+					.setColor("RED")
+					.setDescription(`[${err.name}] ${err.message}`)
+					.setFooter({
+						text: "Please use the command again or contact support!",
+					});
+				const button: MessageActionRow = new MessageActionRow().addComponents(
+					new MessageButton()
+						.setStyle("LINK")
+						.setLabel("Support Server")
+						.setEmoji("⚙️")
+						.setURL("https://discord.gg/NFkMxFeEWr")
+				);
+
+				interaction.deferred
+					? await interaction.editReply({
+							embeds: [errorEmbed],
+							components: [button],
+					  })
+					: await interaction.reply({
+							embeds: [errorEmbed],
+							components: [button],
+					  });
 			});
-		});
 	},
 });
