@@ -65,17 +65,11 @@ export async function ShinanoPaginator(options: {
 					.setDisabled(true);
 			}
 		} else if (options.pages.length == pageCount) {
-			(navigation.components[3] as MessageButton)
-				.setStyle("SECONDARY")
-				.setDisabled(true);
-			(navigation.components[4] as MessageButton)
-				.setStyle("SECONDARY")
-				.setDisabled(true);
+			(navigation.components[3] as MessageButton).setDisabled(true);
+			(navigation.components[4] as MessageButton).setDisabled(true);
 		} else {
-			for (let i = 0; i < navigation.components.length; i++) {
-				if (i == 2) continue;
-				(navigation.components[i] as MessageButton).setDisabled(false);
-			}
+			(navigation.components[0] as MessageButton).setDisabled(true);
+			(navigation.components[1] as MessageButton).setDisabled(true);
 		}
 
 		let message;
